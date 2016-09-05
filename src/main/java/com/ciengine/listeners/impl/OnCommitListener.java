@@ -1,8 +1,11 @@
 package main.java.com.ciengine.listeners.impl;
 
+import main.java.com.ciengine.CIEngine;
+import main.java.com.ciengine.EnvironmentVariables;
 import main.java.com.ciengine.events.CIEngineEvent;
 import main.java.com.ciengine.listeners.CIEngineListener;
 import main.java.com.ciengine.listeners.CIEngineListenerException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 /**
@@ -10,8 +13,13 @@ import main.java.com.ciengine.listeners.CIEngineListenerException;
  */
 public class OnCommitListener implements CIEngineListener
 {
+	@Autowired
+	private CIEngine ciEngine;
+
 	@Override public void onEvent(CIEngineEvent ciEngineEvent) throws CIEngineListenerException
 	{
-		// TODO copy all info from
+		EnvironmentVariables environmentVariables = new EnvironmentVariables();
+		// TODO copy all info from event
+		ciEngine.submitBuild();
 	}
 }
