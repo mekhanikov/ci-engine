@@ -11,4 +11,9 @@ public class CIEngineImpl implements CIEngine
 	{
 
 	}
+
+	@Override public Module findModuleByGitUrl(String gitUrl)
+	{
+		return null;
+	}
 }

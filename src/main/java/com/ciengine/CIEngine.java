@@ -7,4 +7,6 @@ public interface CIEngine
 {
 	void submitBuild(String moduleName, String branchName, String executionListId, String dockerImageId,
 			EnvironmentVariables environmentVariables) throws CIEngineException;
+
+	Module findModuleByGitUrl(String gitUrl);
 }

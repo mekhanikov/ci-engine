@@ -11,4 +11,34 @@ public class OnCommitEvent implements CIEngineEvent
 	private String gitUrl;
 	private String comitId;
 	private String branchName;
+
+	public String getGitUrl()
+	{
+		return gitUrl;
+	}
+
+	public void setGitUrl(String gitUrl)
+	{
+		this.gitUrl = gitUrl;
+	}
+
+	public String getComitId()
+	{
+		return comitId;
+	}
+
+	public void setComitId(String comitId)
+	{
+		this.comitId = comitId;
+	}
+
+	public String getBranchName()
+	{
+		return branchName;
+	}
+
+	public void setBranchName(String branchName)
+	{
+		this.branchName = branchName;
+	}
 }
