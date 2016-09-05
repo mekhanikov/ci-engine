@@ -69,7 +69,7 @@ public class OnCommitListener implements CIEngineListener
 	}
 
 	public List<OnCommitRule> getRules()
-	{// TODO load?
+	{// TODO load from OnCommitListener.csv on each event.
 		return rules;
 	}
 }
