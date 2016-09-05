@@ -5,4 +5,8 @@ package main.java.com.ciengine;
  */
 public class EnvironmentVariables
 {
+	public void addProperty(String key, String value)
+	{
+
+	}
 }
