@@ -69,7 +69,9 @@ public class OnCommitListener implements CIEngineListener
 	}
 
 	public List<OnCommitRule> getRules()
-	{// TODO load from OnCommitListener.csv on each event.
+	{
+		// TODO load from OnCommitListener.csv on each event.
+		// TODO or only on start? because resources inside jar will never be overriten in runtime?
 		return rules;
 	}
 }

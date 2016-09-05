@@ -1,5 +1,6 @@
 package main.java.com.ciengine;
 
+import main.java.com.ciengine.events.CIEngineEvent;
 import main.java.com.ciengine.events.impl.OnQueueBuildEvent;
 
 
@@ -8,7 +9,9 @@ import main.java.com.ciengine.events.impl.OnQueueBuildEvent;
  */
 public interface CIEngine
 {
-	void submitEvent(OnQueueBuildEvent onQueueBuildEvent) throws CIEngineException;
+	void submitEvent(CIEngineEvent ciEngineEvent) throws CIEngineException;
 
 	Module findModuleByGitUrl(String gitUrl);
+
+	Build runOnNode(Node node);
 }
