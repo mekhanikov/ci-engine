@@ -34,13 +34,15 @@ public class OnCommitListener implements CIEngineListener
 
 		environmentVariablesFromEvent.addProperty("MODULE_NAME", module.getName());
 
+		// TODO set module specific values
+
 		List<OnCommitRule> onCommitRuleList = getRules();
 		for(OnCommitRule onCommitRule : onCommitRuleList) {
 			if(isApplicable(onCommitRule, onCommitEvent)) {
 				OnQueueBuildEvent onQueueBuildEvent = new OnQueueBuildEvent();
 				onQueueBuildEvent.setBranchName(module.getName());
 				onQueueBuildEvent.setDockerImageId(onCommitRule.getDockerImageId());
-				onQueueBuildEvent.setEnvironmentVariables(onCommitRule.getEnvironmentVariables());
+				onQueueBuildEvent.setEnvironmentVariables(merge(environmentVariablesFromEvent, onCommitRule.getEnvironmentVariables()));
 				onQueueBuildEvent.setExecutionList(onCommitRule.getApplyList());
 				try
 				{
@@ -54,13 +56,20 @@ public class OnCommitListener implements CIEngineListener
 		}
 	}
 
-	private boolean isApplicable(OnCommitRule onCommitRule, OnCommitEvent onCommitEvent)
+	private EnvironmentVariables merge(EnvironmentVariables environmentVariablesFromEvent,
+			EnvironmentVariables environmentVariables)
 	{
+		// TODO
+		return null;
+	}
+
+	private boolean isApplicable(OnCommitRule onCommitRule, OnCommitEvent onCommitEvent)
+	{// TODO
 		return false;
 	}
 
 	public List<OnCommitRule> getRules()
-	{
+	{// TODO load?
 		return rules;
 	}
 }
