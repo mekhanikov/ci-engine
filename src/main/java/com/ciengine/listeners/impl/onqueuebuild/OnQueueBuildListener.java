@@ -14,6 +14,7 @@ public class OnQueueBuildListener implements CIEngineListener
 	@Override public void onEvent(CIEngineEvent ciEngineEvent) throws CIEngineListenerException
 	{
 		OnQueueBuildEvent onQueueBuildEvent = (OnQueueBuildEvent) ciEngineEvent;
-		// TODO Just add record to Build queue/history table
+		// TODO Just add record to Build queue/history table (or even tun? why if no free nodes? wait? Controller will hang and then timeout?)
+		// TODO
 	}
 }
