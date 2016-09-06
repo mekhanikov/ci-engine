@@ -9,6 +9,6 @@ public class BuildRunner
 	// TODO because otherwise Controller will hang and then timeout.
 	// load from build quiue table quiuied build with lowest start time.
 	// find node good for the build.
-	// If no free nodes - wait.
+	// If no free nodes - wait / exit if used Scheduller.
 	// upload to node build plan.
 }
