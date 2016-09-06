@@ -17,6 +17,7 @@ public class AttachArtefactsStep implements CIEngineStep
 
 	@Override public void doStep(EnvironmentVariables environmentVariables) throws CIEngineStepException
 	{
+		//Don't need to change HASH because dont change state of the build.
 		String buildId = environmentVariables.getProperty("BUILD_ID");
 		String files = environmentVariables.getProperty("ATTACH_FILES"); // E.g. "target/*.html, target/*.java"
 		ciEngineClient.attachArtefacts(buildId, files);
