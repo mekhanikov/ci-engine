@@ -31,18 +31,8 @@ public class OnCommitList implements CIEngineList
 		executeStep(attachArtefactsStep, environmentVariables);
 	}
 
-	private void executeStep(CIEngineStep checkoutStep, EnvironmentVariables environmentVariables)
+	private void executeStep(CIEngineStep checkoutStep, EnvironmentVariables environmentVariables) throws CIEngineStepException
 	{
-		try
-		{
-			checkoutStep.doStep(environmentVariables);
-		}
-		catch (CIEngineStepException e)
-		{
-			e.printStackTrace();
-		} finally
-		{
-			// TODO save environmentVariables in build queue.
-		}
+		checkoutStep.doStep(environmentVariables);
 	}
 }
