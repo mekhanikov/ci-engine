@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class BuildStep implements CIEngineStep
-{
+{// TODO or rename to BuildModAStep
 	@Override
 	public void doStep(EnvironmentVariables environmentVariables) throws CIEngineStepException
 	{
