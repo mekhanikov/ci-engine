@@ -4,6 +4,14 @@
 	<groupId>com.ciengine</groupId>
 	<artifactId>ciengine</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	 <modules>
+        <module>master</module>
+        <module>common</module>
+        <module>agent</module>
+      
+    </modules>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
