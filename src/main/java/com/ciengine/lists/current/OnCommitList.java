@@ -6,6 +6,7 @@ import main.java.com.ciengine.lists.CIEngineList;
 import main.java.com.ciengine.steps.CIEngineStep;
 import main.java.com.ciengine.steps.CIEngineStepException;
 import main.java.com.ciengine.steps.impl.AttachArtefactsStep;
+import main.java.com.ciengine.steps.impl.BuildStep;
 import main.java.com.ciengine.steps.impl.CheckoutStep;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,11 +20,15 @@ public class OnCommitList implements CIEngineList
 	private CheckoutStep checkoutStep;
 
 	@Autowired
+	private BuildStep buildStep;
+
+	@Autowired
 	private AttachArtefactsStep attachArtefactsStep;
 
 	@Override public void doList(EnvironmentVariables environmentVariables) throws CIEngineStepException
 	{
 		executeStep(checkoutStep, environmentVariables);// TODO or by name executeSteps(environmentVariables, "CHECKOUT", "BUILD", ...)
+		executeStep(buildStep, environmentVariables);   // TODO or by name executeSteps(environmentVariables, "CHECKOUT", "BUILD", ...)
 
 		environmentVariables.addProperty("BUILD_STATUS", "OK"); // TODO or ciEngineClient.setBuildStatus(); ?
 		// TODO upload logs (all at the end? partialy?)

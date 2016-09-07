@@ -3,11 +3,13 @@ package main.java.com.ciengine.steps.impl;
 import main.java.com.ciengine.EnvironmentVariables;
 import main.java.com.ciengine.steps.CIEngineStep;
 import main.java.com.ciengine.steps.CIEngineStepException;
+import org.springframework.stereotype.Component;
 
 
 /**
  * Created by emekhanikov on 05.09.2016.
  */
+@Component
 public class BuildStep implements CIEngineStep
 {
 	@Override
@@ -22,21 +24,7 @@ public class BuildStep implements CIEngineStep
 
 	private CIEngineStep retrieveBuildStepForModule(String moduleName)
 	{
-		//
+		//TODO if cant find specific, use default (this?). DEFAULT, DEFAULT_MODULE_A, DEFAULT_MODULE_A_6.2v
 		return this;
-	}
-
-	private String calcHash(String... args)
-	{
-		String result = "";
-		for(String s : args) {
-			// TODO
-		}
-		return result;
-	}
-
-	private String getTheLattestCommitForBranch(String gitUrl, String branchName)
-	{// TODO
-		return null;
 	}
 }
