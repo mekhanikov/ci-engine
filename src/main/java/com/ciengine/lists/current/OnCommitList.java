@@ -23,8 +23,7 @@ public class OnCommitList implements CIEngineList
 
 	@Override public void doList(EnvironmentVariables environmentVariables) throws CIEngineStepException
 	{
-
-		executeStep(checkoutStep, environmentVariables);
+		executeStep(checkoutStep, environmentVariables);// TODO or by name executeSteps(environmentVariables, "CHECKOUT", "BUILD", ...)
 
 		environmentVariables.addProperty("BUILD_STATUS", "OK"); // TODO or ciEngineClient.setBuildStatus(); ?
 		// TODO upload logs (all at the end? partialy?)

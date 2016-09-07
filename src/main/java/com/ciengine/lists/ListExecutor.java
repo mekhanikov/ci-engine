@@ -17,6 +17,7 @@ public class ListExecutor
 	public void run() {
 		try
 		{
+			// TODO find Bean of CIEngineList based on bean name in EnvironmentVariables.EXECUTION_LIST
 			EnvironmentVariables environmentVariables = new EnvironmentVariables(); // TODO load from file
 			onCommitList.doList(environmentVariables);
 		}
