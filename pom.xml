@@ -10,8 +10,17 @@
         <module>master</module>
         <module>common</module>
         <module>agent</module>
-      
     </modules>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>4.3.2.RELEASE</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
@@ -26,11 +35,5 @@
  
 		</plugins>
 	</build>
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>4.3.2.RELEASE</version>
-		</dependency>
-	</dependencies>
+
 </project>
