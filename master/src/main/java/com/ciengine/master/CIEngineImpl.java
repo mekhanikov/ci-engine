@@ -53,7 +53,12 @@ public class CIEngineImpl implements CIEngine
 			sftpChannel.connect();
 			System.out.println("SFTP Channel created.");
 			File f1 = new File("D:\\prj\\ci-engine\\master\\src\\main\\resources\\build.sh");
+//			sftpChannel.rm("tmp");
+//			sftpChannel.mkdir("tmp");
+			sftpChannel.cd("tmp");
 			sftpChannel.put(new FileInputStream(f1), f1.getName(), ChannelSftp.OVERWRITE);
+			File f2 = new File("D:\\prj\\ci-engine\\master\\src\\main\\resources\\Dockerfile");
+			sftpChannel.put(new FileInputStream(f2), f2.getName(), ChannelSftp.OVERWRITE);
 
 //			InputStream out= null;
 //			out= sftpChannel.get(remoteFile);
@@ -67,9 +72,10 @@ public class CIEngineImpl implements CIEngine
 
 			Channel channel = session.openChannel("exec");
 
-			((ChannelExec) channel).setCommand("/home/ev/build.sh");
+			((ChannelExec) channel).setCommand("cd tmp; ./build.sh");
 			String permissionStringInDecimal = "777";
-			sftpChannel.chmod(Integer.parseInt(permissionStringInDecimal,8), "/home/ev/build.sh");
+			sftpChannel.chmod(Integer.parseInt(permissionStringInDecimal,8), "/home/ev/tmp/build.sh");
+			sftpChannel.chmod(Integer.parseInt(permissionStringInDecimal,8), "/home/ev/tmp/Dockerfile");
 
 			channel.connect();
 
