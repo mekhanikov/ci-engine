@@ -11,4 +11,5 @@ public class BuildRunner
 	// find node good for the build.
 	// If no free nodes - wait / exit if used Scheduller.
 	// upload to node build plan.
+	// Upload of CS can take a time. Better if Node will download it by it self.
 }
