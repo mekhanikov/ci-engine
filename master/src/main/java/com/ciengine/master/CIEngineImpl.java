@@ -92,7 +92,7 @@ public class CIEngineImpl implements CIEngine
 //					rez = new String(tmp, 0, i);
 				}
 				if (channel.isClosed()) {
-					// System.out.println("exit-status: "+channel.getExitStatus());
+					 System.out.println("exit-status: "+channel.getExitStatus());
 					break;
 				}
 				try {
