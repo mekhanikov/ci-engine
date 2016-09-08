@@ -1,5 +1,0 @@
-for modules;  For branches;           apply list;   dockerId;       Environment variables;
-*;            feature/*, topic/*;     List#1;       dockerImage#1;  inline:a=1,b=3;
-modA;         release/1;              List#2;       dockerImage#1;  file:1.txt;
-*;            develop;                List#2;       dockerImage#1;
-modA;         release/1/hotfix/2;     List#2;       dockerImage#1;
