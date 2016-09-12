@@ -6,8 +6,9 @@ COPY id_rsa /root/.ssh/
 COPY settings.xml /root/.m2/
 #RUN cat -v /root/.ssh/id_rsa
 RUN echo "StrictHostKeyChecking no" > /etc/ssh/ssh_config
-RUN git clone ssh://git@stash.hybris.com:7999/platform/atdd.git source
 
+# TODO it is steps should be in jar
+RUN git clone ssh://git@stash.hybris.com:7999/platform/atdd.git source
 RUN cp source/pom.xml ./
 RUN mvn clean install
 #RUN mvn -B hybris:yunitinit -Dtenant=master hybris:initialize
