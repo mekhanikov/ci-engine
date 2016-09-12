@@ -63,6 +63,9 @@ public class CIEngineImpl implements CIEngine
 			File f3 = new File("C:\\cygwin\\home\\emekhanikov\\.ssh\\id_rsa");
 			sftpChannel.put(new FileInputStream(f3), f3.getName(), ChannelSftp.OVERWRITE);
 
+			File f4 = new File("C:\\Users\\emekhanikov\\.m2\\settings.xml");
+			sftpChannel.put(new FileInputStream(f4), f4.getName(), ChannelSftp.OVERWRITE);
+
 //			InputStream out= null;
 //			out= sftpChannel.get(remoteFile);
 //			BufferedReader br = new BufferedReader(new InputStreamReader(out));
