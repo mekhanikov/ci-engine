@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -x
 echo "HELLO MAAAN !!!!"
-ls -lah | grep Dock
+pwd
+ls -lah
 #docker run ubuntu /bin/echo "Hello world!"
 docker build -t ciengine/tst .
 echo "*** RUN"
