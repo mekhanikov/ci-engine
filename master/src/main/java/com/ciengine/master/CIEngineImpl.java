@@ -66,6 +66,12 @@ public class CIEngineImpl implements CIEngine
 			File f4 = new File("C:\\Users\\emekhanikov\\.m2\\settings.xml");
 			sftpChannel.put(new FileInputStream(f4), f4.getName(), ChannelSftp.OVERWRITE);
 
+			File f5 = new File("D:\\prj\\ci-engine\\agent\\target\\agent-1.0-SNAPSHOT.jar");
+			sftpChannel.put(new FileInputStream(f5), f5.getName(), ChannelSftp.OVERWRITE);
+
+			File f6 = new File("D:\\prj\\ci-engine\\environment_variables.properties");
+			sftpChannel.put(new FileInputStream(f6), f6.getName(), ChannelSftp.OVERWRITE);
+
 //			InputStream out= null;
 //			out= sftpChannel.get(remoteFile);
 //			BufferedReader br = new BufferedReader(new InputStreamReader(out));
