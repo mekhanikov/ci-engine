@@ -1,12 +1,23 @@
 package com.ciengine.master;
 
-import com.jcraft.jsch.*;
+import com.jcraft.jsch.Channel;
+import com.jcraft.jsch.ChannelExec;
+import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
+import com.jcraft.jsch.SftpException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -15,6 +26,16 @@ import java.io.InputStream;
 @Component
 public class BuildRunnerImpl implements BuildRunner
 {
+	private static final Logger log = LoggerFactory.getLogger(BuildRunnerImpl.class);
+
+	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+
+
+	@Scheduled(fixedRate = 5000)
+	public void reportCurrentTime() {
+		log.info("The time is now {}", dateFormat.format(new Date()));
+	}
+
 	public void run()
 	{
 		// TODO Run all controllers
