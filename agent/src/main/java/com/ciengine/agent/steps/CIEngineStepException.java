@@ -5,4 +5,8 @@ package com.ciengine.agent.steps;
  */
 public class CIEngineStepException extends Exception
 {
+	public CIEngineStepException(String s)
+	{
+		super(s);
+	}
 }

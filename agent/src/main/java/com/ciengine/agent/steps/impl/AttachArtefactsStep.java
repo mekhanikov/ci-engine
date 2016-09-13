@@ -5,11 +5,13 @@ import com.ciengine.agent.steps.CIEngineStepException;
 import com.ciengine.common.CIEngineClient;
 import com.ciengine.common.EnvironmentVariables;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 
 /**
  * Created by emekhanikov on 06.09.2016.
  */
+@Component
 public class AttachArtefactsStep implements CIEngineStep
 {
 	@Autowired

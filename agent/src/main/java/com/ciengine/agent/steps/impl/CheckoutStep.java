@@ -4,12 +4,14 @@ package com.ciengine.agent.steps.impl;
 import com.ciengine.agent.steps.CIEngineStep;
 import com.ciengine.agent.steps.CIEngineStepException;
 import com.ciengine.common.EnvironmentVariables;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 
 /**
  * Created by emekhanikov on 05.09.2016.
  */
+@Component
 public class CheckoutStep implements CIEngineStep
 {
 	@Override
@@ -20,7 +22,7 @@ public class CheckoutStep implements CIEngineStep
 		String commitId = environmentVariables.getProperty("COMMIT_ID");
 		if (StringUtils.isEmpty(commitId)) {
 			if (StringUtils.isEmpty(branchName)) {
-				throw new CIEngineStepException();
+				throw new CIEngineStepException("COMMIT_ID should not be empty");
 			}
 			commitId = getTheLattestCommitForBranch(gitUrl, branchName);
 			environmentVariables.addProperty("COMMIT_ID", commitId);

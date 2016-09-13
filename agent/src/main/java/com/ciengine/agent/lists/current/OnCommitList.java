@@ -10,11 +10,13 @@ import com.ciengine.agent.steps.impl.BuildStep;
 import com.ciengine.agent.steps.impl.CheckoutStep;
 import com.ciengine.common.EnvironmentVariables;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 
 /**
  * Created by emekhanikov on 05.09.2016.
  */
+@Component
 public class OnCommitList implements CIEngineList
 {
 	@Autowired
