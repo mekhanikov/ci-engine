@@ -1,5 +1,7 @@
 package com.ciengine.master;
 
+import com.ciengine.master.dao.BuildDao;
+import com.ciengine.master.model.BuildModel;
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.ChannelSftp;
@@ -9,6 +11,7 @@ import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -31,8 +34,13 @@ public class BuildRunnerImpl implements BuildRunner
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
 
+	@Autowired
+	BuildDao buildDao;
+
 	@Scheduled(fixedRate = 5000)
 	public void reportCurrentTime() {
+		BuildModel buildModel = new BuildModel();
+		buildDao.save(buildModel);
 		log.info("The time is now {}", dateFormat.format(new Date()));
 	}
 
