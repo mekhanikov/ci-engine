@@ -1,17 +1,27 @@
 package com.ciengine.common;
 
+import java.util.HashMap;
+import java.util.Map;
+
+
 /**
  * Created by emekhanikov on 05.09.2016.
  */
 public class EnvironmentVariables
 {
+	private Map<String, Object> map = new HashMap();
 	public void addProperty(String key, String value)
 	{
-		// TODO
+		map.put(key, value);
 	}
 
-	public String getProperty(String gitUrl)
+	public String getProperty(String key)
 	{
-		return "";// TODO
+		return (String) map.get(key);
+	}
+
+	public void addProperties(Map<String, Object> source)
+	{
+		map.putAll(source);
 	}
 }

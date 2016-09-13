@@ -33,17 +33,9 @@ public class ListExecutor
 		{
 			// TODO find Bean of CIEngineList based on bean name in EnvironmentVariables.EXECUTION_LIST
 			System.out.println("*********************");
-			Map<String, Object> map = new HashMap();
-			for(Iterator it = ((AbstractEnvironment) environment).getPropertySources().iterator(); it.hasNext(); ) {
-				PropertySource propertySource = (PropertySource) it.next();
-				if (propertySource instanceof MapPropertySource) {
-					map.putAll(((MapPropertySource) propertySource).getSource());
-				}
-			}
-			System.out.println(map);
-			environment.getRequiredProperty("a");
+
 			System.out.println("*********************");
-			EnvironmentVariables environmentVariables = new EnvironmentVariables(); // TODO load from file
+			EnvironmentVariables environmentVariables = getEnvironmentVariables(); // TODO load from file
 			onCommitList.doList(environmentVariables);
 		}
 		catch (CIEngineStepException e)
@@ -54,5 +46,20 @@ public class ListExecutor
 			// TODO save environmentVariables in build queue.
 			// TODO extract BUILS_STATUS and save it in build queue "status" field.
 		}
+	}
+
+	private EnvironmentVariables getEnvironmentVariables()
+	{
+		EnvironmentVariables environmentVariables =  new EnvironmentVariables();
+		Map<String, Object> map = new HashMap();
+		for(Iterator it = ((AbstractEnvironment) environment).getPropertySources().iterator(); it.hasNext(); ) {
+			PropertySource propertySource = (PropertySource) it.next();
+			if (propertySource instanceof MapPropertySource) {
+				environmentVariables.addProperties(((MapPropertySource) propertySource).getSource());
+			}
+		}
+		System.out.println(map);
+		//environment.getRequiredProperty("a");
+		return environmentVariables;
 	}
 }
