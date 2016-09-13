@@ -1,15 +1,18 @@
 package com.ciengine.master;
 
+import com.jcraft.jsch.*;
+import org.springframework.stereotype.Component;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+
 /**
  * Created by emekhanikov on 05.09.2016.
  */
-public class BuildRunner
+interface BuildRunner
 {
-	// TODO run in separate thread bacause can be time consumption to make listeners work as fas as posible,
-	// TODO because otherwise Controller will hang and then timeout.
-	// load from build quiue table quiuied build with lowest start time.
-	// find node good for the build.
-	// If no free nodes - wait / exit if used Scheduller.
-	// upload to node build plan.
-	// Upload of CS can take a time. Better if Node will download it by it self.
+	void run();
 }
