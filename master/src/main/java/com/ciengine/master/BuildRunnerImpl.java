@@ -86,10 +86,9 @@ public class BuildRunnerImpl implements BuildRunner
 			File f5 = new File("D:\\prj\\ci-engine\\agent\\target\\agent-1.0-SNAPSHOT.jar");
 			sftpChannel.put(new FileInputStream(f5), f5.getName(), ChannelSftp.OVERWRITE);
 
-			File f6 = new File("D:\\prj\\ci-engine\\environment_variables.properties");
-			;
+
 			InputStream stream = new ByteArrayInputStream(buildModel.getInputParams().getBytes(StandardCharsets.UTF_8));
-			sftpChannel.put(stream, f6.getName(), ChannelSftp.OVERWRITE);
+			sftpChannel.put(stream, "environment_variables.properties", ChannelSftp.OVERWRITE);
 
 			//			InputStream out= null;
 			//			out= sftpChannel.get(remoteFile);
