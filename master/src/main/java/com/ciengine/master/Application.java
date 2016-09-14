@@ -70,7 +70,7 @@ public class Application
 	@Bean(name = "sessionFactory")
 	public SessionFactory createSessionFactory() throws ClassNotFoundException {
 		Configuration configuration = new Configuration();
-		configuration.addAnnotatedClass(BuildModel.class);
+		//configuration.addAnnotatedClass(BuildModel.class);
 
 		Properties properties = new Properties();
 		properties.put("hibernate.dialect","org.hibernate.dialect.HSQLDialect");
@@ -86,7 +86,8 @@ public class Application
 
 		MetadataSources metadataSources = new MetadataSources(standardServiceRegistryBuilder.build());
 
-		metadataSources.addPackage("com.ciengine");
+//		metadataSources.addPackage("com.ciengine.master.model");
+		metadataSources.addAnnotatedClass(BuildModel.class);
 		return metadataSources.getMetadataBuilder().build().buildSessionFactory();
 
 		//return metadataSources.getMetadataBuilder().build().getSessionFactoryBuilder().build();

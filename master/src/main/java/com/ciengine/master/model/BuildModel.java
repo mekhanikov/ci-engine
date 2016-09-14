@@ -9,7 +9,7 @@ import javax.persistence.Id;
 /**
  * Created by emekhanikov on 13.09.2016.
  */
-@Entity
+@Entity(name = "build")
 public class BuildModel
 {
 	@Id
@@ -18,4 +18,25 @@ public class BuildModel
 	private int id;
 
 	private String fistName;
+
+	public int getId()
+	{
+		return id;
+	}
+
+	public void setId(int id)
+	{
+		this.id = id;
+	}
+
+	public String getFistName()
+	{
+		return fistName;
+	}
+
+	public void setFistName(String fistName)
+	{
+		this.fistName = fistName;
+	}
+
 }
