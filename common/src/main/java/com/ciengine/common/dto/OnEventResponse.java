@@ -1,4 +1,4 @@
-package com.ciengine.master.controllers.onevent;
+package com.ciengine.common.dto;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

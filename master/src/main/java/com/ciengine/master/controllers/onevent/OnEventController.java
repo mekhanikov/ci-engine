@@ -1,8 +1,9 @@
 package com.ciengine.master.controllers.onevent;
 
+import com.ciengine.common.dto.OnEventRequest;
+import com.ciengine.common.dto.OnEventResponse;
 import com.ciengine.master.controllers.CIEngineFacade;
 import com.ciengine.master.controllers.addbuild.AddBuildRequest;
-import com.ciengine.master.controllers.getbuilds.GetBuildsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,9 +24,9 @@ public class OnEventController
 	// TODO 1. Used to receive events from Agents/Slaves. Should be secure?
 	// TODO 2. Used for link from Stash to concrete build: to see logs, artefacts, status and so on.
 	// TODO 3. See list of builds with filtration by fields.
-	@RequestMapping(value = "/onevent",produces = {"application/json"}, method = RequestMethod.GET)
+	@RequestMapping(value = "/onevent",produces = {"application/json"}, method = RequestMethod.POST)
 	@ResponseBody
-	OnEventResponse onevent() {//@RequestBody AddBuildRequest addBuildRequest
+	OnEventResponse onevent(@RequestBody OnEventRequest onEventRequest) {//
 		OnEventResponse onEventResponse = new OnEventResponse();
 		return onEventResponse;
 	}

@@ -3,6 +3,7 @@ package com.ciengine.master;
 
 
 import com.ciengine.common.CIEngineClient;
+import com.ciengine.common.CIEngineEvent;
 
 
 /**
@@ -11,6 +12,11 @@ import com.ciengine.common.CIEngineClient;
 public class CIEngineClientImpl implements CIEngineClient
 {// TODO 1. Used by Agents/Slaves to send events to Master.
 	@Override public void attachArtefacts(String buildId, String files)
+	{
+
+	}
+
+	@Override public void sendEvent(CIEngineEvent ciEngineEvent)
 	{
 
 	}

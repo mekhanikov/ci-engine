@@ -8,6 +8,7 @@ import com.ciengine.agent.steps.CIEngineStepException;
 import com.ciengine.agent.steps.impl.AttachArtefactsStep;
 import com.ciengine.agent.steps.impl.BuildStep;
 import com.ciengine.agent.steps.impl.CheckoutStep;
+import com.ciengine.agent.steps.impl.NewArtefactsReleasedStep;
 import com.ciengine.common.EnvironmentVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -28,6 +29,9 @@ public class OnCommitList implements CIEngineList
 	@Autowired
 	private AttachArtefactsStep attachArtefactsStep;
 
+	@Autowired
+	private NewArtefactsReleasedStep newArtefactsReleasedStep;
+
 	@Override public void doList(EnvironmentVariables environmentVariables) throws CIEngineStepException
 	{
 		executeStep(checkoutStep, environmentVariables);// TODO or by name executeSteps(environmentVariables, "CHECKOUT", "BUILD", ...)
@@ -36,6 +40,7 @@ public class OnCommitList implements CIEngineList
 		environmentVariables.addProperty("BUILD_STATUS", "OK"); // TODO or ciEngineClient.setBuildStatus(); ?
 		// TODO upload logs (all at the end? partialy?)
 		executeStep(attachArtefactsStep, environmentVariables);
+		executeStep(newArtefactsReleasedStep, environmentVariables);
 	}
 
 	private void executeStep(CIEngineStep checkoutStep, EnvironmentVariables environmentVariables) throws CIEngineStepException

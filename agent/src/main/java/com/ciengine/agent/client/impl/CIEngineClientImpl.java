@@ -3,7 +3,11 @@ package com.ciengine.agent.client.impl;
 
 
 import com.ciengine.common.CIEngineClient;
+import com.ciengine.common.CIEngineEvent;
+import com.ciengine.common.dto.OnEventRequest;
+import com.ciengine.common.dto.OnEventResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 
 /**
@@ -16,5 +20,15 @@ public class CIEngineClientImpl implements CIEngineClient
 	{
 
 
+	}
+
+	@Override public void sendEvent(CIEngineEvent ciEngineEvent)
+	{
+		final String uri = "http://10.69.36.221:8080/onevent";
+
+		OnEventRequest onEventRequest = new OnEventRequest();
+
+		RestTemplate restTemplate = new RestTemplate();
+		OnEventResponse result = restTemplate.postForObject( uri, onEventRequest, OnEventResponse.class);
 	}
 }
