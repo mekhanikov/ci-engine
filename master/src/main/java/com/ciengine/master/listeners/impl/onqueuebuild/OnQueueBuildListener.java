@@ -4,7 +4,7 @@ package com.ciengine.master.listeners.impl.onqueuebuild;
 
 
 import com.ciengine.common.CIEngineEvent;
-import com.ciengine.master.events.impl.OnQueueBuildEvent;
+import com.ciengine.common.events.OnQueueBuildEvent;
 import com.ciengine.master.listeners.CIEngineListener;
 import com.ciengine.master.listeners.CIEngineListenerException;
 

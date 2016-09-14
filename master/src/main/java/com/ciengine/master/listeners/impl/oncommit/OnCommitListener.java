@@ -1,8 +1,8 @@
 package com.ciengine.master.listeners.impl.oncommit;
 
 import com.ciengine.common.*;
-import com.ciengine.master.events.impl.OnCommitEvent;
-import com.ciengine.master.events.impl.OnQueueBuildEvent;
+import com.ciengine.common.events.OnCommitEvent;
+import com.ciengine.common.events.OnQueueBuildEvent;
 import com.ciengine.master.listeners.CIEngineListener;
 import com.ciengine.master.listeners.CIEngineListenerException;
 import org.springframework.beans.factory.annotation.Autowired;

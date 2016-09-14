@@ -3,7 +3,7 @@ package com.ciengine.master.controllers;
 
 import com.ciengine.common.CIEngine;
 import com.ciengine.common.CIEngineException;
-import com.ciengine.master.events.impl.OnCommitEvent;
+import com.ciengine.common.events.OnCommitEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 
 

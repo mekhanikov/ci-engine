@@ -1,4 +1,4 @@
-package com.ciengine.master.events.impl;
+package com.ciengine.common.events;
 
 
 
@@ -9,19 +9,14 @@ import com.ciengine.common.CIEngineEvent;
 /**
  * Created by emekhanikov on 05.09.2016.
  */
-public class OnNewArtifactEvent implements CIEngineEvent
+public class OnArtifactIsRequiredEvent implements CIEngineEvent
 {
 	private String groupId;
 	private String artifactId;
-	private String deployVersion;
+	private String version; // wildcarts? more then one?
 
 	// FROM OnComitEvent
 	private String gitUrl;
-	private String comitId;
+	//private String comitId; // required?
 	private String branchName;
-
-	private String buildId;
-
-	//private String time;// ????
-
 }
