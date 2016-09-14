@@ -15,10 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -37,18 +35,19 @@ public class BuildRunnerImpl implements BuildRunner
 	@Autowired
 	BuildDao buildDao;
 
-	@Scheduled(fixedRate = 15000)
+	@Scheduled(fixedRate = 2000)
 	public void reportCurrentTime() {
 		BuildModel buildModel = buildDao.getNextToBuild();
 		if (buildModel != null) {
 			buildModel.setStatus("IN PROGRESS");
+			run(buildModel);
 			buildDao.update(buildModel);
 		}
 
 		log.info(String.valueOf(buildModel));
 	}
 
-	public void run()
+	public void run(BuildModel buildModel)
 	{
 		// TODO Run all controllers
 		// TODO initiate all Listeners
@@ -56,8 +55,6 @@ public class BuildRunnerImpl implements BuildRunner
 		String password = "weter";
 		String host = "127.0.0.1";
 		int port=22;
-
-		String remoteFile="sample.txt";
 
 		try
 		{
@@ -90,7 +87,9 @@ public class BuildRunnerImpl implements BuildRunner
 			sftpChannel.put(new FileInputStream(f5), f5.getName(), ChannelSftp.OVERWRITE);
 
 			File f6 = new File("D:\\prj\\ci-engine\\environment_variables.properties");
-			sftpChannel.put(new FileInputStream(f6), f6.getName(), ChannelSftp.OVERWRITE);
+			;
+			InputStream stream = new ByteArrayInputStream(buildModel.getInputParams().getBytes(StandardCharsets.UTF_8));
+			sftpChannel.put(stream, f6.getName(), ChannelSftp.OVERWRITE);
 
 			//			InputStream out= null;
 			//			out= sftpChannel.get(remoteFile);

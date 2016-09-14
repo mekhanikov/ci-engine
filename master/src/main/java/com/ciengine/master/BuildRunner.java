@@ -1,5 +1,6 @@
 package com.ciengine.master;
 
+import com.ciengine.master.model.BuildModel;
 import com.jcraft.jsch.*;
 import org.springframework.stereotype.Component;
 
@@ -14,5 +15,5 @@ import java.io.InputStream;
  */
 interface BuildRunner
 {
-	void run();
+	void run(BuildModel buildModel);
 }
