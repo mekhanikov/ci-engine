@@ -2,6 +2,7 @@ package com.ciengine.master.dao;
 
 import com.ciengine.master.model.BuildModel;
 
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -26,4 +27,15 @@ public class BuildDao extends AbstractDao<BuildModel>
 		return persons;
 	}
 
+	public BuildModel getNextToBuild()
+	{
+		Query query = openSession().createQuery("from build as o where o.Status='QUEUED' order by o.startTimestamp asc");
+		query.setFirstResult(0);
+		query.setMaxResults(1);
+		List result = query.getResultList();
+		if (result.size() > 0) {
+			return (BuildModel) result.get(0);
+		}
+		return null;
+	}
 }

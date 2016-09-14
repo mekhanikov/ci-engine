@@ -1,5 +1,6 @@
 package com.ciengine.master.dao;
 
+import com.ciengine.master.model.BuildModel;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -29,4 +30,8 @@ public abstract class AbstractDao<E> {
 	}
 
 
+	public void update(BuildModel buildModel)
+	{
+		openSession().update(buildModel);
+	}
 }

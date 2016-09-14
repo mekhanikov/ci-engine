@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+
 
 /**
  * Created by emekhanikov on 14.09.2016.
@@ -39,6 +41,8 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 		buildModel.setModuleName(addBuildRequest.getModuleName());
 		buildModel.setNodeId(addBuildRequest.getNodeId());
 		buildModel.setReasonOfTrigger(addBuildRequest.getReasonOfTrigger());
+		buildModel.setStatus("QUEUED");
+		buildModel.setStartTimestamp(new Date());
 		buildDao.save(buildModel);
 		return getBuildsResponse;
 	}

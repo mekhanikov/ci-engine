@@ -37,13 +37,15 @@ public class BuildRunnerImpl implements BuildRunner
 	@Autowired
 	BuildDao buildDao;
 
-	@Scheduled(fixedRate = 5000)
+	@Scheduled(fixedRate = 15000)
 	public void reportCurrentTime() {
-		BuildModel buildModel = new BuildModel();
-		buildModel.setStartTimestamp(new Date());
-		buildDao.save(buildModel);
-		log.info("The time is now {}", dateFormat.format(new Date()));
-		log.info(buildModel.toString());
+		BuildModel buildModel = buildDao.getNextToBuild();
+		if (buildModel != null) {
+			buildModel.setStatus("IN PROGRESS");
+			buildDao.update(buildModel);
+		}
+
+		log.info(String.valueOf(buildModel));
 	}
 
 	public void run()
