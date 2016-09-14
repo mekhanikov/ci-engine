@@ -1,8 +1,6 @@
 package com.ciengine.master.controllers.getbuilds;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 
 
 /**
@@ -12,5 +10,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GetBuildsResponse
 {
+	@XmlAttribute(name = "sss")
 private String s = "sdd";
 }
