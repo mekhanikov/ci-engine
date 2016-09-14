@@ -39,4 +39,33 @@ public class BuildModel
 		this.fistName = fistName;
 	}
 
+	@Override public boolean equals(Object o)
+	{
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+
+		BuildModel that = (BuildModel) o;
+
+		if (id != that.id)
+			return false;
+		return fistName != null ? fistName.equals(that.fistName) : that.fistName == null;
+
+	}
+
+	@Override public int hashCode()
+	{
+		int result = id;
+		result = 31 * result + (fistName != null ? fistName.hashCode() : 0);
+		return result;
+	}
+
+	@Override public String toString()
+	{
+		return "BuildModel{" +
+				"id=" + id +
+				", fistName='" + fistName + '\'' +
+				'}';
+	}
 }

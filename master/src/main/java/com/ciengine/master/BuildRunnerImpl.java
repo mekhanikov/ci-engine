@@ -42,6 +42,7 @@ public class BuildRunnerImpl implements BuildRunner
 		BuildModel buildModel = new BuildModel();
 		buildDao.save(buildModel);
 		log.info("The time is now {}", dateFormat.format(new Date()));
+		log.info(buildModel.toString());
 	}
 
 	public void run()
