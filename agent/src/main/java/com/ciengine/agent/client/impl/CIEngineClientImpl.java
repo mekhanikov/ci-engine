@@ -27,7 +27,7 @@ public class CIEngineClientImpl implements CIEngineClient
 		final String uri = "http://localhost:8080/onevent";
 
 		OnEventRequest onEventRequest = new OnEventRequest();
-
+// TODO sends XML swirch to JSON
 		RestTemplate restTemplate = new RestTemplate();
 		OnEventResponse result = restTemplate.postForObject( uri, onEventRequest, OnEventResponse.class);
 	}
