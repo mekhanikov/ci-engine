@@ -1,5 +1,6 @@
 package com.ciengine.master.controllers;
 
+import com.ciengine.master.controllers.addbuild.AddBuildRequest;
 import com.ciengine.master.controllers.getbuilds.GetBuildsResponse;
 import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.model.BuildModel;
@@ -30,6 +31,14 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 //		BuildModel buildModel = new BuildModel();
 //		buildModel.setStartTimestamp(new Date());
 		buildDao.getAll();
+		return getBuildsResponse;
+	}
+
+	@Override public GetBuildsResponse addBuild(AddBuildRequest addBuildRequest)
+	{
+		GetBuildsResponse getBuildsResponse = new GetBuildsResponse();
+		BuildModel buildModel = new BuildModel();
+		buildDao.save(buildModel);
 		return getBuildsResponse;
 	}
 }

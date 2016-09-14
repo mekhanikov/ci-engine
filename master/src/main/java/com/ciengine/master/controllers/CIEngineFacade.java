@@ -1,5 +1,6 @@
 package com.ciengine.master.controllers;
 
+import com.ciengine.master.controllers.addbuild.AddBuildRequest;
 import com.ciengine.master.controllers.getbuilds.GetBuildsResponse;
 
 
@@ -9,4 +10,6 @@ import com.ciengine.master.controllers.getbuilds.GetBuildsResponse;
 public interface CIEngineFacade
 {
 	GetBuildsResponse getBuildsResponse();
+
+	GetBuildsResponse addBuild(AddBuildRequest addBuildRequest);
 }
