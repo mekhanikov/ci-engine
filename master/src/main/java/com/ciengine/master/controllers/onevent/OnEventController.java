@@ -24,7 +24,7 @@ public class OnEventController
 	// TODO 1. Used to receive events from Agents/Slaves. Should be secure?
 	// TODO 2. Used for link from Stash to concrete build: to see logs, artefacts, status and so on.
 	// TODO 3. See list of builds with filtration by fields.
-	@RequestMapping(value = "/onevent",produces = {"application/json"}, method = RequestMethod.POST)
+	@RequestMapping(value = "/onevent",produces = {"application/json","application/xml"}, method = RequestMethod.POST)
 	@ResponseBody
 	OnEventResponse onevent(@RequestBody OnEventRequest onEventRequest) {//
 		OnEventResponse onEventResponse = new OnEventResponse();

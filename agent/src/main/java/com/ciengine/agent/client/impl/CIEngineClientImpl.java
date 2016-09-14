@@ -24,7 +24,7 @@ public class CIEngineClientImpl implements CIEngineClient
 
 	@Override public void sendEvent(CIEngineEvent ciEngineEvent)
 	{
-		final String uri = "http://10.69.36.221:8080/onevent";
+		final String uri = "http://localhost:8080/onevent";
 
 		OnEventRequest onEventRequest = new OnEventRequest();
 
