@@ -74,7 +74,7 @@ public class BuildRunnerImpl implements BuildRunner
 			//			sftpChannel.mkdir("tmp");
 			sftpChannel.cd("tmp");
 			sftpChannel.put(new FileInputStream(f1), f1.getName(), ChannelSftp.OVERWRITE);
-			File f2 = new File("D:\\prj\\ci-engine\\master\\src\\main\\resources\\Dockerfile");
+			File f2 = new File("D:\\prj\\ci-engine\\master\\docker\\"+buildModel.getDockerImageId()+"\\Dockerfile");
 			sftpChannel.put(new FileInputStream(f2), f2.getName(), ChannelSftp.OVERWRITE);
 			//sftpChannel.cd("/home/ev/.ssh");
 			File f3 = new File("C:\\cygwin\\home\\emekhanikov\\.ssh\\id_rsa");
@@ -148,7 +148,7 @@ public class BuildRunnerImpl implements BuildRunner
 		}
 		catch(JSchException | IOException e)
 		{
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		catch (SftpException e)
 		{
