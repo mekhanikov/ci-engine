@@ -34,7 +34,7 @@ public class Application
 
 	public static void main(String[] args) {
 		ApplicationContext ctx = SpringApplication.run(Application.class, args);
-		Application application = ctx.getBean(Application.class);
+		//Application application = ctx.getBean(Application.class);
 	}
 
 	@Bean

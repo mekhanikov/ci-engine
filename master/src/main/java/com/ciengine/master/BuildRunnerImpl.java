@@ -40,6 +40,7 @@ public class BuildRunnerImpl implements BuildRunner
 	@Scheduled(fixedRate = 5000)
 	public void reportCurrentTime() {
 		BuildModel buildModel = new BuildModel();
+		buildModel.setStartTimestamp(new Date());
 		buildDao.save(buildModel);
 		log.info("The time is now {}", dateFormat.format(new Date()));
 		log.info(buildModel.toString());
