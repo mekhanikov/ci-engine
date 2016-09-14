@@ -26,7 +26,6 @@ import java.util.Properties;
 @PropertySource(value = { "classpath:application.properties" })
 public class Application
 {
-
 	@Autowired
 	private Environment environment;
 
@@ -36,50 +35,7 @@ public class Application
 	public static void main(String[] args) {
 		ApplicationContext ctx = SpringApplication.run(Application.class, args);
 		Application application = ctx.getBean(Application.class);
-		//application.run();
-//
-//		System.out.println("Let's inspect the beans provided by Spring Boot:");
-//
-//		String[] beanNames = ctx.getBeanDefinitionNames();
-//		Arrays.sort(beanNames);
-//		for (String beanName : beanNames) {
-//			System.out.println(beanName);
-//		}
 	}
-//
-//	private void run()
-//	{
-//		buildRunner.run();
-//	}
-
-//
-//	@Bean(name = "sessionFactory")
-//	public SessionFactory createSessionFactory() throws ClassNotFoundException {
-//		Configuration configuration = new Configuration();
-//		//configuration.addAnnotatedClass(BuildModel.class);
-//
-//		Properties properties = new Properties();
-//		properties.put("hibernate.dialect","org.hibernate.dialect.HSQLDialect");
-//		properties.put("hibernate.show_sql", "true");
-//		properties.put("hibernate.hbm2ddl.auto","update");
-//
-//		configuration.setProperties(properties);
-//
-//
-//		StandardServiceRegistryBuilder standardServiceRegistryBuilder = new StandardServiceRegistryBuilder();
-//		standardServiceRegistryBuilder.applySettings(configuration.getProperties());
-//		standardServiceRegistryBuilder.applySetting(Environment.DATASOURCE,dataSource());
-//
-//		MetadataSources metadataSources = new MetadataSources(standardServiceRegistryBuilder.build());
-//
-//		//		metadataSources.addPackage("com.ciengine.master.model");
-//		metadataSources.addAnnotatedClass(BuildModel.class);
-//		return metadataSources.getMetadataBuilder().build().buildSessionFactory();
-//
-//		//return metadataSources.getMetadataBuilder().build().getSessionFactoryBuilder().build();
-//
-//
-//	}
 
 	@Bean
 	public DataSource dataSource() {
@@ -121,5 +77,4 @@ public class Application
 	public BuildDao customerDao() {
 		return  new BuildDao();
 	}
-
 }
