@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-
 
 /**
  * Created by emekhanikov on 14.09.2016.
@@ -20,10 +18,6 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 {
 	@Autowired
 	private BuildDao buildDao;
-
-	public CIEngineFacadeImpl() {
-	System.out.println("sd");
-	}
 
 	public GetBuildsResponse getBuildsResponse() {
 		GetBuildsResponse getBuildsResponse = new GetBuildsResponse();
@@ -38,6 +32,13 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 	{
 		GetBuildsResponse getBuildsResponse = new GetBuildsResponse();
 		BuildModel buildModel = new BuildModel();
+		buildModel.setDockerImageId(addBuildRequest.getDockerImageId());
+		buildModel.setBranchName(addBuildRequest.getBranchName());
+		buildModel.setExecutionList(addBuildRequest.getExecutionList());
+		buildModel.setInputParams(addBuildRequest.getInputParams());
+		buildModel.setModuleName(addBuildRequest.getModuleName());
+		buildModel.setNodeId(addBuildRequest.getNodeId());
+		buildModel.setReasonOfTrigger(addBuildRequest.getReasonOfTrigger());
 		buildDao.save(buildModel);
 		return getBuildsResponse;
 	}
