@@ -27,6 +27,7 @@ public class OnEventController
 	@ResponseBody
 	OnEventResponse onevent(@RequestBody DefaultCIEngineEvent defaultCIEngineEvent) {//
 		OnEventResponse onEventResponse = new OnEventResponse();
+		ciEngineFacade.onEvent(defaultCIEngineEvent);
 		return onEventResponse;
 	}
 

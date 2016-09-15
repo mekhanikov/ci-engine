@@ -7,11 +7,13 @@ import com.ciengine.common.CIEngineEvent;
 import com.ciengine.common.events.OnQueueBuildEvent;
 import com.ciengine.master.listeners.CIEngineListener;
 import com.ciengine.master.listeners.CIEngineListenerException;
+import org.springframework.stereotype.Component;
 
 
 /**
  * Created by emekhanikov on 05.09.2016.
  */
+@Component(value = "OnQueueBuildListener")
 public class OnQueueBuildListener implements CIEngineListener
 {
 	@Override public void onEvent(CIEngineEvent ciEngineEvent) throws CIEngineListenerException

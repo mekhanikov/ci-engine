@@ -6,6 +6,7 @@ import com.ciengine.common.events.OnQueueBuildEvent;
 import com.ciengine.master.listeners.CIEngineListener;
 import com.ciengine.master.listeners.CIEngineListenerException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
 /**
  * Created by emekhanikov on 05.09.2016.
  */
+@Component(value = "OnCommitListener")
 public class OnCommitListener implements CIEngineListener
 {
 	@Autowired
