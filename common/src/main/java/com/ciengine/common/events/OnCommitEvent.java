@@ -3,13 +3,13 @@ package com.ciengine.common.events;
 
 
 
-import com.ciengine.common.CIEngineEvent;
+import com.ciengine.common.DefaultCIEngineEvent;
 
 
 /**
  * Created by emekhanikov on 05.09.2016.
  */
-public class OnCommitEvent implements CIEngineEvent
+public class OnCommitEvent  extends DefaultCIEngineEvent
 {
 	private String gitUrl;
 	private String comitId;

@@ -2,14 +2,14 @@ package com.ciengine.common.events;
 
 
 
-import com.ciengine.common.CIEngineEvent;
+import com.ciengine.common.DefaultCIEngineEvent;
 import com.ciengine.common.EnvironmentVariables;
 
 
 /**
  * Created by emekhanikov on 05.09.2016.
  */
-public class OnQueueBuildEvent implements CIEngineEvent
+public class OnQueueBuildEvent  extends DefaultCIEngineEvent
 {
 	private String reasonOfTrigger;
 	private EnvironmentVariables environmentVariables; // String? //	Input params (module, branch, commit), fully determined if Status: progress, success, failed. On start on node can be updated. (should have all info to retrigger)

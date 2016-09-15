@@ -3,13 +3,13 @@ package com.ciengine.common.events;
 
 
 
-import com.ciengine.common.CIEngineEvent;
+import com.ciengine.common.DefaultCIEngineEvent;
 
 
 /**
  * Created by emekhanikov on 05.09.2016.
  */
-public class OnArtifactIsRequiredEvent implements CIEngineEvent
+public class OnArtifactIsRequiredEvent extends DefaultCIEngineEvent
 {
 	private String groupId;
 	private String artifactId;

@@ -21,6 +21,13 @@ public class NewArtefactsReleasedStep implements CIEngineStep
 	@Override public void doStep(EnvironmentVariables environmentVariables) throws CIEngineStepException
 	{
 		OnNewArtifactEvent onNewArtifactEvent = new OnNewArtifactEvent();
+
+		String gitUrl = environmentVariables.getProperty("GIT_URL");
+		String branchName = environmentVariables.getProperty("BRANCH_NAME");
+		String commitId = environmentVariables.getProperty("COMMIT_ID");
+		onNewArtifactEvent.setComitId(commitId);
+		onNewArtifactEvent.setGitUrl(gitUrl);
+		onNewArtifactEvent.setBranchName(branchName);
 		ciEngineClient.sendEvent(onNewArtifactEvent);
 	}
 }

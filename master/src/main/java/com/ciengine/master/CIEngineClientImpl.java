@@ -3,7 +3,7 @@ package com.ciengine.master;
 
 
 import com.ciengine.common.CIEngineClient;
-import com.ciengine.common.CIEngineEvent;
+import com.ciengine.common.DefaultCIEngineEvent;
 
 
 /**
@@ -16,7 +16,7 @@ public class CIEngineClientImpl implements CIEngineClient
 
 	}
 
-	@Override public void sendEvent(CIEngineEvent ciEngineEvent)
+	@Override public void sendEvent(DefaultCIEngineEvent ciEngineEvent)
 	{
 
 	}
