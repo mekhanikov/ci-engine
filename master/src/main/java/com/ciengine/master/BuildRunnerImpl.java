@@ -59,6 +59,7 @@ public class BuildRunnerImpl implements BuildRunner
 		String host = "127.0.0.1";
 		int port=22;
 
+		String workspaceRemotePath = "/home/ev/build_" + buildModel.getId();
 		try
 		{
 			JSch jsch = new JSch();
@@ -73,9 +74,15 @@ public class BuildRunnerImpl implements BuildRunner
 			sftpChannel.connect();
 			System.out.println("SFTP Channel created.");
 			File f1 = new File("D:\\prj\\ci-engine\\master\\docker\\" + buildModel.getDockerImageId() + "\\build.sh");
-			//			sftpChannel.rm("tmp");
-			//			sftpChannel.mkdir("tmp");
-			sftpChannel.cd("tmp");
+			try
+			{
+				sftpChannel.rm(workspaceRemotePath);
+			} catch (SftpException e) {
+				// it is ok.
+			}
+			sftpChannel.mkdir(workspaceRemotePath);
+
+			sftpChannel.cd(workspaceRemotePath);
 			sftpChannel.put(new FileInputStream(f1), f1.getName(), ChannelSftp.OVERWRITE);
 			File f2 = new File("D:\\prj\\ci-engine\\master\\docker\\" + buildModel.getDockerImageId() + "\\Dockerfile");
 			sftpChannel.put(new FileInputStream(f2), f2.getName(), ChannelSftp.OVERWRITE);
@@ -105,11 +112,11 @@ public class BuildRunnerImpl implements BuildRunner
 
 			Channel channel = session.openChannel("exec");
 
-			((ChannelExec) channel).setCommand("cd tmp; ./build.sh");
+			((ChannelExec) channel).setCommand("cd " + workspaceRemotePath + "; ./build.sh");
 			String permissionStringInDecimal = "777";
-			sftpChannel.chmod(Integer.parseInt(permissionStringInDecimal,8), "/home/ev/tmp/build.sh");
-			sftpChannel.chmod(Integer.parseInt(permissionStringInDecimal,8), "/home/ev/tmp/Dockerfile");
-			sftpChannel.chmod(Integer.parseInt("600",8), "/home/ev/tmp/id_rsa");
+			sftpChannel.chmod(Integer.parseInt(permissionStringInDecimal,8), workspaceRemotePath + "/build.sh");
+			sftpChannel.chmod(Integer.parseInt(permissionStringInDecimal,8), workspaceRemotePath + "/Dockerfile");
+			sftpChannel.chmod(Integer.parseInt("600",8), workspaceRemotePath + "/id_rsa");
 
 			channel.connect();
 
