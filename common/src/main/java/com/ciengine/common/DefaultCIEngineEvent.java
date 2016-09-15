@@ -1,6 +1,7 @@
 package com.ciengine.common;
 
 import com.ciengine.common.events.OnNewArtifactEvent;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -14,6 +15,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlSeeAlso(OnNewArtifactEvent.class)
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "type")
 public class DefaultCIEngineEvent implements CIEngineEvent
 {
 			private String s;

@@ -48,7 +48,7 @@ public class CIEngineClientImpl implements CIEngineClient
 		ris.add(ri);
 		restTemplate.setInterceptors(ris);
 		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_XML);
+		headers.setContentType(MediaType.APPLICATION_JSON);
 
 		HttpEntity<CIEngineEvent> entity = new HttpEntity<CIEngineEvent>(ciEngineEvent, headers);
 		restTemplate.setRequestFactory(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
