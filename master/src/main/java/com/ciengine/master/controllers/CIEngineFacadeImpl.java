@@ -4,12 +4,16 @@ import com.ciengine.common.DefaultCIEngineEvent;
 import com.ciengine.master.controllers.addbuild.AddBuildRequest;
 import com.ciengine.master.controllers.getbuilds.GetBuildsResponse;
 import com.ciengine.master.dao.BuildDao;
+import com.ciengine.master.listeners.CIEngineListener;
+import com.ciengine.master.listeners.CIEngineListenerException;
 import com.ciengine.master.model.BuildModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.Map;
 
 
 /**
@@ -21,6 +25,9 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 {
 	@Autowired
 	private BuildDao buildDao;
+
+	@Autowired
+	private ApplicationContext applicationContext;
 
 	public GetBuildsResponse getBuildsResponse() {
 		GetBuildsResponse getBuildsResponse = new GetBuildsResponse();
@@ -50,6 +57,21 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 
 	@Override public void onEvent(DefaultCIEngineEvent defaultCIEngineEvent)
 	{
-		// TODO go thry all listeners
+		Map<String, CIEngineListener> stringCIEngineListenerMap = applicationContext.getBeansOfType(CIEngineListener.class);
+		if (stringCIEngineListenerMap != null) {
+			for (CIEngineListener ciEngineListener : stringCIEngineListenerMap.values()) {
+				if (ciEngineListener.isEventApplicable(defaultCIEngineEvent)) {
+					try
+					{
+						ciEngineListener.onEvent(defaultCIEngineEvent);
+					}
+					catch (CIEngineListenerException e)
+					{
+						// TODO
+						e.printStackTrace();
+					}
+				}
+			}
+		}
 	}
 }

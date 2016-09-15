@@ -48,8 +48,8 @@ public class Application
 
 	public static void main(String[] args) {
 		ApplicationContext ctx = SpringApplication.run(Application.class, args);
-		Map<String, CIEngineListener> stringCIEngineListenerMap = ctx.getBeansOfType(CIEngineListener.class);
-		System.out.println(stringCIEngineListenerMap);
+//		Map<String, CIEngineListener> stringCIEngineListenerMap = ctx.getBeansOfType(CIEngineListener.class);
+//		System.out.println(stringCIEngineListenerMap);
 		//Application application = ctx.getBean(Application.class);
 	}
 

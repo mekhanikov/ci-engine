@@ -4,6 +4,7 @@ package com.ciengine.master.listeners;
 
 
 import com.ciengine.common.CIEngineEvent;
+import com.ciengine.common.DefaultCIEngineEvent;
 
 
 /**
@@ -12,4 +13,6 @@ import com.ciengine.common.CIEngineEvent;
 public interface CIEngineListener
 {
 	void onEvent(CIEngineEvent ciEngineEvent) throws CIEngineListenerException;
+
+	boolean isEventApplicable(DefaultCIEngineEvent defaultCIEngineEvent);
 }

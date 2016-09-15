@@ -54,6 +54,11 @@ public class OnCommitListener implements CIEngineListener
 		}
 	}
 
+	@Override public boolean isEventApplicable(DefaultCIEngineEvent defaultCIEngineEvent)
+	{
+		return defaultCIEngineEvent != null && defaultCIEngineEvent instanceof OnCommitEvent;
+	}
+
 	private EnvironmentVariables merge(EnvironmentVariables environmentVariablesFromEvent,
 			EnvironmentVariables environmentVariables)
 	{
