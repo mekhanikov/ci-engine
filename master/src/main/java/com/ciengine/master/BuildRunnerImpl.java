@@ -80,7 +80,13 @@ public class BuildRunnerImpl implements BuildRunner
 			} catch (SftpException e) {
 				// it is ok.
 			}
-			sftpChannel.mkdir(workspaceRemotePath);
+			try
+			{
+				sftpChannel.mkdir(workspaceRemotePath);
+			} catch (SftpException e) {
+				// it is ok. but why?
+			}
+
 
 			sftpChannel.cd(workspaceRemotePath);
 			sftpChannel.put(new FileInputStream(f1), f1.getName(), ChannelSftp.OVERWRITE);
@@ -111,8 +117,8 @@ public class BuildRunnerImpl implements BuildRunner
 			//			br.close();
 
 			Channel channel = session.openChannel("exec");
-
-			((ChannelExec) channel).setCommand("cd " + workspaceRemotePath + "; ./build.sh");
+//nohup ./build.sh > logs.txt 2>&1 & echo $! > run.pid
+			((ChannelExec) channel).setCommand("cd " + workspaceRemotePath + "; nohup ./build.sh > logs.txt 2>&1 & echo $! > run.pid &");
 			String permissionStringInDecimal = "777";
 			sftpChannel.chmod(Integer.parseInt(permissionStringInDecimal,8), workspaceRemotePath + "/build.sh");
 			sftpChannel.chmod(Integer.parseInt(permissionStringInDecimal,8), workspaceRemotePath + "/Dockerfile");
