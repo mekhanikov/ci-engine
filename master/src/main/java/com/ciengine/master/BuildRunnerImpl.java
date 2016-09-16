@@ -121,6 +121,8 @@ public class BuildRunnerImpl implements BuildRunner
 
 			Channel channel = session.openChannel("exec");
 //nohup ./build.sh > logs.txt 2>&1 & echo $! > run.pid
+			// TODO kill build.sh and all gpid
+			//((ChannelExec) channel).setCommand("cd " + workspaceRemotePath + "; pkill -TERM -P 15237");// is pid of build.sh from pid file
 			((ChannelExec) channel).setCommand("cd " + workspaceRemotePath + "; nohup ./build0.sh > build0nohuplogs.txt 2>&1 &");
 			String permissionStringInDecimal = "777";
 			sftpChannel.chmod(Integer.parseInt(permissionStringInDecimal,8), workspaceRemotePath + "/build.sh");
