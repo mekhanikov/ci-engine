@@ -73,7 +73,7 @@ public class BuildRunnerImpl implements BuildRunner
 			ChannelSftp sftpChannel = (ChannelSftp) session.openChannel("sftp");
 			sftpChannel.connect();
 			System.out.println("SFTP Channel created.");
-			File f1 = new File("D:\\prj\\ci-engine\\master\\docker\\" + buildModel.getDockerImageId() + "\\build.sh");
+
 			try
 			{
 				sftpChannel.rm(workspaceRemotePath);
@@ -89,6 +89,9 @@ public class BuildRunnerImpl implements BuildRunner
 
 
 			sftpChannel.cd(workspaceRemotePath);
+			File f0 = new File("D:\\prj\\ci-engine\\master\\docker\\" + buildModel.getDockerImageId() + "\\build0.sh");
+			sftpChannel.put(new FileInputStream(f0), f0.getName(), ChannelSftp.OVERWRITE);
+			File f1 = new File("D:\\prj\\ci-engine\\master\\docker\\" + buildModel.getDockerImageId() + "\\build.sh");
 			sftpChannel.put(new FileInputStream(f1), f1.getName(), ChannelSftp.OVERWRITE);
 			File f2 = new File("D:\\prj\\ci-engine\\master\\docker\\" + buildModel.getDockerImageId() + "\\Dockerfile");
 			sftpChannel.put(new FileInputStream(f2), f2.getName(), ChannelSftp.OVERWRITE);
@@ -118,9 +121,10 @@ public class BuildRunnerImpl implements BuildRunner
 
 			Channel channel = session.openChannel("exec");
 //nohup ./build.sh > logs.txt 2>&1 & echo $! > run.pid
-			((ChannelExec) channel).setCommand("cd " + workspaceRemotePath + "; nohup ./build.sh > logs.txt 2>&1 & echo $! > run.pid &");
+			((ChannelExec) channel).setCommand("cd " + workspaceRemotePath + "; nohup ./build0.sh > build0nohuplogs.txt 2>&1 &");
 			String permissionStringInDecimal = "777";
 			sftpChannel.chmod(Integer.parseInt(permissionStringInDecimal,8), workspaceRemotePath + "/build.sh");
+			sftpChannel.chmod(Integer.parseInt(permissionStringInDecimal,8), workspaceRemotePath + "/build0.sh");
 			sftpChannel.chmod(Integer.parseInt(permissionStringInDecimal,8), workspaceRemotePath + "/Dockerfile");
 			sftpChannel.chmod(Integer.parseInt("600",8), workspaceRemotePath + "/id_rsa");
 
