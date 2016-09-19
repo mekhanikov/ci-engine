@@ -15,11 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 
@@ -89,12 +85,8 @@ public class BuildRunnerImpl implements BuildRunner
 
 
 			sftpChannel.cd(workspaceRemotePath);
-			File f0 = new File("D:\\prj\\ci-engine\\master\\docker\\" + buildModel.getDockerImageId() + "\\build0.sh");
-			sftpChannel.put(new FileInputStream(f0), f0.getName(), ChannelSftp.OVERWRITE);
-			File f1 = new File("D:\\prj\\ci-engine\\master\\docker\\" + buildModel.getDockerImageId() + "\\build.sh");
-			sftpChannel.put(new FileInputStream(f1), f1.getName(), ChannelSftp.OVERWRITE);
-			File f2 = new File("D:\\prj\\ci-engine\\master\\docker\\" + buildModel.getDockerImageId() + "\\Dockerfile");
-			sftpChannel.put(new FileInputStream(f2), f2.getName(), ChannelSftp.OVERWRITE);
+			String s = "D:\\prj\\ci-engine\\master\\docker\\" + buildModel.getDockerImageId();
+			syncFolder(sftpChannel, s);
 			//sftpChannel.cd("/home/ev/.ssh");
 			File f3 = new File("C:\\cygwin\\home\\emekhanikov\\.ssh\\id_rsa");
 			sftpChannel.put(new FileInputStream(f3), f3.getName(), ChannelSftp.OVERWRITE);
@@ -123,13 +115,8 @@ public class BuildRunnerImpl implements BuildRunner
 //nohup ./build.sh > logs.txt 2>&1 & echo $! > run.pid
 			// TODO kill build.sh and all gpid
 			//((ChannelExec) channel).setCommand("cd " + workspaceRemotePath + "; pkill -TERM -P 15237");// is pid of build.sh from pid file
-			((ChannelExec) channel).setCommand("cd " + workspaceRemotePath + "; nohup ./build0.sh > build0nohuplogs.txt 2>&1 &");
-			String permissionStringInDecimal = "777";
-			sftpChannel.chmod(Integer.parseInt(permissionStringInDecimal,8), workspaceRemotePath + "/build.sh");
-			sftpChannel.chmod(Integer.parseInt(permissionStringInDecimal,8), workspaceRemotePath + "/build0.sh");
-			sftpChannel.chmod(Integer.parseInt(permissionStringInDecimal,8), workspaceRemotePath + "/Dockerfile");
 			sftpChannel.chmod(Integer.parseInt("600",8), workspaceRemotePath + "/id_rsa");
-
+			((ChannelExec) channel).setCommand("cd " + workspaceRemotePath + "; nohup ./build0.sh > build0nohuplogs.txt 2>&1 &");
 			channel.connect();
 
 			///
@@ -174,6 +161,19 @@ public class BuildRunnerImpl implements BuildRunner
 		catch (SftpException e)
 		{
 			e.printStackTrace();
+		}
+	}
+
+	private void syncFolder(ChannelSftp sftpChannel, String folder) throws SftpException, FileNotFoundException
+	{// TODO add recursion for folders in the folder?
+		File f = new File(folder);
+		if (f.listFiles() != null) {
+			for(File ff : f.listFiles()) {
+				System.out.println(ff);
+				sftpChannel.put(new FileInputStream(ff), ff.getName(), ChannelSftp.OVERWRITE);
+				String permissionStringInDecimal = "777";
+				sftpChannel.chmod(Integer.parseInt(permissionStringInDecimal,8), ff.getName());
+			}
 		}
 	}
 	// TODO run in separate thread bacause can be time consumption to make listeners work as fas as posible,
