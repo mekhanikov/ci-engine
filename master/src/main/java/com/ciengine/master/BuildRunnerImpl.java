@@ -88,18 +88,22 @@ public class BuildRunnerImpl implements BuildRunner
 
 
 			sftpChannel.cd(workspaceRemotePath);
-			String s = "D:\\prj\\ci-engine\\master\\docker\\" + buildModel.getDockerImageId();
+			String s = getDockerImagesRoot() + buildModel.getDockerImageId();
 			syncFolder(sftpChannel, s);
 			//sftpChannel.cd("/home/ev/.ssh");
-			File f3 = new File("C:\\cygwin\\home\\emekhanikov\\.ssh\\id_rsa");
+			File f3 = new File("C:/cygwin/home/emekhanikov/.ssh/id_rsa");
 			sftpChannel.put(new FileInputStream(f3), f3.getName(), ChannelSftp.OVERWRITE);
 
-			File f4 = new File("C:\\Users\\emekhanikov\\.m2\\settings.xml");
+			File f4 = new File("C:/Users/emekhanikov/.m2/settings.xml");
 			sftpChannel.put(new FileInputStream(f4), f4.getName(), ChannelSftp.OVERWRITE);
 
-			File f5 = new File("D:\\prj\\ci-engine\\agent\\target\\agent-1.0-SNAPSHOT.jar");
+			File f5 = new File("D:/prj/ci-engine/agent/target/agent-1.0-SNAPSHOT.jar");
 			sftpChannel.put(new FileInputStream(f5), f5.getName(), ChannelSftp.OVERWRITE);
 
+			File f6 = new File(getDockerImagesRoot() + "/build0.sh");
+			sftpChannel.put(new FileInputStream(f6), f6.getName(), ChannelSftp.OVERWRITE);
+			String permissionStringInDecimal = "777";
+			sftpChannel.chmod(Integer.parseInt(permissionStringInDecimal,8), f6.getName());
 
 			InputStream stream = new ByteArrayInputStream(buildModel.getInputParams().getBytes(StandardCharsets.UTF_8));
 			sftpChannel.put(stream, "environment_variables.properties", ChannelSftp.OVERWRITE);
@@ -165,6 +169,11 @@ public class BuildRunnerImpl implements BuildRunner
 		{
 			e.printStackTrace();
 		}
+	}
+
+	private String getDockerImagesRoot()
+	{
+		return "D:/prj/ci-engine/master/docker/";
 	}
 
 	private void syncFolder(ChannelSftp sftpChannel, String folder) throws SftpException, FileNotFoundException
