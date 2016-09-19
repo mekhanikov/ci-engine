@@ -48,13 +48,7 @@ public class BuildStatusCheckerImpl
 				// Finished with status s.
 				log.info(String.valueOf(buildModel));
 			}
-
-//			buildModel.setStatus("IN PROGRESS");
-//			run(buildModel);
-//			buildDao.update(buildModel);
 		}
-
-
 	}
 
 	private String getStatus(Node node, int id)
@@ -111,10 +105,5 @@ public class BuildStatusCheckerImpl
 			e.printStackTrace();
 		}
 		return result;
-	}
-
-	public void run(BuildModel buildModel)
-	{
-
 	}
 }
