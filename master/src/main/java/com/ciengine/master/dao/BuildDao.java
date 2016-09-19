@@ -38,4 +38,12 @@ public class BuildDao extends AbstractDao<BuildModel>
 		}
 		return null;
 	}
+	public List<BuildModel> getNextBuildsInProgress()
+	{
+		Query query = openSession().createQuery("from build as o where o.Status='IN PROGRESS'");
+//		query.setFirstResult(0);
+//		query.setMaxResults(1);
+		List result = query.getResultList();
+		return result;
+	}
 }

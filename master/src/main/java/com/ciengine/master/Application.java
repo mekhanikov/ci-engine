@@ -43,8 +43,8 @@ public class Application
 	@Autowired
 	private Environment environment;
 
-	@Autowired
-	BuildRunner buildRunner;
+//	@Autowired
+//	BuildRunner buildRunner;
 
 	public static void main(String[] args) {
 		ApplicationContext ctx = SpringApplication.run(Application.class, args);

@@ -3,36 +3,26 @@ package com.ciengine.master;
 import com.ciengine.common.Node;
 import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.model.BuildModel;
-import com.jcraft.jsch.Channel;
-import com.jcraft.jsch.ChannelExec;
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
-import com.jcraft.jsch.SftpException;
+import com.jcraft.jsch.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 
 /**
  * Created by emekhanikov on 13.09.2016.
  */
 @Component
-public class BuildRunnerImpl// implements BuildRunner
+public class BuildStatusCheckerImpl
 {
-	private static final Logger log = LoggerFactory.getLogger(BuildRunnerImpl.class);
+	private static final Logger log = LoggerFactory.getLogger(BuildStatusCheckerImpl.class);
 
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
@@ -42,14 +32,19 @@ public class BuildRunnerImpl// implements BuildRunner
 
 	@Scheduled(fixedRate = 2000)
 	public void reportCurrentTime() {
-		BuildModel buildModel = buildDao.getNextToBuild();
-		if (buildModel != null) {
-			buildModel.setStatus("IN PROGRESS");
-			run(buildModel);
-			buildDao.update(buildModel);
+		List<BuildModel> buildModelList = buildDao.getNextBuildsInProgress();
+		if (buildModelList != null) {
+			for (BuildModel buildModel : buildModelList) {
+				// TODO gen Node by buildModel.getNodeId(), connect to the Node and check build status.
+				log.info(String.valueOf(buildModel));
+			}
+
+//			buildModel.setStatus("IN PROGRESS");
+//			run(buildModel);
+//			buildDao.update(buildModel);
 		}
 
-		log.info(String.valueOf(buildModel));
+
 	}
 
 	public void run(BuildModel buildModel)
