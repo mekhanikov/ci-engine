@@ -48,17 +48,19 @@ public class BuildRunnerImpl// implements BuildRunner
 	public void reportCurrentTime() {
 		BuildModel buildModel = buildDao.getNextToBuild();
 		if (buildModel != null) {
+			Node node = nodeFacade.findBestNode();
+			buildModel.setNodeId(node.getId());
 			buildModel.setStatus("IN PROGRESS");
-			run(buildModel);
 			buildDao.update(buildModel);
+			run(buildModel, node);
 		}
 
 		log.info(String.valueOf(buildModel));
 	}
 
-	public void run(BuildModel buildModel)
+	public void run(BuildModel buildModel, Node node)
 	{
-		Node node = nodeFacade.findBestNode();
+
 
 		String workspaceRemotePath = node.getRootWorkspace() + "/build_" + buildModel.getId();
 		try

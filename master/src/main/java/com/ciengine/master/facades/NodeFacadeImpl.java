@@ -13,6 +13,7 @@ public class NodeFacadeImpl implements NodeFacade
 	@Override public Node findBestNode()
 	{
 		Node node = new Node();
+		node.setId("1");
 		node.setUser("ev");
 		node.setPassword("weter");
 		node.setHost("127.0.0.1");

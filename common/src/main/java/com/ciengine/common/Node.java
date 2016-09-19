@@ -10,6 +10,7 @@ public class Node
 	private String host;
 	private int port;
 	private String rootWorkspace;
+	private String id;
 
 	public String getUser()
 	{
@@ -59,5 +60,15 @@ public class Node
 	public void setRootWorkspace(String rootWorkspace)
 	{
 		this.rootWorkspace = rootWorkspace;
+	}
+
+	public void setId(String id)
+	{
+		this.id = id;
+	}
+
+	public String getId()
+	{
+		return id;
 	}
 }
