@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class NodeFacadeImpl implements NodeFacade
-{
+{// TODO store Nodes on Stash or in DB?
 	@Override public Node findBestNode()
 	{// TODO implement me
 		Node node = getNode();
