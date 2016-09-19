@@ -16,7 +16,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 
@@ -55,8 +60,6 @@ public class BuildRunnerImpl implements BuildRunner
 		node.setHost("127.0.0.1");
 		node.setPort(22);
 		node.setRootWorkspace("/home/ev");
-		// TODO Run all controllers
-		// TODO initiate all Listeners
 
 		String workspaceRemotePath = node.getRootWorkspace() + "/build_" + buildModel.getId();
 		try
@@ -85,17 +88,11 @@ public class BuildRunnerImpl implements BuildRunner
 			} catch (SftpException e) {
 				// it is ok. but why?
 			}
-
-
 			sftpChannel.cd(workspaceRemotePath);
 			String s = getDockerImagesRoot() + buildModel.getDockerImageId();
 			syncFolder(sftpChannel, s);
 			//sftpChannel.cd("/home/ev/.ssh");
-			File f3 = new File("C:/cygwin/home/emekhanikov/.ssh/id_rsa");
-			sftpChannel.put(new FileInputStream(f3), f3.getName(), ChannelSftp.OVERWRITE);
-
-			File f4 = new File("C:/Users/emekhanikov/.m2/settings.xml");
-			sftpChannel.put(new FileInputStream(f4), f4.getName(), ChannelSftp.OVERWRITE);
+			prepareBuildFolderDockerImageSpecific(sftpChannel);
 
 			File f5 = new File("D:/prj/ci-engine/agent/target/agent-1.0-SNAPSHOT.jar");
 			sftpChannel.put(new FileInputStream(f5), f5.getName(), ChannelSftp.OVERWRITE);
@@ -169,6 +166,15 @@ public class BuildRunnerImpl implements BuildRunner
 		{
 			e.printStackTrace();
 		}
+	}
+
+	private void prepareBuildFolderDockerImageSpecific(ChannelSftp sftpChannel) throws SftpException, FileNotFoundException
+	{// TODO move to some place image specific
+		File f3 = new File("C:/cygwin/home/emekhanikov/.ssh/id_rsa");
+		sftpChannel.put(new FileInputStream(f3), f3.getName(), ChannelSftp.OVERWRITE);
+
+		File f4 = new File("C:/Users/emekhanikov/.m2/settings.xml");
+		sftpChannel.put(new FileInputStream(f4), f4.getName(), ChannelSftp.OVERWRITE);
 	}
 
 	private String getDockerImagesRoot()
