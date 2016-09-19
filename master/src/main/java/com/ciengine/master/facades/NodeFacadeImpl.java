@@ -11,6 +11,17 @@ import org.springframework.stereotype.Component;
 public class NodeFacadeImpl implements NodeFacade
 {
 	@Override public Node findBestNode()
+	{// TODO implement me
+		Node node = getNode();
+		return node;
+	}
+
+	@Override public Node findBestNodeById(String nodeId)
+	{// TODO implement me
+		return getNode();
+	}
+
+	protected Node getNode()
 	{
 		Node node = new Node();
 		node.setId("1");

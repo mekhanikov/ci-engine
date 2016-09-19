@@ -9,4 +9,5 @@ import com.ciengine.common.Node;
 public interface NodeFacade
 {
 	Node findBestNode();
+	Node findBestNodeById(String nodeId);
 }
