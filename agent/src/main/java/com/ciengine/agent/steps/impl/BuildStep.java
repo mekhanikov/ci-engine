@@ -17,7 +17,6 @@ public class BuildStep implements CIEngineStep
 	public void doStep(EnvironmentVariables environmentVariables) throws CIEngineStepException
 	{
 		// TODO mvn clean install
-		// TODO send logs
-		// TODO set build status
+		// TODO set build status, WHY IF MASTER SET IT BY ITSELF BASED ON build.sh exit code? somebody overwrite other!
 	}
 }

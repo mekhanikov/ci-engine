@@ -40,7 +40,6 @@ public class CIEngineClientImpl implements CIEngineClient
 		final String uri = "http://10.69.36.221:8080/onevent";// TODO to env_var.props
 
 		OnEventRequest onEventRequest = new OnEventRequest();
-// TODO sends XML swirch to JSON
 		RestTemplate restTemplate = new RestTemplate();
 		//set interceptors/requestFactory
 		ClientHttpRequestInterceptor ri = new LoggingRequestInterceptor();

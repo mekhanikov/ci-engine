@@ -14,7 +14,7 @@ public class CIEngineImpl implements CIEngine
 {
 	@Override
 	public void submitEvent(CIEngineEvent ciEngineEvent) throws CIEngineException
-	{// TODO
+	{// TODO in CIEngineFacadeImpl.onEvent()
 
 	}
 
@@ -24,7 +24,7 @@ public class CIEngineImpl implements CIEngine
 	}
 
 	@Override public Build runOnNode(Node node)
-	{
+	{// TODO not used, remove? or extract from BuildRunnerImpl?
 		return null;
 	}
 

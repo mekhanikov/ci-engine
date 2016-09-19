@@ -18,10 +18,10 @@ public class GetBuildsController
 {
 	@Autowired
 	CIEngineFacade ciEngineFacade;
-
-	// TODO 1. Used to receive events from Agents/Slaves. Should be secure?
+	// TODO 1. Should be secure?
+	// TODO See list of builds with filtration by fields.
 	// TODO 2. Used for link from Stash to concrete build: to see logs, artefacts, status and so on.
-	// TODO 3. See list of builds with filtration by fields.
+
 	@RequestMapping(value = "/getBuildsResponse",produces = {"application/json"}, method = RequestMethod.GET)
 	@ResponseBody
 	GetBuildsResponse getBuildsResponse() {

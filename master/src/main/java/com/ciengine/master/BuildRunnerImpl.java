@@ -195,11 +195,5 @@ public class BuildRunnerImpl// implements BuildRunner
 			}
 		}
 	}
-	// TODO run in separate thread bacause can be time consumption to make listeners work as fas as posible,
-	// TODO because otherwise Controller will hang and then timeout.
-	// load from build quiue table quiuied build with lowest start time.
-	// find node good for the build.
-	// If no free nodes - wait / exit if used Scheduller.
-	// upload to node build plan.
-	// Upload of CS can take a time. Better if Node will download it by it self.
+	// If no free nodes - exit if used Scheduller.
 }

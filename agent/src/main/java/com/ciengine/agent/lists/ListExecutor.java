@@ -22,7 +22,7 @@ import java.util.Map;
  */
 @Component
 public class ListExecutor
-{// TODO entry point for Agent.
+{
 	@Autowired
 	private OnCommitList onCommitList;
 
@@ -36,7 +36,7 @@ public class ListExecutor
 			System.out.println("*********************");
 
 			System.out.println("*********************");
-			EnvironmentVariables environmentVariables = getEnvironmentVariables(); // TODO load from file
+			EnvironmentVariables environmentVariables = getEnvironmentVariables();
 			onCommitList.doList(environmentVariables);
 		}
 		catch (CIEngineStepException e)

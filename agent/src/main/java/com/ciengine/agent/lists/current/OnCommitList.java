@@ -38,7 +38,6 @@ public class OnCommitList implements CIEngineList
 		executeStep(buildStep, environmentVariables);   // TODO or by name executeSteps(environmentVariables, "CHECKOUT", "BUILD", ...)
 
 		environmentVariables.addProperty("BUILD_STATUS", "OK"); // TODO or ciEngineClient.setBuildStatus(); ?
-		// TODO upload logs (all at the end? partialy?)
 		executeStep(attachArtefactsStep, environmentVariables);
 		executeStep(newArtefactsReleasedStep, environmentVariables);
 	}
