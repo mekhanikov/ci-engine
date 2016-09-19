@@ -2,6 +2,7 @@ package com.ciengine.master;
 
 import com.ciengine.common.Node;
 import com.ciengine.master.dao.BuildDao;
+import com.ciengine.master.facades.NodeFacade;
 import com.ciengine.master.model.BuildModel;
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
@@ -40,6 +41,9 @@ public class BuildRunnerImpl// implements BuildRunner
 	@Autowired
 	BuildDao buildDao;
 
+	@Autowired
+	NodeFacade nodeFacade;
+
 	@Scheduled(fixedRate = 2000)
 	public void reportCurrentTime() {
 		BuildModel buildModel = buildDao.getNextToBuild();
@@ -54,12 +58,7 @@ public class BuildRunnerImpl// implements BuildRunner
 
 	public void run(BuildModel buildModel)
 	{
-		Node node = new Node();
-		node.setUser("ev");
-		node.setPassword("weter");
-		node.setHost("127.0.0.1");
-		node.setPort(22);
-		node.setRootWorkspace("/home/ev");
+		Node node = nodeFacade.findBestNode();
 
 		String workspaceRemotePath = node.getRootWorkspace() + "/build_" + buildModel.getId();
 		try
