@@ -1,5 +1,6 @@
 package com.ciengine.master;
 
+import com.ciengine.common.Node;
 import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.model.BuildModel;
 import com.jcraft.jsch.Channel;
@@ -48,19 +49,21 @@ public class BuildRunnerImpl implements BuildRunner
 
 	public void run(BuildModel buildModel)
 	{
+		Node node = new Node();
+		node.setUser("ev");
+		node.setPassword("weter");
+		node.setHost("127.0.0.1");
+		node.setPort(22);
+		node.setRootWorkspace("/home/ev");
 		// TODO Run all controllers
 		// TODO initiate all Listeners
-		String user = "ev";
-		String password = "weter";
-		String host = "127.0.0.1";
-		int port=22;
 
-		String workspaceRemotePath = "/home/ev/build_" + buildModel.getId();
+		String workspaceRemotePath = node.getRootWorkspace() + "/build_" + buildModel.getId();
 		try
 		{
 			JSch jsch = new JSch();
-			Session session = jsch.getSession(user, host, port);
-			session.setPassword(password);
+			Session session = jsch.getSession(node.getUser(), node.getHost(), node.getPort());
+			session.setPassword(node.getPassword());
 			session.setConfig("StrictHostKeyChecking", "no");
 			System.out.println("Establishing Connection...");
 			session.connect();
