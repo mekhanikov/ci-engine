@@ -1,4 +1,4 @@
-package com.ciengine.master.controllers;
+package com.ciengine.master.facades;
 
 import com.ciengine.common.DefaultCIEngineEvent;
 import com.ciengine.master.controllers.addbuild.AddBuildRequest;

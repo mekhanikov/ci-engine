@@ -34,6 +34,12 @@ public class OnCommitList implements CIEngineList
 
 	@Override public void doList(EnvironmentVariables environmentVariables) throws CIEngineStepException
 	{
+		/*
+# TODO it is steps should be here
+#RUN git clone ssh://git@stash.hybris.com:7999/platform/atdd.git source
+#RUN cp source/pom.xml ./
+#RUN mvn clean install > logs.txt
+		 */
 		executeStep(checkoutStep, environmentVariables);// TODO or by name executeSteps(environmentVariables, "CHECKOUT", "BUILD", ...)
 		executeStep(buildStep, environmentVariables);   // TODO or by name executeSteps(environmentVariables, "CHECKOUT", "BUILD", ...)
 

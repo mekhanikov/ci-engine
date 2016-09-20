@@ -1,4 +1,4 @@
-package com.ciengine.master.controllers;
+package com.ciengine.master.controllers.stash;
 
 
 import com.ciengine.common.CIEngine;

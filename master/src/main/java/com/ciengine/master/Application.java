@@ -1,7 +1,6 @@
 package com.ciengine.master;
 
 import com.ciengine.master.dao.BuildDao;
-import com.ciengine.master.listeners.CIEngineListener;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -25,10 +24,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.sql.DataSource;
-import java.util.Map;
 import java.util.Properties;
-
-import static springfox.documentation.builders.PathSelectors.regex;
 
 
 @ComponentScan({ "com.ciengine" })

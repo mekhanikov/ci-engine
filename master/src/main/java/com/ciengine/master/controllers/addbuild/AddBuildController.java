@@ -1,6 +1,6 @@
 package com.ciengine.master.controllers.addbuild;
 
-import com.ciengine.master.controllers.CIEngineFacade;
+import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.controllers.getbuilds.GetBuildsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
