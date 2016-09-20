@@ -44,14 +44,16 @@ public class OnCommitListener implements CIEngineListener
 				onQueueBuildEvent.setDockerImageId(onCommitRule.getDockerImageId());
 				onQueueBuildEvent.setEnvironmentVariables(merge(environmentVariablesFromEvent, onCommitRule.getEnvironmentVariables()));
 				onQueueBuildEvent.setExecutionList(onCommitRule.getApplyList());
-				try
-				{
-					ciEngineFacade.submitEvent(onQueueBuildEvent);
-				}
-				catch (CIEngineException e)
-				{
-					throw new CIEngineListenerException(e);
-				}
+				ciEngineFacade.onEvent(onQueueBuildEvent);
+
+//				try
+//				{
+//
+//				}
+//				catch (CIEngineException e)
+//				{
+//					throw new CIEngineListenerException(e);
+//				}
 			}
 		}
 	}
@@ -70,7 +72,7 @@ public class OnCommitListener implements CIEngineListener
 
 	private boolean isApplicable(OnCommitRule onCommitRule, OnCommitEvent onCommitEvent)
 	{// TODO
-		return false;
+		return true;
 	}
 
 	public List<OnCommitRule> getRules()
@@ -78,5 +80,10 @@ public class OnCommitListener implements CIEngineListener
 		// TODO load from OnCommitListener.csv on each event.
 		// TODO or only on start? because resources inside jar will never be overriten in runtime?
 		return rules;
+	}
+
+	public void setRules(List<OnCommitRule> rules)
+	{
+		this.rules = rules;
 	}
 }

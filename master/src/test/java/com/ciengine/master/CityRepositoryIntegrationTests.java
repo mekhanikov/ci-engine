@@ -9,6 +9,8 @@ import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.master.controllers.addbuild.AddBuildRequest;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.facades.CIEngineFacadeImpl;
+import com.ciengine.master.listeners.impl.oncommit.OnCommitListener;
+import com.ciengine.master.listeners.impl.oncommit.OnCommitRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,9 @@ public class CityRepositoryIntegrationTests {
 
 	@Autowired
 	CIEngineFacade ciEngineFacade;
+
+	@Autowired
+	OnCommitListener onCommitListener;
 	/*
 	Test data:
 	Modules:
@@ -49,6 +54,7 @@ public class CityRepositoryIntegrationTests {
 	@Test
 	public void testName() throws Exception {
 		prepareModules();
+		prepareOnCommitListener();
 
 		//ciEngineFacade.addListener();
 		OnCommitEvent onCommitEvent = new OnCommitEvent();
@@ -69,6 +75,26 @@ public class CityRepositoryIntegrationTests {
 //		DefaultCIEngineEvent defaultCIEngineEvent = waitForEvent(DefaultCIEngineEvent.class, timeout);
 //		System.out.println("Hello World!");
 //		assertTrue(true);
+	}
+
+	private void prepareOnCommitListener()
+	{
+		List<OnCommitRule> onCommitRules = new ArrayList<>();
+		onCommitRules.add(createOnCommitRule("modA", "develop"));
+		onCommitRules.add(createOnCommitRule("modB", "develop"));
+		onCommitRules.add(createOnCommitRule("modC", "develop"));
+		onCommitListener.setRules(onCommitRules);
+	}
+
+	private OnCommitRule createOnCommitRule(String forModules, String forBranches)
+	{
+		OnCommitRule onCommitRule = new OnCommitRule();
+//		onCommitRule.setDockerImageId();
+//		onCommitRule.setApplyList();
+//		onCommitRule.setEnvironmentVariables();
+		onCommitRule.setForBranches(forBranches);
+		onCommitRule.setForModules(forModules);
+		return onCommitRule;
 	}
 
 	private void prepareModules() {
