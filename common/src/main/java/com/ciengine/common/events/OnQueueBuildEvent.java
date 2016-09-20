@@ -17,8 +17,9 @@ public class OnQueueBuildEvent  extends DefaultCIEngineEvent
 	private String branchName; //	Branch (merge connected to 2 branches, pass both?)
 	private String executionList;
 	private String dockerImageId;
+	private String moduleName;
 
-//	RunId
+	//	RunId
 //	start Time - submit time (or runtime?)
 //	End time (duration?)
 //	Sha of input params - calculated on fully determined params on runtime
@@ -77,5 +78,15 @@ public class OnQueueBuildEvent  extends DefaultCIEngineEvent
 	public void setDockerImageId(String dockerImageId)
 	{
 		this.dockerImageId = dockerImageId;
+	}
+
+	public String getModuleName()
+	{
+		return moduleName;
+	}
+
+	public void setModuleName(String moduleName)
+	{
+		this.moduleName = moduleName;
 	}
 }
