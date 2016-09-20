@@ -30,6 +30,8 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 
 	private List<CIEngineListener> ciEngineListeners = new ArrayList<>();
 
+	private List<Module> modules = new ArrayList<>();
+
 	public GetBuildsResponse getBuildsResponse() {
 		GetBuildsResponse getBuildsResponse = new GetBuildsResponse();
 		//		buildDao.getAll();
@@ -90,9 +92,15 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 	}
 
 	@Override public Module findModuleByGitUrl(String gitUrl)
-	{// TODO
-		Module module = new Module();
-		return module;
+	{
+		for (Module module: modules) {
+			for (Repo repo : module.getRepoList()) {
+				if (gitUrl.equals(repo.getGitUrl())) {
+					return module;
+				}
+			}
+		}
+		return null;
 	}
 
 	@Override public Build runOnNode(Node node)
@@ -103,6 +111,16 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 	@Override public void addListener(CIEngineListener ciEngineListener)
 	{
 		ciEngineListeners.add(ciEngineListener);
+	}
+
+	public List<Module> getModules()
+	{
+		return modules;
+	}
+
+	public void setModules(List<Module> modules)
+	{
+		this.modules = modules;
 	}
 
 	//	public static void main(String[] strings) {

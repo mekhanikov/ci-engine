@@ -5,6 +5,8 @@ import com.ciengine.master.controllers.addbuild.AddBuildRequest;
 import com.ciengine.master.controllers.getbuilds.GetBuildsResponse;
 import com.ciengine.master.listeners.CIEngineListener;
 
+import java.util.List;
+
 
 /**
  * Created by emekhanikov on 14.09.2016.
@@ -24,4 +26,6 @@ public interface CIEngineFacade
 	Build runOnNode(Node node);
 
 	void addListener(CIEngineListener ciEngineListener);
+
+	void setModules(List<Module> moduleList);
 }
