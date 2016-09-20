@@ -12,8 +12,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -28,6 +27,8 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 
 	@Autowired
 	private ApplicationContext applicationContext;
+
+	private List<CIEngineListener> ciEngineListeners = new ArrayList<>();
 
 	public GetBuildsResponse getBuildsResponse() {
 		GetBuildsResponse getBuildsResponse = new GetBuildsResponse();
@@ -59,17 +60,24 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 	{
 		Map<String, CIEngineListener> stringCIEngineListenerMap = applicationContext.getBeansOfType(CIEngineListener.class);
 		if (stringCIEngineListenerMap != null) {
-			for (CIEngineListener ciEngineListener : stringCIEngineListenerMap.values()) {
-				if (ciEngineListener.isEventApplicable(defaultCIEngineEvent)) {
-					try
-					{
-						ciEngineListener.onEvent(defaultCIEngineEvent);
-					}
-					catch (CIEngineListenerException e)
-					{
-						// TODO
-						e.printStackTrace();
-					}
+			Collection<CIEngineListener> ciEngineListenerCollection = stringCIEngineListenerMap.values();
+			processEventForListeners(defaultCIEngineEvent, ciEngineListenerCollection);
+		}
+		processEventForListeners(defaultCIEngineEvent, ciEngineListeners);
+	}
+
+	private void processEventForListeners(DefaultCIEngineEvent defaultCIEngineEvent, Collection<CIEngineListener> ciEngineListenerCollection)
+	{
+		for (CIEngineListener ciEngineListener : ciEngineListenerCollection) {
+			if (ciEngineListener.isEventApplicable(defaultCIEngineEvent)) {
+				try
+				{
+					ciEngineListener.onEvent(defaultCIEngineEvent);
+				}
+				catch (CIEngineListenerException e)
+				{
+					// TODO
+					e.printStackTrace();
 				}
 			}
 		}
@@ -83,12 +91,18 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 
 	@Override public Module findModuleByGitUrl(String gitUrl)
 	{// TODO
-		return null;
+		Module module = new Module();
+		return module;
 	}
 
 	@Override public Build runOnNode(Node node)
 	{// TODO not used, remove? or extract from BuildRunnerImpl?
 		return null;
+	}
+
+	@Override public void addListener(CIEngineListener ciEngineListener)
+	{
+		ciEngineListeners.add(ciEngineListener);
 	}
 
 	//	public static void main(String[] strings) {

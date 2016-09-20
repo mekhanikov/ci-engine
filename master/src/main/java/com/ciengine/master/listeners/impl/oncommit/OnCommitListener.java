@@ -9,6 +9,7 @@ import com.ciengine.master.listeners.CIEngineListenerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,7 +21,7 @@ public class OnCommitListener implements CIEngineListener
 {
 	@Autowired
 	private CIEngineFacade ciEngineFacade;
-	private List<OnCommitRule> rules;
+	private List<OnCommitRule> rules = new ArrayList<>();
 
 	@Override public void onEvent(CIEngineEvent ciEngineEvent) throws CIEngineListenerException
 	{
