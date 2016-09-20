@@ -61,15 +61,15 @@ public class CityRepositoryIntegrationTests {
 //		AddBuildRequest addBuildRequest = new AddBuildRequest();
 //		addBuildRequest.setNodeId("1");
 		onCommitEvent.setBranchName("develop");
-		onCommitEvent.setGitUrl("ssh://git@repo.ru/mod-c");
+		onCommitEvent.setGitUrl("ssh://git@repo.ru/mod-a");
 		onCommitEvent.setComitId("1234");
 
 //		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
-		WaitForEventListener waitForEventListener = new WaitForEventListener(OnCommitEvent.class);
+		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
 		ciEngineFacade.addListener(waitForEventListener);
 		ciEngineFacade.onEvent(onCommitEvent);
 		CIEngineEvent ciEngineEvent = waitForEventListener.waitEvent();
-		assertTrue(ciEngineEvent instanceof OnCommitEvent);
+		assertTrue(ciEngineEvent instanceof OnNewArtifactEvent);
 		System.out.println("Hello World!");
 //		long timeout = 5000;
 //		DefaultCIEngineEvent defaultCIEngineEvent = waitForEvent(DefaultCIEngineEvent.class, timeout);
@@ -81,8 +81,8 @@ public class CityRepositoryIntegrationTests {
 	{
 		List<OnCommitRule> onCommitRules = new ArrayList<>();
 		onCommitRules.add(createOnCommitRule("modA", "develop"));
-		onCommitRules.add(createOnCommitRule("modB", "develop"));
-		onCommitRules.add(createOnCommitRule("modC", "develop"));
+//		onCommitRules.add(createOnCommitRule("modB", "develop"));
+//		onCommitRules.add(createOnCommitRule("modC", "develop"));
 		onCommitListener.setRules(onCommitRules);
 	}
 
@@ -100,8 +100,8 @@ public class CityRepositoryIntegrationTests {
 	private void prepareModules() {
 		List<Module> moduleList = new ArrayList<>();
 		moduleList.add(createModule("modA", "ssh://git@repo.ru/mod-a"));
-		moduleList.add(createModule("modB", "ssh://git@repo.ru/mod-b"));
-		moduleList.add(createModule("modC", "ssh://git@repo.ru/mod-c"));
+//		moduleList.add(createModule("modB", "ssh://git@repo.ru/mod-b"));
+//		moduleList.add(createModule("modC", "ssh://git@repo.ru/mod-c"));
 		ciEngineFacade.setModules(moduleList);
 
 	}

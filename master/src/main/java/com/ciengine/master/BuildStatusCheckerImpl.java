@@ -1,7 +1,9 @@
 package com.ciengine.master;
 
 import com.ciengine.common.Node;
+import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.master.dao.BuildDao;
+import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.facades.NodeFacade;
 import com.ciengine.master.model.BuildModel;
 import com.jcraft.jsch.*;
@@ -34,6 +36,9 @@ public class BuildStatusCheckerImpl
 	@Autowired
 	NodeFacade nodeFacade;
 
+	@Autowired
+	CIEngineFacade ciEngineFacade;
+
 	@Scheduled(fixedRate = 2000)
 	public void reportCurrentTime() {
 		List<BuildModel> buildModelList = buildDao.getNextBuildsInProgress();
@@ -44,6 +49,8 @@ public class BuildStatusCheckerImpl
 				if (!buildModel.getStatus().equals(s)) {
 					buildModel.setStatus(s);
 					buildDao.update(buildModel);
+					OnNewArtifactEvent onNewArtifactEvent = new OnNewArtifactEvent();
+					ciEngineFacade.onEvent(onNewArtifactEvent);
 				}
 				// Finished with status s.
 				log.info(String.valueOf(buildModel));
