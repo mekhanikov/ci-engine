@@ -3,6 +3,7 @@ package com.ciengine.master.listeners.impl.oncommit;
 import com.ciengine.common.*;
 import com.ciengine.common.events.OnCommitEvent;
 import com.ciengine.common.events.OnQueueBuildEvent;
+import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.listeners.CIEngineListener;
 import com.ciengine.master.listeners.CIEngineListenerException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +19,13 @@ import java.util.List;
 public class OnCommitListener implements CIEngineListener
 {
 	@Autowired
-	private CIEngine ciEngine;
+	private CIEngineFacade ciEngineFacade;
 	private List<OnCommitRule> rules;
 
 	@Override public void onEvent(CIEngineEvent ciEngineEvent) throws CIEngineListenerException
 	{
 		OnCommitEvent onCommitEvent = (OnCommitEvent) ciEngineEvent;
-		Module module = ciEngine.findModuleByGitUrl(((OnCommitEvent) ciEngineEvent).getGitUrl());
+		Module module = ciEngineFacade.findModuleByGitUrl(((OnCommitEvent) ciEngineEvent).getGitUrl());
 		EnvironmentVariables environmentVariablesFromEvent = new EnvironmentVariables();
 		environmentVariablesFromEvent.addProperty("GIT_URL", onCommitEvent.getGitUrl());
 		environmentVariablesFromEvent.addProperty("BRANCH_NAME", onCommitEvent.getBranchName());
@@ -44,7 +45,7 @@ public class OnCommitListener implements CIEngineListener
 				onQueueBuildEvent.setExecutionList(onCommitRule.getApplyList());
 				try
 				{
-					ciEngine.submitEvent(onQueueBuildEvent);
+					ciEngineFacade.submitEvent(onQueueBuildEvent);
 				}
 				catch (CIEngineException e)
 				{

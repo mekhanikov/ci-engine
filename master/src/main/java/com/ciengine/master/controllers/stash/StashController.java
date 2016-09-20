@@ -1,9 +1,9 @@
 package com.ciengine.master.controllers.stash;
 
 
-import com.ciengine.common.CIEngine;
 import com.ciengine.common.CIEngineException;
 import com.ciengine.common.events.OnCommitEvent;
+import com.ciengine.master.facades.CIEngineFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -13,14 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class StashController
 {
 	@Autowired
-	private CIEngine ciEngine;
+	private CIEngineFacade ciEngineFacade;
 
 	public void onEvent() {
 		// TODO set from inpit params
 		OnCommitEvent onCommitEvent = new OnCommitEvent();
 		try
 		{
-			ciEngine.submitEvent(onCommitEvent);
+			ciEngineFacade.submitEvent(onCommitEvent);
 		}
 		catch (CIEngineException e)
 		{

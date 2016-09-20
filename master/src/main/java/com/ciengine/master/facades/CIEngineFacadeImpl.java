@@ -1,6 +1,6 @@
 package com.ciengine.master.facades;
 
-import com.ciengine.common.DefaultCIEngineEvent;
+import com.ciengine.common.*;
 import com.ciengine.master.controllers.addbuild.AddBuildRequest;
 import com.ciengine.master.controllers.getbuilds.GetBuildsResponse;
 import com.ciengine.master.dao.BuildDao;
@@ -74,4 +74,24 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 			}
 		}
 	}
+
+	@Override
+	public void submitEvent(CIEngineEvent ciEngineEvent) throws CIEngineException
+	{// TODO in CIEngineFacadeImpl.onEvent()
+
+	}
+
+	@Override public Module findModuleByGitUrl(String gitUrl)
+	{// TODO
+		return null;
+	}
+
+	@Override public Build runOnNode(Node node)
+	{// TODO not used, remove? or extract from BuildRunnerImpl?
+		return null;
+	}
+
+	//	public static void main(String[] strings) {
+	//
+	//	}
 }
