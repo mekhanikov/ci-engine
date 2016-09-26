@@ -103,6 +103,21 @@ public class CityRepositoryIntegrationTests {
 	}
 
 	@Test
+	public void dontTriggerBuildForModARelease() throws Exception {
+		prepareModules();
+		prepareOnCommitListener();
+		OnCommitEvent onCommitEvent = new OnCommitEvent();
+		onCommitEvent.setBranchName("release");
+		onCommitEvent.setGitUrl("ssh://git@repo.ru/mod-a");
+		onCommitEvent.setComitId("1234");
+		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
+		ciEngineFacade.addListener(waitForEventListener);
+		ciEngineFacade.onEvent(onCommitEvent);
+		CIEngineEvent ciEngineEvent = waitForEventListener.waitEvent(15);
+		assertTrue(ciEngineEvent == null);
+	}
+
+	@Test
 	public void dontTriggerBuildForModBDevelop() throws Exception {
 		prepareModules();
 		prepareOnCommitListener();
