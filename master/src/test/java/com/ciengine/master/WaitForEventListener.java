@@ -11,6 +11,7 @@ import com.ciengine.master.listeners.impl.oncommit.OnCommitRule;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -29,9 +30,9 @@ public class WaitForEventListener implements CIEngineListener
 		this.onNewArtifactEventClass = onNewArtifactEventClass;
 	}
 
-	public CIEngineEvent waitEvent() throws InterruptedException
+	public CIEngineEvent waitEvent(long timeout) throws InterruptedException
 	{
-		startSignal.await();
+		startSignal.await(timeout, TimeUnit.SECONDS);
 		return ciEngineEvent;
 	}
 
