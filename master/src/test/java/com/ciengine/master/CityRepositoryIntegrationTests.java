@@ -20,6 +20,10 @@ import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
+
+/**
+ * Mocked master-agent communication.
+ */
 @ActiveProfiles("test")
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = TestConfiguration.class)
