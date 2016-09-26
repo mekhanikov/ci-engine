@@ -61,9 +61,7 @@ public class CityRepositoryIntegrationTests {
 		 */
 	@Test
 	public void triggerBuildForModADevelop() throws Exception {
-		CIAgentFacade ciAgentFacade = Mockito.mock(CIAgentFacade.class);
-		buildStatusChecker.setCiAgentFacade(ciAgentFacade);
-		buildRunner.setCiAgentFacade(ciAgentFacade);
+		prepareMocks();
 		prepareModules();
 		prepareOnCommitListener();
 
@@ -90,9 +88,7 @@ public class CityRepositoryIntegrationTests {
 
 	@Test
 	public void triggerBuildForModAFeature() throws Exception {
-		CIAgentFacade ciAgentFacade = Mockito.mock(CIAgentFacade.class);
-		buildStatusChecker.setCiAgentFacade(ciAgentFacade);
-		buildRunner.setCiAgentFacade(ciAgentFacade);
+		prepareMocks();
 		prepareModules();
 		prepareOnCommitListener();
 		OnCommitEvent onCommitEvent = new OnCommitEvent();
@@ -168,5 +164,12 @@ public class CityRepositoryIntegrationTests {
 
 		// todo create customlistener
 		return null;
+	}
+
+	private void prepareMocks()
+	{
+		CIAgentFacade ciAgentFacade = Mockito.mock(CIAgentFacade.class);
+		buildStatusChecker.setCiAgentFacade(ciAgentFacade);
+		buildRunner.setCiAgentFacade(ciAgentFacade);
 	}
 }
