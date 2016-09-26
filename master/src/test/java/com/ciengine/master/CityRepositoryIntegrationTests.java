@@ -35,14 +35,6 @@ public class CityRepositoryIntegrationTests {
 	@Autowired
 	OnCommitListener onCommitListener;
 
-	@Autowired
-	BuildStatusCheckerImpl buildStatusChecker;
-
-
-	@Autowired
-	BuildRunnerImpl buildRunner;
-
-
 	/*
 	Test data:
 	Modules:
