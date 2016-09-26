@@ -1,7 +1,6 @@
 package com.ciengine.master;
 
 import com.ciengine.common.CIEngineEvent;
-import com.ciengine.common.DefaultCIEngineEvent;
 import com.ciengine.common.Module;
 import com.ciengine.common.Repo;
 import com.ciengine.common.events.OnCommitEvent;
@@ -157,13 +156,6 @@ public class CityRepositoryIntegrationTests {
 		repos.add(repo);
 		module.setRepoList(repos);
 		return module;
-	}
-
-	private DefaultCIEngineEvent waitForEvent(Class<DefaultCIEngineEvent> defaultCIEngineEventClass, long timeout)
-	{
-
-		// todo create customlistener
-		return null;
 	}
 
 	private void prepareMocks()
