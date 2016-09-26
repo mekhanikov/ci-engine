@@ -4,12 +4,9 @@ import com.ciengine.common.CIEngineEvent;
 import com.ciengine.common.DefaultCIEngineEvent;
 import com.ciengine.common.Module;
 import com.ciengine.common.Repo;
-import com.ciengine.common.events.OnArtifactIsRequiredEvent;
 import com.ciengine.common.events.OnCommitEvent;
 import com.ciengine.common.events.OnNewArtifactEvent;
-import com.ciengine.master.controllers.addbuild.AddBuildRequest;
 import com.ciengine.master.facades.CIEngineFacade;
-import com.ciengine.master.facades.CIEngineFacadeImpl;
 import com.ciengine.master.listeners.impl.oncommit.OnCommitListener;
 import com.ciengine.master.listeners.impl.oncommit.OnCommitRule;
 import org.junit.Test;
@@ -22,7 +19,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 
@@ -53,7 +49,7 @@ public class CityRepositoryIntegrationTests {
 		- wait for BuildFinishedEvent for some time (timeout)
 		 */
 	@Test
-	public void testName() throws Exception {
+	public void triggerBuildForModADevelop() throws Exception {
 		prepareModules();
 		prepareOnCommitListener();
 
@@ -78,10 +74,40 @@ public class CityRepositoryIntegrationTests {
 //		assertTrue(true);
 	}
 
+	@Test
+	public void triggerBuildForModAFeature() throws Exception {
+		prepareModules();
+		prepareOnCommitListener();
+		OnCommitEvent onCommitEvent = new OnCommitEvent();
+		onCommitEvent.setBranchName("feature/AA-1234");
+		onCommitEvent.setGitUrl("ssh://git@repo.ru/mod-a");
+		onCommitEvent.setComitId("1234");
+		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
+		ciEngineFacade.addListener(waitForEventListener);
+		ciEngineFacade.onEvent(onCommitEvent);
+		CIEngineEvent ciEngineEvent = waitForEventListener.waitEvent(15);
+		assertTrue(ciEngineEvent instanceof OnNewArtifactEvent);
+	}
+
+	@Test
+	public void dontTriggerBuildForModANonDevelop() throws Exception {
+		prepareModules();
+		prepareOnCommitListener();
+		OnCommitEvent onCommitEvent = new OnCommitEvent();
+		onCommitEvent.setBranchName("release/6.3");
+		onCommitEvent.setGitUrl("ssh://git@repo.ru/mod-a");
+		onCommitEvent.setComitId("1234");
+		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
+		ciEngineFacade.addListener(waitForEventListener);
+		ciEngineFacade.onEvent(onCommitEvent);
+		CIEngineEvent ciEngineEvent = waitForEventListener.waitEvent(15);
+		assertTrue(ciEngineEvent instanceof OnNewArtifactEvent);
+	}
+
 	private void prepareOnCommitListener()
 	{
 		List<OnCommitRule> onCommitRules = new ArrayList<>();
-		onCommitRules.add(createOnCommitRule("modA", "develop"));
+		onCommitRules.add(createOnCommitRule("modA", "develop, feature/.*"));
 //		onCommitRules.add(createOnCommitRule("modB", "develop"));
 //		onCommitRules.add(createOnCommitRule("modC", "develop"));
 		onCommitListener.setRules(onCommitRules);

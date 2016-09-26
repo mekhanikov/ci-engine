@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -72,6 +74,21 @@ public class OnCommitListener implements CIEngineListener
 
 	private boolean isApplicable(OnCommitRule onCommitRule, OnCommitEvent onCommitEvent)
 	{// TODO
+
+		String[] branches = onCommitRule.getForBranches().split(",");
+		for (String s : branches) {
+			String pattern = "(" + s.trim() + ")";
+
+			// Create a Pattern object
+			Pattern r = Pattern.compile(pattern);
+
+			// Now create matcher object.
+			Matcher m = r.matcher(onCommitEvent.getBranchName());
+			boolean branchIsApplicable = false;
+			if (m.find()) {
+				branchIsApplicable = true;
+			}
+		}
 		return true;
 	}
 
