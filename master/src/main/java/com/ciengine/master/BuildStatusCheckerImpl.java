@@ -3,21 +3,18 @@ package com.ciengine.master;
 import com.ciengine.common.Node;
 import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.master.dao.BuildDao;
+import com.ciengine.master.facades.CIAgentFacade;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.facades.NodeFacade;
 import com.ciengine.master.model.BuildModel;
-import com.jcraft.jsch.*;
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import java.io.*;
-import java.nio.charset.StandardCharsets;
+
 import java.text.SimpleDateFormat;
 import java.util.List;
-
 
 /**
  * Created by emekhanikov on 13.09.2016.
@@ -31,13 +28,16 @@ public class BuildStatusCheckerImpl
 
 
 	@Autowired
-	BuildDao buildDao;
+	private BuildDao buildDao;
 
 	@Autowired
-	NodeFacade nodeFacade;
+	private NodeFacade nodeFacade;
 
 	@Autowired
-	CIEngineFacade ciEngineFacade;
+	private CIEngineFacade ciEngineFacade;
+
+	@Autowired
+	private CIAgentFacade ciAgentFacade;
 
 	@Scheduled(fixedRate = 2000)
 	public void reportCurrentTime() {
@@ -45,7 +45,7 @@ public class BuildStatusCheckerImpl
 		if (buildModelList != null) {
 			for (BuildModel buildModel : buildModelList) {
 				Node node = nodeFacade.findBestNodeById(buildModel.getNodeId());
-				String s = getStatus(node, buildModel.getId());
+				String s = ciAgentFacade.getStatus(node, buildModel.getId());
 				if (!buildModel.getStatus().equals(s)) {
 					buildModel.setStatus(s);
 					buildDao.update(buildModel);
@@ -58,59 +58,43 @@ public class BuildStatusCheckerImpl
 		}
 	}
 
-	private String getStatus(Node node, int id)
+	public BuildDao getBuildDao()
 	{
-		String result = "IN PROGRESS";
-		String workspaceRemotePath = node.getRootWorkspace() + "/build_" + id;
-		try
-		{
-			JSch jsch = new JSch();
-			Session session = jsch.getSession(node.getUser(), node.getHost(), node.getPort());
-			session.setPassword(node.getPassword());
-			session.setConfig("StrictHostKeyChecking", "no");
-			System.out.println("Establishing Connection...");
-			session.connect();
-			System.out.println("Connection established.");
-			System.out.println("Crating SFTP Channel.");
-			ChannelSftp sftpChannel = (ChannelSftp) session.openChannel("sftp");
-			sftpChannel.connect();
-			System.out.println("SFTP Channel created.");
+		return buildDao;
+	}
 
-			try
-			{
-				sftpChannel.rm(workspaceRemotePath);
-			} catch (SftpException e) {
-				// it is ok.
-			}
-			try
-			{
-				sftpChannel.mkdir(workspaceRemotePath);
-			} catch (SftpException e) {
-				// it is ok. but why?
-			}
-			sftpChannel.cd(workspaceRemotePath);
+	public void setBuildDao(BuildDao buildDao)
+	{
+		this.buildDao = buildDao;
+	}
 
-			InputStream inputStream = sftpChannel.get("status");
-			StringWriter writer = new StringWriter();
-			IOUtils.copy(inputStream, writer, "utf-8");
-			String theString = writer.toString();
-			if ("0".equals(theString.trim())) {
-				result = "SUCCESS";
-			} else {
-				result = "FAIL";
-			}
-//			result = theString;
-			sftpChannel.disconnect();
-			session.disconnect();
-		}
-		catch(JSchException | IOException e)
-		{
-			e.printStackTrace();
-		}
-		catch (SftpException e)
-		{
-			e.printStackTrace();
-		}
-		return result;
+	public NodeFacade getNodeFacade()
+	{
+		return nodeFacade;
+	}
+
+	public void setNodeFacade(NodeFacade nodeFacade)
+	{
+		this.nodeFacade = nodeFacade;
+	}
+
+	public CIEngineFacade getCiEngineFacade()
+	{
+		return ciEngineFacade;
+	}
+
+	public void setCiEngineFacade(CIEngineFacade ciEngineFacade)
+	{
+		this.ciEngineFacade = ciEngineFacade;
+	}
+
+	public CIAgentFacade getCiAgentFacade()
+	{
+		return ciAgentFacade;
+	}
+
+	public void setCiAgentFacade(CIAgentFacade ciAgentFacade)
+	{
+		this.ciAgentFacade = ciAgentFacade;
 	}
 }

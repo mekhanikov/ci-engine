@@ -77,7 +77,7 @@ public class OnCommitListener implements CIEngineListener
 	}
 
 	private boolean isApplicable(OnCommitRule onCommitRule, OnCommitEvent onCommitEvent)
-	{// TODO
+	{
 		Module module = ciEngineFacade.findModuleByGitUrl(onCommitEvent.getGitUrl());
 		if (module == null) {
 			return false;

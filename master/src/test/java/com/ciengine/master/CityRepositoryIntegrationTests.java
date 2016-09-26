@@ -6,11 +6,13 @@ import com.ciengine.common.Module;
 import com.ciengine.common.Repo;
 import com.ciengine.common.events.OnCommitEvent;
 import com.ciengine.common.events.OnNewArtifactEvent;
+import com.ciengine.master.facades.CIAgentFacade;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.listeners.impl.oncommit.OnCommitListener;
 import com.ciengine.master.listeners.impl.oncommit.OnCommitRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
@@ -32,6 +34,15 @@ public class CityRepositoryIntegrationTests {
 
 	@Autowired
 	OnCommitListener onCommitListener;
+
+	@Autowired
+	BuildStatusCheckerImpl buildStatusChecker;
+
+
+	@Autowired
+	BuildRunnerImpl buildRunner;
+
+
 	/*
 	Test data:
 	Modules:
@@ -50,6 +61,9 @@ public class CityRepositoryIntegrationTests {
 		 */
 	@Test
 	public void triggerBuildForModADevelop() throws Exception {
+		CIAgentFacade ciAgentFacade = Mockito.mock(CIAgentFacade.class);
+		buildStatusChecker.setCiAgentFacade(ciAgentFacade);
+		buildRunner.setCiAgentFacade(ciAgentFacade);
 		prepareModules();
 		prepareOnCommitListener();
 
@@ -76,6 +90,9 @@ public class CityRepositoryIntegrationTests {
 
 	@Test
 	public void triggerBuildForModAFeature() throws Exception {
+		CIAgentFacade ciAgentFacade = Mockito.mock(CIAgentFacade.class);
+		buildStatusChecker.setCiAgentFacade(ciAgentFacade);
+		buildRunner.setCiAgentFacade(ciAgentFacade);
 		prepareModules();
 		prepareOnCommitListener();
 		OnCommitEvent onCommitEvent = new OnCommitEvent();
