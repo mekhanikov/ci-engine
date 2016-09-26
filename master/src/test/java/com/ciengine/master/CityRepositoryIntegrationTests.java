@@ -15,6 +15,8 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
@@ -22,10 +24,9 @@ import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
-
+@ActiveProfiles("test")
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(Application.class)
-@WebIntegrationTest
+@SpringBootTest(classes = TestConfiguration.class)
 public class CityRepositoryIntegrationTests {
 
 	@Autowired
@@ -160,8 +161,8 @@ public class CityRepositoryIntegrationTests {
 
 	private void prepareMocks()
 	{
-		CIAgentFacade ciAgentFacade = Mockito.mock(CIAgentFacade.class);
-		buildStatusChecker.setCiAgentFacade(ciAgentFacade);
-		buildRunner.setCiAgentFacade(ciAgentFacade);
+//		CIAgentFacade ciAgentFacade = Mockito.mock(CIAgentFacade.class);
+//		buildStatusChecker.setCiAgentFacade(ciAgentFacade);
+//		buildRunner.setCiAgentFacade(ciAgentFacade);
 	}
 }
