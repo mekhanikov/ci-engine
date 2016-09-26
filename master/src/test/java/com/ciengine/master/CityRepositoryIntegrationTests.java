@@ -90,18 +90,18 @@ public class CityRepositoryIntegrationTests {
 	}
 
 	@Test
-	public void dontTriggerBuildForModANonDevelop() throws Exception {
+	public void dontTriggerBuildForModBDevelop() throws Exception {
 		prepareModules();
 		prepareOnCommitListener();
 		OnCommitEvent onCommitEvent = new OnCommitEvent();
-		onCommitEvent.setBranchName("release/6.3");
-		onCommitEvent.setGitUrl("ssh://git@repo.ru/mod-a");
+		onCommitEvent.setBranchName("develop");
+		onCommitEvent.setGitUrl("ssh://git@repo.ru/mod-b");
 		onCommitEvent.setComitId("1234");
 		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
 		ciEngineFacade.addListener(waitForEventListener);
 		ciEngineFacade.onEvent(onCommitEvent);
 		CIEngineEvent ciEngineEvent = waitForEventListener.waitEvent(15);
-		assertTrue(ciEngineEvent instanceof OnNewArtifactEvent);
+		assertTrue(ciEngineEvent == null);
 	}
 
 	private void prepareOnCommitListener()
@@ -127,7 +127,7 @@ public class CityRepositoryIntegrationTests {
 	private void prepareModules() {
 		List<Module> moduleList = new ArrayList<>();
 		moduleList.add(createModule("modA", "ssh://git@repo.ru/mod-a"));
-//		moduleList.add(createModule("modB", "ssh://git@repo.ru/mod-b"));
+		moduleList.add(createModule("modB", "ssh://git@repo.ru/mod-b"));
 //		moduleList.add(createModule("modC", "ssh://git@repo.ru/mod-c"));
 		ciEngineFacade.setModules(moduleList);
 

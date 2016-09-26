@@ -29,6 +29,10 @@ public class OnCommitListener implements CIEngineListener
 	{
 		OnCommitEvent onCommitEvent = (OnCommitEvent) ciEngineEvent;
 		Module module = ciEngineFacade.findModuleByGitUrl(((OnCommitEvent) ciEngineEvent).getGitUrl());
+		if (module == null) {
+			// TODO add warning?
+			return;
+		}
 		EnvironmentVariables environmentVariablesFromEvent = new EnvironmentVariables();
 		environmentVariablesFromEvent.addProperty("GIT_URL", onCommitEvent.getGitUrl());
 		environmentVariablesFromEvent.addProperty("BRANCH_NAME", onCommitEvent.getBranchName());
@@ -74,22 +78,30 @@ public class OnCommitListener implements CIEngineListener
 
 	private boolean isApplicable(OnCommitRule onCommitRule, OnCommitEvent onCommitEvent)
 	{// TODO
+		Module module = ciEngineFacade.findModuleByGitUrl(onCommitEvent.getGitUrl());
+		if (module == null) {
+			return false;
+		}
+		boolean branchIsApplicable = isMach(onCommitRule.getForBranches(), onCommitEvent.getBranchName());
+		boolean moduleIsApplicable = isMach(onCommitRule.getForModules(), module.getName());
+		return branchIsApplicable && moduleIsApplicable;
+	}
 
-		String[] branches = onCommitRule.getForBranches().split(",");
+	private boolean isMach(String commaSeparatedRegexps, String stringToMach)
+	{
+		boolean branchIsApplicable = false;
+		String[] branches = commaSeparatedRegexps.split(",");
 		for (String s : branches) {
 			String pattern = "(" + s.trim() + ")";
-
 			// Create a Pattern object
 			Pattern r = Pattern.compile(pattern);
-
 			// Now create matcher object.
-			Matcher m = r.matcher(onCommitEvent.getBranchName());
-			boolean branchIsApplicable = false;
+			Matcher m = r.matcher(stringToMach);
 			if (m.find()) {
 				branchIsApplicable = true;
 			}
 		}
-		return true;
+		return branchIsApplicable;
 	}
 
 	public List<OnCommitRule> getRules()
