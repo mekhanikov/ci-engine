@@ -4,7 +4,6 @@ import com.ciengine.common.CIEngineEvent;
 import com.ciengine.common.DefaultCIEngineEvent;
 import com.ciengine.common.EnvironmentVariables;
 import com.ciengine.common.Module;
-import com.ciengine.common.events.OnCommitEvent;
 import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.master.controllers.addbuild.AddBuildRequest;
 import com.ciengine.master.facades.CIEngineFacade;
@@ -31,17 +30,17 @@ public class OnReleaseListener implements CIEngineListener
 	@Override public void onEvent(CIEngineEvent ciEngineEvent) throws CIEngineListenerException
 	{// TODO Triggered on OnNewArtifactEvent event. And on add OnReleaseRule to DB/mem.
 //		OnNewArtifactEvent onNewArtifactEvent = (OnNewArtifactEvent) ciEngineEvent;
-		Module module = ciEngineFacade.findModuleByGitUrl(((OnCommitEvent) ciEngineEvent).getGitUrl());
-		if (module == null) {
-			// TODO add warning?
-			return;
-		}
+		Module module = ciEngineFacade.findModuleByGitUrl(((OnNewArtifactEvent) ciEngineEvent).getGitUrl());
+//		if (module == null) {
+//			// TODO add warning?
+//			return;
+//		}
 		EnvironmentVariables environmentVariablesFromEvent = new EnvironmentVariables();
 //		environmentVariablesFromEvent.addProperty("GIT_URL", onNewArtifactEvent.getGitUrl());
 //		environmentVariablesFromEvent.addProperty("BRANCH_NAME", onNewArtifactEvent.getBranchName());
 //		environmentVariablesFromEvent.addProperty("COMMIT_ID", onNewArtifactEvent.getComitId());
 
-		environmentVariablesFromEvent.addProperty("MODULE_NAME", module.getName());
+//		environmentVariablesFromEvent.addProperty("MODULE_NAME", module.getName());
 
 		// TODO set module specific values
 
