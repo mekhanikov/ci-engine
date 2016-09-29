@@ -34,20 +34,26 @@ public class OnReleaseList implements CIEngineList
 
 	@Override public void doList(EnvironmentVariables environmentVariables) throws CIEngineStepException
 	{
-
-
 		/*
-# TODO it is steps should be here
-#RUN git clone ssh://git@stash.hybris.com:7999/platform/atdd.git source
-#RUN cp source/pom.xml ./
-#RUN mvn clean install > logs.txt
-		 */
-		executeStep(checkoutStep, environmentVariables);// TODO or by name executeSteps(environmentVariables, "CHECKOUT", "BUILD", ...)
-		executeStep(buildStep, environmentVariables);   // TODO or by name executeSteps(environmentVariables, "CHECKOUT", "BUILD", ...)
 
-		environmentVariables.addProperty("BUILD_STATUS", "OK"); // TODO or ciEngineClient.setBuildStatus(); ?
-		executeStep(attachArtefactsStep, environmentVariables);
-		executeStep(newArtefactsReleasedStep, environmentVariables);
+		In: ruleId, version to release, list of ModX:vY, .. goig to release, develop commitid, release branch
+release artefact -> id, name, giturl, branch
+[check already released -> disable rule, exit]
+[merge from develop] from comitid to release branch
+[check all required modules on artifactory, not - exit]
+[update pom-latest-approved-milestones] overwritten by Required artifacts
+[update version]
+[stash in progress]
+Build
+[stash success | failed]
+[if success, commit version, add tag, commit release-snapshot, push]
+
+
+		 */
+		String gitUrl = environmentVariables.getProperty("GIT_URL");
+		String branchName = environmentVariables.getProperty("BRANCH_NAME");
+		String commitId = environmentVariables.getProperty("COMMIT_ID");
+
 	}
 
 	private void executeStep(CIEngineStep checkoutStep, EnvironmentVariables environmentVariables) throws CIEngineStepException
