@@ -23,8 +23,6 @@ public interface CIEngineFacade
 
 	Module findModuleByGitUrl(String gitUrl);
 
-	Build runOnNode(Node node);
-
 	void addListener(CIEngineListener ciEngineListener);
 
 	void setModules(List<Module> moduleList);

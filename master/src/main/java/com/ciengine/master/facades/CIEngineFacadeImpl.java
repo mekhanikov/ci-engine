@@ -103,11 +103,6 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 		return null;
 	}
 
-	@Override public Build runOnNode(Node node)
-	{// TODO not used, remove? or extract from BuildRunnerImpl?
-		return null;
-	}
-
 	@Override public void addListener(CIEngineListener ciEngineListener)
 	{
 		ciEngineListeners.add(ciEngineListener);
