@@ -42,7 +42,7 @@ public class ReleaseIntegrationTests {
 	ModB -> ModC
 	Each has release branch
 
-	Task:
+	Task (lives in memory or in DB):
 	Release ModA 2.0
 	Release ModB 2.0
 	Release ModC 2.0
@@ -85,51 +85,6 @@ public class ReleaseIntegrationTests {
 //		assertTrue(true);
 	}
 
-	@Test
-	public void triggerBuildForModAFeature() throws Exception {
-		prepareMocks();
-		prepareModules();
-		prepareOnCommitListener();
-		OnCommitEvent onCommitEvent = new OnCommitEvent();
-		onCommitEvent.setBranchName("feature/AA-1234");
-		onCommitEvent.setGitUrl("ssh://git@repo.ru/mod-a");
-		onCommitEvent.setComitId("1234");
-		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
-		ciEngineFacade.addListener(waitForEventListener);
-		ciEngineFacade.onEvent(onCommitEvent);
-		CIEngineEvent ciEngineEvent = waitForEventListener.waitEvent(15);
-		assertTrue(ciEngineEvent instanceof OnNewArtifactEvent);
-	}
-
-	@Test
-	public void dontTriggerBuildForModARelease() throws Exception {
-		prepareModules();
-		prepareOnCommitListener();
-		OnCommitEvent onCommitEvent = new OnCommitEvent();
-		onCommitEvent.setBranchName("release");
-		onCommitEvent.setGitUrl("ssh://git@repo.ru/mod-a");
-		onCommitEvent.setComitId("1234");
-		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
-		ciEngineFacade.addListener(waitForEventListener);
-		ciEngineFacade.onEvent(onCommitEvent);
-		CIEngineEvent ciEngineEvent = waitForEventListener.waitEvent(15);
-		assertTrue(ciEngineEvent == null);
-	}
-
-	@Test
-	public void dontTriggerBuildForModBDevelop() throws Exception {
-		prepareModules();
-		prepareOnCommitListener();
-		OnCommitEvent onCommitEvent = new OnCommitEvent();
-		onCommitEvent.setBranchName("develop");
-		onCommitEvent.setGitUrl("ssh://git@repo.ru/mod-b");
-		onCommitEvent.setComitId("1234");
-		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
-		ciEngineFacade.addListener(waitForEventListener);
-		ciEngineFacade.onEvent(onCommitEvent);
-		CIEngineEvent ciEngineEvent = waitForEventListener.waitEvent(15);
-		assertTrue(ciEngineEvent == null);
-	}
 
 	private void prepareOnCommitListener()
 	{

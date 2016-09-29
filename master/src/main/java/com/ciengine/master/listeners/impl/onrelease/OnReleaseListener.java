@@ -5,6 +5,7 @@ import com.ciengine.common.DefaultCIEngineEvent;
 import com.ciengine.common.EnvironmentVariables;
 import com.ciengine.common.Module;
 import com.ciengine.common.events.OnCommitEvent;
+import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.master.controllers.addbuild.AddBuildRequest;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.listeners.CIEngineListener;
@@ -31,7 +32,7 @@ public class OnReleaseListener implements CIEngineListener
 	private List<OnCommitRule> rules = new ArrayList<>();
 
 	@Override public void onEvent(CIEngineEvent ciEngineEvent) throws CIEngineListenerException
-	{
+	{// TODO Triggered on OnNewArtifactEvent event. And on add OnReleaseRule to DB/mem.
 		OnCommitEvent onCommitEvent = (OnCommitEvent) ciEngineEvent;
 		Module module = ciEngineFacade.findModuleByGitUrl(((OnCommitEvent) ciEngineEvent).getGitUrl());
 		if (module == null) {
@@ -89,7 +90,7 @@ public class OnReleaseListener implements CIEngineListener
 
 	@Override public boolean isEventApplicable(DefaultCIEngineEvent defaultCIEngineEvent)
 	{
-		return defaultCIEngineEvent != null && defaultCIEngineEvent instanceof OnCommitEvent;
+		return defaultCIEngineEvent != null && defaultCIEngineEvent instanceof OnNewArtifactEvent;
 	}
 
 	private EnvironmentVariables merge(EnvironmentVariables environmentVariablesFromEvent,
