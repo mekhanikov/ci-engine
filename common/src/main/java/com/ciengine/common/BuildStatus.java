@@ -5,6 +5,27 @@ package com.ciengine.common;
  */
 public class BuildStatus
 {
-	public static String IN_PROGRESS = "IN PROGRESS";
+	/**
+	 * Has when build was just added
+	 */
 	public static String QUEUED = "QUEUED";
+
+	/**
+	 * BuildRunner set the status when run it on Node
+	 */
+	public static String IN_PROGRESS = "IN PROGRESS";
+
+
+	/**
+	 *
+	 */
+	public static String SUCCESS = "SUCCESS";
+
+	/**
+	 *
+	 */
+	public static String FAILED = "FAILED";
+
+	// TODO If build decided no need build (duplicate run) DISCARTED? SKIPED? with skip comment.
+
 }
