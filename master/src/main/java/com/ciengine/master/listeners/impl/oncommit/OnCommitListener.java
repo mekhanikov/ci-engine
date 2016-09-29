@@ -56,7 +56,7 @@ public class OnCommitListener implements CIEngineListener
 				addBuildRequest.setInputParams(makeString(merge(environmentVariablesFromEvent, onCommitRule.getEnvironmentVariables())));
 				addBuildRequest.setModuleName(module.getName());
 				addBuildRequest.setReasonOfTrigger("commit");
-				addBuildRequest.setBranchName(module.getName());
+				addBuildRequest.setBranchName(onCommitEvent.getBranchName());
 				ciEngineFacade.addBuild(addBuildRequest);
 //				ciEngineFacade.onEvent(onQueueBuildEvent);
 

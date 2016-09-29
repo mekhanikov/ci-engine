@@ -30,7 +30,7 @@ public class OnReleaseListener implements CIEngineListener
 	@Override public void onEvent(CIEngineEvent ciEngineEvent) throws CIEngineListenerException
 	{// TODO Triggered on OnNewArtifactEvent event. And on add OnReleaseRule to DB/mem.
 //		OnNewArtifactEvent onNewArtifactEvent = (OnNewArtifactEvent) ciEngineEvent;
-		Module module = ciEngineFacade.findModuleByGitUrl(((OnNewArtifactEvent) ciEngineEvent).getGitUrl());
+		//Module module = ciEngineFacade.findModuleByGitUrl(((OnNewArtifactEvent) ciEngineEvent).getGitUrl());
 //		if (module == null) {
 //			// TODO add warning?
 //			return;
@@ -52,9 +52,9 @@ public class OnReleaseListener implements CIEngineListener
 				addBuildRequest.setNodeId(null);
 				addBuildRequest.setDockerImageId(onReleaseRule.getDockerImageId());
 				addBuildRequest.setInputParams(makeString(merge(environmentVariablesFromEvent, onReleaseRule.getEnvironmentVariables())));
-				addBuildRequest.setModuleName(module.getName());
+				addBuildRequest.setModuleName(onReleaseRule.getModuleNameToRelease());
 				addBuildRequest.setReasonOfTrigger("commit");
-				addBuildRequest.setBranchName(module.getName());
+				addBuildRequest.setBranchName(onReleaseRule.getModuleNameToRelease());// todo or what?
 				ciEngineFacade.addBuild(addBuildRequest);
 //				ciEngineFacade.onEvent(onQueueBuildEvent);
 
