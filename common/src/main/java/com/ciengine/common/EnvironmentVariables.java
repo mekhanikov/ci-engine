@@ -24,4 +24,8 @@ public class EnvironmentVariables
 	{
 		map.putAll(source);
 	}
+
+	public Map<String, Object> getProperties() {
+		return new HashMap<>(map);
+	}
 }

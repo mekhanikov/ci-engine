@@ -1,8 +1,11 @@
 package com.ciengine.master.listeners.impl.oncommit;
 
-import com.ciengine.common.*;
+import com.ciengine.common.CIEngineEvent;
+import com.ciengine.common.DefaultCIEngineEvent;
+import com.ciengine.common.EnvironmentVariables;
+import com.ciengine.common.Module;
 import com.ciengine.common.events.OnCommitEvent;
-import com.ciengine.common.events.OnQueueBuildEvent;
+import com.ciengine.master.controllers.addbuild.AddBuildRequest;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.listeners.CIEngineListener;
 import com.ciengine.master.listeners.CIEngineListenerException;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,12 +49,16 @@ public class OnCommitListener implements CIEngineListener
 		List<OnCommitRule> onCommitRuleList = getRules();
 		for(OnCommitRule onCommitRule : onCommitRuleList) {
 			if(isApplicable(onCommitRule, onCommitEvent)) {
-				OnQueueBuildEvent onQueueBuildEvent = new OnQueueBuildEvent();
-				onQueueBuildEvent.setBranchName(module.getName());
-				onQueueBuildEvent.setDockerImageId(onCommitRule.getDockerImageId());
-				onQueueBuildEvent.setEnvironmentVariables(merge(environmentVariablesFromEvent, onCommitRule.getEnvironmentVariables()));
-				onQueueBuildEvent.setExecutionList(onCommitRule.getApplyList());
-				ciEngineFacade.onEvent(onQueueBuildEvent);
+				AddBuildRequest addBuildRequest = new AddBuildRequest();
+				addBuildRequest.setExecutionList(onCommitRule.getApplyList());
+				addBuildRequest.setNodeId(null);
+				addBuildRequest.setDockerImageId(onCommitRule.getDockerImageId());
+				addBuildRequest.setInputParams(makeString(merge(environmentVariablesFromEvent, onCommitRule.getEnvironmentVariables())));
+				addBuildRequest.setModuleName(module.getName());
+				addBuildRequest.setReasonOfTrigger("commit");
+				addBuildRequest.setBranchName(module.getName());
+				ciEngineFacade.addBuild(addBuildRequest);
+//				ciEngineFacade.onEvent(onQueueBuildEvent);
 
 //				try
 //				{
@@ -64,6 +72,20 @@ public class OnCommitListener implements CIEngineListener
 		}
 	}
 
+	private String makeString(EnvironmentVariables merge)
+	{
+		StringBuilder stringBuilder = new StringBuilder();
+		if (merge != null && merge.getProperties() != null) {
+			for (Map.Entry<String, Object> kvEntry : merge.getProperties().entrySet()) {
+				stringBuilder.append(kvEntry.getKey());
+				stringBuilder.append("=");
+				stringBuilder.append(kvEntry.getValue());
+				stringBuilder.append("\n");
+			}
+		}
+		return stringBuilder.toString();
+	}
+
 	@Override public boolean isEventApplicable(DefaultCIEngineEvent defaultCIEngineEvent)
 	{
 		return defaultCIEngineEvent != null && defaultCIEngineEvent instanceof OnCommitEvent;
@@ -72,8 +94,15 @@ public class OnCommitListener implements CIEngineListener
 	private EnvironmentVariables merge(EnvironmentVariables environmentVariablesFromEvent,
 			EnvironmentVariables environmentVariables)
 	{
-		// TODO
-		return null;
+		EnvironmentVariables environmentVariablesMerged = new EnvironmentVariables();
+		if (environmentVariablesFromEvent != null && environmentVariablesFromEvent.getProperties() != null) {
+			environmentVariablesMerged.addProperties(environmentVariablesFromEvent.getProperties());
+		}
+		if (environmentVariables != null && environmentVariables.getProperties() != null) {
+			environmentVariablesMerged.addProperties(environmentVariables.getProperties());
+		}
+
+		return environmentVariablesMerged;
 	}
 
 	private boolean isApplicable(OnCommitRule onCommitRule, OnCommitEvent onCommitEvent)
