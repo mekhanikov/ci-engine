@@ -69,7 +69,7 @@ public class OnCommitEventIntegrationTests {
 		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
 		ciEngineFacade.addListener(waitForEventListener);
 		ciEngineFacade.onEvent(onCommitEvent);
-		CIEngineEvent ciEngineEvent = waitForEventListener.waitEvent(15);
+		CIEngineEvent ciEngineEvent = waitForEventListener.waitEvent(150);
 		assertTrue(ciEngineEvent instanceof OnNewArtifactEvent);
 		//System.out.println("Hello World!");
 //		long timeout = 5000;

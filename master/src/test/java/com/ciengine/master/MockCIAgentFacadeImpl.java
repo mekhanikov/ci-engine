@@ -1,5 +1,6 @@
 package com.ciengine.master;
 
+import com.ciengine.common.BuildStatus;
 import com.ciengine.common.CIEngineList;
 import com.ciengine.common.CIEngineStepException;
 import com.ciengine.common.Node;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 /**
@@ -26,14 +28,20 @@ public class MockCIAgentFacadeImpl implements CIAgentFacade
 	@Autowired
 	private GitHubLookupService gitHubLookupServiceImpl;
 
-	private Map<Integer, CIEngineList> map = new HashMap<>();
+	private Map<Integer, Future<String>> map = new HashMap<>();
 
 	@Override
 	public String getStatus(Node node, int id)
 	{
 		String result = "";
-		CIEngineList ciEngineList = map.get(id);
-
+		Future<String> ciEngineList = map.get(id);
+		try {
+			result = ciEngineList.isDone() ? ciEngineList.get() : BuildStatus.IN_PROGRESS;
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
 		return result;
 	}
 
@@ -42,18 +50,16 @@ public class MockCIAgentFacadeImpl implements CIAgentFacade
 	{
 		// todo find list bean by name.
 		CIEngineList ciEngineList = (CIEngineList) applicationContext.getBean(buildModel.getExecutionList());
-		map.put(buildModel.getId(), ciEngineList);
+		Future<String> page = null;
 		try {
-			Future<String> page = gitHubLookupServiceImpl.executeList(ciEngineList);
-			// Wait until they are all done
-			while (!(page.isDone())) {
-				Thread.sleep(10); //10-millisecond pause between each check
-			}
+			page = gitHubLookupServiceImpl.executeList(ciEngineList);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (CIEngineStepException e) {
 			e.printStackTrace();
 		}
+		map.put(buildModel.getId(), page);
+
 	}
 
 }
