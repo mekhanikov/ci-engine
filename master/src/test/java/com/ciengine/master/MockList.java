@@ -17,5 +17,10 @@ public class MockList implements CIEngineList
 	@Override public void doList(EnvironmentVariables environmentVariables) throws CIEngineStepException
 	{
 System.out.print("d");
+		try {
+			Thread.sleep(5);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }
