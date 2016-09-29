@@ -22,5 +22,6 @@ System.out.print("d");
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		throw new CIEngineStepException("");
 	}
 }
