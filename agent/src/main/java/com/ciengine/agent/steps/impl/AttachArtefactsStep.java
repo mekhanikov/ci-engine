@@ -1,7 +1,7 @@
 package com.ciengine.agent.steps.impl;
 
-import com.ciengine.agent.steps.CIEngineStep;
-import com.ciengine.agent.steps.CIEngineStepException;
+import com.ciengine.common.CIEngineStep;
+import com.ciengine.common.CIEngineStepException;
 import com.ciengine.common.CIEngineClient;
 import com.ciengine.common.EnvironmentVariables;
 import org.springframework.beans.factory.annotation.Autowired;

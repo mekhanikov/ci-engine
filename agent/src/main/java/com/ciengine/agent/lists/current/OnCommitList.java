@@ -2,9 +2,9 @@ package com.ciengine.agent.lists.current;
 
 
 
-import com.ciengine.agent.lists.CIEngineList;
-import com.ciengine.agent.steps.CIEngineStep;
-import com.ciengine.agent.steps.CIEngineStepException;
+import com.ciengine.common.CIEngineList;
+import com.ciengine.common.CIEngineStep;
+import com.ciengine.common.CIEngineStepException;
 import com.ciengine.agent.steps.impl.AttachArtefactsStep;
 import com.ciengine.agent.steps.impl.BuildStep;
 import com.ciengine.agent.steps.impl.CheckoutStep;

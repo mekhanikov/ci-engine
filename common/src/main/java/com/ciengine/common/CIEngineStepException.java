@@ -1,4 +1,4 @@
-package com.ciengine.agent.steps;
+package com.ciengine.common;
 
 /**
  * Created by emekhanikov on 05.09.2016.

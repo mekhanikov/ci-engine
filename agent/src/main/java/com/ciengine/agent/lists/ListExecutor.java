@@ -2,8 +2,7 @@ package com.ciengine.agent.lists;
 
 
 import com.ciengine.agent.lists.current.OnCommitList;
-import com.ciengine.agent.steps.CIEngineStepException;
-import com.ciengine.agent.steps.impl.NewArtefactsReleasedStep;
+import com.ciengine.common.CIEngineStepException;
 import com.ciengine.common.EnvironmentVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.AbstractEnvironment;

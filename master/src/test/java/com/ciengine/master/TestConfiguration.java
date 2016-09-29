@@ -21,6 +21,6 @@ public class TestConfiguration
 	@Bean
 	@Primary
 	public CIAgentFacade ciAgentFacade() {
-		return Mockito.mock(CIAgentFacade.class);
+		return new MockCIAgentFacadeImpl();
 	}
 }

@@ -137,7 +137,7 @@ public class OnCommitEventIntegrationTests {
 	{
 		OnCommitRule onCommitRule = new OnCommitRule();
 //		onCommitRule.setDockerImageId();
-//		onCommitRule.setApplyList();
+		onCommitRule.setApplyList("mockList");
 //		onCommitRule.setEnvironmentVariables();
 		onCommitRule.setForBranches(forBranches);
 		onCommitRule.setForModules(forModules);
