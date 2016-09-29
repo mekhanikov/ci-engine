@@ -52,7 +52,7 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 		buildModel.setModuleName(addBuildRequest.getModuleName());
 		buildModel.setNodeId(addBuildRequest.getNodeId());
 		buildModel.setReasonOfTrigger(addBuildRequest.getReasonOfTrigger());
-		buildModel.setStatus("QUEUED");
+		buildModel.setStatus(BuildStatus.QUEUED);
 		buildModel.setStartTimestamp(new Date());
 		buildDao.save(buildModel);
 		return getBuildsResponse;

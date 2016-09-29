@@ -1,5 +1,6 @@
 package com.ciengine.master;
 
+import com.ciengine.common.BuildStatus;
 import com.ciengine.common.Node;
 import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.facades.CIAgentFacade;
@@ -40,7 +41,7 @@ public class BuildRunnerImpl// implements BuildRunner
 		if (buildModel != null) {
 			Node node = nodeFacade.findBestNode();
 			buildModel.setNodeId(node.getId());
-			buildModel.setStatus("IN PROGRESS");
+			buildModel.setStatus(BuildStatus.IN_PROGRESS);
 			buildDao.update(buildModel);
 			ciAgentFacade.run(buildModel, node);
 		}
