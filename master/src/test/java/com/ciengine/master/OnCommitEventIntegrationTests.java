@@ -27,7 +27,7 @@ import static org.junit.Assert.assertTrue;
 @ActiveProfiles("test")
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = TestConfiguration.class)
-public class CityRepositoryIntegrationTests {
+public class OnCommitEventIntegrationTests {
 
 	@Autowired
 	CIEngineFacade ciEngineFacade;
