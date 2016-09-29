@@ -27,5 +27,5 @@ public class BuildStatus
 	public static String FAILED = "FAILED";
 
 	// TODO If build decided no need build (duplicate run) DISCARTED? SKIPED? with skip comment.
-
+// TODO If build was terminated by user TERMINATED
 }
