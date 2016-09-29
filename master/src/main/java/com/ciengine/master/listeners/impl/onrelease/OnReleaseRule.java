@@ -19,4 +19,59 @@ public class OnReleaseRule
 	private String dockerImageId;
 	private EnvironmentVariables environmentVariables;
 
+	public String getModuleNameToRelease() {
+		return moduleNameToRelease;
+	}
+
+	public void setModuleNameToRelease(String moduleNameToRelease) {
+		this.moduleNameToRelease = moduleNameToRelease;
+	}
+
+	public String getMergeFromCommitId() {
+		return mergeFromCommitId;
+	}
+
+	public void setMergeFromCommitId(String mergeFromCommitId) {
+		this.mergeFromCommitId = mergeFromCommitId;
+	}
+
+	public String getReleaseBranchName() {
+		return releaseBranchName;
+	}
+
+	public void setReleaseBranchName(String releaseBranchName) {
+		this.releaseBranchName = releaseBranchName;
+	}
+
+	public String getGoingToRelease() {
+		return goingToRelease;
+	}
+
+	public void setGoingToRelease(String goingToRelease) {
+		this.goingToRelease = goingToRelease;
+	}
+
+	public String getApplyList() {
+		return applyList;
+	}
+
+	public void setApplyList(String applyList) {
+		this.applyList = applyList;
+	}
+
+	public String getDockerImageId() {
+		return dockerImageId;
+	}
+
+	public void setDockerImageId(String dockerImageId) {
+		this.dockerImageId = dockerImageId;
+	}
+
+	public EnvironmentVariables getEnvironmentVariables() {
+		return environmentVariables;
+	}
+
+	public void setEnvironmentVariables(EnvironmentVariables environmentVariables) {
+		this.environmentVariables = environmentVariables;
+	}
 }

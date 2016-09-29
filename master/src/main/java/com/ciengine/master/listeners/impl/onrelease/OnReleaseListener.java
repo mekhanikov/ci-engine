@@ -10,52 +10,49 @@ import com.ciengine.master.controllers.addbuild.AddBuildRequest;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.listeners.CIEngineListener;
 import com.ciengine.master.listeners.CIEngineListenerException;
-import com.ciengine.master.listeners.impl.oncommit.OnCommitRule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 /**
  * Created by emekhanikov on 05.09.2016.
  */
-@Component(value = "OnCommitListener")
+@Component(value = "OnReleaseListener")
 public class OnReleaseListener implements CIEngineListener
 {
 	@Autowired
 	private CIEngineFacade ciEngineFacade;
-	private List<OnCommitRule> rules = new ArrayList<>();
+	private List<OnReleaseRule> rules = new ArrayList<>();
 
 	@Override public void onEvent(CIEngineEvent ciEngineEvent) throws CIEngineListenerException
 	{// TODO Triggered on OnNewArtifactEvent event. And on add OnReleaseRule to DB/mem.
-		OnCommitEvent onCommitEvent = (OnCommitEvent) ciEngineEvent;
+//		OnNewArtifactEvent onNewArtifactEvent = (OnNewArtifactEvent) ciEngineEvent;
 		Module module = ciEngineFacade.findModuleByGitUrl(((OnCommitEvent) ciEngineEvent).getGitUrl());
 		if (module == null) {
 			// TODO add warning?
 			return;
 		}
 		EnvironmentVariables environmentVariablesFromEvent = new EnvironmentVariables();
-		environmentVariablesFromEvent.addProperty("GIT_URL", onCommitEvent.getGitUrl());
-		environmentVariablesFromEvent.addProperty("BRANCH_NAME", onCommitEvent.getBranchName());
-		environmentVariablesFromEvent.addProperty("COMMIT_ID", onCommitEvent.getComitId());
+//		environmentVariablesFromEvent.addProperty("GIT_URL", onNewArtifactEvent.getGitUrl());
+//		environmentVariablesFromEvent.addProperty("BRANCH_NAME", onNewArtifactEvent.getBranchName());
+//		environmentVariablesFromEvent.addProperty("COMMIT_ID", onNewArtifactEvent.getComitId());
 
 		environmentVariablesFromEvent.addProperty("MODULE_NAME", module.getName());
 
 		// TODO set module specific values
 
-		List<OnCommitRule> onCommitRuleList = getRules();
-		for(OnCommitRule onCommitRule : onCommitRuleList) {
-			if(isApplicable(onCommitRule, onCommitEvent)) {
+		List<OnReleaseRule> onReleaseRuleList = getRules();
+		for(OnReleaseRule onReleaseRule : onReleaseRuleList) {
+
 				AddBuildRequest addBuildRequest = new AddBuildRequest();
-				addBuildRequest.setExecutionList(onCommitRule.getApplyList());
+				addBuildRequest.setExecutionList(onReleaseRule.getApplyList());
 				addBuildRequest.setNodeId(null);
-				addBuildRequest.setDockerImageId(onCommitRule.getDockerImageId());
-				addBuildRequest.setInputParams(makeString(merge(environmentVariablesFromEvent, onCommitRule.getEnvironmentVariables())));
+				addBuildRequest.setDockerImageId(onReleaseRule.getDockerImageId());
+				addBuildRequest.setInputParams(makeString(merge(environmentVariablesFromEvent, onReleaseRule.getEnvironmentVariables())));
 				addBuildRequest.setModuleName(module.getName());
 				addBuildRequest.setReasonOfTrigger("commit");
 				addBuildRequest.setBranchName(module.getName());
@@ -70,7 +67,7 @@ public class OnReleaseListener implements CIEngineListener
 //				{
 //					throw new CIEngineListenerException(e);
 //				}
-			}
+
 		}
 	}
 
@@ -107,42 +104,14 @@ public class OnReleaseListener implements CIEngineListener
 		return environmentVariablesMerged;
 	}
 
-	private boolean isApplicable(OnCommitRule onCommitRule, OnCommitEvent onCommitEvent)
-	{
-		Module module = ciEngineFacade.findModuleByGitUrl(onCommitEvent.getGitUrl());
-		if (module == null) {
-			return false;
-		}
-		boolean branchIsApplicable = isMach(onCommitRule.getForBranches(), onCommitEvent.getBranchName());
-		boolean moduleIsApplicable = isMach(onCommitRule.getForModules(), module.getName());
-		return branchIsApplicable && moduleIsApplicable;
-	}
-
-	private boolean isMach(String commaSeparatedRegexps, String stringToMach)
-	{
-		boolean branchIsApplicable = false;
-		String[] branches = commaSeparatedRegexps.split(",");
-		for (String s : branches) {
-			String pattern = "(" + s.trim() + ")";
-			// Create a Pattern object
-			Pattern r = Pattern.compile(pattern);
-			// Now create matcher object.
-			Matcher m = r.matcher(stringToMach);
-			if (m.find()) {
-				branchIsApplicable = true;
-			}
-		}
-		return branchIsApplicable;
-	}
-
-	public List<OnCommitRule> getRules()
+	public List<OnReleaseRule> getRules()
 	{
 		// TODO load from OnCommitListener.csv on each event.
 		// TODO or only on start? because resources inside jar will never be overriten in runtime?
 		return rules;
 	}
 
-	public void setRules(List<OnCommitRule> rules)
+	public void setRules(List<OnReleaseRule> rules)
 	{
 		this.rules = rules;
 	}
