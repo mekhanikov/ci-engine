@@ -46,7 +46,7 @@ public class CityRepositoryIntegrationTests {
 
 		/*
 		Triger on commitEvent to develop of module-a ->
-		- OnCommitListener will find executionList and trigger OnQueueBuildEvent->OnQueueBuildListener -> addBuildToDB
+		- OnCommitListener will find executionList and enqueue build
 		- async in BuildRunnerImpl the build wll be executed on the Node (need mock it, no real node is required)
 		- async in BuildStatusCheckerImpl build status will be changed on success or failed -> BuildFinishedEvent or so.
 		- wait for BuildFinishedEvent for some time (timeout)
