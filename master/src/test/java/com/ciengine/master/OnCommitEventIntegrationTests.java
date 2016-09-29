@@ -11,9 +11,12 @@ import com.ciengine.master.listeners.impl.oncommit.OnCommitRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.IntegrationTest;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +29,10 @@ import static org.junit.Assert.assertTrue;
  */
 @ActiveProfiles("test")
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = TestConfiguration.class)
+//@SpringBootTest(classes = TestConfiguration.class)
+@SpringApplicationConfiguration(classes = TestConfiguration.class)
+@WebAppConfiguration
+@IntegrationTest
 public class OnCommitEventIntegrationTests {
 
 	@Autowired
@@ -69,7 +75,7 @@ public class OnCommitEventIntegrationTests {
 		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
 		ciEngineFacade.addListener(waitForEventListener);
 		ciEngineFacade.onEvent(onCommitEvent);
-		CIEngineEvent ciEngineEvent = waitForEventListener.waitEvent(150);
+		CIEngineEvent ciEngineEvent = waitForEventListener.waitEvent(15);
 		assertTrue(ciEngineEvent instanceof OnNewArtifactEvent);
 		//System.out.println("Hello World!");
 //		long timeout = 5000;

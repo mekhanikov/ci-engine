@@ -1,4 +1,4 @@
-package com.ciengine.agent.client.impl;
+package com.ciengine.common;
 
 
 
@@ -37,7 +37,8 @@ public class CIEngineClientImpl implements CIEngineClient
 
 	@Override public void sendEvent(DefaultCIEngineEvent ciEngineEvent)
 	{
-		final String uri = "http://10.69.36.221:8080/onevent";// TODO to env_var.props
+//		final String uri = "http://10.69.36.221:8080/onevent";// TODO to env_var.props
+		final String uri = "http://192.168.0.103:8080/onevent";// TODO to env_var.props
 
 		OnEventRequest onEventRequest = new OnEventRequest();
 		RestTemplate restTemplate = new RestTemplate();

@@ -49,8 +49,8 @@ public class BuildStatusChecker
 				if (!buildModel.getStatus().equals(s)) {
 					buildModel.setStatus(s);
 					buildDao.update(buildModel);
-					OnNewArtifactEvent onNewArtifactEvent = new OnNewArtifactEvent();
-					ciEngineFacade.onEvent(onNewArtifactEvent);
+//					OnNewArtifactEvent onNewArtifactEvent = new OnNewArtifactEvent();
+//					ciEngineFacade.onEvent(onNewArtifactEvent);
 				}
 				// Finished with status s.
 				log.info(String.valueOf(buildModel));
