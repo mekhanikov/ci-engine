@@ -19,9 +19,9 @@ import java.text.SimpleDateFormat;
  * Created by emekhanikov on 13.09.2016.
  */
 @Component
-public class BuildRunnerImpl// implements BuildRunner
+public class BuildRunner// implements BuildRunner
 {
-	private static final Logger log = LoggerFactory.getLogger(BuildRunnerImpl.class);
+	private static final Logger log = LoggerFactory.getLogger(BuildRunner.class);
 
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 

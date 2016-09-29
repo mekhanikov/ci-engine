@@ -20,9 +20,9 @@ import java.util.List;
  * Created by emekhanikov on 13.09.2016.
  */
 @Component
-public class BuildStatusCheckerImpl
+public class BuildStatusChecker
 {
-	private static final Logger log = LoggerFactory.getLogger(BuildStatusCheckerImpl.class);
+	private static final Logger log = LoggerFactory.getLogger(BuildStatusChecker.class);
 
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
