@@ -26,7 +26,7 @@ import static org.junit.Assert.assertTrue;
  * Mocked master-agent communication.
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.DEFINED_PORT, classes = {Application.class, TestConfiguration.class}, properties = "server.port=8080")
+@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.DEFINED_PORT, classes = {TestConfiguration.class}, properties = "server.port=8080")
 //@SpringBootTest(TestConfiguration.class)
 @EnableAutoConfiguration(exclude = HibernateJpaAutoConfiguration.class)
 public class OnCommitEventIntegrationTests {

@@ -22,7 +22,7 @@ import java.util.concurrent.Executor;
 //@Profile("test")
 @Configuration
 @EnableAsync
-//@Import(Application.class)
+@Import(Application.class)
 //@SpringBootApplication
 //@EnableAutoConfiguration(exclude = HibernateJpaAutoConfiguration.class)
 
