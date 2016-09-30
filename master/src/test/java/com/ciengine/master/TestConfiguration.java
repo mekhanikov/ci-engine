@@ -21,7 +21,7 @@ import java.util.concurrent.Executor;
  */
 //@Profile("test")
 @Configuration
-//@EnableAsync
+@EnableAsync
 //@Import(Application.class)
 //@SpringBootApplication
 //@EnableAutoConfiguration(exclude = HibernateJpaAutoConfiguration.class)
@@ -31,7 +31,7 @@ import java.util.concurrent.Executor;
 //@EnableTransactionManagement
 //@PropertySource(value = { "classpath:application.properties" })
 //@EnableSwagger2
-public class TestConfiguration// extends AsyncConfigurerSupport
+public class TestConfiguration extends AsyncConfigurerSupport
 {
 	@Bean
 	@Primary
@@ -39,14 +39,14 @@ public class TestConfiguration// extends AsyncConfigurerSupport
 		return new MockCIAgentFacadeImpl();
 	}
 
-//	@Override
-//	public Executor getAsyncExecutor() {
-//		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-//		executor.setCorePoolSize(2);
-//		executor.setMaxPoolSize(2);
-//		executor.setQueueCapacity(500);
-//		executor.setThreadNamePrefix("GithubLookup-");
-//		executor.initialize();
-//		return executor;
-//	}
+	@Override
+	public Executor getAsyncExecutor() {
+		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		executor.setCorePoolSize(2);
+		executor.setMaxPoolSize(2);
+		executor.setQueueCapacity(500);
+		executor.setThreadNamePrefix("GithubLookup-");
+		executor.initialize();
+		return executor;
+	}
 }
