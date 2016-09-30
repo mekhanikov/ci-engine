@@ -1,6 +1,9 @@
 package com.ciengine.master;
 
 import com.ciengine.master.dao.BuildDao;
+import com.ciengine.master.facades.CIAgentFacade;
+import com.ciengine.master.facades.CIEngineFacade;
+import com.ciengine.master.facades.CIEngineFacadeImpl;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -15,6 +18,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.scheduling.annotation.AsyncConfigurerSupport;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -76,6 +80,18 @@ public class Application
 		sessionFactory.setHibernateProperties(hibernateProperties());
 		return sessionFactory;
 	}
+
+	@Bean
+	public CIAgentFacade ciAgentFacade() {
+		CIAgentFacade ciAgentFacade = new MockCIAgentFacadeImpl();
+		return ciAgentFacade;
+	}
+
+//	@Bean
+//	public CIEngineFacade ciAgentFacade() {
+//		CIEngineFacade ciEngineFacade = new CIEngineFacadeImpl();
+//		return ciEngineFacade;
+//	}
 
 	@Bean
 	@Autowired

@@ -2,7 +2,6 @@ package com.ciengine.master;
 
 import com.ciengine.common.CIEngineList;
 import com.ciengine.common.CIEngineStepException;
-import org.springframework.scheduling.annotation.AsyncResult;
 
 import java.util.concurrent.Future;
 
