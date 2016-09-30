@@ -2,6 +2,7 @@ package com.ciengine.master;
 
 import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.facades.CIAgentFacade;
+import com.ciengine.master.facades.CIAgentFacadeImpl;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.facades.CIEngineFacadeImpl;
 import org.hibernate.SessionFactory;
@@ -83,7 +84,7 @@ public class Application
 
 	@Bean
 	public CIAgentFacade ciAgentFacade() {
-		CIAgentFacade ciAgentFacade = new MockCIAgentFacadeImpl();
+		CIAgentFacade ciAgentFacade = new CIAgentFacadeImpl();
 		return ciAgentFacade;
 	}
 
