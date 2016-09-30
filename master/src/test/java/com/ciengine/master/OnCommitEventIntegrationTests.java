@@ -11,11 +11,15 @@ import com.ciengine.master.listeners.impl.oncommit.OnCommitRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.ArrayList;
@@ -27,12 +31,10 @@ import static org.junit.Assert.assertTrue;
 /**
  * Mocked master-agent communication.
  */
-@ActiveProfiles("test")
-@RunWith(SpringJUnit4ClassRunner.class)
-//@SpringBootTest(classes = TestConfiguration.class)
-@SpringApplicationConfiguration(classes = TestConfiguration.class)
-@WebAppConfiguration
-@IntegrationTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.DEFINED_PORT, classes = TestConfiguration.class, properties = "server.port=8080")
+//@SpringBootTest(TestConfiguration.class)
+@EnableAutoConfiguration(exclude = HibernateJpaAutoConfiguration.class)
 public class OnCommitEventIntegrationTests {
 
 	@Autowired

@@ -5,16 +5,13 @@ import com.ciengine.common.dto.OnEventResponse;
 import com.ciengine.master.facades.CIEngineFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
  * Created by emekhanikov on 06.09.2016.
  */
-@Controller
+@RestController
 public class OnEventController
 {
 	@Autowired
