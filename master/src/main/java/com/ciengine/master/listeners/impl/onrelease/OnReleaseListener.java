@@ -46,7 +46,7 @@ public class OnReleaseListener implements CIEngineListener
 
 		List<OnReleaseRule> onReleaseRuleList = getRules();
 		for(OnReleaseRule onReleaseRule : onReleaseRuleList) {
-
+// TODO check for dups right here?
 				AddBuildRequest addBuildRequest = new AddBuildRequest();
 				addBuildRequest.setExecutionList(onReleaseRule.getApplyList());
 				addBuildRequest.setNodeId(null);
