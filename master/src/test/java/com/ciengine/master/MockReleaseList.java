@@ -22,6 +22,11 @@ public class MockReleaseList implements CIEngineList
 
 	@Override public void doList(EnvironmentVariables environmentVariables) throws CIEngineStepException
 	{
+		// TODO check if module already relesed -> delete Release from DB (need releaseId in in args)
+		// TODO get list of deps from pom
+		// TODO map them to module-name
+		// TODO check if it is going to release AND not released yet -> SKIP
+
 System.out.print("d");
 		try {
 			Thread.sleep(5);
