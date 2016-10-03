@@ -6,6 +6,7 @@ import com.ciengine.common.Repo;
 import com.ciengine.common.events.OnCommitEvent;
 import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.master.facades.CIEngineFacade;
+import com.ciengine.master.facades.Release;
 import com.ciengine.master.listeners.impl.oncommit.OnCommitListener;
 import com.ciengine.master.listeners.impl.oncommit.OnCommitRule;
 import org.junit.Test;
@@ -138,5 +139,11 @@ public class ReleaseIntegrationTests {
 //		CIAgentFacade ciAgentFacade = Mockito.mock(CIAgentFacade.class);
 //		buildStatusChecker.setCiAgentFacade(ciAgentFacade);
 //		buildRunner.setCiAgentFacade(ciAgentFacade);
+	}
+
+	private void submitRelease(String moduleNameToRelease, String versionToRelease) {
+		Release release = new Release();
+		release.setModuleNameToRelease(moduleNameToRelease);
+		ciEngineFacade.submitRelease(release);
 	}
 }
