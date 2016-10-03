@@ -145,9 +145,14 @@ public class ReleaseIntegrationTests {
 //		buildRunner.setCiAgentFacade(ciAgentFacade);
 	}
 
-	private void submitRelease(String moduleNameToRelease, String goingToRelease) {
+	private void submitRelease(String moduleNameToRelease,
+							   String goingToRelease) {
 		Release release = new Release();
 		release.setModuleNameToRelease(moduleNameToRelease);
+		release.setGoingToRelease(goingToRelease);
+		release.setApplyList("mockReleaseList");
+		release.setMergeFromCommitId("123");
+		release.setReleaseBranchName("release/2.0");
 		ciEngineFacade.submitRelease(release);
 	}
 }
