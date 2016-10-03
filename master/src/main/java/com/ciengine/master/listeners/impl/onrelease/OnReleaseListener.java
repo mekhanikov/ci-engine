@@ -3,8 +3,8 @@ package com.ciengine.master.listeners.impl.onrelease;
 import com.ciengine.common.CIEngineEvent;
 import com.ciengine.common.DefaultCIEngineEvent;
 import com.ciengine.common.EnvironmentVariables;
-import com.ciengine.common.Module;
 import com.ciengine.common.events.OnNewArtifactEvent;
+import com.ciengine.common.events.OnReleaseSubmitedEvent;
 import com.ciengine.master.controllers.addbuild.AddBuildRequest;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.listeners.CIEngineListener;
@@ -86,7 +86,8 @@ public class OnReleaseListener implements CIEngineListener
 
 	@Override public boolean isEventApplicable(DefaultCIEngineEvent defaultCIEngineEvent)
 	{
-		return defaultCIEngineEvent != null && defaultCIEngineEvent instanceof OnNewArtifactEvent;
+		return defaultCIEngineEvent != null &&
+				(defaultCIEngineEvent instanceof OnNewArtifactEvent  || defaultCIEngineEvent instanceof OnReleaseSubmitedEvent);
 	}
 
 	private EnvironmentVariables merge(EnvironmentVariables environmentVariablesFromEvent,
@@ -105,9 +106,7 @@ public class OnReleaseListener implements CIEngineListener
 
 	public List<OnReleaseRule> getRules()
 	{
-		// TODO load from OnCommitListener.csv on each event.
-		// TODO or only on start? because resources inside jar will never be overriten in runtime?
-		return rules;
+		return ciEngineFacade.findAllReleases();
 	}
 
 	public void setRules(List<OnReleaseRule> rules)

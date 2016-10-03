@@ -66,13 +66,13 @@ public class ReleaseIntegrationTests {
 		 */
 	@Test
 	public void test() throws Exception {
-		prepareMocks();
+//		prepareMocks();
 		prepareModules();
-		prepareOnCommitListener();
+//		prepareOnCommitListener();
 
 		submitRelease("ModA:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
-		submitRelease("ModB:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
-		submitRelease("ModC:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
+//		submitRelease("ModB:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
+//		submitRelease("ModC:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 
 		//ciEngineFacade.addListener();
 		OnCommitEvent onCommitEvent = new OnCommitEvent();
@@ -96,31 +96,31 @@ public class ReleaseIntegrationTests {
 	}
 
 
-	private void prepareOnCommitListener()
-	{
-		List<OnCommitRule> onCommitRules = new ArrayList<>();
-		onCommitRules.add(createOnCommitRule("modA", "develop, feature/.*"));
-//		onCommitRules.add(createOnCommitRule("modB", "develop"));
-//		onCommitRules.add(createOnCommitRule("modC", "develop"));
-		onCommitListener.setRules(onCommitRules);
-	}
-
-	private OnCommitRule createOnCommitRule(String forModules, String forBranches)
-	{
-		OnCommitRule onCommitRule = new OnCommitRule();
-//		onCommitRule.setDockerImageId();
-//		onCommitRule.setApplyList();
-//		onCommitRule.setEnvironmentVariables();
-		onCommitRule.setForBranches(forBranches);
-		onCommitRule.setForModules(forModules);
-		return onCommitRule;
-	}
+//	private void prepareOnCommitListener()
+//	{
+//		List<OnCommitRule> onCommitRules = new ArrayList<>();
+//		onCommitRules.add(createOnCommitRule("modA", "develop, feature/.*"));
+////		onCommitRules.add(createOnCommitRule("modB", "develop"));
+////		onCommitRules.add(createOnCommitRule("modC", "develop"));
+//		onCommitListener.setRules(onCommitRules);
+//	}
+//
+//	private OnCommitRule createOnCommitRule(String forModules, String forBranches)
+//	{
+//		OnCommitRule onCommitRule = new OnCommitRule();
+////		onCommitRule.setDockerImageId();
+////		onCommitRule.setApplyList();
+////		onCommitRule.setEnvironmentVariables();
+//		onCommitRule.setForBranches(forBranches);
+//		onCommitRule.setForModules(forModules);
+//		return onCommitRule;
+//	}
 
 	private void prepareModules() {
 		List<Module> moduleList = new ArrayList<>();
 		moduleList.add(createModule("modA", "ssh://git@repo.ru/mod-a"));
 		moduleList.add(createModule("modB", "ssh://git@repo.ru/mod-b"));
-//		moduleList.add(createModule("modC", "ssh://git@repo.ru/mod-c"));
+		moduleList.add(createModule("modC", "ssh://git@repo.ru/mod-c"));
 		ciEngineFacade.setModules(moduleList);
 
 	}

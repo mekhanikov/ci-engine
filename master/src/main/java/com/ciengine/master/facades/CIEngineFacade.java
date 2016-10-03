@@ -4,6 +4,7 @@ import com.ciengine.common.*;
 import com.ciengine.master.controllers.addbuild.AddBuildRequest;
 import com.ciengine.master.controllers.getbuilds.GetBuildsResponse;
 import com.ciengine.master.listeners.CIEngineListener;
+import com.ciengine.master.listeners.impl.onrelease.OnReleaseRule;
 
 import java.util.List;
 
@@ -27,5 +28,9 @@ public interface CIEngineFacade
 
 	void setModules(List<Module> moduleList);
 
+	// TODO extract to ReleseFacade
 	void submitRelease(Release release);
+
+	// TODO extract to ReleseFacade
+    List<OnReleaseRule> findAllReleases();
 }

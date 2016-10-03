@@ -1,12 +1,14 @@
 package com.ciengine.master.facades;
 
 import com.ciengine.common.*;
+import com.ciengine.common.events.OnReleaseSubmitedEvent;
 import com.ciengine.master.controllers.addbuild.AddBuildRequest;
 import com.ciengine.master.controllers.getbuilds.GetBuildsResponse;
 import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.dao.ReleaseDao;
 import com.ciengine.master.listeners.CIEngineListener;
 import com.ciengine.master.listeners.CIEngineListenerException;
+import com.ciengine.master.listeners.impl.onrelease.OnReleaseRule;
 import com.ciengine.master.model.BuildModel;
 import com.ciengine.master.model.ReleaseModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,7 +128,34 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 	@Override
 	public void submitRelease(Release release) {
 		ReleaseModel releaseModel = new ReleaseModel();
+		releaseModel.setModuleNameToRelease(release.getModuleNameToRelease());
+		releaseModel.setGoingToRelease(release.getGoingToRelease());
+		releaseModel.setApplyList(release.getApplyList());
+		releaseModel.setReleaseBranchName(release.getReleaseBranchName());
+		releaseModel.setMergeFromCommitId(release.getMergeFromCommitId());
+		releaseModel.setInputParams(release.getInputParams());
 		releaseDao.save(releaseModel);
+		OnReleaseSubmitedEvent onReleaseSubmitedEvent = new OnReleaseSubmitedEvent();
+		// TODO
+		onEvent(onReleaseSubmitedEvent);
+	}
+
+	@Override
+	public List<OnReleaseRule> findAllReleases() {
+		List<OnReleaseRule> result = new ArrayList<>();
+		List<ReleaseModel> releaseModels = releaseDao.getAll();
+		for (ReleaseModel releaseModel : releaseModels) {
+			OnReleaseRule onReleaseRule = new OnReleaseRule();
+			onReleaseRule.setModuleNameToRelease(releaseModel.getModuleNameToRelease());
+//			onReleaseRule.setEnvironmentVariables(releaseModel.getInputParams()); // TODo parse
+//			onReleaseRule.setDockerImageId(releaseModel.getDockerImageId());// TODO remove?
+			onReleaseRule.setApplyList(releaseModel.getApplyList());
+			onReleaseRule.setGoingToRelease(releaseModel.getGoingToRelease());
+			onReleaseRule.setMergeFromCommitId(releaseModel.getMergeFromCommitId());
+			onReleaseRule.setReleaseBranchName(releaseModel.getReleaseBranchName());
+			result.add(onReleaseRule);
+		}
+		return result;
 	}
 
 	//	public static void main(String[] strings) {
