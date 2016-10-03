@@ -1,6 +1,7 @@
 package com.ciengine.master.dao;
 
 import com.ciengine.master.model.BuildModel;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -12,6 +13,7 @@ import java.util.List;
 /**
  * Created by emekhanikov on 13.09.2016.
  */
+@Component
 public class BuildDao extends AbstractDao<BuildModel>
 {
 	public List<BuildModel> getAll()

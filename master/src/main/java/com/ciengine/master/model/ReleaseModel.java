@@ -1,9 +1,7 @@
 package com.ciengine.master.model;
 
-import com.ciengine.common.EnvironmentVariables;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * Created by emekhanikov on 13.09.2016.

@@ -26,4 +26,6 @@ public interface CIEngineFacade
 	void addListener(CIEngineListener ciEngineListener);
 
 	void setModules(List<Module> moduleList);
+
+	void submitRelease(Release release);
 }

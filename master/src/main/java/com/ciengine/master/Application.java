@@ -102,10 +102,10 @@ public class Application
 		return txManager;
 	}
 
-	@Bean
-	public BuildDao customerDao() {
-		return  new BuildDao();
-	}
+//	@Bean
+//	public BuildDao customerDao() {
+//		return  new BuildDao();
+//	}
 
 
 	@Bean

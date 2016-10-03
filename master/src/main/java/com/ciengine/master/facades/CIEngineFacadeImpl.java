@@ -4,9 +4,11 @@ import com.ciengine.common.*;
 import com.ciengine.master.controllers.addbuild.AddBuildRequest;
 import com.ciengine.master.controllers.getbuilds.GetBuildsResponse;
 import com.ciengine.master.dao.BuildDao;
+import com.ciengine.master.dao.ReleaseDao;
 import com.ciengine.master.listeners.CIEngineListener;
 import com.ciengine.master.listeners.CIEngineListenerException;
 import com.ciengine.master.model.BuildModel;
+import com.ciengine.master.model.ReleaseModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -24,6 +26,9 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 {
 	@Autowired
 	private BuildDao buildDao;
+
+	@Autowired
+	private ReleaseDao releaseDao;
 
 	@Autowired
 	private ApplicationContext applicationContext;
@@ -116,6 +121,12 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 	public void setModules(List<Module> modules)
 	{
 		this.modules = modules;
+	}
+
+	@Override
+	public void submitRelease(Release release) {
+		ReleaseModel releaseModel = new ReleaseModel();
+		releaseDao.save(releaseModel);
 	}
 
 	//	public static void main(String[] strings) {
