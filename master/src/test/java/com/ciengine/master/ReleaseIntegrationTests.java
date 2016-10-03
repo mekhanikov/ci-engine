@@ -65,10 +65,12 @@ public class ReleaseIntegrationTests {
 		- wait for BuildFinishedEvent for some time (timeout)
 		 */
 	@Test
-	public void triggerBuildForModADevelop() throws Exception {
+	public void test() throws Exception {
 		prepareMocks();
 		prepareModules();
 		prepareOnCommitListener();
+
+		submitRelease("ModA:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 
 		//ciEngineFacade.addListener();
 		OnCommitEvent onCommitEvent = new OnCommitEvent();
@@ -141,7 +143,7 @@ public class ReleaseIntegrationTests {
 //		buildRunner.setCiAgentFacade(ciAgentFacade);
 	}
 
-	private void submitRelease(String moduleNameToRelease, String versionToRelease) {
+	private void submitRelease(String moduleNameToRelease, String goingToRelease) {
 		Release release = new Release();
 		release.setModuleNameToRelease(moduleNameToRelease);
 		ciEngineFacade.submitRelease(release);
