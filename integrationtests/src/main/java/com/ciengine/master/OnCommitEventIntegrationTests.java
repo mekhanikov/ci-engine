@@ -6,9 +6,9 @@ import com.ciengine.common.Repo;
 import com.ciengine.common.events.OnCommitEvent;
 import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.master.facades.CIEngineFacade;
-import com.ciengine.master.facades.Release;
 import com.ciengine.master.listeners.impl.oncommit.OnCommitListener;
 import com.ciengine.master.listeners.impl.oncommit.OnCommitRule;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,6 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ import static org.junit.Assert.assertTrue;
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.DEFINED_PORT, classes = {TestConfiguration.class}, properties = "server.port=8080")
 //@SpringBootTest(TestConfiguration.class)
 @EnableAutoConfiguration(exclude = HibernateJpaAutoConfiguration.class)
-public class ReleaseIntegrationTests {
+public class OnCommitEventIntegrationTests {
 
 	@Autowired
 	CIEngineFacade ciEngineFacade;
@@ -46,14 +45,7 @@ public class ReleaseIntegrationTests {
 	Modules:
 	ModA -> ModB, ModC
 	ModB -> ModC
-	Each has release branch
-
-	Task (lives in memory or in DB):
-	Release ModA 2.0
-	Release ModB 2.0
-	Release ModC 2.0
-
-
+	Each has develop branch
 	On commit to develop of ModC -> execute exection list
 	 */
 
@@ -65,14 +57,10 @@ public class ReleaseIntegrationTests {
 		- wait for BuildFinishedEvent for some time (timeout)
 		 */
 	@Test
-	public void test() throws Exception {
-//		prepareMocks();
+	public void triggerBuildForModADevelop() throws Exception {
+		prepareMocks();
 		prepareModules();
-//		prepareOnCommitListener();
-
-		submitRelease("ModC:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
-//		submitRelease("ModB:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
-//		submitRelease("ModA:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
+		prepareOnCommitListener();
 
 		//ciEngineFacade.addListener();
 		OnCommitEvent onCommitEvent = new OnCommitEvent();
@@ -87,7 +75,7 @@ public class ReleaseIntegrationTests {
 		ciEngineFacade.addListener(waitForEventListener);
 		ciEngineFacade.onEvent(onCommitEvent);
 		CIEngineEvent ciEngineEvent = waitForEventListener.waitEvent(15);
-		assertTrue(ciEngineEvent instanceof OnNewArtifactEvent);
+		Assert.assertTrue(ciEngineEvent instanceof OnNewArtifactEvent);
 		//System.out.println("Hello World!");
 //		long timeout = 5000;
 //		DefaultCIEngineEvent defaultCIEngineEvent = waitForEvent(DefaultCIEngineEvent.class, timeout);
@@ -95,32 +83,77 @@ public class ReleaseIntegrationTests {
 //		assertTrue(true);
 	}
 
+	@Test
+	public void triggerBuildForModAFeature() throws Exception {
+		prepareMocks();
+		prepareModules();
+		prepareOnCommitListener();
+		OnCommitEvent onCommitEvent = new OnCommitEvent();
+		onCommitEvent.setBranchName("feature/AA-1234");
+		onCommitEvent.setGitUrl("ssh://git@repo.ru/mod-a");
+		onCommitEvent.setComitId("1234");
+		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
+		ciEngineFacade.addListener(waitForEventListener);
+		ciEngineFacade.onEvent(onCommitEvent);
+		CIEngineEvent ciEngineEvent = waitForEventListener.waitEvent(15);
+		Assert.assertTrue(ciEngineEvent instanceof OnNewArtifactEvent);
+	}
 
-//	private void prepareOnCommitListener()
-//	{
-//		List<OnCommitRule> onCommitRules = new ArrayList<>();
-//		onCommitRules.add(createOnCommitRule("modA", "develop, feature/.*"));
-////		onCommitRules.add(createOnCommitRule("modB", "develop"));
-////		onCommitRules.add(createOnCommitRule("modC", "develop"));
-//		onCommitListener.setRules(onCommitRules);
-//	}
-//
-//	private OnCommitRule createOnCommitRule(String forModules, String forBranches)
-//	{
-//		OnCommitRule onCommitRule = new OnCommitRule();
-////		onCommitRule.setDockerImageId();
-////		onCommitRule.setApplyList();
-////		onCommitRule.setEnvironmentVariables();
-//		onCommitRule.setForBranches(forBranches);
-//		onCommitRule.setForModules(forModules);
-//		return onCommitRule;
-//	}
+	@Test
+	public void dontTriggerBuildForModARelease() throws Exception {
+		prepareModules();
+		prepareOnCommitListener();
+		OnCommitEvent onCommitEvent = new OnCommitEvent();
+		onCommitEvent.setBranchName("release");
+		onCommitEvent.setGitUrl("ssh://git@repo.ru/mod-a");
+		onCommitEvent.setComitId("1234");
+		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
+		ciEngineFacade.addListener(waitForEventListener);
+		ciEngineFacade.onEvent(onCommitEvent);
+		CIEngineEvent ciEngineEvent = waitForEventListener.waitEvent(15);
+		Assert.assertTrue(ciEngineEvent == null);
+	}
+
+	@Test
+	public void dontTriggerBuildForModBDevelop() throws Exception {
+		prepareModules();
+		prepareOnCommitListener();
+		OnCommitEvent onCommitEvent = new OnCommitEvent();
+		onCommitEvent.setBranchName("develop");
+		onCommitEvent.setGitUrl("ssh://git@repo.ru/mod-b");
+		onCommitEvent.setComitId("1234");
+		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
+		ciEngineFacade.addListener(waitForEventListener);
+		ciEngineFacade.onEvent(onCommitEvent);
+		CIEngineEvent ciEngineEvent = waitForEventListener.waitEvent(15);
+		Assert.assertTrue(ciEngineEvent == null);
+	}
+
+	private void prepareOnCommitListener()
+	{
+		List<OnCommitRule> onCommitRules = new ArrayList<>();
+		onCommitRules.add(createOnCommitRule("modA", "develop, feature/.*"));
+//		onCommitRules.add(createOnCommitRule("modB", "develop"));
+//		onCommitRules.add(createOnCommitRule("modC", "develop"));
+		onCommitListener.setRules(onCommitRules);
+	}
+
+	private OnCommitRule createOnCommitRule(String forModules, String forBranches)
+	{
+		OnCommitRule onCommitRule = new OnCommitRule();
+//		onCommitRule.setDockerImageId();
+		onCommitRule.setApplyList("mockList");
+//		onCommitRule.setEnvironmentVariables();
+		onCommitRule.setForBranches(forBranches);
+		onCommitRule.setForModules(forModules);
+		return onCommitRule;
+	}
 
 	private void prepareModules() {
 		List<Module> moduleList = new ArrayList<>();
 		moduleList.add(createModule("modA", "ssh://git@repo.ru/mod-a"));
 		moduleList.add(createModule("modB", "ssh://git@repo.ru/mod-b"));
-		moduleList.add(createModule("modC", "ssh://git@repo.ru/mod-c"));
+//		moduleList.add(createModule("modC", "ssh://git@repo.ru/mod-c"));
 		ciEngineFacade.setModules(moduleList);
 
 	}
@@ -143,16 +176,5 @@ public class ReleaseIntegrationTests {
 //		CIAgentFacade ciAgentFacade = Mockito.mock(CIAgentFacade.class);
 //		buildStatusChecker.setCiAgentFacade(ciAgentFacade);
 //		buildRunner.setCiAgentFacade(ciAgentFacade);
-	}
-
-	private void submitRelease(String moduleNameToRelease,
-							   String goingToRelease) {
-		Release release = new Release();
-		release.setModuleNameToRelease(moduleNameToRelease);
-		release.setGoingToRelease(goingToRelease);
-		release.setApplyList("mockReleaseList");
-		release.setMergeFromCommitId("123");
-		release.setReleaseBranchName("release/2.0");
-		ciEngineFacade.submitRelease(release);
 	}
 }

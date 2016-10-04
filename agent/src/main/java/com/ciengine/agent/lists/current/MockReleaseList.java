@@ -1,4 +1,4 @@
-package com.ciengine.master;
+package com.ciengine.agent.lists.current;
 
 
 
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class MockReleaseList implements CIEngineList
-{
+{// TODO rename to ReleaseList
 	@Autowired
 	private CIEngineClient ciEngineClient;
 

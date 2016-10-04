@@ -16,6 +16,7 @@
     </parent>
     
     <modules>
+        <module>integrationtests</module>
         <module>common</module>
         <module>master</module>
         <module>agent</module>

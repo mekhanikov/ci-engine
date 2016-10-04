@@ -2,9 +2,6 @@ package com.ciengine.master;
 
 import com.ciengine.common.CIEngineEvent;
 import com.ciengine.common.DefaultCIEngineEvent;
-import com.ciengine.common.EnvironmentVariables;
-import com.ciengine.common.events.OnCommitEvent;
-import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.master.listeners.CIEngineListener;
 import com.ciengine.master.listeners.CIEngineListenerException;
 import com.ciengine.master.listeners.impl.oncommit.OnCommitRule;
