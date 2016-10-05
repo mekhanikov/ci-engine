@@ -1,9 +1,6 @@
 package com.ciengine.master;
 
-import com.ciengine.common.BuildStatus;
-import com.ciengine.common.CIEngineList;
-import com.ciengine.common.CIEngineStepException;
-import com.ciengine.common.Node;
+import com.ciengine.common.*;
 import com.ciengine.master.facades.CIAgentFacade;
 import com.ciengine.master.model.BuildModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,11 +45,17 @@ public class MockCIAgentFacadeImpl implements CIAgentFacade
 	@Override
 	public void run(BuildModel buildModel, Node node)
 	{
-		// todo find list bean by name.
 		CIEngineList ciEngineList = (CIEngineList) applicationContext.getBean(buildModel.getExecutionList());
+		EnvironmentVariables environmentVariables = new EnvironmentVariables();
+		String[] lines = buildModel.getInputParams().split("\n");
+		for (String line : lines) {
+			String[] keyValue = line.split("=");
+			environmentVariables.addProperty(keyValue[0], keyValue[1]);
+		}
+
 		Future<String> page = null;
 		try {
-			page = gitHubLookupServiceImpl.executeList(ciEngineList);
+			page = gitHubLookupServiceImpl.executeList(ciEngineList, environmentVariables);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (CIEngineStepException e) {

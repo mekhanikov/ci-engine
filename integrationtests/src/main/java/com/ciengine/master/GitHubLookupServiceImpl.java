@@ -3,6 +3,7 @@ package com.ciengine.master;
 import com.ciengine.common.BuildStatus;
 import com.ciengine.common.CIEngineList;
 import com.ciengine.common.CIEngineStepException;
+import com.ciengine.common.EnvironmentVariables;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
@@ -16,9 +17,9 @@ import java.util.concurrent.Future;
 public class GitHubLookupServiceImpl implements GitHubLookupService {
 
     @Async
-    public Future<String> executeList(CIEngineList ciEngineList)  {
+    public Future<String> executeList(CIEngineList ciEngineList, EnvironmentVariables environmentVariables)  {
         try {
-            ciEngineList.doList(null);
+            ciEngineList.doList(environmentVariables);
             return new AsyncResult<>(BuildStatus.SUCCESS);
         } catch (CIEngineStepException e) {
             e.printStackTrace();

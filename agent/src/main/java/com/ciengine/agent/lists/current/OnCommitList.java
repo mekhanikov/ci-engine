@@ -2,14 +2,12 @@ package com.ciengine.agent.lists.current;
 
 
 
-import com.ciengine.common.CIEngineList;
-import com.ciengine.common.CIEngineStep;
-import com.ciengine.common.CIEngineStepException;
+import com.ciengine.common.*;
 import com.ciengine.agent.steps.impl.AttachArtefactsStep;
 import com.ciengine.agent.steps.impl.BuildStep;
 import com.ciengine.agent.steps.impl.CheckoutStep;
 import com.ciengine.agent.steps.impl.NewArtefactsReleasedStep;
-import com.ciengine.common.EnvironmentVariables;
+import com.ciengine.common.events.OnNewArtifactEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,6 +30,9 @@ public class OnCommitList implements CIEngineList
 	@Autowired
 	private NewArtefactsReleasedStep newArtefactsReleasedStep;
 
+	@Autowired
+	private CIEngineClient ciEngineClient;
+
 	@Override public void doList(EnvironmentVariables environmentVariables) throws CIEngineStepException
 	{
 		/*
@@ -46,6 +47,22 @@ public class OnCommitList implements CIEngineList
 		environmentVariables.addProperty("BUILD_STATUS", "OK"); // TODO or ciEngineClient.setBuildStatus(); ?
 		executeStep(attachArtefactsStep, environmentVariables);
 		executeStep(newArtefactsReleasedStep, environmentVariables);
+
+		try {
+			Thread.sleep(5);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		//throw new CIEngineStepException("");
+		OnNewArtifactEvent onNewArtifactEvent = new OnNewArtifactEvent();
+
+//		String gitUrl = environmentVariables.getProperty("GIT_URL");
+//		String branchName = environmentVariables.getProperty("BRANCH_NAME");
+//		String commitId = environmentVariables.getProperty("COMMIT_ID");
+//		onNewArtifactEvent.setComitId(commitId);
+//		onNewArtifactEvent.setGitUrl(gitUrl);
+//		onNewArtifactEvent.setBranchName(branchName);
+		ciEngineClient.sendEvent(onNewArtifactEvent);
 	}
 
 	private void executeStep(CIEngineStep checkoutStep, EnvironmentVariables environmentVariables) throws CIEngineStepException
