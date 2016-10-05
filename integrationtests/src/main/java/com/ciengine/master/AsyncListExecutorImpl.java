@@ -14,7 +14,7 @@ import java.util.concurrent.Future;
  * Created by evgenymekhanikov on 29.09.16.
  */
 @Service
-public class GitHubLookupServiceImpl implements GitHubLookupService {
+public class AsyncListExecutorImpl implements AsyncListExecutor {
 
     @Async
     public Future<String> executeList(CIEngineList ciEngineList, EnvironmentVariables environmentVariables)  {

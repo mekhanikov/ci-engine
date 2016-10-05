@@ -9,6 +9,6 @@ import java.util.concurrent.Future;
 /**
  * Created by evgenymekhanikov on 29.09.16.
  */
-public interface GitHubLookupService {
+interface AsyncListExecutor {
     public Future<String> executeList(CIEngineList ciEngineList, EnvironmentVariables environmentVariables) throws InterruptedException, CIEngineStepException;
 }

@@ -6,6 +6,8 @@ import com.ciengine.master.model.BuildModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+import org.springframework.util.xml.StaxUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +25,7 @@ public class MockCIAgentFacadeImpl implements CIAgentFacade
 	private ApplicationContext applicationContext;
 
 	@Autowired
-	private GitHubLookupService gitHubLookupServiceImpl;
+	private AsyncListExecutor asyncListExecutorImpl;
 
 	private Map<Integer, Future<String>> map = new HashMap<>();
 
@@ -47,15 +49,22 @@ public class MockCIAgentFacadeImpl implements CIAgentFacade
 	{
 		CIEngineList ciEngineList = (CIEngineList) applicationContext.getBean(buildModel.getExecutionList());
 		EnvironmentVariables environmentVariables = new EnvironmentVariables();
-		String[] lines = buildModel.getInputParams().split("\n");
-		for (String line : lines) {
-			String[] keyValue = line.split("=");
-			environmentVariables.addProperty(keyValue[0], keyValue[1]);
+		if (!StringUtils.isEmpty(buildModel.getInputParams())) {
+			String[] lines = buildModel.getInputParams().split("\n");
+			for (String line : lines) {
+				if (!StringUtils.isEmpty(line)) {
+					String[] keyValue = line.split("=");
+					String key = keyValue.length > 0 ? keyValue[0] : "";
+					String value = keyValue.length > 1 ? keyValue[1] : "";
+					environmentVariables.addProperty(key, value);
+				}
+			}
 		}
+
 
 		Future<String> page = null;
 		try {
-			page = gitHubLookupServiceImpl.executeList(ciEngineList, environmentVariables);
+			page = asyncListExecutorImpl.executeList(ciEngineList, environmentVariables);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (CIEngineStepException e) {
