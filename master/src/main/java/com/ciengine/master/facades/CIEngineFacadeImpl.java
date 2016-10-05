@@ -11,13 +11,14 @@ import com.ciengine.master.listeners.CIEngineListenerException;
 import com.ciengine.master.listeners.impl.onrelease.OnReleaseRule;
 import com.ciengine.master.model.BuildModel;
 import com.ciengine.master.model.ReleaseModel;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-
 
 /**
  * Created by emekhanikov on 14.09.2016.
@@ -26,6 +27,9 @@ import java.util.*;
 @Component
 public class CIEngineFacadeImpl implements CIEngineFacade
 {
+//	private static final Logger LOG = Logger.getLogger(CIEngineFacadeImpl.class.getName());
+	private static final Log logger = LogFactory.getLog(CIEngineFacadeImpl.class);
+
 	@Autowired
 	private BuildDao buildDao;
 
@@ -67,6 +71,7 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 
 	@Override public void onEvent(DefaultCIEngineEvent defaultCIEngineEvent)
 	{
+		logger.debug("defaultCIEngineEvent: " + defaultCIEngineEvent);
 		Map<String, CIEngineListener> stringCIEngineListenerMap = applicationContext.getBeansOfType(CIEngineListener.class);
 		if (stringCIEngineListenerMap != null) {
 			Collection<CIEngineListener> ciEngineListenerCollection = stringCIEngineListenerMap.values();

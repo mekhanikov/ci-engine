@@ -99,4 +99,47 @@ public class OnReleaseSubmitedEvent extends DefaultCIEngineEvent
 	{
 		this.buildId = buildId;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		OnReleaseSubmitedEvent that = (OnReleaseSubmitedEvent) o;
+
+		if (groupId != null ? !groupId.equals(that.groupId) : that.groupId != null) return false;
+		if (artifactId != null ? !artifactId.equals(that.artifactId) : that.artifactId != null) return false;
+		if (deployVersion != null ? !deployVersion.equals(that.deployVersion) : that.deployVersion != null)
+			return false;
+		if (gitUrl != null ? !gitUrl.equals(that.gitUrl) : that.gitUrl != null) return false;
+		if (comitId != null ? !comitId.equals(that.comitId) : that.comitId != null) return false;
+		if (branchName != null ? !branchName.equals(that.branchName) : that.branchName != null) return false;
+		return buildId != null ? buildId.equals(that.buildId) : that.buildId == null;
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result = groupId != null ? groupId.hashCode() : 0;
+		result = 31 * result + (artifactId != null ? artifactId.hashCode() : 0);
+		result = 31 * result + (deployVersion != null ? deployVersion.hashCode() : 0);
+		result = 31 * result + (gitUrl != null ? gitUrl.hashCode() : 0);
+		result = 31 * result + (comitId != null ? comitId.hashCode() : 0);
+		result = 31 * result + (branchName != null ? branchName.hashCode() : 0);
+		result = 31 * result + (buildId != null ? buildId.hashCode() : 0);
+		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "OnReleaseSubmitedEvent{" +
+				"groupId='" + groupId + '\'' +
+				", artifactId='" + artifactId + '\'' +
+				", deployVersion='" + deployVersion + '\'' +
+				", gitUrl='" + gitUrl + '\'' +
+				", comitId='" + comitId + '\'' +
+				", branchName='" + branchName + '\'' +
+				", buildId='" + buildId + '\'' +
+				'}';
+	}
 }

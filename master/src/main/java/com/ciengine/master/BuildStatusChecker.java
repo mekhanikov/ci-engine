@@ -7,8 +7,8 @@ import com.ciengine.master.facades.CIAgentFacade;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.facades.NodeFacade;
 import com.ciengine.master.model.BuildModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -22,7 +22,8 @@ import java.util.List;
 @Component
 public class BuildStatusChecker
 {
-	private static final Logger log = LoggerFactory.getLogger(BuildStatusChecker.class);
+	private static final Log logger = LogFactory.getLog(BuildStatusChecker.class);
+
 
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
@@ -53,7 +54,7 @@ public class BuildStatusChecker
 //					ciEngineFacade.onEvent(onNewArtifactEvent);
 				}
 				// Finished with status s.
-				log.info(String.valueOf(buildModel));
+				logger.info(String.valueOf(buildModel));
 			}
 		}
 	}

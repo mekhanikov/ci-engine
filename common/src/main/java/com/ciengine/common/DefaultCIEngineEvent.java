@@ -18,16 +18,5 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "type")
 public class DefaultCIEngineEvent implements CIEngineEvent
 {
-			private String s;
 
-
-	public String getS()
-	{
-		return s;
-	}
-
-	public void setS(String s)
-	{
-		this.s = s;
-	}
 }

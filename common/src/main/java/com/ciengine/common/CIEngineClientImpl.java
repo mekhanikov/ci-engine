@@ -7,8 +7,6 @@ import com.ciengine.common.CIEngineEvent;
 import com.ciengine.common.DefaultCIEngineEvent;
 import com.ciengine.common.dto.OnEventRequest;
 import com.ciengine.common.dto.OnEventResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
@@ -58,7 +56,6 @@ public class CIEngineClientImpl implements CIEngineClient
 	public static class LoggingRequestInterceptor implements ClientHttpRequestInterceptor
 	{
 
-		private static final Logger log = LoggerFactory.getLogger(LoggingRequestInterceptor.class);
 
 		@Override
 		public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws
