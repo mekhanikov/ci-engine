@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-import org.springframework.util.xml.StaxUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,9 +35,7 @@ public class MockCIAgentFacadeImpl implements CIAgentFacade
 		Future<String> ciEngineList = map.get(id);
 		try {
 			result = ciEngineList.isDone() ? ciEngineList.get() : BuildStatus.IN_PROGRESS;
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
+		} catch (InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
 		return result;
@@ -65,9 +62,7 @@ public class MockCIAgentFacadeImpl implements CIAgentFacade
 		Future<String> page = null;
 		try {
 			page = asyncListExecutorImpl.executeList(ciEngineList, environmentVariables);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (CIEngineStepException e) {
+		} catch (InterruptedException | CIEngineStepException e) {
 			e.printStackTrace();
 		}
 		map.put(buildModel.getId(), page);
