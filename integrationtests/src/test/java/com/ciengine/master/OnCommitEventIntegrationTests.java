@@ -21,8 +21,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
-
 
 /**
  * Mocked master-agent communication.
@@ -83,7 +81,7 @@ public class OnCommitEventIntegrationTests {
 //		assertTrue(true);
 	}
 
-	@Test
+	//@Test
 	public void triggerBuildForModAFeature() throws Exception {
 		prepareMocks();
 		prepareModules();
@@ -114,7 +112,7 @@ public class OnCommitEventIntegrationTests {
 		Assert.assertTrue(ciEngineEvent == null);
 	}
 
-	@Test
+	//@Test
 	public void dontTriggerBuildForModBDevelop() throws Exception {
 		prepareModules();
 		prepareOnCommitListener();
