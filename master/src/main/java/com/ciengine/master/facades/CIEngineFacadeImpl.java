@@ -163,6 +163,17 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 		return result;
 	}
 
+	@Override
+	public List<BuildModel> findBuild(AddBuildRequest addBuildRequest) {
+		return buildDao.find(
+				addBuildRequest.getModuleName(),
+				addBuildRequest.getBranchName(),
+				addBuildRequest.getExecutionList(),
+				addBuildRequest.getDockerImageId(),
+				addBuildRequest.getInputParams()
+				);
+	}
+
 	//	public static void main(String[] strings) {
 	//
 	//	}

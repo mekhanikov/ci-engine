@@ -5,6 +5,7 @@ import com.ciengine.master.controllers.addbuild.AddBuildRequest;
 import com.ciengine.master.controllers.getbuilds.GetBuildsResponse;
 import com.ciengine.master.listeners.CIEngineListener;
 import com.ciengine.master.listeners.impl.onrelease.OnReleaseRule;
+import com.ciengine.master.model.BuildModel;
 
 import java.util.List;
 
@@ -33,4 +34,6 @@ public interface CIEngineFacade
 
 	// TODO extract to ReleseFacade
     List<OnReleaseRule> findAllReleases();
+
+	List<BuildModel> findBuild(AddBuildRequest addBuildRequest);
 }

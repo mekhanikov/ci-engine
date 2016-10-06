@@ -9,6 +9,7 @@ import com.ciengine.master.controllers.addbuild.AddBuildRequest;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.listeners.CIEngineListener;
 import com.ciengine.master.listeners.CIEngineListenerException;
+import com.ciengine.master.model.BuildModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -55,7 +56,12 @@ public class OnReleaseListener implements CIEngineListener
 				addBuildRequest.setModuleName(onReleaseRule.getModuleNameToRelease());
 				addBuildRequest.setReasonOfTrigger("commit");
 				addBuildRequest.setBranchName(onReleaseRule.getModuleNameToRelease());// todo or what?
+			List<BuildModel> buildModels = ciEngineFacade.findBuild(addBuildRequest);
+			if (buildModels == null || buildModels.size() == 0) {
 				ciEngineFacade.addBuild(addBuildRequest);
+			}
+
+
 //				ciEngineFacade.onEvent(onQueueBuildEvent);
 
 //				try

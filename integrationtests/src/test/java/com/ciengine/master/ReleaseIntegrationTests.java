@@ -70,6 +70,7 @@ public class ReleaseIntegrationTests {
 //		prepareOnCommitListener();
 
 		submitRelease("ModC:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
+		submitRelease("ModC:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 //		submitRelease("ModB:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 //		submitRelease("ModA:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 
