@@ -57,6 +57,7 @@ public class OnReleaseListener implements CIEngineListener
 				addBuildRequest.setReasonOfTrigger("commit");
 				addBuildRequest.setBranchName(onReleaseRule.getModuleNameToRelease());// todo or what?
 			List<BuildModel> buildModels = ciEngineFacade.findBuild(addBuildRequest);
+			// TODO If build (with the latest startTimestamp?) is skipped - rebuild
 			if (buildModels == null || buildModels.size() == 0) {
 				ciEngineFacade.addBuild(addBuildRequest);
 			}
