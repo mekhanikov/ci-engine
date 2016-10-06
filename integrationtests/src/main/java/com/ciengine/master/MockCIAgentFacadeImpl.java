@@ -33,11 +33,14 @@ public class MockCIAgentFacadeImpl implements CIAgentFacade
 	{
 		String result = "";
 		Future<String> ciEngineList = map.get(id);
-		try {
-			result = ciEngineList.isDone() ? ciEngineList.get() : BuildStatus.IN_PROGRESS;
-		} catch (InterruptedException | ExecutionException e) {
-			e.printStackTrace();
+		if (ciEngineList != null) {
+			try {
+				result = ciEngineList.isDone() ? ciEngineList.get() : BuildStatus.IN_PROGRESS;
+			} catch (InterruptedException | ExecutionException e) {
+				e.printStackTrace();
+			}
 		}
+
 		return result;
 	}
 

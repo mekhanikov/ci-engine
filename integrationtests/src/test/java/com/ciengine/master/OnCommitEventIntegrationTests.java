@@ -79,9 +79,12 @@ public class OnCommitEventIntegrationTests {
 //		DefaultCIEngineEvent defaultCIEngineEvent = waitForEvent(DefaultCIEngineEvent.class, timeout);
 //		System.out.println("Hello World!");
 //		assertTrue(true);
+		// TODO Added pause because it is posible situation when even OnNewArtifactEvent is sitll sending to other listeners and in next test will recive event created in current.
+		// TODO better to wait for some event but which one? no active builds? All events had been sent to all listeners?
+		Thread.sleep(1000);
 	}
 
-	//@Test
+	@Test
 	public void triggerBuildForModAFeature() throws Exception {
 		prepareMocks();
 		prepareModules();
@@ -95,6 +98,9 @@ public class OnCommitEventIntegrationTests {
 		ciEngineFacade.onEvent(onCommitEvent);
 		CIEngineEvent ciEngineEvent = waitForEventListener.waitEvent(15);
 		Assert.assertTrue(ciEngineEvent instanceof OnNewArtifactEvent);
+		// TODO Added pause because it is posible situation when even OnNewArtifactEvent is sitll sending to other listeners and in next test will recive event created in current.
+		// TODO better to wait for some event but which one? no active builds? All events had been sent to all listeners?
+		Thread.sleep(1000);
 	}
 
 	@Test
@@ -112,7 +118,7 @@ public class OnCommitEventIntegrationTests {
 		Assert.assertTrue(ciEngineEvent == null);
 	}
 
-	//@Test
+	@Test
 	public void dontTriggerBuildForModBDevelop() throws Exception {
 		prepareModules();
 		prepareOnCommitListener();
