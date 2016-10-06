@@ -48,18 +48,7 @@ public class MockCIAgentFacadeImpl implements CIAgentFacade
 	public void run(BuildModel buildModel, Node node)
 	{
 		CIEngineList ciEngineList = (CIEngineList) applicationContext.getBean(buildModel.getExecutionList());
-		EnvironmentVariables environmentVariables = new EnvironmentVariables();
-		if (!StringUtils.isEmpty(buildModel.getInputParams())) {
-			String[] lines = buildModel.getInputParams().split("\n");
-			for (String line : lines) {
-				if (!StringUtils.isEmpty(line)) {
-					String[] keyValue = line.split("=");
-					String key = keyValue.length > 0 ? keyValue[0] : "";
-					String value = keyValue.length > 1 ? keyValue[1] : "";
-					environmentVariables.addProperty(key, value);
-				}
-			}
-		}
+		EnvironmentVariables environmentVariables = getEnvironmentVariables(buildModel.getInputParams());
 
 
 		Future<String> page = null;
@@ -71,5 +60,19 @@ public class MockCIAgentFacadeImpl implements CIAgentFacade
 		map.put(buildModel.getId(), page);
 
 	}
-
+	protected EnvironmentVariables getEnvironmentVariables(String inputParams) {
+		EnvironmentVariables environmentVariables = new EnvironmentVariables();
+		if (!StringUtils.isEmpty(inputParams)) {
+			String[] lines = inputParams.split("\n");
+			for (String line : lines) {
+				if (!StringUtils.isEmpty(line)) {
+					String[] keyValue = line.split("=");
+					String key = keyValue.length > 0 ? keyValue[0] : "";
+					String value = keyValue.length > 1 ? keyValue[1] : "";
+					environmentVariables.addProperty(key, value);
+				}
+			}
+		}
+		return environmentVariables;
+	}
 }

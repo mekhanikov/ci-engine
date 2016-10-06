@@ -153,6 +153,7 @@ public class ReleaseIntegrationTests {
 		release.setApplyList("mockReleaseList");
 		release.setMergeFromCommitId("123");
 		release.setReleaseBranchName("release/2.0");
+		release.setDockerImageId("");
 		ciEngineFacade.submitRelease(release);
 	}
 }

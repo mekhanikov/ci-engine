@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 
@@ -139,6 +140,7 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 		releaseModel.setReleaseBranchName(release.getReleaseBranchName());
 		releaseModel.setMergeFromCommitId(release.getMergeFromCommitId());
 		releaseModel.setInputParams(release.getInputParams());
+		releaseModel.setDockerImageId(release.getDockerImageId());
 		releaseDao.save(releaseModel);
 		OnReleaseSubmitedEvent onReleaseSubmitedEvent = new OnReleaseSubmitedEvent();
 		// TODO
@@ -152,8 +154,8 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 		for (ReleaseModel releaseModel : releaseModels) {
 			OnReleaseRule onReleaseRule = new OnReleaseRule();
 			onReleaseRule.setModuleNameToRelease(releaseModel.getModuleNameToRelease());
-//			onReleaseRule.setEnvironmentVariables(releaseModel.getInputParams()); // TODo parse
-//			onReleaseRule.setDockerImageId(releaseModel.getDockerImageId());// TODO remove?
+			onReleaseRule.setEnvironmentVariables(getEnvironmentVariables(releaseModel.getInputParams()));
+			onReleaseRule.setDockerImageId(releaseModel.getDockerImageId());
 			onReleaseRule.setApplyList(releaseModel.getApplyList());
 			onReleaseRule.setGoingToRelease(releaseModel.getGoingToRelease());
 			onReleaseRule.setMergeFromCommitId(releaseModel.getMergeFromCommitId());
@@ -174,6 +176,21 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 				);
 	}
 
+	protected EnvironmentVariables getEnvironmentVariables(String inputParams) {
+		EnvironmentVariables environmentVariables = new EnvironmentVariables();
+		if (!StringUtils.isEmpty(inputParams)) {
+			String[] lines = inputParams.split("\n");
+			for (String line : lines) {
+				if (!StringUtils.isEmpty(line)) {
+					String[] keyValue = line.split("=");
+					String key = keyValue.length > 0 ? keyValue[0] : "";
+					String value = keyValue.length > 1 ? keyValue[1] : "";
+					environmentVariables.addProperty(key, value);
+				}
+			}
+		}
+		return environmentVariables;
+	}
 	//	public static void main(String[] strings) {
 	//
 	//	}
