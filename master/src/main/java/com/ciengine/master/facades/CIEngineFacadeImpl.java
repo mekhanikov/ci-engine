@@ -67,6 +67,7 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 		buildModel.setReasonOfTrigger(addBuildRequest.getReasonOfTrigger());
 		buildModel.setStatus(BuildStatus.QUEUED);
 		buildModel.setStartTimestamp(new Date());
+		buildModel.setExternalId(addBuildRequest.getExternalId());
 		buildDao.save(buildModel);
 		return getBuildsResponse;
 	}

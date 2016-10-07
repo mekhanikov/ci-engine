@@ -35,6 +35,7 @@ public class BuildModel
 	private String reasonOfTrigger;
 	private String summary;
 	private String log;
+	private String externalId;
 //			artifacts
 
 
@@ -178,47 +179,47 @@ public class BuildModel
 		this.log = log;
 	}
 
-	@Override public boolean equals(Object o)
-	{
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
+
+	public void setExternalId(String externalId) {
+		this.externalId = externalId;
+	}
+
+	public String getExternalId() {
+		return externalId;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
 		BuildModel that = (BuildModel) o;
 
-		if (id != that.id)
-			return false;
+		if (id != that.id) return false;
 		if (startTimestamp != null ? !startTimestamp.equals(that.startTimestamp) : that.startTimestamp != null)
 			return false;
-		if (endTimestamp != null ? !endTimestamp.equals(that.endTimestamp) : that.endTimestamp != null)
-			return false;
-		if (inputParams != null ? !inputParams.equals(that.inputParams) : that.inputParams != null)
-			return false;
+		if (endTimestamp != null ? !endTimestamp.equals(that.endTimestamp) : that.endTimestamp != null) return false;
+		if (inputParams != null ? !inputParams.equals(that.inputParams) : that.inputParams != null) return false;
 		if (inputParamsHash != null ? !inputParamsHash.equals(that.inputParamsHash) : that.inputParamsHash != null)
 			return false;
-		if (moduleName != null ? !moduleName.equals(that.moduleName) : that.moduleName != null)
-			return false;
-		if (branchName != null ? !branchName.equals(that.branchName) : that.branchName != null)
-			return false;
+		if (moduleName != null ? !moduleName.equals(that.moduleName) : that.moduleName != null) return false;
+		if (branchName != null ? !branchName.equals(that.branchName) : that.branchName != null) return false;
 		if (executionList != null ? !executionList.equals(that.executionList) : that.executionList != null)
 			return false;
 		if (dockerImageId != null ? !dockerImageId.equals(that.dockerImageId) : that.dockerImageId != null)
 			return false;
-		if (Status != null ? !Status.equals(that.Status) : that.Status != null)
-			return false;
-		if (nodeId != null ? !nodeId.equals(that.nodeId) : that.nodeId != null)
-			return false;
+		if (Status != null ? !Status.equals(that.Status) : that.Status != null) return false;
+		if (nodeId != null ? !nodeId.equals(that.nodeId) : that.nodeId != null) return false;
 		if (reasonOfTrigger != null ? !reasonOfTrigger.equals(that.reasonOfTrigger) : that.reasonOfTrigger != null)
 			return false;
-		if (summary != null ? !summary.equals(that.summary) : that.summary != null)
-			return false;
-		return log != null ? log.equals(that.log) : that.log == null;
+		if (summary != null ? !summary.equals(that.summary) : that.summary != null) return false;
+		if (log != null ? !log.equals(that.log) : that.log != null) return false;
+		return externalId != null ? externalId.equals(that.externalId) : that.externalId == null;
 
 	}
 
-	@Override public int hashCode()
-	{
+	@Override
+	public int hashCode() {
 		int result = id;
 		result = 31 * result + (startTimestamp != null ? startTimestamp.hashCode() : 0);
 		result = 31 * result + (endTimestamp != null ? endTimestamp.hashCode() : 0);
@@ -233,11 +234,12 @@ public class BuildModel
 		result = 31 * result + (reasonOfTrigger != null ? reasonOfTrigger.hashCode() : 0);
 		result = 31 * result + (summary != null ? summary.hashCode() : 0);
 		result = 31 * result + (log != null ? log.hashCode() : 0);
+		result = 31 * result + (externalId != null ? externalId.hashCode() : 0);
 		return result;
 	}
 
-	@Override public String toString()
-	{
+	@Override
+	public String toString() {
 		return "BuildModel{" +
 				"id=" + id +
 				", startTimestamp=" + startTimestamp +
@@ -253,6 +255,7 @@ public class BuildModel
 				", reasonOfTrigger='" + reasonOfTrigger + '\'' +
 				", summary='" + summary + '\'' +
 				", log='" + log + '\'' +
+				", externalId='" + externalId + '\'' +
 				'}';
 	}
 }

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,14 +50,19 @@ public class OnCommitListener implements CIEngineListener
 		List<OnCommitRule> onCommitRuleList = getRules();
 		for(OnCommitRule onCommitRule : onCommitRuleList) {
 			if(isApplicable(onCommitRule, onCommitEvent)) {
+				EnvironmentVariables environmentVariablesFromEventTmp = new EnvironmentVariables();
+				environmentVariablesFromEventTmp.addProperties(environmentVariablesFromEvent.getProperties());
+				String buildExternalId = UUID.randomUUID().toString();
+				environmentVariablesFromEventTmp.addProperty("BUILD_EXTERNAL_ID", buildExternalId);
 				AddBuildRequest addBuildRequest = new AddBuildRequest();
 				addBuildRequest.setExecutionList(onCommitRule.getApplyList());
 				addBuildRequest.setNodeId(null);
 				addBuildRequest.setDockerImageId(onCommitRule.getDockerImageId());
-				addBuildRequest.setInputParams(makeString(merge(environmentVariablesFromEvent, onCommitRule.getEnvironmentVariables())));
+				addBuildRequest.setInputParams(makeString(merge(environmentVariablesFromEventTmp, onCommitRule.getEnvironmentVariables())));
 				addBuildRequest.setModuleName(module.getName());
 				addBuildRequest.setReasonOfTrigger("commit");
 				addBuildRequest.setBranchName(onCommitEvent.getBranchName());
+				addBuildRequest.setExternalId(buildExternalId);
 				ciEngineFacade.addBuild(addBuildRequest);
 //				ciEngineFacade.onEvent(onQueueBuildEvent);
 

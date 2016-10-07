@@ -21,6 +21,7 @@ public class AddBuildRequest
 	private String dockerImageId;
 	private String nodeId;//Executed on node id (null if Status: queued) - doesn't makes sense
 	private String reasonOfTrigger;
+	private String externalId;
 
 
 	public String getInputParams()
@@ -91,5 +92,13 @@ public class AddBuildRequest
 	public void setReasonOfTrigger(String reasonOfTrigger)
 	{
 		this.reasonOfTrigger = reasonOfTrigger;
+	}
+
+	public void setExternalId(String externalId) {
+		this.externalId = externalId;
+	}
+
+	public String getExternalId() {
+		return externalId;
 	}
 }
