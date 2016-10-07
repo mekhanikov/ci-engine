@@ -8,4 +8,6 @@ public interface CIEngineClient
 	void attachArtefacts(String buildId, String files);
 
 	void sendEvent(DefaultCIEngineEvent ciEngineEvent);
+
+    void setBuildStatus(String buildId, String skiped);
 }

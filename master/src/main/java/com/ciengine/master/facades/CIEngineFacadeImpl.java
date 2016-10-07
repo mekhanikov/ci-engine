@@ -1,6 +1,7 @@
 package com.ciengine.master.facades;
 
 import com.ciengine.common.*;
+import com.ciengine.common.dto.SetBuildStatusRequest;
 import com.ciengine.common.events.OnReleaseSubmitedEvent;
 import com.ciengine.master.controllers.addbuild.AddBuildRequest;
 import com.ciengine.master.controllers.getbuilds.GetBuildsResponse;
@@ -174,6 +175,11 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 				addBuildRequest.getDockerImageId(),
 				addBuildRequest.getInputParams()
 				);
+	}
+
+	@Override
+	public void setBuildStatus(SetBuildStatusRequest setBuildStatusRequest) {
+
 	}
 
 	protected EnvironmentVariables getEnvironmentVariables(String inputParams) {

@@ -55,7 +55,8 @@ public class BuildDao extends AbstractDao<BuildModel>
 				" AND o.branchName=:branchName" +
 				" AND o.executionList=:executionList" +
 				" AND o.dockerImageId=:dockerImageId" +
-				" AND o.inputParams=:inputParams")
+				" AND o.inputParams=:inputParams" +
+				" ORDER BY o.startTimestamp")
 				.setParameter( "moduleName", moduleName )
 				.setParameter( "branchName", branchName )
 				.setParameter( "executionList", executionList )

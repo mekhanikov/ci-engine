@@ -1,5 +1,6 @@
 package com.ciengine.master.listeners.impl.onrelease;
 
+import com.ciengine.common.BuildStatus;
 import com.ciengine.common.CIEngineEvent;
 import com.ciengine.common.DefaultCIEngineEvent;
 import com.ciengine.common.EnvironmentVariables;
@@ -57,8 +58,10 @@ public class OnReleaseListener implements CIEngineListener
 				addBuildRequest.setReasonOfTrigger("commit");
 				addBuildRequest.setBranchName(onReleaseRule.getModuleNameToRelease());// todo or what?
 			List<BuildModel> buildModels = ciEngineFacade.findBuild(addBuildRequest);
+
 			// TODO If build (with the latest startTimestamp?) is skipped - rebuild
-			if (buildModels == null || buildModels.size() == 0) {
+			String lastBuildStatus = buildModels != null && buildModels.size() > 0 ? buildModels.get(0).getStatus() : null;
+			if (lastBuildStatus == null || BuildStatus.SKIPED.equals(lastBuildStatus)) {
 				ciEngineFacade.addBuild(addBuildRequest);
 			}
 

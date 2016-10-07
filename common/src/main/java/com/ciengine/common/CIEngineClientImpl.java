@@ -7,6 +7,8 @@ import com.ciengine.common.CIEngineEvent;
 import com.ciengine.common.DefaultCIEngineEvent;
 import com.ciengine.common.dto.OnEventRequest;
 import com.ciengine.common.dto.OnEventResponse;
+import com.ciengine.common.dto.SetBuildStatusRequest;
+import com.ciengine.common.dto.SetBuildStatusResponse;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
@@ -51,6 +53,25 @@ public class CIEngineClientImpl implements CIEngineClient
 		HttpEntity<CIEngineEvent> entity = new HttpEntity<CIEngineEvent>(ciEngineEvent, headers);
 		restTemplate.setRequestFactory(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
 		OnEventResponse result = restTemplate.postForObject( uri, entity, OnEventResponse.class);
+	}
+
+	@Override
+	public void setBuildStatus(String buildId, String skiped) {
+		final String uri = "http://127.0.0.1:8080/setbuildstatus";// TODO to env_var.props
+
+		SetBuildStatusRequest setBuildStatusRequest = new SetBuildStatusRequest();
+		RestTemplate restTemplate = new RestTemplate();
+		//set interceptors/requestFactory
+		ClientHttpRequestInterceptor ri = new LoggingRequestInterceptor();
+		List<ClientHttpRequestInterceptor> ris = new ArrayList<ClientHttpRequestInterceptor>();
+		ris.add(ri);
+		restTemplate.setInterceptors(ris);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		HttpEntity<SetBuildStatusRequest> entity = new HttpEntity<>(setBuildStatusRequest, headers);
+		restTemplate.setRequestFactory(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
+		SetBuildStatusResponse result = restTemplate.postForObject( uri, entity, SetBuildStatusResponse.class);
 	}
 
 	public static class LoggingRequestInterceptor implements ClientHttpRequestInterceptor

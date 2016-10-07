@@ -26,6 +26,11 @@ public class BuildStatus
 	 */
 	public static String FAILED = "FAILED";
 
+	/**
+	 *
+	 */
+	public static String SKIPED = "SKIPED";
+
 	// TODO If build decided no need build (duplicate run) DISCARTED? SKIPED? with skip comment.
 // TODO If build was terminated by user TERMINATED
 	// TODO or one state FINISHED (= SUCCESS | FAILED | SKIPED | TERMINATED)?

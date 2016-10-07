@@ -2,10 +2,7 @@ package com.ciengine.agent.lists.current;
 
 
 
-import com.ciengine.common.CIEngineClient;
-import com.ciengine.common.CIEngineList;
-import com.ciengine.common.CIEngineStepException;
-import com.ciengine.common.EnvironmentVariables;
+import com.ciengine.common.*;
 import com.ciengine.common.events.OnNewArtifactEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -39,9 +36,11 @@ System.out.print("d");
 		String gitUrl = environmentVariables.getProperty("GIT_URL");
 		String branchName = environmentVariables.getProperty("BRANCH_NAME");
 		String commitId = environmentVariables.getProperty("COMMIT_ID");
+		String buildId = environmentVariables.getProperty("BUILD_ID");
 		onNewArtifactEvent.setComitId(commitId);
 		onNewArtifactEvent.setGitUrl(gitUrl);
 		onNewArtifactEvent.setBranchName(branchName);
 		ciEngineClient.sendEvent(onNewArtifactEvent);
+		ciEngineClient.setBuildStatus(buildId, BuildStatus.SKIPED);
 	}
 }
