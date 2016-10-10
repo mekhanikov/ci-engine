@@ -14,15 +14,15 @@ public class SetBuildStatusRequest
 {
 //	@XmlAttribute(name = "sss")
 
-	private String buildId;
+	private String externalBuildId;
 	private String status;
 
-	public String getBuildId() {
-		return buildId;
+	public String getExternalBuildId() {
+		return externalBuildId;
 	}
 
-	public void setBuildId(String buildId) {
-		this.buildId = buildId;
+	public void setExternalBuildId(String externalBuildId) {
+		this.externalBuildId = externalBuildId;
 	}
 
 	public String getStatus() {

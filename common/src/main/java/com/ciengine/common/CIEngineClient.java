@@ -9,5 +9,5 @@ public interface CIEngineClient
 
 	void sendEvent(DefaultCIEngineEvent ciEngineEvent);
 
-    void setBuildStatus(String buildId, String skiped);
+    void setBuildStatus(String externalBuildId, String status);
 }

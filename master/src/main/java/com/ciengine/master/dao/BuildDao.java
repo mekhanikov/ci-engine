@@ -67,4 +67,12 @@ public class BuildDao extends AbstractDao<BuildModel>
 		List result = query.getResultList();
 		return result;
 	}
+
+	public BuildModel findByExternalId(String externalId) {
+		Query query = openSession().createQuery("from build as o where o.externalId=:externalId")
+				.setParameter( "externalId", externalId );
+//		query.setFirstResult(0);
+//		query.setMaxResults(1);
+		return (BuildModel) query.getSingleResult();
+	}
 }

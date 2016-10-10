@@ -56,10 +56,12 @@ public class CIEngineClientImpl implements CIEngineClient
 	}
 
 	@Override
-	public void setBuildStatus(String buildId, String skiped) {
+	public void setBuildStatus(String externalBuildId, String status) {
 		final String uri = "http://127.0.0.1:8080/setbuildstatus";// TODO to env_var.props
 
 		SetBuildStatusRequest setBuildStatusRequest = new SetBuildStatusRequest();
+		setBuildStatusRequest.setExternalBuildId(externalBuildId);
+		setBuildStatusRequest.setStatus(status);
 		RestTemplate restTemplate = new RestTemplate();
 		//set interceptors/requestFactory
 		ClientHttpRequestInterceptor ri = new LoggingRequestInterceptor();

@@ -180,7 +180,9 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 
 	@Override
 	public void setBuildStatus(SetBuildStatusRequest setBuildStatusRequest) {
-
+// TODO
+		BuildModel buildModel = buildDao.findByExternalId(setBuildStatusRequest.getExternalBuildId());
+		buildModel.setStatus(setBuildStatusRequest.getStatus());
 	}
 
 	protected EnvironmentVariables getEnvironmentVariables(String inputParams) {
