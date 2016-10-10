@@ -60,12 +60,13 @@ public class OnReleaseListener implements CIEngineListener
 				addBuildRequest.setBranchName(onReleaseRule.getModuleNameToRelease());// todo or what?
 			List<BuildModel> buildModels = ciEngineFacade.findBuild(addBuildRequest);
 
-			// TODO If build (with the latest startTimestamp?) is skipped - rebuild
+			// If build (with the latest startTimestamp?) is skipped - rebuild
 			String lastBuildStatus = buildModels != null && buildModels.size() > 0 ? buildModels.get(0).getStatus() : null;
 			if (lastBuildStatus == null || BuildStatus.SKIPED.equals(lastBuildStatus)) {
 				String buildExternalId = UUID.randomUUID().toString();
 				addBuildRequest.setExternalId(buildExternalId);
 				environmentVariablesFromEvent.addProperty("BUILD_EXTERNAL_ID", buildExternalId);
+				environmentVariablesFromEvent.addProperty("GOING_TO_RELEASE", onReleaseRule.getGoingToRelease());
 				addBuildRequest.setInputParams(makeString(merge(environmentVariablesFromEvent, onReleaseRule.getEnvironmentVariables())));
 				ciEngineFacade.addBuild(addBuildRequest);
 			}

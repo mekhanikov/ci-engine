@@ -37,6 +37,7 @@ System.out.print("d");
 		String branchName = environmentVariables.getProperty("BRANCH_NAME");
 		String commitId = environmentVariables.getProperty("COMMIT_ID");
 		String buildId = environmentVariables.getProperty("BUILD_EXTERNAL_ID");
+		String goingToRelease = environmentVariables.getProperty("GOING_TO_RELEASE");
 		onNewArtifactEvent.setComitId(commitId);
 		onNewArtifactEvent.setGitUrl(gitUrl);
 		onNewArtifactEvent.setBranchName(branchName);

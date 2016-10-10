@@ -17,129 +17,78 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class OnReleaseSubmitedEvent extends DefaultCIEngineEvent
 {
-	private String groupId;
-	private String artifactId;
-	private String deployVersion;
+	private int id;
 
-	// FROM OnComitEvent
-	private String gitUrl;
-	private String comitId;
-	private String branchName;
+	private String moduleNameToRelease;
+	private String mergeFromCommitId; // commit it (e.g. on develop branch) from it merge to release.
+	private String releaseBranchName; // e.g. release/2.0
 
-	private String buildId;
+	private String goingToRelease; // list of modules. Used by list, if it see module depends on some modu;es from list
+	private String applyList;
+	private String dockerImageId;
+	private String inputParams; // strigified EnvironmentVariables
 
-	//private String time;// ????
-
-	public String getGroupId()
-	{
-		return groupId;
+	public int getId() {
+		return id;
 	}
 
-	public void setGroupId(String groupId)
-	{
-		this.groupId = groupId;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public String getArtifactId()
-	{
-		return artifactId;
+	public String getModuleNameToRelease() {
+		return moduleNameToRelease;
 	}
 
-	public void setArtifactId(String artifactId)
-	{
-		this.artifactId = artifactId;
+	public void setModuleNameToRelease(String moduleNameToRelease) {
+		this.moduleNameToRelease = moduleNameToRelease;
 	}
 
-	public String getDeployVersion()
-	{
-		return deployVersion;
+	public String getMergeFromCommitId() {
+		return mergeFromCommitId;
 	}
 
-	public void setDeployVersion(String deployVersion)
-	{
-		this.deployVersion = deployVersion;
+	public void setMergeFromCommitId(String mergeFromCommitId) {
+		this.mergeFromCommitId = mergeFromCommitId;
 	}
 
-	public String getGitUrl()
-	{
-		return gitUrl;
+	public String getReleaseBranchName() {
+		return releaseBranchName;
 	}
 
-	public void setGitUrl(String gitUrl)
-	{
-		this.gitUrl = gitUrl;
+	public void setReleaseBranchName(String releaseBranchName) {
+		this.releaseBranchName = releaseBranchName;
 	}
 
-	public String getComitId()
-	{
-		return comitId;
+	public String getGoingToRelease() {
+		return goingToRelease;
 	}
 
-	public void setComitId(String comitId)
-	{
-		this.comitId = comitId;
+	public void setGoingToRelease(String goingToRelease) {
+		this.goingToRelease = goingToRelease;
 	}
 
-	public String getBranchName()
-	{
-		return branchName;
+	public String getApplyList() {
+		return applyList;
 	}
 
-	public void setBranchName(String branchName)
-	{
-		this.branchName = branchName;
+	public void setApplyList(String applyList) {
+		this.applyList = applyList;
 	}
 
-	public String getBuildId()
-	{
-		return buildId;
+	public String getDockerImageId() {
+		return dockerImageId;
 	}
 
-	public void setBuildId(String buildId)
-	{
-		this.buildId = buildId;
+	public void setDockerImageId(String dockerImageId) {
+		this.dockerImageId = dockerImageId;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-
-		OnReleaseSubmitedEvent that = (OnReleaseSubmitedEvent) o;
-
-		if (groupId != null ? !groupId.equals(that.groupId) : that.groupId != null) return false;
-		if (artifactId != null ? !artifactId.equals(that.artifactId) : that.artifactId != null) return false;
-		if (deployVersion != null ? !deployVersion.equals(that.deployVersion) : that.deployVersion != null)
-			return false;
-		if (gitUrl != null ? !gitUrl.equals(that.gitUrl) : that.gitUrl != null) return false;
-		if (comitId != null ? !comitId.equals(that.comitId) : that.comitId != null) return false;
-		if (branchName != null ? !branchName.equals(that.branchName) : that.branchName != null) return false;
-		return buildId != null ? buildId.equals(that.buildId) : that.buildId == null;
-
+	public String getInputParams() {
+		return inputParams;
 	}
 
-	@Override
-	public int hashCode() {
-		int result = groupId != null ? groupId.hashCode() : 0;
-		result = 31 * result + (artifactId != null ? artifactId.hashCode() : 0);
-		result = 31 * result + (deployVersion != null ? deployVersion.hashCode() : 0);
-		result = 31 * result + (gitUrl != null ? gitUrl.hashCode() : 0);
-		result = 31 * result + (comitId != null ? comitId.hashCode() : 0);
-		result = 31 * result + (branchName != null ? branchName.hashCode() : 0);
-		result = 31 * result + (buildId != null ? buildId.hashCode() : 0);
-		return result;
-	}
-
-	@Override
-	public String toString() {
-		return "OnReleaseSubmitedEvent{" +
-				"groupId='" + groupId + '\'' +
-				", artifactId='" + artifactId + '\'' +
-				", deployVersion='" + deployVersion + '\'' +
-				", gitUrl='" + gitUrl + '\'' +
-				", comitId='" + comitId + '\'' +
-				", branchName='" + branchName + '\'' +
-				", buildId='" + buildId + '\'' +
-				'}';
+	public void setInputParams(String inputParams) {
+		this.inputParams = inputParams;
 	}
 }

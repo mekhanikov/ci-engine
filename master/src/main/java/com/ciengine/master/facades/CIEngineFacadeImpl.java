@@ -145,6 +145,7 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 		releaseModel.setDockerImageId(release.getDockerImageId());
 		releaseDao.save(releaseModel);
 		OnReleaseSubmitedEvent onReleaseSubmitedEvent = new OnReleaseSubmitedEvent();
+        onReleaseSubmitedEvent.setGoingToRelease(releaseModel.getGoingToRelease());
 		// TODO
 		onEvent(onReleaseSubmitedEvent);
 	}
