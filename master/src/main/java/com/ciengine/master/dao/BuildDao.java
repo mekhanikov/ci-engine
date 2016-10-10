@@ -55,13 +55,13 @@ public class BuildDao extends AbstractDao<BuildModel>
 				" AND o.branchName=:branchName" +
 				" AND o.executionList=:executionList" +
 				" AND o.dockerImageId=:dockerImageId" +
-				" AND o.inputParams=:inputParams" +
-				" ORDER BY o.startTimestamp")
+//				" AND o.inputParams=:inputParams" +
+				" ORDER BY o.startTimestamp DESC")
 				.setParameter( "moduleName", moduleName )
 				.setParameter( "branchName", branchName )
 				.setParameter( "executionList", executionList )
-				.setParameter( "dockerImageId", dockerImageId )
-				.setParameter( "inputParams", inputParams );
+				.setParameter( "dockerImageId", dockerImageId );
+				//.setParameter( "inputParams", inputParams ); // TODO use hash?
 //		query.setFirstResult(0);
 //		query.setMaxResults(1);
 		List result = query.getResultList();
