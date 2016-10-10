@@ -6,9 +6,11 @@ import com.ciengine.common.Module;
 import com.ciengine.common.Repo;
 import com.ciengine.common.events.OnCommitEvent;
 import com.ciengine.common.events.OnNewArtifactEvent;
+import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.facades.Release;
 import com.ciengine.master.listeners.impl.oncommit.OnCommitListener;
+import com.ciengine.master.model.BuildModel;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,6 +42,9 @@ public class ReleaseIntegrationTests {
 	@Autowired
 	OnCommitListener onCommitListener;
 
+	@Autowired
+	BuildDao buildDao;
+
 	/*
 	Test data:
 	Modules:
@@ -70,33 +75,17 @@ public class ReleaseIntegrationTests {
 //		prepareOnCommitListener();
 
 		submitRelease("ModC:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
-		Thread.sleep(1000);
+		Thread.sleep(6000);
 		submitRelease("ModC:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
-		Thread.sleep(1000);
+		Thread.sleep(6000);
 		submitRelease("ModC:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
-		Thread.sleep(1000);
+		Thread.sleep(6000);
 //		submitRelease("ModB:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 //		submitRelease("ModA:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
-
-		//ciEngineFacade.addListener();
-		OnCommitEvent onCommitEvent = new OnCommitEvent();
-//		AddBuildRequest addBuildRequest = new AddBuildRequest();
-//		addBuildRequest.setNodeId("1");
-		onCommitEvent.setBranchName("develop");
-		onCommitEvent.setGitUrl("ssh://git@repo.ru/mod-a");
-		onCommitEvent.setComitId("1234");
-
-//		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
-		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
-		ciEngineFacade.addListener(waitForEventListener);
-		ciEngineFacade.onEvent(onCommitEvent);
-		CIEngineEvent ciEngineEvent = waitForEventListener.waitEvent(15);
-		Assert.assertTrue(ciEngineEvent instanceof OnNewArtifactEvent);
-		//System.out.println("Hello World!");
-//		long timeout = 5000;
-//		DefaultCIEngineEvent defaultCIEngineEvent = waitForEvent(DefaultCIEngineEvent.class, timeout);
-//		System.out.println("Hello World!");
-//		assertTrue(true);
+		List<BuildModel> buildModels = buildDao.getAll();
+		for (BuildModel buildModel : buildModels) {
+			System.out.println(buildModel);
+		}
 	}
 
 
