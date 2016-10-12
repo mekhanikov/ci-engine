@@ -19,6 +19,7 @@ public class AttachArtefactsStep implements CIEngineStep
 		//Don't need to change HASH because dont change state of the build.
 		String buildId = environmentVariables.getProperty(EnvironmentVariablesConstants.BUILD_EXTERNAL_ID);
 		String files = environmentVariables.getProperty(EnvironmentVariablesConstants.ATTACH_FILES);
-		ciEngineClient.attachArtefacts(buildId, files);
+		String url = environmentVariables.getProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL);
+		ciEngineClient.attachArtefacts(url, buildId, files);
 	}
 }

@@ -61,4 +61,8 @@ public class EnvironmentVariablesConstants
 	 */
 	public static final String RELEASE_BRANCH_NAME = "RELEASE_BRANCH_NAME";
 
+	/**
+	 *
+	 */
+    public static final String CIENGINE_MASTER_URL = "CIENGINE_MASTER_URL";
 }

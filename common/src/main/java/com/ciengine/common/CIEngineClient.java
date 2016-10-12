@@ -5,11 +5,11 @@ package com.ciengine.common;
  */
 public interface CIEngineClient
 {
-	void attachArtefacts(String buildId, String files);
+	void attachArtefacts(String serverUrl, String buildId, String files);
 
-	void sendEvent(DefaultCIEngineEvent ciEngineEvent);
+	void sendEvent(String serverUrl, DefaultCIEngineEvent ciEngineEvent);
 
-    void setBuildStatus(String externalBuildId, String status);
+    void setBuildStatus(String serverUrl, String externalBuildId, String status);
 
-    boolean isModuleReleased(String moduleNameToRelease);
+    boolean isModuleReleased(String serverUrl, String moduleNameToRelease);
 }

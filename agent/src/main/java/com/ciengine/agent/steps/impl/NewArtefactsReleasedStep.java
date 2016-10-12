@@ -22,9 +22,10 @@ public class NewArtefactsReleasedStep implements CIEngineStep
 		String gitUrl = environmentVariables.getProperty(EnvironmentVariablesConstants.GIT_URL);
 		String branchName = environmentVariables.getProperty(EnvironmentVariablesConstants.BRANCH_NAME);
 		String commitId = environmentVariables.getProperty(EnvironmentVariablesConstants.COMMIT_ID);
+		String url = environmentVariables.getProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL);
 		onNewArtifactEvent.setComitId(commitId);
 		onNewArtifactEvent.setGitUrl(gitUrl);
 		onNewArtifactEvent.setBranchName(branchName);
-		ciEngineClient.sendEvent(onNewArtifactEvent);
+		ciEngineClient.sendEvent(url, onNewArtifactEvent);
 	}
 }

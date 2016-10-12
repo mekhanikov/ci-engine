@@ -25,8 +25,9 @@ public class MockReleaseList implements CIEngineList
 		String buildId = environmentVariables.getProperty(EnvironmentVariablesConstants.BUILD_EXTERNAL_ID);
 		String goingToRelease = environmentVariables.getProperty(EnvironmentVariablesConstants.GOING_TO_RELEASE);
 		String moduleNameToRelease = environmentVariables.getProperty(EnvironmentVariablesConstants.MODULE_NAME);
+		String url = environmentVariables.getProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL);
 
-		if (!ciEngineClient.isModuleReleased(moduleNameToRelease)) {
+		if (!ciEngineClient.isModuleReleased(url, moduleNameToRelease)) {
 			// TODO read deps from pom.xml
 			// Map each dep artefact to module (each module can be related to multiple artefacts).
 			// Check if the module in list of going to release.
@@ -53,7 +54,7 @@ System.out.print("d");
 		onNewArtifactEvent.setComitId(commitId);
 		onNewArtifactEvent.setGitUrl(gitUrl);
 		onNewArtifactEvent.setBranchName(branchName);
-		ciEngineClient.sendEvent(onNewArtifactEvent);
-		ciEngineClient.setBuildStatus(buildId, BuildStatus.SKIPED);
+		ciEngineClient.sendEvent(url, onNewArtifactEvent);
+		ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SKIPED);
 	}
 }

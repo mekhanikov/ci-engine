@@ -29,13 +29,13 @@ import java.util.List;
 @Component
 public class CIEngineClientImpl implements CIEngineClient
 {// TODO 1. Used by Agents/Slaves to send events to Master.
-	@Override public void attachArtefacts(String buildId, String files)
+	@Override public void attachArtefacts(String serverUrl, String buildId, String files)
 	{
 
 
 	}
 
-	@Override public void sendEvent(DefaultCIEngineEvent ciEngineEvent)
+	@Override public void sendEvent(String serverUrl, DefaultCIEngineEvent ciEngineEvent)
 	{
 //		final String uri = "http://10.69.36.221:8080/onevent";// TODO to env_var.props
 		final String uri = "http://127.0.0.1:8080/onevent";// TODO to env_var.props
@@ -57,7 +57,7 @@ public class CIEngineClientImpl implements CIEngineClient
 	}
 
 	@Override
-	public void setBuildStatus(String externalBuildId, String status) {
+	public void setBuildStatus(String serverUrl, String externalBuildId, String status) {
 		final String uri = "http://127.0.0.1:8080/setbuildstatus";// TODO to env_var.props
 
 		SetBuildStatusRequest setBuildStatusRequest = new SetBuildStatusRequest();
@@ -80,7 +80,7 @@ public class CIEngineClientImpl implements CIEngineClient
 	}
 
 	@Override
-	public boolean isModuleReleased(String moduleNameToRelease) {
+	public boolean isModuleReleased(String serverUrl, String moduleNameToRelease) {
 		// TODO
 		return false;
 	}
