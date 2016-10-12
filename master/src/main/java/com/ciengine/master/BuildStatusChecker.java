@@ -1,7 +1,6 @@
 package com.ciengine.master;
 
 import com.ciengine.common.Node;
-import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.facades.CIAgentFacade;
 import com.ciengine.master.facades.CIEngineFacade;

@@ -27,77 +27,70 @@ public class OnNewArtifactEvent  extends DefaultCIEngineEvent
 	private String branchName;
 
 	private String buildId;
+	private String moduleName;
 
-	//private String time;// ????
-
-	public String getGroupId()
-	{
+	public String getGroupId() {
 		return groupId;
 	}
 
-	public void setGroupId(String groupId)
-	{
+	public void setGroupId(String groupId) {
 		this.groupId = groupId;
 	}
 
-	public String getArtifactId()
-	{
+	public String getArtifactId() {
 		return artifactId;
 	}
 
-	public void setArtifactId(String artifactId)
-	{
+	public void setArtifactId(String artifactId) {
 		this.artifactId = artifactId;
 	}
 
-	public String getDeployVersion()
-	{
+	public String getDeployVersion() {
 		return deployVersion;
 	}
 
-	public void setDeployVersion(String deployVersion)
-	{
+	public void setDeployVersion(String deployVersion) {
 		this.deployVersion = deployVersion;
 	}
 
-	public String getGitUrl()
-	{
+	public String getGitUrl() {
 		return gitUrl;
 	}
 
-	public void setGitUrl(String gitUrl)
-	{
+	public void setGitUrl(String gitUrl) {
 		this.gitUrl = gitUrl;
 	}
 
-	public String getComitId()
-	{
+	public String getComitId() {
 		return comitId;
 	}
 
-	public void setComitId(String comitId)
-	{
+	public void setComitId(String comitId) {
 		this.comitId = comitId;
 	}
 
-	public String getBranchName()
-	{
+	public String getBranchName() {
 		return branchName;
 	}
 
-	public void setBranchName(String branchName)
-	{
+	public void setBranchName(String branchName) {
 		this.branchName = branchName;
 	}
 
-	public String getBuildId()
-	{
+	public String getBuildId() {
 		return buildId;
 	}
 
-	public void setBuildId(String buildId)
-	{
+	public void setBuildId(String buildId) {
 		this.buildId = buildId;
+	}
+
+	public String getModuleName() {
+		return moduleName;
+	}
+
+	public void setModuleName(String moduleName) {
+		this.moduleName = moduleName;
 	}
 
 	@Override
@@ -114,7 +107,8 @@ public class OnNewArtifactEvent  extends DefaultCIEngineEvent
 		if (gitUrl != null ? !gitUrl.equals(that.gitUrl) : that.gitUrl != null) return false;
 		if (comitId != null ? !comitId.equals(that.comitId) : that.comitId != null) return false;
 		if (branchName != null ? !branchName.equals(that.branchName) : that.branchName != null) return false;
-		return buildId != null ? buildId.equals(that.buildId) : that.buildId == null;
+		if (buildId != null ? !buildId.equals(that.buildId) : that.buildId != null) return false;
+		return moduleName != null ? moduleName.equals(that.moduleName) : that.moduleName == null;
 
 	}
 
@@ -127,6 +121,7 @@ public class OnNewArtifactEvent  extends DefaultCIEngineEvent
 		result = 31 * result + (comitId != null ? comitId.hashCode() : 0);
 		result = 31 * result + (branchName != null ? branchName.hashCode() : 0);
 		result = 31 * result + (buildId != null ? buildId.hashCode() : 0);
+		result = 31 * result + (moduleName != null ? moduleName.hashCode() : 0);
 		return result;
 	}
 
@@ -140,6 +135,7 @@ public class OnNewArtifactEvent  extends DefaultCIEngineEvent
 				", comitId='" + comitId + '\'' +
 				", branchName='" + branchName + '\'' +
 				", buildId='" + buildId + '\'' +
+				", moduleName='" + moduleName + '\'' +
 				'}';
 	}
 }

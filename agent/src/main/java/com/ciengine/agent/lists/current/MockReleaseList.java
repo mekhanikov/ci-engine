@@ -56,6 +56,7 @@ System.out.print("d");
 		onNewArtifactEvent.setComitId(commitId);
 		onNewArtifactEvent.setGitUrl(gitUrl);
 		onNewArtifactEvent.setBranchName(branchName);
+		onNewArtifactEvent.setModuleName(moduleNameToRelease);
 		ciEngineClient.sendEvent(url, onNewArtifactEvent);
 		ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SKIPED);
 	}

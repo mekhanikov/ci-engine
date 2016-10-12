@@ -5,12 +5,7 @@ import com.ciengine.common.DefaultCIEngineEvent;
 import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.master.listeners.CIEngineListener;
 import com.ciengine.master.listeners.CIEngineListenerException;
-import com.ciengine.master.listeners.impl.oncommit.OnCommitRule;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 
 /**

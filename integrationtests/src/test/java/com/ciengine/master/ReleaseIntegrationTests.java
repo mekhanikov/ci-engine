@@ -1,17 +1,14 @@
 package com.ciengine.master;
 
 import com.ciengine.TestConfiguration;
-import com.ciengine.common.CIEngineEvent;
 import com.ciengine.common.Module;
 import com.ciengine.common.Repo;
-import com.ciengine.common.events.OnCommitEvent;
 import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.facades.Release;
 import com.ciengine.master.listeners.impl.oncommit.OnCommitListener;
 import com.ciengine.master.model.BuildModel;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +19,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.assertTrue;
 
 
 /**
@@ -76,8 +71,8 @@ public class ReleaseIntegrationTests {
 //		prepareMocks();
 		prepareModules();
 //		prepareOnCommitListener();
-		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
-		ciEngineFacade.addListener(waitForEventListener);
+//		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
+//		ciEngineFacade.addListener(waitForEventListener);
 
 		submitRelease("ModC:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 		//Thread.sleep(6000);
