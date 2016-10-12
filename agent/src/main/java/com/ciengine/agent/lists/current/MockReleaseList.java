@@ -19,10 +19,23 @@ public class MockReleaseList implements CIEngineList
 
 	@Override public void doList(EnvironmentVariables environmentVariables) throws CIEngineStepException
 	{
-		// TODO check if module already relesed -> delete Release from DB (need releaseId in in args)
-		// TODO get list of deps from pom
-		// TODO map them to module-name
-		// TODO check if it is going to release AND not released yet -> SKIP
+		String gitUrl = environmentVariables.getProperty(EnvironmentVariablesConstants.GIT_URL);
+		String branchName = environmentVariables.getProperty(EnvironmentVariablesConstants.BRANCH_NAME);
+		String commitId = environmentVariables.getProperty(EnvironmentVariablesConstants.COMMIT_ID);
+		String buildId = environmentVariables.getProperty(EnvironmentVariablesConstants.BUILD_EXTERNAL_ID);
+		String goingToRelease = environmentVariables.getProperty(EnvironmentVariablesConstants.GOING_TO_RELEASE);
+		String moduleNameToRelease = environmentVariables.getProperty(EnvironmentVariablesConstants.MODULE_NAME);
+
+		if (!ciEngineClient.isModuleReleased(moduleNameToRelease)) {
+			// TODO read deps from pom.xml
+			// Map each dep artefact to module (each module can be related to multiple artefacts).
+			// Check if the module in list of going to release.
+			// If in list, check if isModuleReleased
+			// if not all required modules is released, SKIPPED, reason = ModA:1, ModB:2 are required, but has not been released yet
+		} else {
+			// TODO SKIPED, reason = already released.
+			// delete Release from DB (need releaseId in in args)
+		}
 
 System.out.print("d");
 		try {
@@ -33,11 +46,7 @@ System.out.print("d");
 		//throw new CIEngineStepException("");
 		OnNewArtifactEvent onNewArtifactEvent = new OnNewArtifactEvent();
 
-		String gitUrl = environmentVariables.getProperty(EnvironmentVariablesConstants.GIT_URL);
-		String branchName = environmentVariables.getProperty(EnvironmentVariablesConstants.BRANCH_NAME);
-		String commitId = environmentVariables.getProperty(EnvironmentVariablesConstants.COMMIT_ID);
-		String buildId = environmentVariables.getProperty(EnvironmentVariablesConstants.BUILD_EXTERNAL_ID);
-		String goingToRelease = environmentVariables.getProperty(EnvironmentVariablesConstants.GOING_TO_RELEASE);
+
 
 
 

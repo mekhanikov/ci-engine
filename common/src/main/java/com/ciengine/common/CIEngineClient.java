@@ -10,4 +10,6 @@ public interface CIEngineClient
 	void sendEvent(DefaultCIEngineEvent ciEngineEvent);
 
     void setBuildStatus(String externalBuildId, String status);
+
+    boolean isModuleReleased(String moduleNameToRelease);
 }

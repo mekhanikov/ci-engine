@@ -40,19 +40,20 @@ public class CIEngineClientImpl implements CIEngineClient
 //		final String uri = "http://10.69.36.221:8080/onevent";// TODO to env_var.props
 		final String uri = "http://127.0.0.1:8080/onevent";// TODO to env_var.props
 
-		OnEventRequest onEventRequest = new OnEventRequest();
-		RestTemplate restTemplate = new RestTemplate();
-		//set interceptors/requestFactory
-		ClientHttpRequestInterceptor ri = new LoggingRequestInterceptor();
-		List<ClientHttpRequestInterceptor> ris = new ArrayList<ClientHttpRequestInterceptor>();
-		ris.add(ri);
-		restTemplate.setInterceptors(ris);
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-
-		HttpEntity<CIEngineEvent> entity = new HttpEntity<CIEngineEvent>(ciEngineEvent, headers);
-		restTemplate.setRequestFactory(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
-		OnEventResponse result = restTemplate.postForObject( uri, entity, OnEventResponse.class);
+//		OnEventRequest onEventRequest = new OnEventRequest();
+//		RestTemplate restTemplate = new RestTemplate();
+//		//set interceptors/requestFactory
+//		ClientHttpRequestInterceptor ri = new LoggingRequestInterceptor();
+//		List<ClientHttpRequestInterceptor> ris = new ArrayList<ClientHttpRequestInterceptor>();
+//		ris.add(ri);
+//		restTemplate.setInterceptors(ris);
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.setContentType(MediaType.APPLICATION_JSON);
+//
+//		HttpEntity<CIEngineEvent> entity = new HttpEntity<CIEngineEvent>(ciEngineEvent, headers);
+//		restTemplate.setRequestFactory(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
+//		OnEventResponse result = restTemplate.postForObject( uri, entity, OnEventResponse.class);
+		doPost(uri, ciEngineEvent, SetBuildStatusResponse.class);
 	}
 
 	@Override
@@ -62,6 +63,29 @@ public class CIEngineClientImpl implements CIEngineClient
 		SetBuildStatusRequest setBuildStatusRequest = new SetBuildStatusRequest();
 		setBuildStatusRequest.setExternalBuildId(externalBuildId);
 		setBuildStatusRequest.setStatus(status);
+//		RestTemplate restTemplate = new RestTemplate();
+//		//set interceptors/requestFactory
+//		ClientHttpRequestInterceptor ri = new LoggingRequestInterceptor();
+//		List<ClientHttpRequestInterceptor> ris = new ArrayList<ClientHttpRequestInterceptor>();
+//		ris.add(ri);
+//		restTemplate.setInterceptors(ris);
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.setContentType(MediaType.APPLICATION_JSON);
+//
+//		HttpEntity<SetBuildStatusRequest> entity = new HttpEntity<>(setBuildStatusRequest, headers);
+//		restTemplate.setRequestFactory(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
+//		SetBuildStatusResponse result = restTemplate.postForObject( uri, entity, SetBuildStatusResponse.class);
+
+		doPost(uri, setBuildStatusRequest, SetBuildStatusResponse.class);
+	}
+
+	@Override
+	public boolean isModuleReleased(String moduleNameToRelease) {
+		// TODO
+		return false;
+	}
+
+	private <T> T doPost(String url, Object setBuildStatusRequest, Class<T> responseType) {
 		RestTemplate restTemplate = new RestTemplate();
 		//set interceptors/requestFactory
 		ClientHttpRequestInterceptor ri = new LoggingRequestInterceptor();
@@ -71,9 +95,9 @@ public class CIEngineClientImpl implements CIEngineClient
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
-		HttpEntity<SetBuildStatusRequest> entity = new HttpEntity<>(setBuildStatusRequest, headers);
+		HttpEntity<Object> entity = new HttpEntity<>(setBuildStatusRequest, headers);
 		restTemplate.setRequestFactory(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
-		SetBuildStatusResponse result = restTemplate.postForObject( uri, entity, SetBuildStatusResponse.class);
+		return restTemplate.postForObject( url, entity, responseType);
 	}
 
 	public static class LoggingRequestInterceptor implements ClientHttpRequestInterceptor
