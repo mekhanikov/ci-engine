@@ -5,10 +5,7 @@ package com.ciengine.common;
 import com.ciengine.common.CIEngineClient;
 import com.ciengine.common.CIEngineEvent;
 import com.ciengine.common.DefaultCIEngineEvent;
-import com.ciengine.common.dto.OnEventRequest;
-import com.ciengine.common.dto.OnEventResponse;
-import com.ciengine.common.dto.SetBuildStatusRequest;
-import com.ciengine.common.dto.SetBuildStatusResponse;
+import com.ciengine.common.dto.*;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
@@ -37,8 +34,8 @@ public class CIEngineClientImpl implements CIEngineClient
 
 	@Override public void sendEvent(String serverUrl, DefaultCIEngineEvent ciEngineEvent)
 	{
-//		final String uri = "http://10.69.36.221:8080/onevent";// TODO to env_var.props
-		final String uri = serverUrl + "/onevent";// TODO to env_var.props
+//		final String uri = "http://10.69.36.221:8080/onevent";
+		final String uri = serverUrl + "/onevent";
 
 //		OnEventRequest onEventRequest = new OnEventRequest();
 //		RestTemplate restTemplate = new RestTemplate();
@@ -58,7 +55,7 @@ public class CIEngineClientImpl implements CIEngineClient
 
 	@Override
 	public void setBuildStatus(String serverUrl, String externalBuildId, String status) {
-		final String uri =  serverUrl + "/setbuildstatus";// TODO to env_var.props
+		final String uri =  serverUrl + "/setbuildstatus";
 
 		SetBuildStatusRequest setBuildStatusRequest = new SetBuildStatusRequest();
 		setBuildStatusRequest.setExternalBuildId(externalBuildId);
@@ -81,8 +78,10 @@ public class CIEngineClientImpl implements CIEngineClient
 
 	@Override
 	public boolean isModuleReleased(String serverUrl, String moduleNameToRelease) {
-		// TODO
-		return false;
+        final String uri =  serverUrl + "/ismodulereleased";
+        IsModuleReleasedRequest isModuleReleasedRequest = new IsModuleReleasedRequest();
+        IsModuleReleasedResponse isModuleReleasedResponse = doPost(uri, isModuleReleasedRequest, IsModuleReleasedResponse.class);
+		return isModuleReleasedResponse.isReleased();
 	}
 
 	private <T> T doPost(String url, Object setBuildStatusRequest, Class<T> responseType) {

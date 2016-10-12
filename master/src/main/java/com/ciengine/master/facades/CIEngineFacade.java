@@ -1,6 +1,8 @@
 package com.ciengine.master.facades;
 
 import com.ciengine.common.*;
+import com.ciengine.common.dto.IsModuleReleasedRequest;
+import com.ciengine.common.dto.IsModuleReleasedResponse;
 import com.ciengine.common.dto.SetBuildStatusRequest;
 import com.ciengine.master.controllers.addbuild.AddBuildRequest;
 import com.ciengine.master.controllers.getbuilds.GetBuildsResponse;
@@ -39,4 +41,6 @@ public interface CIEngineFacade
 	List<BuildModel> findBuild(AddBuildRequest addBuildRequest);
 
     void setBuildStatus(SetBuildStatusRequest setBuildStatusRequest);
+
+	IsModuleReleasedResponse isModuleReleased(IsModuleReleasedRequest isModuleReleasedRequest);
 }

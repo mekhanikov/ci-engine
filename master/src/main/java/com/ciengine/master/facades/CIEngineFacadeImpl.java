@@ -1,6 +1,8 @@
 package com.ciengine.master.facades;
 
 import com.ciengine.common.*;
+import com.ciengine.common.dto.IsModuleReleasedRequest;
+import com.ciengine.common.dto.IsModuleReleasedResponse;
 import com.ciengine.common.dto.SetBuildStatusRequest;
 import com.ciengine.common.events.OnReleaseSubmitedEvent;
 import com.ciengine.master.controllers.addbuild.AddBuildRequest;
@@ -185,7 +187,16 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 		buildModel.setStatus(setBuildStatusRequest.getStatus());
 	}
 
-	protected EnvironmentVariables getEnvironmentVariables(String inputParams) {
+    @Override
+    public IsModuleReleasedResponse isModuleReleased(IsModuleReleasedRequest isModuleReleasedRequest) {
+        // TODO go to artefactory (NEED ARTIFACTORY MOCK)
+        IsModuleReleasedResponse isModuleReleasedResponse = new IsModuleReleasedResponse();
+        // TODO
+        isModuleReleasedResponse.setReleased(true);
+        return isModuleReleasedResponse;
+    }
+
+    protected EnvironmentVariables getEnvironmentVariables(String inputParams) {
 		EnvironmentVariables environmentVariables = new EnvironmentVariables();
 		if (!StringUtils.isEmpty(inputParams)) {
 			String[] lines = inputParams.split("\n");

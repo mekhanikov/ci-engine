@@ -28,12 +28,14 @@ public class MockReleaseList implements CIEngineList
 		String url = environmentVariables.getProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL);
 
 		if (!ciEngineClient.isModuleReleased(url, moduleNameToRelease)) {
+			System.out.print("");
 			// TODO read deps from pom.xml
 			// Map each dep artefact to module (each module can be related to multiple artefacts).
 			// Check if the module in list of going to release.
 			// If in list, check if isModuleReleased
 			// if not all required modules is released, SKIPPED, reason = ModA:1, ModB:2 are required, but has not been released yet
 		} else {
+			System.out.print("");
 			// TODO SKIPED, reason = already released.
 			// delete Release from DB (need releaseId in in args)
 		}
