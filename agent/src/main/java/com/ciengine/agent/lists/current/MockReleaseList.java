@@ -28,7 +28,24 @@ public class MockReleaseList implements CIEngineList
 		String url = environmentVariables.getProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL);
 
 		if (!ciEngineClient.isModuleReleased(url, moduleNameToRelease)) {
-			System.out.print("");
+			if (allDepsInPlace(url, moduleNameToRelease)) {
+				System.out.print("d");
+				try {
+					Thread.sleep(5);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				//throw new CIEngineStepException("");
+				OnNewArtifactEvent onNewArtifactEvent = new OnNewArtifactEvent();
+				onNewArtifactEvent.setComitId(commitId);
+				onNewArtifactEvent.setGitUrl(gitUrl);
+				onNewArtifactEvent.setBranchName(branchName);
+				onNewArtifactEvent.setModuleName(moduleNameToRelease);
+				ciEngineClient.sendEvent(url, onNewArtifactEvent);
+			} else {
+				ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SKIPED);
+			}
+
 			// TODO read deps from pom.xml
 			// Map each dep artefact to module (each module can be related to multiple artefacts).
 			// Check if the module in list of going to release.
@@ -38,26 +55,20 @@ public class MockReleaseList implements CIEngineList
 			System.out.print("");
 			// TODO SKIPED, reason = already released.
 			// delete Release from DB (need releaseId in in args)
+			ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SKIPED);
 		}
+	}
 
-System.out.print("d");
-		try {
-			Thread.sleep(5);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+	private boolean allDepsInPlace(String url, String module) {
+		if ("ModC:2.0".equals(module)) {
+			return true;
 		}
-		//throw new CIEngineStepException("");
-		OnNewArtifactEvent onNewArtifactEvent = new OnNewArtifactEvent();
-
-
-
-
-
-		onNewArtifactEvent.setComitId(commitId);
-		onNewArtifactEvent.setGitUrl(gitUrl);
-		onNewArtifactEvent.setBranchName(branchName);
-		onNewArtifactEvent.setModuleName(moduleNameToRelease);
-		ciEngineClient.sendEvent(url, onNewArtifactEvent);
-		ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SKIPED);
+		if ("ModB:2.0".equals(module) && ciEngineClient.isModuleReleased(url, "ModC:2.0")) {
+			return true;
+		}
+		if ("ModA:2.0".equals(module) && ciEngineClient.isModuleReleased(url, "ModB:2.0") && ciEngineClient.isModuleReleased(url, "ModC:2.0")) {
+			return true;
+		}
+		return false;
 	}
 }
