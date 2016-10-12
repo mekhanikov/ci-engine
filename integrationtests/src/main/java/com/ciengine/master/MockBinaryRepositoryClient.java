@@ -16,4 +16,8 @@ public class MockBinaryRepositoryClient implements BinaryRepositoryClient {
     public boolean isModuleReleased(String module) {
         return stringModuleMap.containsKey(module);
     }
+
+    public void addModule(String s) {
+        stringModuleMap.put(s, null);
+    }
 }

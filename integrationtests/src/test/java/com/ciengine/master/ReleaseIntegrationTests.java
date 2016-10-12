@@ -43,6 +43,9 @@ public class ReleaseIntegrationTests {
 	OnCommitListener onCommitListener;
 
 	@Autowired
+	MockBinaryRepositoryClient mockBinaryRepositoryClient;
+
+	@Autowired
 	BuildDao buildDao;
 
 	/*
@@ -80,6 +83,7 @@ public class ReleaseIntegrationTests {
 		//Thread.sleep(6000);
 		submitRelease("ModC:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 		//Thread.sleep(6000);
+		mockBinaryRepositoryClient.addModule("ModC:2.0");
 //		submitRelease("ModB:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 //		submitRelease("ModA:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 		Thread.sleep(10000);
