@@ -41,6 +41,8 @@ public class OnCommitListener implements CIEngineListener
 		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.COMMIT_ID, onCommitEvent.getComitId());
 
 		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MODULE_NAME, module.getName());
+		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL, "http://127.0.0.1:8080"); // TODO to conf?
+
 
 		// TODO set module specific values
 

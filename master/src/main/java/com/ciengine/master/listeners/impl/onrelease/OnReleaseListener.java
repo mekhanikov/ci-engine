@@ -71,6 +71,7 @@ public class OnReleaseListener implements CIEngineListener
 				environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MERGE_FROM_COMMIT_ID, onReleaseRule.getMergeFromCommitId());
 				environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MODULE_NAME, onReleaseRule.getModuleNameToRelease());
 				environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.RELEASE_BRANCH_NAME, onReleaseRule.getReleaseBranchName());
+				environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL, "http://127.0.0.1:8080"); // TODO to conf?
 				addBuildRequest.setInputParams(makeString(merge(environmentVariablesFromEvent, onReleaseRule.getEnvironmentVariables())));
 				ciEngineFacade.addBuild(addBuildRequest);
 			}

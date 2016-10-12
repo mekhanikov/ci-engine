@@ -38,7 +38,7 @@ public class CIEngineClientImpl implements CIEngineClient
 	@Override public void sendEvent(String serverUrl, DefaultCIEngineEvent ciEngineEvent)
 	{
 //		final String uri = "http://10.69.36.221:8080/onevent";// TODO to env_var.props
-		final String uri = "http://127.0.0.1:8080/onevent";// TODO to env_var.props
+		final String uri = serverUrl + "/onevent";// TODO to env_var.props
 
 //		OnEventRequest onEventRequest = new OnEventRequest();
 //		RestTemplate restTemplate = new RestTemplate();
@@ -58,7 +58,7 @@ public class CIEngineClientImpl implements CIEngineClient
 
 	@Override
 	public void setBuildStatus(String serverUrl, String externalBuildId, String status) {
-		final String uri = "http://127.0.0.1:8080/setbuildstatus";// TODO to env_var.props
+		final String uri =  serverUrl + "/setbuildstatus";// TODO to env_var.props
 
 		SetBuildStatusRequest setBuildStatusRequest = new SetBuildStatusRequest();
 		setBuildStatusRequest.setExternalBuildId(externalBuildId);
