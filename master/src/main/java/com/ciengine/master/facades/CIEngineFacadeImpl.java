@@ -43,6 +43,9 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 	@Autowired
 	private ApplicationContext applicationContext;
 
+	@Autowired
+	private BinaryRepositoryClient binaryRepositoryClient;
+
 	private List<CIEngineListener> ciEngineListeners = new ArrayList<>();
 
 	private List<Module> modules = new ArrayList<>();
@@ -189,10 +192,8 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 
     @Override
     public IsModuleReleasedResponse isModuleReleased(IsModuleReleasedRequest isModuleReleasedRequest) {
-        // TODO go to artefactory (NEED ARTIFACTORY MOCK)
         IsModuleReleasedResponse isModuleReleasedResponse = new IsModuleReleasedResponse();
-        // TODO
-        isModuleReleasedResponse.setReleased(true);
+        isModuleReleasedResponse.setReleased( binaryRepositoryClient.isModuleReleased(isModuleReleasedRequest.getModule()));
         return isModuleReleasedResponse;
     }
 

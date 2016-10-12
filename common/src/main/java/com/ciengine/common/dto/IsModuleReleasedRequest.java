@@ -14,22 +14,13 @@ public class IsModuleReleasedRequest
 {
 //	@XmlAttribute(name = "sss")
 
-	private String externalBuildId;
-	private String status;
+	private String module;
 
-	public String getExternalBuildId() {
-		return externalBuildId;
+	public String getModule() {
+		return module;
 	}
 
-	public void setExternalBuildId(String externalBuildId) {
-		this.externalBuildId = externalBuildId;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
+	public void setModule(String module) {
+		this.module = module;
 	}
 }

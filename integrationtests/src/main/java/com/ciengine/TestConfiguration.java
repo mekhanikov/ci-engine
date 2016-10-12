@@ -1,5 +1,7 @@
 package com.ciengine;
 
+import com.ciengine.common.BinaryRepositoryClient;
+import com.ciengine.master.MockBinaryRepositoryClient;
 import com.ciengine.master.MockCIAgentFacadeImpl;
 import com.ciengine.master.facades.CIAgentFacade;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,11 +45,19 @@ public class TestConfiguration extends AsyncConfigurerSupport
 
 	@Autowired
 	private Environment environment;
+
 	@Bean
 	@Primary
 	public CIAgentFacade ciAgentFacade() {
 		return new MockCIAgentFacadeImpl();
 	}
+
+	@Bean
+	@Primary
+	public BinaryRepositoryClient binaryRepositoryClient() {
+		return new MockBinaryRepositoryClient();
+	}
+
 
 	@Override
 	public Executor getAsyncExecutor() {
