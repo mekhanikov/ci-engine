@@ -1,9 +1,6 @@
 package com.ciengine.master.listeners.impl.onrelease;
 
-import com.ciengine.common.BuildStatus;
-import com.ciengine.common.CIEngineEvent;
-import com.ciengine.common.DefaultCIEngineEvent;
-import com.ciengine.common.EnvironmentVariables;
+import com.ciengine.common.*;
 import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.common.events.OnReleaseSubmitedEvent;
 import com.ciengine.master.controllers.addbuild.AddBuildRequest;
@@ -39,11 +36,11 @@ public class OnReleaseListener implements CIEngineListener
 //			return;
 //		}
 		EnvironmentVariables environmentVariablesFromEvent = new EnvironmentVariables();
-//		environmentVariablesFromEvent.addProperty("GIT_URL", onNewArtifactEvent.getGitUrl());
-//		environmentVariablesFromEvent.addProperty("BRANCH_NAME", onNewArtifactEvent.getBranchName());
-//		environmentVariablesFromEvent.addProperty("COMMIT_ID", onNewArtifactEvent.getComitId());
+//		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.GIT_URL, onNewArtifactEvent.getGitUrl());
+//		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.BRANCH_NAME, onNewArtifactEvent.getBranchName());
+//		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.COMMIT_ID, onNewArtifactEvent.getComitId());
 
-//		environmentVariablesFromEvent.addProperty("MODULE_NAME", module.getName());
+//		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MODULE_NAME, module.getName());
 
 		// TODO set module specific values
 
@@ -65,8 +62,8 @@ public class OnReleaseListener implements CIEngineListener
 			if (lastBuildStatus == null || BuildStatus.SKIPED.equals(lastBuildStatus)) {
 				String buildExternalId = UUID.randomUUID().toString();
 				addBuildRequest.setExternalId(buildExternalId);
-				environmentVariablesFromEvent.addProperty("BUILD_EXTERNAL_ID", buildExternalId);
-				environmentVariablesFromEvent.addProperty("GOING_TO_RELEASE", onReleaseRule.getGoingToRelease());
+				environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.BUILD_EXTERNAL_ID, buildExternalId);
+				environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.GOING_TO_RELEASE, onReleaseRule.getGoingToRelease());
 				addBuildRequest.setInputParams(makeString(merge(environmentVariablesFromEvent, onReleaseRule.getEnvironmentVariables())));
 				ciEngineFacade.addBuild(addBuildRequest);
 			}

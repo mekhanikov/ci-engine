@@ -1,9 +1,6 @@
 package com.ciengine.master.listeners.impl.oncommit;
 
-import com.ciengine.common.CIEngineEvent;
-import com.ciengine.common.DefaultCIEngineEvent;
-import com.ciengine.common.EnvironmentVariables;
-import com.ciengine.common.Module;
+import com.ciengine.common.*;
 import com.ciengine.common.events.OnCommitEvent;
 import com.ciengine.master.controllers.addbuild.AddBuildRequest;
 import com.ciengine.master.facades.CIEngineFacade;
@@ -39,11 +36,11 @@ public class OnCommitListener implements CIEngineListener
 			return;
 		}
 		EnvironmentVariables environmentVariablesFromEvent = new EnvironmentVariables();
-		environmentVariablesFromEvent.addProperty("GIT_URL", onCommitEvent.getGitUrl());
-		environmentVariablesFromEvent.addProperty("BRANCH_NAME", onCommitEvent.getBranchName());
-		environmentVariablesFromEvent.addProperty("COMMIT_ID", onCommitEvent.getComitId());
+		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.GIT_URL, onCommitEvent.getGitUrl());
+		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.BRANCH_NAME, onCommitEvent.getBranchName());
+		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.COMMIT_ID, onCommitEvent.getComitId());
 
-		environmentVariablesFromEvent.addProperty("MODULE_NAME", module.getName());
+		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MODULE_NAME, module.getName());
 
 		// TODO set module specific values
 
@@ -53,7 +50,7 @@ public class OnCommitListener implements CIEngineListener
 				EnvironmentVariables environmentVariablesFromEventTmp = new EnvironmentVariables();
 				environmentVariablesFromEventTmp.addProperties(environmentVariablesFromEvent.getProperties());
 				String buildExternalId = UUID.randomUUID().toString();
-				environmentVariablesFromEventTmp.addProperty("BUILD_EXTERNAL_ID", buildExternalId);
+				environmentVariablesFromEventTmp.addProperty(EnvironmentVariablesConstants.BUILD_EXTERNAL_ID, buildExternalId);
 				AddBuildRequest addBuildRequest = new AddBuildRequest();
 				addBuildRequest.setExecutionList(onCommitRule.getApplyList());
 				addBuildRequest.setNodeId(null);

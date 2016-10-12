@@ -44,7 +44,7 @@ public class OnCommitList implements CIEngineList
 		executeStep(checkoutStep, environmentVariables);// TODO or by name executeSteps(environmentVariables, "CHECKOUT", "BUILD", ...)
 		executeStep(buildStep, environmentVariables);   // TODO or by name executeSteps(environmentVariables, "CHECKOUT", "BUILD", ...)
 
-		environmentVariables.addProperty("BUILD_STATUS", "OK"); // TODO or ciEngineClient.setBuildStatus(); ?
+		environmentVariables.addProperty(EnvironmentVariablesConstants.BUILD_STATUS, BuildStatus.SUCCESS); // TODO or ciEngineClient.setBuildStatus(); ?
 		executeStep(attachArtefactsStep, environmentVariables);
 		executeStep(newArtefactsReleasedStep, environmentVariables);
 
@@ -56,9 +56,9 @@ public class OnCommitList implements CIEngineList
 		//throw new CIEngineStepException("");
 		OnNewArtifactEvent onNewArtifactEvent = new OnNewArtifactEvent();
 
-		String gitUrl = environmentVariables.getProperty("GIT_URL");
-		String branchName = environmentVariables.getProperty("BRANCH_NAME");
-		String commitId = environmentVariables.getProperty("COMMIT_ID");
+		String gitUrl = environmentVariables.getProperty(EnvironmentVariablesConstants.GIT_URL);
+		String branchName = environmentVariables.getProperty(EnvironmentVariablesConstants.BRANCH_NAME);
+		String commitId = environmentVariables.getProperty(EnvironmentVariablesConstants.COMMIT_ID);
 		onNewArtifactEvent.setComitId(commitId);
 		onNewArtifactEvent.setGitUrl(gitUrl);
 		onNewArtifactEvent.setBranchName(branchName);

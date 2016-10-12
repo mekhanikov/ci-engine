@@ -2,14 +2,11 @@ package com.ciengine.agent.lists.current;
 
 
 
-import com.ciengine.common.CIEngineList;
-import com.ciengine.common.CIEngineStep;
-import com.ciengine.common.CIEngineStepException;
+import com.ciengine.common.*;
 import com.ciengine.agent.steps.impl.AttachArtefactsStep;
 import com.ciengine.agent.steps.impl.BuildStep;
 import com.ciengine.agent.steps.impl.CheckoutStep;
 import com.ciengine.agent.steps.impl.NewArtefactsReleasedStep;
-import com.ciengine.common.EnvironmentVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -50,9 +47,9 @@ Build
 
 
 		 */
-		String gitUrl = environmentVariables.getProperty("GIT_URL");
-		String branchName = environmentVariables.getProperty("BRANCH_NAME");
-		String commitId = environmentVariables.getProperty("COMMIT_ID");
+		String gitUrl = environmentVariables.getProperty(EnvironmentVariablesConstants.GIT_URL);
+		String branchName = environmentVariables.getProperty(EnvironmentVariablesConstants.BRANCH_NAME);
+		String commitId = environmentVariables.getProperty(EnvironmentVariablesConstants.COMMIT_ID);
 
 	}
 

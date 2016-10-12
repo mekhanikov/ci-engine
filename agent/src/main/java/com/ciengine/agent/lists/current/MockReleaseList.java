@@ -33,11 +33,14 @@ System.out.print("d");
 		//throw new CIEngineStepException("");
 		OnNewArtifactEvent onNewArtifactEvent = new OnNewArtifactEvent();
 
-		String gitUrl = environmentVariables.getProperty("GIT_URL");
-		String branchName = environmentVariables.getProperty("BRANCH_NAME");
-		String commitId = environmentVariables.getProperty("COMMIT_ID");
-		String buildId = environmentVariables.getProperty("BUILD_EXTERNAL_ID");
-		String goingToRelease = environmentVariables.getProperty("GOING_TO_RELEASE");
+		String gitUrl = environmentVariables.getProperty(EnvironmentVariablesConstants.GIT_URL);
+		String branchName = environmentVariables.getProperty(EnvironmentVariablesConstants.BRANCH_NAME);
+		String commitId = environmentVariables.getProperty(EnvironmentVariablesConstants.COMMIT_ID);
+		String buildId = environmentVariables.getProperty(EnvironmentVariablesConstants.BUILD_EXTERNAL_ID);
+		String goingToRelease = environmentVariables.getProperty(EnvironmentVariablesConstants.GOING_TO_RELEASE);
+
+
+
 		onNewArtifactEvent.setComitId(commitId);
 		onNewArtifactEvent.setGitUrl(gitUrl);
 		onNewArtifactEvent.setBranchName(branchName);

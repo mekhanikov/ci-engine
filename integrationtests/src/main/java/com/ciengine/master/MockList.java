@@ -31,9 +31,9 @@
 //		//throw new CIEngineStepException("");
 //		OnNewArtifactEvent onNewArtifactEvent = new OnNewArtifactEvent();
 //
-////		String gitUrl = environmentVariables.getProperty("GIT_URL");
-////		String branchName = environmentVariables.getProperty("BRANCH_NAME");
-////		String commitId = environmentVariables.getProperty("COMMIT_ID");
+////		String gitUrl = environmentVariables.getProperty(EnvironmentVariablesConstants.GIT_URL);
+////		String branchName = environmentVariables.getProperty(EnvironmentVariablesConstants.BRANCH_NAME);
+////		String commitId = environmentVariables.getProperty(EnvironmentVariablesConstants.COMMIT_ID);
 ////		onNewArtifactEvent.setComitId(commitId);
 ////		onNewArtifactEvent.setGitUrl(gitUrl);
 ////		onNewArtifactEvent.setBranchName(branchName);

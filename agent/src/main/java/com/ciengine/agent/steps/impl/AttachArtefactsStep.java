@@ -1,9 +1,6 @@
 package com.ciengine.agent.steps.impl;
 
-import com.ciengine.common.CIEngineStep;
-import com.ciengine.common.CIEngineStepException;
-import com.ciengine.common.CIEngineClient;
-import com.ciengine.common.EnvironmentVariables;
+import com.ciengine.common.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,8 +17,8 @@ public class AttachArtefactsStep implements CIEngineStep
 	@Override public void doStep(EnvironmentVariables environmentVariables) throws CIEngineStepException
 	{
 		//Don't need to change HASH because dont change state of the build.
-		String buildId = environmentVariables.getProperty("BUILD_ID");
-		String files = environmentVariables.getProperty("ATTACH_FILES"); // E.g. "target/*.html, target/*.java"
+		String buildId = environmentVariables.getProperty(EnvironmentVariablesConstants.BUILD_EXTERNAL_ID);
+		String files = environmentVariables.getProperty(EnvironmentVariablesConstants.ATTACH_FILES);
 		ciEngineClient.attachArtefacts(buildId, files);
 	}
 }

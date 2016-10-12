@@ -1,9 +1,6 @@
 package com.ciengine.agent.steps.impl;
 
-import com.ciengine.common.CIEngineStep;
-import com.ciengine.common.CIEngineStepException;
-import com.ciengine.common.CIEngineClient;
-import com.ciengine.common.EnvironmentVariables;
+import com.ciengine.common.*;
 import com.ciengine.common.events.OnNewArtifactEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,9 +19,9 @@ public class NewArtefactsReleasedStep implements CIEngineStep
 	{
 		OnNewArtifactEvent onNewArtifactEvent = new OnNewArtifactEvent();
 
-		String gitUrl = environmentVariables.getProperty("GIT_URL");
-		String branchName = environmentVariables.getProperty("BRANCH_NAME");
-		String commitId = environmentVariables.getProperty("COMMIT_ID");
+		String gitUrl = environmentVariables.getProperty(EnvironmentVariablesConstants.GIT_URL);
+		String branchName = environmentVariables.getProperty(EnvironmentVariablesConstants.BRANCH_NAME);
+		String commitId = environmentVariables.getProperty(EnvironmentVariablesConstants.COMMIT_ID);
 		onNewArtifactEvent.setComitId(commitId);
 		onNewArtifactEvent.setGitUrl(gitUrl);
 		onNewArtifactEvent.setBranchName(branchName);
