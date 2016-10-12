@@ -64,6 +64,13 @@ public class OnReleaseListener implements CIEngineListener
 				addBuildRequest.setExternalId(buildExternalId);
 				environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.BUILD_EXTERNAL_ID, buildExternalId);
 				environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.GOING_TO_RELEASE, onReleaseRule.getGoingToRelease());
+				//onReleaseRule.getApplyList();
+				//onReleaseRule.getDockerImageId();
+				onReleaseRule.getModuleNameToRelease();
+				onReleaseRule.getReleaseBranchName();
+				environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MERGE_FROM_COMMIT_ID, onReleaseRule.getMergeFromCommitId());
+				environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MODULE_NAME, onReleaseRule.getModuleNameToRelease());
+				environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.RELEASE_BRANCH_NAME, onReleaseRule.getReleaseBranchName());
 				addBuildRequest.setInputParams(makeString(merge(environmentVariablesFromEvent, onReleaseRule.getEnvironmentVariables())));
 				ciEngineFacade.addBuild(addBuildRequest);
 			}
