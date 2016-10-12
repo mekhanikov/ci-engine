@@ -76,6 +76,8 @@ public class ReleaseIntegrationTests {
 //		prepareMocks();
 		prepareModules();
 //		prepareOnCommitListener();
+		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
+		ciEngineFacade.addListener(waitForEventListener);
 
 		submitRelease("ModC:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 		//Thread.sleep(6000);

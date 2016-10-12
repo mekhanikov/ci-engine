@@ -3,6 +3,7 @@ package com.ciengine;
 import com.ciengine.common.BinaryRepositoryClient;
 import com.ciengine.master.MockBinaryRepositoryClient;
 import com.ciengine.master.MockCIAgentFacadeImpl;
+import com.ciengine.master.OnNewArtifactEventListener;
 import com.ciengine.master.facades.CIAgentFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -56,6 +57,12 @@ public class TestConfiguration extends AsyncConfigurerSupport
 	@Primary
 	public BinaryRepositoryClient binaryRepositoryClient() {
 		return new MockBinaryRepositoryClient();
+	}
+
+	@Bean
+//	@Primary
+	public OnNewArtifactEventListener onNewArtifactEventListener() {
+		return new OnNewArtifactEventListener();
 	}
 
 
