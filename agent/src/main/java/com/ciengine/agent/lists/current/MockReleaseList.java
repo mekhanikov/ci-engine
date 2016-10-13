@@ -31,7 +31,7 @@ public class MockReleaseList implements CIEngineList
 			if (allDepsInPlace(url, moduleNameToRelease)) {
 				System.out.print("d");
 				try {
-					Thread.sleep(5);
+					Thread.sleep(5000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -42,6 +42,7 @@ public class MockReleaseList implements CIEngineList
 				onNewArtifactEvent.setBranchName(branchName);
 				onNewArtifactEvent.setModuleName(moduleNameToRelease);
 				ciEngineClient.sendEvent(url, onNewArtifactEvent);
+				ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SUCCESS);
 			} else {
 				ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SKIPED);
 			}

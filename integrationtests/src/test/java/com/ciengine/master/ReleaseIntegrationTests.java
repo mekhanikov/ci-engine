@@ -74,20 +74,21 @@ public class ReleaseIntegrationTests {
 //		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
 //		ciEngineFacade.addListener(waitForEventListener);
 
+		submitRelease("ModA:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
+		//Thread.sleep(6000);
+		submitRelease("ModB:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
+//		//Thread.sleep(6000);
 		submitRelease("ModC:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 		//Thread.sleep(6000);
-		submitRelease("ModC:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
-		//Thread.sleep(6000);
-		submitRelease("ModC:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
-		//Thread.sleep(6000);
-		mockBinaryRepositoryClient.addModule("ModC:2.0");
+		//mockBinaryRepositoryClient.addModule("ModC:2.0");
 //		submitRelease("ModB:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 //		submitRelease("ModA:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
-		Thread.sleep(10000);
+		Thread.sleep(30000);
 		List<BuildModel> buildModels = buildDao.getAll();
 		System.out.println("********");
 		for (BuildModel buildModel : buildModels) {
 			System.out.println(buildModel);
+			System.out.println("--------");
 		}
 		System.out.println("********");
 	}

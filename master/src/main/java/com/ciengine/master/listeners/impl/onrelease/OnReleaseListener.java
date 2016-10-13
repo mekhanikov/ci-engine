@@ -35,6 +35,15 @@ public class OnReleaseListener implements CIEngineListener
 //			// TODO add warning?
 //			return;
 //		}
+		String reasonOfTrigger = "";
+		if (ciEngineEvent instanceof OnReleaseSubmitedEvent) {
+			OnReleaseSubmitedEvent onReleaseSubmitedEvent = (OnReleaseSubmitedEvent) ciEngineEvent;
+			reasonOfTrigger = "Added ReleaseRule for: " + onReleaseSubmitedEvent.getModuleNameToRelease();
+		}
+		if (ciEngineEvent instanceof OnNewArtifactEvent) {
+			OnNewArtifactEvent ciEngineEvent1 = (OnNewArtifactEvent) ciEngineEvent;
+			reasonOfTrigger = "Released module: " + ciEngineEvent1.getModuleName();
+		}
 		EnvironmentVariables environmentVariablesFromEvent = new EnvironmentVariables();
 //		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.GIT_URL, onNewArtifactEvent.getGitUrl());
 //		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.BRANCH_NAME, onNewArtifactEvent.getBranchName());
@@ -47,14 +56,14 @@ public class OnReleaseListener implements CIEngineListener
 		List<OnReleaseRule> onReleaseRuleList = getRules();
 		for(OnReleaseRule onReleaseRule : onReleaseRuleList) {
 // TODO check for dups right here?
-				AddBuildRequest addBuildRequest = new AddBuildRequest();
-				addBuildRequest.setExecutionList(onReleaseRule.getApplyList());
-				addBuildRequest.setNodeId(null);
-				addBuildRequest.setDockerImageId(onReleaseRule.getDockerImageId());
-
-				addBuildRequest.setModuleName(onReleaseRule.getModuleNameToRelease());
-				addBuildRequest.setReasonOfTrigger("commit");
-				addBuildRequest.setBranchName(onReleaseRule.getModuleNameToRelease());// todo or what?
+			AddBuildRequest addBuildRequest = new AddBuildRequest();
+			addBuildRequest.setExecutionList(onReleaseRule.getApplyList());
+			addBuildRequest.setNodeId(null);
+			addBuildRequest.setDockerImageId(onReleaseRule.getDockerImageId());
+			addBuildRequest.setModuleName(onReleaseRule.getModuleNameToRelease());
+			addBuildRequest.setReasonOfTrigger("commit");
+			addBuildRequest.setBranchName(onReleaseRule.getModuleNameToRelease());// todo or what?
+			addBuildRequest.setReasonOfTrigger(reasonOfTrigger);
 			List<BuildModel> buildModels = ciEngineFacade.findBuild(addBuildRequest);
 
 			// If build (with the latest startTimestamp?) is skipped - rebuild

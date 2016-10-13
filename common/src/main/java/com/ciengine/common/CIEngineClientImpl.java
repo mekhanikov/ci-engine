@@ -50,7 +50,7 @@ public class CIEngineClientImpl implements CIEngineClient
 //		HttpEntity<CIEngineEvent> entity = new HttpEntity<CIEngineEvent>(ciEngineEvent, headers);
 //		restTemplate.setRequestFactory(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
 //		OnEventResponse result = restTemplate.postForObject( uri, entity, OnEventResponse.class);
-		doPost(uri, ciEngineEvent, SetBuildStatusResponse.class);
+		doPost(uri, ciEngineEvent, OnEventResponse.class);
 	}
 
 	@Override
