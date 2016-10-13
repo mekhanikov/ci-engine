@@ -44,6 +44,7 @@ public class MockReleaseList implements CIEngineList
 				ciEngineClient.sendEvent(url, onNewArtifactEvent);
 				ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SUCCESS);
 			} else {
+				System.out.print("DEPS ARE REQUIRED");
 				ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SKIPED);
 			}
 

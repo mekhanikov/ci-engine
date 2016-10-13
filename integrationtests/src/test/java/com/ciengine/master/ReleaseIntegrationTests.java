@@ -65,7 +65,7 @@ public class ReleaseIntegrationTests {
 		- async in BuildStatusChecker build status will be changed on success or failed -> BuildFinishedEvent or so.
 		- wait for BuildFinishedEvent for some time (timeout)
 		 */
-	@Test
+	//@Test
 	public void test() throws Exception {
 //		prepareMocks();
 		prepareModules();
@@ -79,6 +79,33 @@ public class ReleaseIntegrationTests {
 //		//Thread.sleep(6000);
 		submitRelease("ModC:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 		//Thread.sleep(6000);
+		//mockBinaryRepositoryClient.addModule("ModC:2.0");
+//		submitRelease("ModB:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
+//		submitRelease("ModA:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
+		Thread.sleep(30000);
+		List<BuildModel> buildModels = buildDao.getAll();
+		System.out.println("********");
+		for (BuildModel buildModel : buildModels) {
+			System.out.println(buildModel);
+			System.out.println("--------");
+		}
+		System.out.println("********");
+	}
+
+//	@Test
+	public void test3() throws Exception {
+//		prepareMocks();
+		prepareModules();
+//		prepareOnCommitListener();
+//		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
+//		ciEngineFacade.addListener(waitForEventListener);
+
+		submitRelease("ModA:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
+		Thread.sleep(6000);
+		submitRelease("ModB:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
+		Thread.sleep(6000);
+		submitRelease("ModC:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
+		Thread.sleep(6000);
 		//mockBinaryRepositoryClient.addModule("ModC:2.0");
 //		submitRelease("ModB:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 //		submitRelease("ModA:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
