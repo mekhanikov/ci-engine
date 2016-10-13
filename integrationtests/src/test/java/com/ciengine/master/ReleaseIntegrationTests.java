@@ -3,7 +3,6 @@ package com.ciengine.master;
 import com.ciengine.TestConfiguration;
 import com.ciengine.common.Module;
 import com.ciengine.common.Repo;
-import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.facades.Release;
