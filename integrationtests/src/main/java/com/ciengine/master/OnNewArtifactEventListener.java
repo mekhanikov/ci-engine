@@ -19,7 +19,7 @@ public class OnNewArtifactEventListener implements CIEngineListener
 	@Override public void onEvent(CIEngineEvent ciEngineEvent) throws CIEngineListenerException
 	{
 		OnNewArtifactEvent onNewArtifactEvent = (OnNewArtifactEvent)ciEngineEvent;
-		mockBinaryRepositoryClient.addModule(onNewArtifactEvent.getArtifactId());// TODO artefsact
+		mockBinaryRepositoryClient.addModule(onNewArtifactEvent.getModuleName());// TODO artefsact
 	}
 
 	@Override public boolean isEventApplicable(DefaultCIEngineEvent defaultCIEngineEvent)

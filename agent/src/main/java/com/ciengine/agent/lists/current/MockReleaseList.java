@@ -64,7 +64,8 @@ public class MockReleaseList implements CIEngineList
 		if ("ModC:2.0".equals(module)) {
 			return true;
 		}
-		if ("ModB:2.0".equals(module) && ciEngineClient.isModuleReleased(url, "ModC:2.0")) {
+		if ("ModB:2.0".equals(module) &&
+				ciEngineClient.isModuleReleased(url, "ModC:2.0")) {
 			return true;
 		}
 		if ("ModA:2.0".equals(module) && ciEngineClient.isModuleReleased(url, "ModB:2.0") && ciEngineClient.isModuleReleased(url, "ModC:2.0")) {

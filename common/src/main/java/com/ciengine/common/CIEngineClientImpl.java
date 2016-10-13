@@ -80,6 +80,7 @@ public class CIEngineClientImpl implements CIEngineClient
 	public boolean isModuleReleased(String serverUrl, String moduleNameToRelease) {
         final String uri =  serverUrl + "/ismodulereleased";
         IsModuleReleasedRequest isModuleReleasedRequest = new IsModuleReleasedRequest();
+        isModuleReleasedRequest.setModule(moduleNameToRelease);
         IsModuleReleasedResponse isModuleReleasedResponse = doPost(uri, isModuleReleasedRequest, IsModuleReleasedResponse.class);
 		return isModuleReleasedResponse.isReleased();
 	}

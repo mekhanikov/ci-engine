@@ -61,7 +61,7 @@ public class OnReleaseListener implements CIEngineListener
 			addBuildRequest.setNodeId(null);
 			addBuildRequest.setDockerImageId(onReleaseRule.getDockerImageId());
 			addBuildRequest.setModuleName(onReleaseRule.getModuleNameToRelease());
-			addBuildRequest.setReasonOfTrigger("commit");
+			//addBuildRequest.setReasonOfTrigger("commit");
 			addBuildRequest.setBranchName(onReleaseRule.getModuleNameToRelease());// todo or what?
 			addBuildRequest.setReasonOfTrigger(reasonOfTrigger);
 			List<BuildModel> buildModels = ciEngineFacade.findBuild(addBuildRequest);
