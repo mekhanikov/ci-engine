@@ -58,6 +58,14 @@
                         </goals>
                     </execution>
                 </executions>
+
+    <configuration>
+        <configFile>../hybrisJavaCodeconventionsLuna.xml</configFile>
+        <overrideConfigCompilerVersion>true</overrideConfigCompilerVersion>
+        <compilerSource>1.8</compilerSource>
+        <compilerCompliance>1.8</compilerCompliance>
+        <compilerTargetPlatform>1.8</compilerTargetPlatform>
+    </configuration>
             </plugin>
 
 
