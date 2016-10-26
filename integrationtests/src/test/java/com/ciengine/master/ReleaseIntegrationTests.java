@@ -92,7 +92,7 @@ public class ReleaseIntegrationTests {
 		System.out.println("********");
 	}
 
-//	@Test
+	@Test
 	public void test3() throws Exception {
 //		prepareMocks();
 		prepareModules();
@@ -195,7 +195,7 @@ public class ReleaseIntegrationTests {
 		release.setApplyList("mockReleaseList");
 		release.setMergeFromCommitId("123");
 		release.setReleaseBranchName("release/2.0");
-		release.setDockerImageId("");
+		release.setDockerImageId("someDockerImageId");
 		ciEngineFacade.submitRelease(release);
 	}
 }

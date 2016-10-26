@@ -2,7 +2,7 @@ package com.ciengine.master.listeners.impl.oncommit;
 
 import com.ciengine.common.*;
 import com.ciengine.common.events.OnCommitEvent;
-import com.ciengine.master.controllers.addbuild.AddBuildRequest;
+import com.ciengine.common.dto.AddBuildRequest;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.listeners.CIEngineListener;
 import com.ciengine.master.listeners.CIEngineListenerException;

@@ -1,5 +1,6 @@
 package com.ciengine.master.controllers.addbuild;
 
+import com.ciengine.common.dto.AddBuildRequest;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.controllers.getbuilds.GetBuildsResponse;
 import org.springframework.beans.factory.annotation.Autowired;

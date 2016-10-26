@@ -45,30 +45,6 @@
                 <!--</executions>-->
             <!--</plugin>-->
 
-<plugin>
-    <!-- https://mvnrepository.com/artifact/net.revelc.code/formatter-maven-plugin -->
-        <groupId>net.revelc.code</groupId>
-        <artifactId>formatter-maven-plugin</artifactId>
-        <version>0.5.2</version>
-
-    <executions>
-                    <execution>
-                        <goals>
-                            <goal>format</goal>
-                        </goals>
-                    </execution>
-                </executions>
-
-    <configuration>
-        <configFile>../hybrisJavaCodeconventionsLuna.xml</configFile>
-        <overrideConfigCompilerVersion>true</overrideConfigCompilerVersion>
-        <compilerSource>1.8</compilerSource>
-        <compilerCompliance>1.8</compilerCompliance>
-        <compilerTargetPlatform>1.8</compilerTargetPlatform>
-    </configuration>
-            </plugin>
-
-
 
         </plugins>
     </build>

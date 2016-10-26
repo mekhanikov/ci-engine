@@ -5,7 +5,7 @@ import com.ciengine.common.dto.IsModuleReleasedRequest;
 import com.ciengine.common.dto.IsModuleReleasedResponse;
 import com.ciengine.common.dto.SetBuildStatusRequest;
 import com.ciengine.common.events.OnReleaseSubmitedEvent;
-import com.ciengine.master.controllers.addbuild.AddBuildRequest;
+import com.ciengine.common.dto.AddBuildRequest;
 import com.ciengine.master.controllers.getbuilds.GetBuildsResponse;
 import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.dao.ReleaseDao;

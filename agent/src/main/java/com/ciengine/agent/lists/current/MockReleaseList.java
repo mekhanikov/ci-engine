@@ -3,9 +3,12 @@ package com.ciengine.agent.lists.current;
 
 
 import com.ciengine.common.*;
+import com.ciengine.common.dto.AddBuildRequest;
 import com.ciengine.common.events.OnNewArtifactEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 
 /**
@@ -26,7 +29,23 @@ public class MockReleaseList implements CIEngineList
 		String goingToRelease = environmentVariables.getProperty(EnvironmentVariablesConstants.GOING_TO_RELEASE);
 		String moduleNameToRelease = environmentVariables.getProperty(EnvironmentVariablesConstants.MODULE_NAME);
 		String url = environmentVariables.getProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL);
+		String dockerImageId = environmentVariables.getProperty(EnvironmentVariablesConstants.DOCKER_IMAGE_ID);
 
+		String moduleName = moduleNameToRelease.split(":")[0];
+/*
+		AddBuildRequest addBuildRequest = new AddBuildRequest();
+		addBuildRequest.setExecutionList("mockReleaseList");
+		addBuildRequest.setDockerImageId(dockerImageId);
+		addBuildRequest.setModuleName(moduleName);
+		addBuildRequest.setBranchName(branchName);
+		List<BuildModel> buildModels = ciEngineClient.findBuild(addBuildRequest);
+
+		// If build (with the latest startTimestamp?) is skipped - rebuild
+		String lastBuildStatus = buildModels != null && buildModels.size() > 0 ? buildModels.get(0).getStatus() : null;
+		if (lastBuildStatus == null || BuildStatus.SKIPED.equals(lastBuildStatus)) {
+
+		}
+//*/
 		if (!ciEngineClient.isModuleReleased(url, moduleNameToRelease)) {
 			if (allDepsInPlace(url, moduleNameToRelease)) {
 				System.out.print("d");

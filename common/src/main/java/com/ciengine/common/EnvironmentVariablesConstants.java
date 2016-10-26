@@ -65,4 +65,9 @@ public class EnvironmentVariablesConstants
 	 *
 	 */
     public static final String CIENGINE_MASTER_URL = "CIENGINE_MASTER_URL";
+
+	/**
+	 *
+	 */
+	public static final String DOCKER_IMAGE_ID = "DOCKER_IMAGE_ID";
 }
