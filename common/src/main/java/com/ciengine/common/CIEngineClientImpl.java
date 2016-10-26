@@ -85,6 +85,12 @@ public class CIEngineClientImpl implements CIEngineClient
 		return isModuleReleasedResponse.isReleased();
 	}
 
+	@Override
+	public AddBuildResponse findBuild(AddBuildRequest addBuildRequest) {
+		// TODO implement me
+		return null;
+	}
+
 	private <T> T doPost(String url, Object setBuildStatusRequest, Class<T> responseType) {
 		RestTemplate restTemplate = new RestTemplate();
 		//set interceptors/requestFactory

@@ -64,11 +64,11 @@ public class OnReleaseListener implements CIEngineListener
 			//addBuildRequest.setReasonOfTrigger("commit");
 			addBuildRequest.setBranchName(onReleaseRule.getModuleNameToRelease());// todo or what?
 			addBuildRequest.setReasonOfTrigger(reasonOfTrigger);
-			List<BuildModel> buildModels = ciEngineFacade.findBuild(addBuildRequest);
+//			List<BuildModel> buildModels = ciEngineFacade.findBuild(addBuildRequest);
 
 			// If build (with the latest startTimestamp?) is skipped - rebuild
-			String lastBuildStatus = buildModels != null && buildModels.size() > 0 ? buildModels.get(0).getStatus() : null;
-			if (lastBuildStatus == null || BuildStatus.SKIPED.equals(lastBuildStatus)) {
+//			String lastBuildStatus = buildModels != null && buildModels.size() > 0 ? buildModels.get(0).getStatus() : null;
+//			if (lastBuildStatus == null || BuildStatus.SKIPED.equals(lastBuildStatus)) {
 				String buildExternalId = UUID.randomUUID().toString();
 				addBuildRequest.setExternalId(buildExternalId);
 				environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.BUILD_EXTERNAL_ID, buildExternalId);
@@ -84,7 +84,7 @@ public class OnReleaseListener implements CIEngineListener
 				environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL, "http://127.0.0.1:8080"); // TODO to conf?
 				addBuildRequest.setInputParams(makeString(merge(environmentVariablesFromEvent, onReleaseRule.getEnvironmentVariables())));
 				ciEngineFacade.addBuild(addBuildRequest);
-			}
+//			}
 
 
 //				ciEngineFacade.onEvent(onQueueBuildEvent);

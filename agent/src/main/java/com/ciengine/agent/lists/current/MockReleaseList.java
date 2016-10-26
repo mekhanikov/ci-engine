@@ -4,6 +4,8 @@ package com.ciengine.agent.lists.current;
 
 import com.ciengine.common.*;
 import com.ciengine.common.dto.AddBuildRequest;
+import com.ciengine.common.dto.AddBuildResponse;
+import com.ciengine.common.dto.Build;
 import com.ciengine.common.events.OnNewArtifactEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,13 +34,14 @@ public class MockReleaseList implements CIEngineList
 		String dockerImageId = environmentVariables.getProperty(EnvironmentVariablesConstants.DOCKER_IMAGE_ID);
 
 		String moduleName = moduleNameToRelease.split(":")[0];
-/*
+//*
 		AddBuildRequest addBuildRequest = new AddBuildRequest();
 		addBuildRequest.setExecutionList("mockReleaseList");
 		addBuildRequest.setDockerImageId(dockerImageId);
 		addBuildRequest.setModuleName(moduleName);
 		addBuildRequest.setBranchName(branchName);
-		List<BuildModel> buildModels = ciEngineClient.findBuild(addBuildRequest);
+		AddBuildResponse addBuildResponse = ciEngineClient.findBuild(addBuildRequest);
+		List<Build> buildModels = addBuildResponse.getBuildList();
 
 		// If build (with the latest startTimestamp?) is skipped - rebuild
 		String lastBuildStatus = buildModels != null && buildModels.size() > 0 ? buildModels.get(0).getStatus() : null;

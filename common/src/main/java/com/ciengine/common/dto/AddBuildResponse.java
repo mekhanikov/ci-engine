@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 
 /**
@@ -13,6 +14,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AddBuildResponse
 {
+	private List<Build> buildList;
+
 	@XmlAttribute(name = "sss")
 private String s = "sdd";
 
@@ -24,5 +27,13 @@ private String s = "sdd";
 	public void setS(String s)
 	{
 		this.s = s;
+	}
+
+	public List<Build> getBuildList() {
+		return buildList;
+	}
+
+	public void setBuildList(List<Build> buildList) {
+		this.buildList = buildList;
 	}
 }
