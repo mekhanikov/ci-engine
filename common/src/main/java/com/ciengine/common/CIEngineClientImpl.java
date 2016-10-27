@@ -86,9 +86,12 @@ public class CIEngineClientImpl implements CIEngineClient
 	}
 
 	@Override
-	public AddBuildResponse findBuild(AddBuildRequest addBuildRequest) {
-		// TODO implement me
-		return null;
+	public AddBuildResponse findBuild(String serverUrl, AddBuildRequest addBuildRequest) {
+		final String uri =  serverUrl + "/findbuild";
+		//AddBuildRequest addBuildRequest1 = new AddBuildRequest();
+		//isModuleReleasedRequest.setModule(moduleNameToRelease);
+		AddBuildResponse addBuildResponse = doPost(uri, addBuildRequest, AddBuildResponse.class);
+		return addBuildResponse;
 	}
 
 	private <T> T doPost(String url, Object setBuildStatusRequest, Class<T> responseType) {

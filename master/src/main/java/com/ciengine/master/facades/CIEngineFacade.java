@@ -1,10 +1,7 @@
 package com.ciengine.master.facades;
 
 import com.ciengine.common.*;
-import com.ciengine.common.dto.IsModuleReleasedRequest;
-import com.ciengine.common.dto.IsModuleReleasedResponse;
-import com.ciengine.common.dto.SetBuildStatusRequest;
-import com.ciengine.common.dto.AddBuildRequest;
+import com.ciengine.common.dto.*;
 import com.ciengine.master.controllers.getbuilds.GetBuildsResponse;
 import com.ciengine.master.listeners.CIEngineListener;
 import com.ciengine.master.listeners.impl.onrelease.OnReleaseRule;
@@ -38,7 +35,7 @@ public interface CIEngineFacade
 	// TODO extract to ReleseFacade
     List<OnReleaseRule> findAllReleases();
 
-	List<BuildModel> findBuild(AddBuildRequest addBuildRequest);
+	AddBuildResponse findBuild(AddBuildRequest addBuildRequest);
 
     void setBuildStatus(SetBuildStatusRequest setBuildStatusRequest);
 

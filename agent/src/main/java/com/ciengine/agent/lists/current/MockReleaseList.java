@@ -40,7 +40,7 @@ public class MockReleaseList implements CIEngineList
 		addBuildRequest.setDockerImageId(dockerImageId);
 		addBuildRequest.setModuleName(moduleName);
 		addBuildRequest.setBranchName(branchName);
-		AddBuildResponse addBuildResponse = ciEngineClient.findBuild(addBuildRequest);
+		AddBuildResponse addBuildResponse = ciEngineClient.findBuild(url, addBuildRequest);
 		List<Build> buildModels = addBuildResponse.getBuildList();
 
 		// If build (with the latest startTimestamp?) is skipped - rebuild

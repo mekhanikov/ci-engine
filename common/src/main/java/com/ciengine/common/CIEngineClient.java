@@ -16,5 +16,5 @@ public interface CIEngineClient
 
     boolean isModuleReleased(String serverUrl, String moduleNameToRelease);
 
-    AddBuildResponse findBuild(AddBuildRequest addBuildRequest);
+    AddBuildResponse findBuild(String serverUrl, AddBuildRequest addBuildRequest);
 }

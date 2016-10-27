@@ -1,11 +1,8 @@
 package com.ciengine.master.facades;
 
 import com.ciengine.common.*;
-import com.ciengine.common.dto.IsModuleReleasedRequest;
-import com.ciengine.common.dto.IsModuleReleasedResponse;
-import com.ciengine.common.dto.SetBuildStatusRequest;
+import com.ciengine.common.dto.*;
 import com.ciengine.common.events.OnReleaseSubmitedEvent;
-import com.ciengine.common.dto.AddBuildRequest;
 import com.ciengine.master.controllers.getbuilds.GetBuildsResponse;
 import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.dao.ReleaseDao;
@@ -173,14 +170,33 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 	}
 
 	@Override
-	public List<BuildModel> findBuild(AddBuildRequest addBuildRequest) {
-		return buildDao.find(
+	public AddBuildResponse findBuild(AddBuildRequest addBuildRequest) {
+		AddBuildResponse addBuildResponse = new AddBuildResponse();
+		List<BuildModel> buildModelList = buildDao.find(
 				addBuildRequest.getModuleName(),
 				addBuildRequest.getBranchName(),
 				addBuildRequest.getExecutionList(),
 				addBuildRequest.getDockerImageId(),
 				addBuildRequest.getInputParams()
 				);
+
+		List<Build> builds = new ArrayList<>();
+		for(BuildModel buildModel : buildModelList) {
+			Build build = new Build();
+			build.setDockerImageId(buildModel.getDockerImageId());
+			build.setBranchName(buildModel.getBranchName());
+			build.setExecutionList(buildModel.getExecutionList());
+			build.setModuleName(buildModel.getModuleName());
+			build.setInputParams(buildModel.getInputParams());
+			build.setStatus(buildModel.getStatus());
+			build.setExternalId(buildModel.getExternalId());
+			build.setId(buildModel.getId());
+			build.setInputParamsHash(buildModel.getInputParamsHash());
+			//	build.setEndTimestamp(buildModel.getEndTimestamp());
+			// TODO map other
+		}
+		addBuildResponse.setBuildList(builds);
+		return addBuildResponse;
 	}
 
 	@Override
