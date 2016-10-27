@@ -194,6 +194,7 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 			build.setInputParamsHash(buildModel.getInputParamsHash());
 			//	build.setEndTimestamp(buildModel.getEndTimestamp());
 			// TODO map other
+			builds.add(build);
 		}
 		addBuildResponse.setBuildList(builds);
 		return addBuildResponse;

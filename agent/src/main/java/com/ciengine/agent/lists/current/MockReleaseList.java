@@ -25,7 +25,7 @@ public class MockReleaseList implements CIEngineList
 	@Override public void doList(EnvironmentVariables environmentVariables) throws CIEngineStepException
 	{
 		String gitUrl = environmentVariables.getProperty(EnvironmentVariablesConstants.GIT_URL);
-		String branchName = environmentVariables.getProperty(EnvironmentVariablesConstants.BRANCH_NAME);
+		String branchName = environmentVariables.getProperty(EnvironmentVariablesConstants.RELEASE_BRANCH_NAME);
 		String commitId = environmentVariables.getProperty(EnvironmentVariablesConstants.COMMIT_ID);
 		String buildId = environmentVariables.getProperty(EnvironmentVariablesConstants.BUILD_EXTERNAL_ID);
 		String goingToRelease = environmentVariables.getProperty(EnvironmentVariablesConstants.GOING_TO_RELEASE);
