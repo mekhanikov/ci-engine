@@ -10,6 +10,7 @@ import com.ciengine.common.events.OnNewArtifactEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.swing.*;
 import java.util.List;
 
 
@@ -34,54 +35,66 @@ public class MockReleaseList implements CIEngineList
 		String dockerImageId = environmentVariables.getProperty(EnvironmentVariablesConstants.DOCKER_IMAGE_ID);
 
 		String moduleName = moduleNameToRelease.split(":")[0];
-//*
+
 		AddBuildRequest addBuildRequest = new AddBuildRequest();
 		addBuildRequest.setExecutionList("mockReleaseList");
 		addBuildRequest.setDockerImageId(dockerImageId);
 		addBuildRequest.setModuleName(moduleName);
 		addBuildRequest.setBranchName(branchName);
 		AddBuildResponse addBuildResponse = ciEngineClient.findBuild(url, addBuildRequest);
-		List<Build> buildModels = addBuildResponse.getBuildList();
+        // TODO calch hash and gilter by hash as well.
+        // TODO except current one build - it alwasy IN PROGRESS
+		List<Build> buildLists = addBuildResponse.getBuildList();
+
+        // If has at least one build IN PROGRESS/QUEUED/FAILED (check hash as well, it should be the same?) - skip current one - no need build the same.
+
+        boolean allAreSkipped = true;
+        if (buildLists != null) {
+            for (Build build : buildLists) {
+                if ( !build.getExternalId().equals(buildId) && !BuildStatus.SKIPED.equals(build.getStatus())) {
+                    allAreSkipped = false;
+                }
+            }
+        }
 
 		// If build (with the latest startTimestamp?) is skipped - rebuild
-		String lastBuildStatus = buildModels != null && buildModels.size() > 0 ? buildModels.get(0).getStatus() : null;
-		if (lastBuildStatus == null || BuildStatus.SKIPED.equals(lastBuildStatus)) {
-
-		}
-//*/
-		if (!ciEngineClient.isModuleReleased(url, moduleNameToRelease)) {
-			if (allDepsInPlace(url, moduleNameToRelease)) {
-				System.out.print("d");
-				try {
-					Thread.sleep(5000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+		//String lastBuildStatus = buildLists != null && buildLists.size() > 0 ? buildLists.get(0).getStatus() : null;
+		if (allAreSkipped) {
+			if (!ciEngineClient.isModuleReleased(url, moduleNameToRelease)) {
+				if (allDepsInPlace(url, moduleNameToRelease)) {
+					System.out.print("d");
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					//throw new CIEngineStepException("");
+					OnNewArtifactEvent onNewArtifactEvent = new OnNewArtifactEvent();
+					onNewArtifactEvent.setComitId(commitId);
+					onNewArtifactEvent.setGitUrl(gitUrl);
+					onNewArtifactEvent.setBranchName(branchName);
+					onNewArtifactEvent.setModuleName(moduleNameToRelease);
+					ciEngineClient.sendEvent(url, onNewArtifactEvent);
+					ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SUCCESS);
+				} else {
+					System.out.print("DEPS ARE REQUIRED");
+					ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SKIPED);
 				}
-				//throw new CIEngineStepException("");
-				OnNewArtifactEvent onNewArtifactEvent = new OnNewArtifactEvent();
-				onNewArtifactEvent.setComitId(commitId);
-				onNewArtifactEvent.setGitUrl(gitUrl);
-				onNewArtifactEvent.setBranchName(branchName);
-				onNewArtifactEvent.setModuleName(moduleNameToRelease);
-				ciEngineClient.sendEvent(url, onNewArtifactEvent);
-				ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SUCCESS);
+
+				// TODO read deps from pom.xml
+				// Map each dep artefact to module (each module can be related to multiple artefacts).
+				// Check if the module in list of going to release.
+				// If in list, check if isModuleReleased
+				// if not all required modules is released, SKIPPED, reason = ModA:1, ModB:2 are required, but has not been released yet
 			} else {
-				System.out.print("DEPS ARE REQUIRED");
+				System.out.print("ALREADY RELEASED");
+				// TODO SKIPED, reason = already released.
+				// delete Release from DB (need releaseId in in args)
 				ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SKIPED);
 			}
-
-			// TODO read deps from pom.xml
-			// Map each dep artefact to module (each module can be related to multiple artefacts).
-			// Check if the module in list of going to release.
-			// If in list, check if isModuleReleased
-			// if not all required modules is released, SKIPPED, reason = ModA:1, ModB:2 are required, but has not been released yet
 		} else {
-			// TODO we will never be here?
-			System.out.print("ALREADY RELEASED");
-			// TODO SKIPED, reason = already released.
-			// delete Release from DB (need releaseId in in args)
-			ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SKIPED);
-		}
+            ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SKIPED);
+        }
 	}
 
 	private boolean allDepsInPlace(String url, String module) {
