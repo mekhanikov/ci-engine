@@ -87,6 +87,7 @@ public class MockReleaseList implements CIEngineList
 				// If in list, check if isModuleReleased
 				// if not all required modules is released, SKIPPED, reason = ModA:1, ModB:2 are required, but has not been released yet
 			} else {
+                // TODO never will be here!
 				System.out.print("ALREADY RELEASED");
 				// TODO SKIPED, reason = already released.
 				// delete Release from DB (need releaseId in in args)
