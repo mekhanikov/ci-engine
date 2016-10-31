@@ -98,15 +98,17 @@ public class MockReleaseList implements CIEngineList
         }
 	}
 
-	private boolean allDepsInPlace(String url, String module) {
-		if ("ModC:2.0".equals(module)) {
+	private boolean allDepsInPlace(String url, String module0) {
+		String moduleName = module0.split(":")[0];
+		String moduleVersion = module0.split(":")[1];
+		if ("ModC".equals(moduleName)) {
 			return true;
 		}
-		if ("ModB:2.0".equals(module) &&
-				ciEngineClient.isModuleReleased(url, "ModC:2.0")) {
+		if ("ModB".equals(moduleName) &&
+				ciEngineClient.isModuleReleased(url, "ModC:" + moduleVersion)) {
 			return true;
 		}
-		if ("ModA:2.0".equals(module) && ciEngineClient.isModuleReleased(url, "ModB:2.0") && ciEngineClient.isModuleReleased(url, "ModC:2.0")) {
+		if ("ModA".equals(moduleName) && ciEngineClient.isModuleReleased(url, "ModB:" + moduleVersion) && ciEngineClient.isModuleReleased(url, "ModC:" + moduleVersion)) {
 			return true;
 		}
 		return false;

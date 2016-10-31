@@ -71,7 +71,7 @@ public class ReleaseIntegrationTests {
 		- async in BuildStatusChecker build status will be changed on success or failed -> BuildFinishedEvent or so.
 		- wait for BuildFinishedEvent for some time (timeout)
 		 */
-	//@Test
+	@Test
 	public void test() throws Exception {
 //		prepareMocks();
 		prepareModules();
@@ -79,16 +79,16 @@ public class ReleaseIntegrationTests {
 //		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
 //		ciEngineFacade.addListener(waitForEventListener);
 
-		submitRelease("ModA:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
+		submitRelease("ModA:1.0", "ModA:1.0,ModB:1.0,ModC:1.0");
 		//Thread.sleep(6000);
-		submitRelease("ModB:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
+		submitRelease("ModB:1.0", "ModA:1.0,ModB:1.0,ModC:1.0");
 //		//Thread.sleep(6000);
-		submitRelease("ModC:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
+		submitRelease("ModC:1.0", "ModA:1.0,ModB:1.0,ModC:1.0");
 		//Thread.sleep(6000);
 		//mockBinaryRepositoryClient.addModule("ModC:2.0");
 //		submitRelease("ModB:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 //		submitRelease("ModA:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
-		Thread.sleep(30000);
+		Thread.sleep(45000);
 		List<BuildModel> buildModels = buildDao.getAll();
 		System.out.println("********");
 		for (BuildModel buildModel : buildModels) {
@@ -96,6 +96,9 @@ public class ReleaseIntegrationTests {
 			System.out.println("--------");
 		}
 		System.out.println("********");
+		assertTrue(binaryRepositoryClient.isModuleReleased("ModA:1.0"));
+		assertTrue(binaryRepositoryClient.isModuleReleased("ModB:1.0"));
+		assertTrue(binaryRepositoryClient.isModuleReleased("ModC:1.0"));
 	}
 
 	@Test
@@ -106,16 +109,16 @@ public class ReleaseIntegrationTests {
 //		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
 //		ciEngineFacade.addListener(waitForEventListener);
 
-		submitRelease("ModA:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
+		submitRelease("ModA:3.0", "ModA:3.0,ModB:3.0,ModC:3.0");
 		Thread.sleep(6000);
-		submitRelease("ModB:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
+		submitRelease("ModB:3.0", "ModA:3.0,ModB:3.0,ModC:3.0");
 		Thread.sleep(6000);
-		submitRelease("ModC:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
+		submitRelease("ModC:3.0", "ModA:3.0,ModB:3.0,ModC:3.0");
 		Thread.sleep(6000);
 		//mockBinaryRepositoryClient.addModule("ModC:2.0");
 //		submitRelease("ModB:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 //		submitRelease("ModA:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
-		Thread.sleep(30000);
+		Thread.sleep(45000);
 		List<BuildModel> buildModels = buildDao.getAll();
 		System.out.println("********");
 		for (BuildModel buildModel : buildModels) {
@@ -123,6 +126,9 @@ public class ReleaseIntegrationTests {
 			System.out.println("--------");
 		}
 		System.out.println("********");
+		assertTrue(binaryRepositoryClient.isModuleReleased("ModA:3.0"));
+		assertTrue(binaryRepositoryClient.isModuleReleased("ModB:3.0"));
+		assertTrue(binaryRepositoryClient.isModuleReleased("ModC:3.0"));
 	}
 
 	@Test
@@ -133,7 +139,7 @@ public class ReleaseIntegrationTests {
 		submitRelease("ModB:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 		Thread.sleep(6000);
 		submitRelease("ModA:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
-		Thread.sleep(30000);
+		Thread.sleep(45000);
 		List<BuildModel> buildModels = buildDao.getAll();
 		System.out.println("********");
 		for (BuildModel buildModel : buildModels) {
