@@ -136,19 +136,26 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 	}
 
 	@Override
-	public void submitRelease(Release release) {
+	public void submitRelease(OnReleaseRule release) {
 		ReleaseModel releaseModel = new ReleaseModel();
 		releaseModel.setModuleNameToRelease(release.getModuleNameToRelease());
 		releaseModel.setGoingToRelease(release.getGoingToRelease());
 		releaseModel.setApplyList(release.getApplyList());
 		releaseModel.setReleaseBranchName(release.getReleaseBranchName());
 		releaseModel.setMergeFromCommitId(release.getMergeFromCommitId());
-		releaseModel.setInputParams(release.getInputParams());
+		releaseModel.setInputParams(makeString(release.getEnvironmentVariables()));
 		releaseModel.setDockerImageId(release.getDockerImageId());
 		releaseDao.save(releaseModel);
 		OnReleaseSubmitedEvent onReleaseSubmitedEvent = new OnReleaseSubmitedEvent();
        		// TODO
 		onReleaseSubmitedEvent.setModuleNameToRelease(release.getModuleNameToRelease());
+        onReleaseSubmitedEvent.setModuleNameToRelease(release.getModuleNameToRelease());
+        onReleaseSubmitedEvent.setGoingToRelease(release.getGoingToRelease());
+        onReleaseSubmitedEvent.setApplyList(release.getApplyList());
+        onReleaseSubmitedEvent.setReleaseBranchName(release.getReleaseBranchName());
+        onReleaseSubmitedEvent.setMergeFromCommitId(release.getMergeFromCommitId());
+        onReleaseSubmitedEvent.setInputParams(makeString(release.getEnvironmentVariables()));
+        onReleaseSubmitedEvent.setDockerImageId(release.getDockerImageId());
 		onEvent(onReleaseSubmitedEvent);
 	}
 
@@ -233,4 +240,17 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 	//	public static void main(String[] strings) {
 	//
 	//	}
+    private String makeString(EnvironmentVariables merge)
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (merge != null && merge.getProperties() != null) {
+            for (Map.Entry<String, Object> kvEntry : merge.getProperties().entrySet()) {
+                stringBuilder.append(kvEntry.getKey());
+                stringBuilder.append("=");
+                stringBuilder.append(kvEntry.getValue());
+                stringBuilder.append("\n");
+            }
+        }
+        return stringBuilder.toString();
+    }
 }

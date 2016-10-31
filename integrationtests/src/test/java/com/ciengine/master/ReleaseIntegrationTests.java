@@ -1,15 +1,13 @@
 package com.ciengine.master;
 
 import com.ciengine.TestConfiguration;
-import com.ciengine.common.BinaryRepositoryClient;
 import com.ciengine.common.Module;
 import com.ciengine.common.Repo;
 import com.ciengine.common.dto.IsModuleReleasedRequest;
 import com.ciengine.common.dto.IsModuleReleasedResponse;
 import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.facades.CIEngineFacade;
-import com.ciengine.master.facades.Release;
-import com.ciengine.master.listeners.impl.oncommit.OnCommitListener;
+import com.ciengine.master.listeners.impl.onrelease.OnReleaseRule;
 import com.ciengine.master.model.BuildModel;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -213,7 +211,7 @@ public class ReleaseIntegrationTests {
 
 	private void submitRelease(String moduleNameToRelease,
 							   String goingToRelease) {
-		Release release = new Release();
+		OnReleaseRule release = new OnReleaseRule();
 		release.setModuleNameToRelease(moduleNameToRelease);
 		release.setGoingToRelease(goingToRelease);
 		release.setApplyList("mockReleaseList");

@@ -30,7 +30,7 @@ public interface CIEngineFacade
 	void setModules(List<Module> moduleList);
 
 	// TODO extract to ReleseFacade
-	void submitRelease(Release release);
+	void submitRelease(OnReleaseRule release);
 
 	// TODO extract to ReleseFacade
     List<OnReleaseRule> findAllReleases();
