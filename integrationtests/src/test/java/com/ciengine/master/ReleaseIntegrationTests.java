@@ -1,6 +1,7 @@
 package com.ciengine.master;
 
 import com.ciengine.TestConfiguration;
+import com.ciengine.common.BinaryRepositoryClient;
 import com.ciengine.common.Module;
 import com.ciengine.common.Repo;
 import com.ciengine.master.dao.BuildDao;
@@ -18,6 +19,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.assertTrue;
 
 
 /**
@@ -41,6 +44,9 @@ public class ReleaseIntegrationTests {
 
 	@Autowired
 	BuildDao buildDao;
+
+	@Autowired
+	BinaryRepositoryClient binaryRepositoryClient;
 
 	/*
 	Test data:
@@ -135,6 +141,10 @@ public class ReleaseIntegrationTests {
 			System.out.println("--------");
 		}
 		System.out.println("********");
+		assertTrue(binaryRepositoryClient.isModuleReleased("ModA:2.0"));
+		assertTrue(binaryRepositoryClient.isModuleReleased("ModB:2.0"));
+		assertTrue(binaryRepositoryClient.isModuleReleased("ModC:2.0"));
+		;
 	}
 
 
