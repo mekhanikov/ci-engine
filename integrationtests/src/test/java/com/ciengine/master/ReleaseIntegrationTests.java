@@ -4,6 +4,8 @@ import com.ciengine.TestConfiguration;
 import com.ciengine.common.BinaryRepositoryClient;
 import com.ciengine.common.Module;
 import com.ciengine.common.Repo;
+import com.ciengine.common.dto.IsModuleReleasedRequest;
+import com.ciengine.common.dto.IsModuleReleasedResponse;
 import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.facades.Release;
@@ -36,17 +38,17 @@ public class ReleaseIntegrationTests {
 	@Autowired
 	CIEngineFacade ciEngineFacade;
 
-	@Autowired
-	OnCommitListener onCommitListener;
-
-	@Autowired
-	MockBinaryRepositoryClient mockBinaryRepositoryClient;
+//	@Autowired
+//	OnCommitListener onCommitListener;
+//
+//	@Autowired
+//	MockBinaryRepositoryClient mockBinaryRepositoryClient;
 
 	@Autowired
 	BuildDao buildDao;
 
-	@Autowired
-	BinaryRepositoryClient binaryRepositoryClient;
+//	@Autowired
+//	BinaryRepositoryClient binaryRepositoryClient;
 
 	/*
 	Test data:
@@ -88,7 +90,7 @@ public class ReleaseIntegrationTests {
 		//mockBinaryRepositoryClient.addModule("ModC:2.0");
 //		submitRelease("ModB:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 //		submitRelease("ModA:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
-		Thread.sleep(45000);
+		Thread.sleep(35000);
 		List<BuildModel> buildModels = buildDao.getAll();
 		System.out.println("********");
 		for (BuildModel buildModel : buildModels) {
@@ -96,12 +98,19 @@ public class ReleaseIntegrationTests {
 			System.out.println("--------");
 		}
 		System.out.println("********");
-		assertTrue(binaryRepositoryClient.isModuleReleased("ModA:1.0"));
-		assertTrue(binaryRepositoryClient.isModuleReleased("ModB:1.0"));
-		assertTrue(binaryRepositoryClient.isModuleReleased("ModC:1.0"));
+		assertTrue(isModuleReleased("ModA:1.0"));
+		assertTrue(isModuleReleased("ModB:1.0"));
+		assertTrue(isModuleReleased("ModC:1.0"));
 	}
 
-	@Test
+    private boolean isModuleReleased(String s) {
+        IsModuleReleasedRequest isModuleReleasedRequest = new IsModuleReleasedRequest();
+        isModuleReleasedRequest.setModule(s);
+        IsModuleReleasedResponse isModuleReleasedResponse = ciEngineFacade.isModuleReleased(isModuleReleasedRequest);
+        return isModuleReleasedResponse.isReleased();
+    }
+
+    @Test
 	public void test3() throws Exception {
 //		prepareMocks();
 		prepareModules();
@@ -118,7 +127,7 @@ public class ReleaseIntegrationTests {
 		//mockBinaryRepositoryClient.addModule("ModC:2.0");
 //		submitRelease("ModB:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 //		submitRelease("ModA:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
-		Thread.sleep(45000);
+		Thread.sleep(35000);
 		List<BuildModel> buildModels = buildDao.getAll();
 		System.out.println("********");
 		for (BuildModel buildModel : buildModels) {
@@ -126,9 +135,9 @@ public class ReleaseIntegrationTests {
 			System.out.println("--------");
 		}
 		System.out.println("********");
-		assertTrue(binaryRepositoryClient.isModuleReleased("ModA:3.0"));
-		assertTrue(binaryRepositoryClient.isModuleReleased("ModB:3.0"));
-		assertTrue(binaryRepositoryClient.isModuleReleased("ModC:3.0"));
+		assertTrue(isModuleReleased("ModA:3.0"));
+		assertTrue(isModuleReleased("ModB:3.0"));
+		assertTrue(isModuleReleased("ModC:3.0"));
 	}
 
 	@Test
@@ -139,7 +148,7 @@ public class ReleaseIntegrationTests {
 		submitRelease("ModB:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 		Thread.sleep(6000);
 		submitRelease("ModA:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
-		Thread.sleep(45000);
+		Thread.sleep(35000);
 		List<BuildModel> buildModels = buildDao.getAll();
 		System.out.println("********");
 		for (BuildModel buildModel : buildModels) {
@@ -147,9 +156,9 @@ public class ReleaseIntegrationTests {
 			System.out.println("--------");
 		}
 		System.out.println("********");
-		assertTrue(binaryRepositoryClient.isModuleReleased("ModA:2.0"));
-		assertTrue(binaryRepositoryClient.isModuleReleased("ModB:2.0"));
-		assertTrue(binaryRepositoryClient.isModuleReleased("ModC:2.0"));
+		assertTrue(isModuleReleased("ModA:2.0"));
+		assertTrue(isModuleReleased("ModB:2.0"));
+		assertTrue(isModuleReleased("ModC:2.0"));
 		;
 	}
 
