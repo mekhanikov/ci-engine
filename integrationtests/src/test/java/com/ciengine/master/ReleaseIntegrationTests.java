@@ -90,7 +90,7 @@ public class ReleaseIntegrationTests {
 		//mockBinaryRepositoryClient.addModule("ModC:2.0");
 //		submitRelease("ModB:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 //		submitRelease("ModA:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
-		Thread.sleep(35000);
+		Thread.sleep(45000);
 		List<BuildModel> buildModels = buildDao.getAll();
 		System.out.println("********");
 		for (BuildModel buildModel : buildModels) {
@@ -127,7 +127,7 @@ public class ReleaseIntegrationTests {
 		//mockBinaryRepositoryClient.addModule("ModC:2.0");
 //		submitRelease("ModB:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 //		submitRelease("ModA:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
-		Thread.sleep(35000);
+		Thread.sleep(45000);
 		List<BuildModel> buildModels = buildDao.getAll();
 		System.out.println("********");
 		for (BuildModel buildModel : buildModels) {
@@ -148,7 +148,7 @@ public class ReleaseIntegrationTests {
 		submitRelease("ModB:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 		Thread.sleep(6000);
 		submitRelease("ModA:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
-		Thread.sleep(35000);
+		Thread.sleep(45000);
 		List<BuildModel> buildModels = buildDao.getAll();
 		System.out.println("********");
 		for (BuildModel buildModel : buildModels) {
@@ -159,7 +159,6 @@ public class ReleaseIntegrationTests {
 		assertTrue(isModuleReleased("ModA:2.0"));
 		assertTrue(isModuleReleased("ModB:2.0"));
 		assertTrue(isModuleReleased("ModC:2.0"));
-		;
 	}
 
 

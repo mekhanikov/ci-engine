@@ -148,6 +148,7 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 		releaseDao.save(releaseModel);
 		OnReleaseSubmitedEvent onReleaseSubmitedEvent = new OnReleaseSubmitedEvent();
        		// TODO
+		onReleaseSubmitedEvent.setModuleNameToRelease(release.getModuleNameToRelease());
 		onEvent(onReleaseSubmitedEvent);
 	}
 

@@ -39,10 +39,12 @@ public class OnReleaseListener implements CIEngineListener
 		if (ciEngineEvent instanceof OnReleaseSubmitedEvent) {
 			OnReleaseSubmitedEvent onReleaseSubmitedEvent = (OnReleaseSubmitedEvent) ciEngineEvent;
 			reasonOfTrigger = "Added ReleaseRule for: " + onReleaseSubmitedEvent.getModuleNameToRelease();
+			// TODO run only current one?
 		}
 		if (ciEngineEvent instanceof OnNewArtifactEvent) {
 			OnNewArtifactEvent ciEngineEvent1 = (OnNewArtifactEvent) ciEngineEvent;
 			reasonOfTrigger = "Released module: " + ciEngineEvent1.getModuleName();
+			// TODO run all?
 		}
 		EnvironmentVariables environmentVariablesFromEvent = new EnvironmentVariables();
 //		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.GIT_URL, onNewArtifactEvent.getGitUrl());
