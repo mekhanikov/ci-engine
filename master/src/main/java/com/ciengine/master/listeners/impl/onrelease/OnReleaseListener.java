@@ -10,6 +10,7 @@ import com.ciengine.master.listeners.CIEngineListenerException;
 import com.ciengine.master.model.BuildModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,35 +41,53 @@ public class OnReleaseListener implements CIEngineListener
 			OnReleaseSubmitedEvent onReleaseSubmitedEvent = (OnReleaseSubmitedEvent) ciEngineEvent;
 			reasonOfTrigger = "Added ReleaseRule for: " + onReleaseSubmitedEvent.getModuleNameToRelease();
 			// TODO run only current one?
+			AddBuildRequest addBuildRequest = new AddBuildRequest();
+			addBuildRequest.setExecutionList(onReleaseSubmitedEvent.getApplyList());
+			addBuildRequest.setNodeId(null);
+			addBuildRequest.setDockerImageId(onReleaseSubmitedEvent.getDockerImageId());
+			addBuildRequest.setModuleName(onReleaseSubmitedEvent.getModuleNameToRelease().split(":")[0]);
+			addBuildRequest.setBranchName(onReleaseSubmitedEvent.getReleaseBranchName());
+			addBuildRequest.setReasonOfTrigger(reasonOfTrigger);
+			String buildExternalId = UUID.randomUUID().toString();
+			addBuildRequest.setExternalId(buildExternalId);
+			EnvironmentVariables environmentVariablesFromEvent = new EnvironmentVariables();
+			environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.BUILD_EXTERNAL_ID, buildExternalId);
+			environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.GOING_TO_RELEASE, onReleaseSubmitedEvent.getGoingToRelease());
+			environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MERGE_FROM_COMMIT_ID, onReleaseSubmitedEvent.getMergeFromCommitId());
+			environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MODULE_NAME, onReleaseSubmitedEvent.getModuleNameToRelease());
+			environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.RELEASE_BRANCH_NAME, onReleaseSubmitedEvent.getReleaseBranchName());
+			environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.DOCKER_IMAGE_ID, onReleaseSubmitedEvent.getDockerImageId());
+			environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL, "http://127.0.0.1:8080"); // TODO to conf?
+			addBuildRequest.setInputParams(makeString(merge(environmentVariablesFromEvent, getEnvironmentVariables(onReleaseSubmitedEvent.getInputParams()))));
+			ciEngineFacade.addBuild(addBuildRequest);
 		}
 		if (ciEngineEvent instanceof OnNewArtifactEvent) {
 			OnNewArtifactEvent ciEngineEvent1 = (OnNewArtifactEvent) ciEngineEvent;
 			reasonOfTrigger = "Released module: " + ciEngineEvent1.getModuleName();
 			// TODO run all?
-		}
-		EnvironmentVariables environmentVariablesFromEvent = new EnvironmentVariables();
+			EnvironmentVariables environmentVariablesFromEvent = new EnvironmentVariables();
 //		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.GIT_URL, onNewArtifactEvent.getGitUrl());
 //		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.BRANCH_NAME, onNewArtifactEvent.getBranchName());
 //		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.COMMIT_ID, onNewArtifactEvent.getComitId());
 
 //		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MODULE_NAME, module.getName());
 
-		// TODO set module specific values
+			// TODO set module specific values
 
-		List<OnReleaseRule> onReleaseRuleList = getRules();
-		for(OnReleaseRule onReleaseRule : onReleaseRuleList) {
+			List<OnReleaseRule> onReleaseRuleList = getRules();
+			for(OnReleaseRule onReleaseRule : onReleaseRuleList) {
 // TODO check for dups right here?
-			AddBuildRequest addBuildRequest = new AddBuildRequest();
-			addBuildRequest.setExecutionList(onReleaseRule.getApplyList());
-			addBuildRequest.setNodeId(null);
-			addBuildRequest.setDockerImageId(onReleaseRule.getDockerImageId());
-			addBuildRequest.setModuleName(onReleaseRule.getModuleNameToRelease().split(":")[0]);
-			//addBuildRequest.setReasonOfTrigger("commit");
-			addBuildRequest.setBranchName(onReleaseRule.getReleaseBranchName());
-			addBuildRequest.setReasonOfTrigger(reasonOfTrigger);
+				AddBuildRequest addBuildRequest = new AddBuildRequest();
+				addBuildRequest.setExecutionList(onReleaseRule.getApplyList());
+				addBuildRequest.setNodeId(null);
+				addBuildRequest.setDockerImageId(onReleaseRule.getDockerImageId());
+				addBuildRequest.setModuleName(onReleaseRule.getModuleNameToRelease().split(":")[0]);
+				//addBuildRequest.setReasonOfTrigger("commit");
+				addBuildRequest.setBranchName(onReleaseRule.getReleaseBranchName());
+				addBuildRequest.setReasonOfTrigger(reasonOfTrigger);
 //			List<BuildModel> buildModels = ciEngineFacade.findBuild(addBuildRequest);
 
-			// If build (with the latest startTimestamp?) is skipped - rebuild
+				// If build (with the latest startTimestamp?) is skipped - rebuild
 //			String lastBuildStatus = buildModels != null && buildModels.size() > 0 ? buildModels.get(0).getStatus() : null;
 //			if (lastBuildStatus == null || BuildStatus.SKIPED.equals(lastBuildStatus)) {
 				String buildExternalId = UUID.randomUUID().toString();
@@ -100,7 +119,9 @@ public class OnReleaseListener implements CIEngineListener
 //					throw new CIEngineListenerException(e);
 //				}
 
+			}
 		}
+
 	}
 
 	private String makeString(EnvironmentVariables merge)
@@ -145,5 +166,21 @@ public class OnReleaseListener implements CIEngineListener
 	public void setRules(List<OnReleaseRule> rules)
 	{
 		this.rules = rules;
+	}
+
+	protected EnvironmentVariables getEnvironmentVariables(String inputParams) {
+		EnvironmentVariables environmentVariables = new EnvironmentVariables();
+		if (!StringUtils.isEmpty(inputParams)) {
+			String[] lines = inputParams.split("\n");
+			for (String line : lines) {
+				if (!StringUtils.isEmpty(line)) {
+					String[] keyValue = line.split("=");
+					String key = keyValue.length > 0 ? keyValue[0] : "";
+					String value = keyValue.length > 1 ? keyValue[1] : "";
+					environmentVariables.addProperty(key, value);
+				}
+			}
+		}
+		return environmentVariables;
 	}
 }
