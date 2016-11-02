@@ -44,6 +44,7 @@ public class BuildStatusChecker
 		List<BuildModel> buildModelList = buildDao.getNextBuildsInProgress();
 		if (buildModelList != null) {
 			for (BuildModel buildModel : buildModelList) {
+				// TODO need to set state only if build finished, but status still in progress. It could because job was failed or terminated. What status to set then?
 				Node node = nodeFacade.findBestNodeById(buildModel.getNodeId());
 				String s = ciAgentFacade.getStatus(node, buildModel.getId());
 				if (!buildModel.getStatus().equals(s)) {

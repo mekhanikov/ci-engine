@@ -28,4 +28,11 @@ public class EnvironmentVariables
 	public Map<String, Object> getProperties() {
 		return new HashMap<>(map);
 	}
+
+	@Override
+	public String toString() {
+		return "EnvironmentVariables{" +
+				"map=" + map +
+				'}';
+	}
 }

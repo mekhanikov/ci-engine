@@ -34,12 +34,12 @@ public class MockReleaseList implements CIEngineList
 		String url = environmentVariables.getProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL);
 		String dockerImageId = environmentVariables.getProperty(EnvironmentVariablesConstants.DOCKER_IMAGE_ID);
 
-		String moduleName = moduleNameToRelease.split(":")[0];
+		//String moduleName = moduleNameToRelease.split(":")[0];
 
 		AddBuildRequest addBuildRequest = new AddBuildRequest();
 		addBuildRequest.setExecutionList("mockReleaseList");
 		addBuildRequest.setDockerImageId(dockerImageId);
-		addBuildRequest.setModuleName(moduleName);
+		addBuildRequest.setModuleName(moduleNameToRelease);
 		addBuildRequest.setBranchName(branchName);
 		AddBuildResponse addBuildResponse = ciEngineClient.findBuild(url, addBuildRequest);
         // TODO calch hash and gilter by hash as well.
