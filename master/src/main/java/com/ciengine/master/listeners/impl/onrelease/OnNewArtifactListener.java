@@ -1,20 +1,20 @@
 package com.ciengine.master.listeners.impl.onrelease;
 
-import com.ciengine.common.*;
-import com.ciengine.common.events.OnNewArtifactEvent;
+import com.ciengine.common.CIEngineEvent;
+import com.ciengine.common.DefaultCIEngineEvent;
+import com.ciengine.common.EnvironmentVariables;
+import com.ciengine.common.EnvironmentVariablesConstants;
 import com.ciengine.common.dto.AddBuildRequest;
+import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.listeners.CIEngineListener;
 import com.ciengine.master.listeners.CIEngineListenerException;
 import com.ciengine.master.listeners.Utils;
-import com.ciengine.master.model.BuildModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 
