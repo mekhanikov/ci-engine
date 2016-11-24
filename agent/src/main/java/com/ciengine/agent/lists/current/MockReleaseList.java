@@ -60,7 +60,7 @@ public class MockReleaseList implements CIEngineList
 		// If build (with the latest startTimestamp?) is skipped - rebuild
 		//String lastBuildStatus = buildLists != null && buildLists.size() > 0 ? buildLists.get(0).getStatus() : null;
 		if (allAreSkipped) {
-			if (!ciEngineClient.isModuleReleased(url, moduleNameToRelease)) {
+			if (!ciEngineClient.isModuleReleased(url, moduleNameToRelease)) {// TODO how it was released if all builds are skipped?
 				if (allDepsInPlace(url, moduleNameToRelease)) {
 					System.out.print("d");
 					try {
@@ -87,7 +87,7 @@ public class MockReleaseList implements CIEngineList
 				// If in list, check if isModuleReleased
 				// if not all required modules is released, SKIPPED, reason = ModA:1, ModB:2 are required, but has not been released yet
 			} else {
-                // TODO never will be here?! but we are here
+                // TODO never will be here (how it was released if all builds are skipped?)?! but we are here
 				System.out.print("ALREADY RELEASED");
 				// TODO SKIPED, reason = already released.
 				// delete Release from DB (need releaseId in in args)
