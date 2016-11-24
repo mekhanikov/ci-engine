@@ -21,8 +21,8 @@ import java.util.UUID;
 /**
  * Created by emekhanikov on 05.09.2016.
  */
-@Component(value = "OnReleaseListener")
-public class OnReleaseListener implements CIEngineListener
+@Component(value = "OnNewArtifactListener")
+public class OnNewArtifactListener implements CIEngineListener
 {
 	@Autowired
 	private CIEngineFacade ciEngineFacade;
