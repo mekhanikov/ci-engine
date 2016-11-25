@@ -64,7 +64,7 @@ public class OnNewArtifactListener implements CIEngineListener
 					addBuildRequest.setExecutionList(onReleaseRule.getApplyList());
 					addBuildRequest.setNodeId(null);
 					addBuildRequest.setDockerImageId(onReleaseRule.getDockerImageId());
-					addBuildRequest.setModuleName(onReleaseRule.getModuleNameToRelease().split(":")[0]);
+					addBuildRequest.setModuleName(onReleaseRule.getModuleNameToRelease());
 					//addBuildRequest.setReasonOfTrigger("commit");
 					addBuildRequest.setBranchName(onReleaseRule.getReleaseBranchName());
 					addBuildRequest.setReasonOfTrigger(reasonOfTrigger);

@@ -74,8 +74,8 @@ public class MockReleaseList implements CIEngineList
 					onNewArtifactEvent.setGitUrl(gitUrl);
 					onNewArtifactEvent.setBranchName(branchName);
 					onNewArtifactEvent.setModuleName(moduleNameToRelease);
-					ciEngineClient.sendEvent(url, onNewArtifactEvent);
 					ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SUCCESS);
+					ciEngineClient.sendEvent(url, onNewArtifactEvent);
 				} else {
 					System.out.print("DEPS ARE REQUIRED");
 					ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SKIPED);

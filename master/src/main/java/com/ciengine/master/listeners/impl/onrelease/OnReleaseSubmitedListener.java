@@ -33,7 +33,7 @@ public class OnReleaseSubmitedListener implements CIEngineListener {
         addBuildRequest.setExecutionList(onReleaseSubmitedEvent.getApplyList());
         addBuildRequest.setNodeId(null);
         addBuildRequest.setDockerImageId(onReleaseSubmitedEvent.getDockerImageId());
-        addBuildRequest.setModuleName(onReleaseSubmitedEvent.getModuleNameToRelease().split(":")[0]);
+        addBuildRequest.setModuleName(onReleaseSubmitedEvent.getModuleNameToRelease());
         addBuildRequest.setBranchName(onReleaseSubmitedEvent.getReleaseBranchName());
         addBuildRequest.setReasonOfTrigger(reasonOfTrigger);
         String buildExternalId = UUID.randomUUID().toString();
