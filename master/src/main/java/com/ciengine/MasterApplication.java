@@ -1,5 +1,6 @@
 package com.ciengine;
 
+import com.ciengine.master.ArtefactoryBinaryRepositoryClient;
 import com.ciengine.master.facades.CIAgentFacade;
 import com.ciengine.master.facades.CIAgentFacadeImpl;
 import org.hibernate.SessionFactory;
@@ -102,7 +103,11 @@ public class MasterApplication
 //	public BuildDao customerDao() {
 //		return  new BuildDao();
 //	}
-
+@Bean
+//@Primary
+public ArtefactoryBinaryRepositoryClient binaryRepositoryClient() {
+	return new ArtefactoryBinaryRepositoryClient();
+}
 
 	@Bean
 	public Docket newsApi() {
