@@ -1,9 +1,10 @@
 package com.ciengine;
 
+import com.ciengine.agent.steps.impl.MockMavenStep;
 import com.ciengine.common.BinaryRepositoryClient;
+import com.ciengine.common.CIEngineStep;
 import com.ciengine.master.MockBinaryRepositoryClient;
 import com.ciengine.master.MockCIAgentFacadeImpl;
-import com.ciengine.master.OnNewArtifactEventListener;
 import com.ciengine.master.facades.CIAgentFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -59,11 +60,17 @@ public class TestConfiguration extends AsyncConfigurerSupport
 		return new MockBinaryRepositoryClient();
 	}
 
-	@Bean
-//	@Primary
-	public OnNewArtifactEventListener onNewArtifactEventListener() {
-		return new OnNewArtifactEventListener();
+	@Bean("mavenStep")
+	@Primary
+	public CIEngineStep mavenStep() {
+		return new MockMavenStep();
 	}
+
+//	@Bean
+////	@Primary
+//	public OnNewArtifactEventListener onNewArtifactEventListener() {
+//		return new OnNewArtifactEventListener();
+//	}
 
 
 	@Override

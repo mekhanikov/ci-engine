@@ -8,6 +8,7 @@ import com.ciengine.common.dto.AddBuildResponse;
 import com.ciengine.common.dto.Build;
 import com.ciengine.common.events.OnNewArtifactEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
@@ -22,6 +23,10 @@ public class MockReleaseList implements CIEngineList
 {// TODO rename to ReleaseList
 	@Autowired
 	private CIEngineClient ciEngineClient;
+
+	@Autowired
+	@Qualifier("mavenStep")
+	private CIEngineStep ciEngineStep;
 
 	@Override public void doList(EnvironmentVariables environmentVariables) throws CIEngineStepException
 	{
@@ -71,6 +76,7 @@ public class MockReleaseList implements CIEngineList
 					//throw new CIEngineStepException("");
 					// TODO parse Maven logs for "Uploaded artefacts?"
 					// TODO are we interesting in Artefacts released? or in Module released? For Module Released we can not scan logs then.
+					ciEngineStep.doStep(environmentVariables);
 					OnNewArtifactEvent onNewArtifactEvent = new OnNewArtifactEvent();
 					onNewArtifactEvent.setComitId(commitId);
 					onNewArtifactEvent.setGitUrl(gitUrl);
