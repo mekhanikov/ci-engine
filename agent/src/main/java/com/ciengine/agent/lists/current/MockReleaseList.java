@@ -69,6 +69,8 @@ public class MockReleaseList implements CIEngineList
 						e.printStackTrace();
 					}
 					//throw new CIEngineStepException("");
+					// TODO parse Maven logs for "Uploaded artefacts?"
+					// TODO are we interesting in Artefacts released? or in Module released? For Module Released we can not scan logs then.
 					OnNewArtifactEvent onNewArtifactEvent = new OnNewArtifactEvent();
 					onNewArtifactEvent.setComitId(commitId);
 					onNewArtifactEvent.setGitUrl(gitUrl);

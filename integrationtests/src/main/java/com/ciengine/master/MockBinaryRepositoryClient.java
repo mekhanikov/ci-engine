@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class MockBinaryRepositoryClient implements BinaryRepositoryClient {
     private Map<String, Module> stringModuleMap = new HashMap<>();
-
+// TODO But BinaryRepo(Artefactory) works with mave artefacts, not with modules, should we rename method to isArtefactReeleased?
     @Override
     public boolean isModuleReleased(String module) {
         return stringModuleMap.containsKey(module);
