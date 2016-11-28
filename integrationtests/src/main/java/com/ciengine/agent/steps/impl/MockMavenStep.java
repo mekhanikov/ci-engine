@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  */
 //@Component("mavenStep")
 public class MockMavenStep implements CIEngineStep
-{// TODO or rename to BuildModAStep
+{
 
 	@Autowired
 	private MockBinaryRepositoryClient mockBinaryRepositoryClient;
@@ -21,9 +21,6 @@ public class MockMavenStep implements CIEngineStep
 	public void doStep(EnvironmentVariables environmentVariables) throws CIEngineStepException
 	{
 		String moduleNameToRelease = environmentVariables.getProperty(EnvironmentVariablesConstants.MODULE_NAME);
-
 		mockBinaryRepositoryClient.addModule(moduleNameToRelease);
-		// TODO mvn clean install
-		// TODO set build status, WHY IF MASTER SET IT BY ITSELF BASED ON build.sh exit code? somebody overwrite other!
 	}
 }
