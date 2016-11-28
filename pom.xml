@@ -20,6 +20,7 @@
         <module>common</module>
         <module>master</module>
         <module>agent</module>
+        <module>webapp</module>
     </modules>
     <build>
         <plugins>
