@@ -52,7 +52,14 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 		//		buildDao.getAll();
 //		BuildModel buildModel = new BuildModel();
 //		buildModel.setStartTimestamp(new Date());
-		buildDao.getAll();
+		List<Build> builds = new ArrayList<>();
+		List<BuildModel> buildModelList = buildDao.getAll();
+		for (BuildModel buildModel : buildModelList) {
+			Build build = new Build();
+			build.setBranchName(buildModel.getBranchName());
+			builds.add(build);
+		}
+		getBuildsResponse.setBuildList(builds);
 		return getBuildsResponse;
 	}
 

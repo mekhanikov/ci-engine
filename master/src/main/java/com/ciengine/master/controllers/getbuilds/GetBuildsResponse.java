@@ -1,6 +1,9 @@
 package com.ciengine.master.controllers.getbuilds;
 
+import com.ciengine.common.dto.Build;
+
 import javax.xml.bind.annotation.*;
+import java.util.List;
 
 
 /**
@@ -13,6 +16,8 @@ public class GetBuildsResponse
 	@XmlAttribute(name = "sss")
 private String s = "sdd";
 
+	private List<Build> buildList;
+
 	public String getS()
 	{
 		return s;
@@ -21,5 +26,13 @@ private String s = "sdd";
 	public void setS(String s)
 	{
 		this.s = s;
+	}
+
+	public List<Build> getBuildList() {
+		return buildList;
+	}
+
+	public void setBuildList(List<Build> buildList) {
+		this.buildList = buildList;
 	}
 }
