@@ -32,7 +32,7 @@ public class OnCommit {
     public OnCommit(CIEngineEvent ciEngineEvent) {
         this.ciEngineEvent = ciEngineEvent;
         eventOk = ciEngineEvent instanceof OnCommitEvent;
-        rules.add(createOnCommitRule("modA", "develop, feature/.*"));
+        //rules.add(createOnCommitRule("modA", "develop, feature/.*"));
 //		onCommitRules.add(createOnCommitRule("modB", "develop"));
 //		onCommitRules.add(createOnCommitRule("modC", "develop"));
     }
@@ -166,5 +166,10 @@ public class OnCommit {
     public void setRules(List<OnCommitRule> rules)
     {
         this.rules = rules;
+    }
+
+    public OnCommit forModuleAndBranches(String forModules, String forBranches) {
+        rules.add(createOnCommitRule("modA", "develop, feature/.*"));
+        return this;
     }
 }
