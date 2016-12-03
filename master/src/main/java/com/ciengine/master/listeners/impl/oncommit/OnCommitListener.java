@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 /**
  * Created by emekhanikov on 05.09.2016.
  */
-@Component(value = "OnCommitListener")
+//@Component(value = "OnCommitListener")
 public class OnCommitListener implements CIEngineListener
 {
 	@Autowired

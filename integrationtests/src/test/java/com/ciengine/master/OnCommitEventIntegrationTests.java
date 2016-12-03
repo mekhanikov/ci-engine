@@ -35,8 +35,8 @@ public class OnCommitEventIntegrationTests {
 	@Autowired
 	CIEngineFacade ciEngineFacade;
 
-	@Autowired
-	OnCommitListener onCommitListener;
+	//@Autowired
+	//OnCommitListener onCommitListener;
 
 	/*
 	Test data:
@@ -58,7 +58,6 @@ public class OnCommitEventIntegrationTests {
 	public void triggerBuildForModADevelop() throws Exception {
 		prepareMocks();
 		prepareModules();
-		prepareOnCommitListener();
 
 		//ciEngineFacade.addListener();
 		OnCommitEvent onCommitEvent = new OnCommitEvent();
@@ -88,7 +87,6 @@ public class OnCommitEventIntegrationTests {
 	public void triggerBuildForModAFeature() throws Exception {
 		prepareMocks();
 		prepareModules();
-		prepareOnCommitListener();
 		OnCommitEvent onCommitEvent = new OnCommitEvent();
 		onCommitEvent.setBranchName("feature/AA-1234");
 		onCommitEvent.setGitUrl("ssh://git@repo.ru/mod-a");
@@ -106,7 +104,6 @@ public class OnCommitEventIntegrationTests {
 	@Test
 	public void dontTriggerBuildForModARelease() throws Exception {
 		prepareModules();
-		prepareOnCommitListener();
 		OnCommitEvent onCommitEvent = new OnCommitEvent();
 		onCommitEvent.setBranchName("release");
 		onCommitEvent.setGitUrl("ssh://git@repo.ru/mod-a");
@@ -121,7 +118,6 @@ public class OnCommitEventIntegrationTests {
 	@Test
 	public void dontTriggerBuildForModBDevelop() throws Exception {
 		prepareModules();
-		prepareOnCommitListener();
 		OnCommitEvent onCommitEvent = new OnCommitEvent();
 		onCommitEvent.setBranchName("develop");
 		onCommitEvent.setGitUrl("ssh://git@repo.ru/mod-b");
@@ -133,14 +129,7 @@ public class OnCommitEventIntegrationTests {
 		Assert.assertTrue(ciEngineEvent == null);
 	}
 
-	private void prepareOnCommitListener()
-	{
-		List<OnCommitRule> onCommitRules = new ArrayList<>();
-		onCommitRules.add(createOnCommitRule("modA", "develop, feature/.*"));
-//		onCommitRules.add(createOnCommitRule("modB", "develop"));
-//		onCommitRules.add(createOnCommitRule("modC", "develop"));
-		onCommitListener.setRules(onCommitRules);
-	}
+
 
 	private OnCommitRule createOnCommitRule(String forModules, String forBranches)
 	{

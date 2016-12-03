@@ -29,4 +29,8 @@ public class RuleBuilder {
         return onReleaseSubmited;
     }
 
+    public OnCommit onCommit() {
+        OnCommit onCommit = applicationContext.getBean(OnCommit.class, ciEngineEvent);
+        return onCommit;
+    }
 }
