@@ -7,7 +7,6 @@ import com.ciengine.common.Repo;
 import com.ciengine.common.events.OnCommitEvent;
 import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.master.facades.CIEngineFacade;
-import com.ciengine.master.listeners.impl.oncommit.OnCommitListener;
 import com.ciengine.master.listeners.impl.oncommit.OnCommitRule;
 import org.junit.Assert;
 import org.junit.Test;

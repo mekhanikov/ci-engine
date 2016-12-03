@@ -1,6 +1,9 @@
 package com.ciengine.master.listeners.impl.oncommit;
 
-import com.ciengine.common.*;
+import com.ciengine.common.CIEngineEvent;
+import com.ciengine.common.EnvironmentVariables;
+import com.ciengine.common.EnvironmentVariablesConstants;
+import com.ciengine.common.Module;
 import com.ciengine.common.dto.AddBuildRequest;
 import com.ciengine.common.events.OnCommitEvent;
 import com.ciengine.master.facades.CIEngineFacade;
