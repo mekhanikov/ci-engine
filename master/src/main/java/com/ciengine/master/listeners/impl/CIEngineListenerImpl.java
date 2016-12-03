@@ -25,8 +25,8 @@ public class CIEngineListenerImpl implements CIEngineListener
 	@Override
 	public void onEvent(CIEngineEvent ciEngineEvent) throws CIEngineListenerException {
 		createRuleBuilder(ciEngineEvent).onNewArtefact().processReleaseRule();
-		createRuleBuilder(ciEngineEvent).onReleaseSubmited().triggerRelease();// TODO .triggerBuild();?
-		createRuleBuilder(ciEngineEvent).onCommit().forModuleAndBranches("modA", "develop, feature/.*").triggerBuild();
+		createRuleBuilder(ciEngineEvent).onReleaseSubmited().triggerRelease();// TODO .triggerBuilds();?
+		createRuleBuilder(ciEngineEvent).onCommit().addRule("modA", "develop, feature/.*","onCommitList").triggerBuilds();
 	}
 
 	private RuleBuilder createRuleBuilder(CIEngineEvent ciEngineEvent) {

@@ -35,7 +35,7 @@ public class OnCommit {
 //		onCommitRules.add(createOnCommitRule("modC", "develop"));
     }
 
-    public void triggerBuild() {
+    public void triggerBuilds() {
         if (eventOk) {
             OnCommitEvent onCommitEvent = (OnCommitEvent) ciEngineEvent;
             Module module = ciEngineFacade.findModuleByGitUrl(((OnCommitEvent) ciEngineEvent).getGitUrl());
@@ -150,11 +150,11 @@ public class OnCommit {
         return rules;
     }
 
-    private OnCommitRule createOnCommitRule(String forModules, String forBranches)
+    private OnCommitRule createOnCommitRule(String forModules, String forBranches, String applyList)
     {
         OnCommitRule onCommitRule = new OnCommitRule();
 //		onCommitRule.setDockerImageId();
-        onCommitRule.setApplyList("onCommitList");
+        onCommitRule.setApplyList(applyList);//"onCommitList"
 //		onCommitRule.setEnvironmentVariables();
         onCommitRule.setForBranches(forBranches);
         onCommitRule.setForModules(forModules);
@@ -166,8 +166,8 @@ public class OnCommit {
         this.rules = rules;
     }
 
-    public OnCommit forModuleAndBranches(String forModules, String forBranches) {
-        rules.add(createOnCommitRule("modA", "develop, feature/.*"));
+    public OnCommit addRule(String forModules, String forBranches, String applyList) {
+        rules.add(createOnCommitRule("modA", "develop, feature/.*", applyList));
         return this;
     }
 }
