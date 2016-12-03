@@ -58,6 +58,7 @@ public class OnCommit {
 
 
             // TODO set module specific values
+            // TODO if applyList is not specified find in buildLists by module branch.
             OnCommitRule rule = createOnCommitRule(modules, branches, applyList);
                 if(isApplicable(rule, onCommitEvent)) {
                     EnvironmentVariables environmentVariablesFromEventTmp = new EnvironmentVariables();
@@ -170,5 +171,9 @@ public class OnCommit {
     public OnCommit applyList(String applyList) {
         this.applyList = applyList;
         return this;
+    }
+
+    public void triggerBuildsFor(String modules, String branches) {
+        // TODO find all related module/branch and resolve applyList for them and trigger.
     }
 }
