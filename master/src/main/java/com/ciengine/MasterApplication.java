@@ -1,8 +1,10 @@
 package com.ciengine;
 
+import com.ciengine.common.CIEngineEvent;
 import com.ciengine.master.ArtefactoryBinaryRepositoryClient;
 import com.ciengine.master.facades.CIAgentFacade;
 import com.ciengine.master.facades.CIAgentFacadeImpl;
+import com.ciengine.master.listeners.RuleBuilder;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -13,6 +15,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
@@ -98,6 +101,13 @@ public class MasterApplication
 		txManager.setSessionFactory(s);
 		return txManager;
 	}
+
+	@Bean
+	@Scope("prototype")
+	public RuleBuilder thing(CIEngineEvent ciEngineEvent) {
+		return new RuleBuilder(ciEngineEvent);
+	}
+
 
 //	@Bean
 //	public BuildDao customerDao() {
