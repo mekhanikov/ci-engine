@@ -75,4 +75,9 @@ public class EnvironmentVariablesConstants
 	 *
 	 */
 	public static final String DOCKER_IMAGE_ID = "DOCKER_IMAGE_ID";
+
+    /**
+	 *
+	 */
+	public static final String ENABLE_CROSS_BUILD = "ENABLE_CROSS_BUILD";
 }

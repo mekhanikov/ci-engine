@@ -30,6 +30,7 @@ public class OnCommit {
     private String branches=".*";
     private String applyList;
     private String mergeFromBranchName;
+    private boolean crossBuildEnabled;
 
     public OnCommit(CIEngineEvent ciEngineEvent) {
         this.ciEngineEvent = ciEngineEvent;
@@ -39,7 +40,7 @@ public class OnCommit {
 //		onCommitRules.add(createOnCommitRule("modC", "develop"));
     }
 
-    public void triggerBuilds() {
+    public void triggerBuild() {
         if (eventOk) {
             OnCommitEvent onCommitEvent = (OnCommitEvent) ciEngineEvent;
             Module module = ciEngineFacade.findModuleByGitUrl(((OnCommitEvent) ciEngineEvent).getGitUrl());
@@ -53,6 +54,9 @@ public class OnCommit {
             environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.COMMIT_ID, onCommitEvent.getComitId());
             if (mergeFromBranchName != null) {
                 environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MERGE_FROM_BRANCH_NAME, mergeFromBranchName);
+            }
+            if (crossBuildEnabled) {
+                environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.ENABLE_CROSS_BUILD, "true");
             }
             environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MODULE_NAME, module.getName());
             environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL, "http://127.0.0.1:8080"); // TODO to conf?
@@ -189,6 +193,11 @@ public class OnCommit {
 
     public OnCommit enableAutomergeFrom(String mergeFromBranchName) {
         this.mergeFromBranchName = mergeFromBranchName;
+        return this;
+    }
+
+    public OnCommit enableCrossBuild() {
+        this.crossBuildEnabled = true;
         return this;
     }
 }
