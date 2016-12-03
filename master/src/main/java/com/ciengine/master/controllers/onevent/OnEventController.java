@@ -4,7 +4,6 @@ import com.ciengine.common.DefaultCIEngineEvent;
 import com.ciengine.common.dto.OnEventResponse;
 import com.ciengine.master.facades.CIEngineFacade;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 

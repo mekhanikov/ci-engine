@@ -1,12 +1,11 @@
 package com.ciengine.agent.lists.current;
 
 
-
-import com.ciengine.common.*;
 import com.ciengine.agent.steps.impl.AttachArtefactsStep;
 import com.ciengine.agent.steps.impl.BuildStep;
 import com.ciengine.agent.steps.impl.CheckoutStep;
 import com.ciengine.agent.steps.impl.NewArtefactsReleasedStep;
+import com.ciengine.common.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

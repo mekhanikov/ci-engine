@@ -1,7 +1,5 @@
 package com.ciengine.master.controllers.setbuildstatus;
 
-import com.ciengine.common.DefaultCIEngineEvent;
-import com.ciengine.common.dto.OnEventResponse;
 import com.ciengine.common.dto.SetBuildStatusRequest;
 import com.ciengine.common.dto.SetBuildStatusResponse;
 import com.ciengine.master.facades.CIEngineFacade;

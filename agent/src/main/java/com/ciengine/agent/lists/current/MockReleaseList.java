@@ -1,7 +1,6 @@
 package com.ciengine.agent.lists.current;
 
 
-
 import com.ciengine.common.*;
 import com.ciengine.common.dto.AddBuildRequest;
 import com.ciengine.common.dto.AddBuildResponse;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import javax.swing.*;
 import java.util.List;
 
 

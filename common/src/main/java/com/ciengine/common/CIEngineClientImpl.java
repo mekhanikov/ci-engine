@@ -1,10 +1,6 @@
 package com.ciengine.common;
 
 
-
-import com.ciengine.common.CIEngineClient;
-import com.ciengine.common.CIEngineEvent;
-import com.ciengine.common.DefaultCIEngineEvent;
 import com.ciengine.common.dto.*;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

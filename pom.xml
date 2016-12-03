@@ -21,6 +21,8 @@
         <module>master</module>
         <module>agent</module>
         <module>webapp</module>
+        <module>mocks</module>
+        <module>masterrunner</module>
     </modules>
     <build>
         <plugins>
