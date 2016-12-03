@@ -24,8 +24,11 @@ public class CIEngineListenerImpl implements CIEngineListener
 
 	@Override
 	public void onEvent(CIEngineEvent ciEngineEvent) throws CIEngineListenerException {
-		RuleBuilder ruleBuilder = applicationContext.getBean(RuleBuilder.class, ciEngineEvent);
-		ruleBuilder.onNewArtefact().processReleaseRule();
+		createRuleBuilder(ciEngineEvent).onNewArtefact().processReleaseRule();
+	}
+
+	private RuleBuilder createRuleBuilder(CIEngineEvent ciEngineEvent) {
+		return applicationContext.getBean(RuleBuilder.class, ciEngineEvent);
 	}
 
 	@Override
