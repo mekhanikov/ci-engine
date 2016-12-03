@@ -18,7 +18,7 @@ import java.util.UUID;
 /**
  * Created by emekhanikov on 24.11.2016.
  */
-@Component(value = "OnReleaseSubmitedListener")
+//@Component(value = "OnReleaseSubmitedListener")
 public class OnReleaseSubmitedListener implements CIEngineListener {
 
     @Autowired

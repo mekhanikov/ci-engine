@@ -25,6 +25,7 @@ public class CIEngineListenerImpl implements CIEngineListener
 	@Override
 	public void onEvent(CIEngineEvent ciEngineEvent) throws CIEngineListenerException {
 		createRuleBuilder(ciEngineEvent).onNewArtefact().processReleaseRule();
+		createRuleBuilder(ciEngineEvent).onReleaseSubmited().triggerRelease();
 	}
 
 	private RuleBuilder createRuleBuilder(CIEngineEvent ciEngineEvent) {

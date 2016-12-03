@@ -7,6 +7,7 @@ import com.ciengine.common.dto.AddBuildRequest;
 import com.ciengine.common.dto.IsModuleReleasedRequest;
 import com.ciengine.common.dto.IsModuleReleasedResponse;
 import com.ciengine.common.events.OnNewArtifactEvent;
+import com.ciengine.common.events.OnReleaseSubmitedEvent;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.listeners.impl.onrelease.OnReleaseRule;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class RuleBuilder {
 
     public RuleBuilder processReleaseRule() {
         String reasonOfTrigger = "";
-        if (ciEngineEvent instanceof OnNewArtifactEvent) {
+        if (eventOk) {
             OnNewArtifactEvent ciEngineEvent1 = (OnNewArtifactEvent) ciEngineEvent;
             reasonOfTrigger = "Released module: " + ciEngineEvent1.getModuleName();
             EnvironmentVariables environmentVariablesFromEvent = new EnvironmentVariables();
@@ -80,5 +81,39 @@ public class RuleBuilder {
     public List<OnReleaseRule> getRules()
     {
         return ciEngineFacade.findAllReleases();
+    }
+
+    public RuleBuilder onReleaseSubmited() {
+        if((ciEngineEvent instanceof OnReleaseSubmitedEvent)) {
+            eventOk = true;
+        }
+        return this;
+    }
+
+    public void triggerRelease() {
+        if(eventOk) {
+            OnReleaseSubmitedEvent onReleaseSubmitedEvent = (OnReleaseSubmitedEvent) ciEngineEvent;
+            String reasonOfTrigger = "Added ReleaseRule for: " + onReleaseSubmitedEvent.getModuleNameToRelease();
+            // TODO run only current one?
+            AddBuildRequest addBuildRequest = new AddBuildRequest();
+            addBuildRequest.setExecutionList(onReleaseSubmitedEvent.getApplyList());
+            addBuildRequest.setNodeId(null);
+            addBuildRequest.setDockerImageId(onReleaseSubmitedEvent.getDockerImageId());
+            addBuildRequest.setModuleName(onReleaseSubmitedEvent.getModuleNameToRelease());
+            addBuildRequest.setBranchName(onReleaseSubmitedEvent.getReleaseBranchName());
+            addBuildRequest.setReasonOfTrigger(reasonOfTrigger);
+            String buildExternalId = UUID.randomUUID().toString();
+            addBuildRequest.setExternalId(buildExternalId);
+            EnvironmentVariables environmentVariablesFromEvent = new EnvironmentVariables();
+            environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.BUILD_EXTERNAL_ID, buildExternalId);
+            environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.GOING_TO_RELEASE, onReleaseSubmitedEvent.getGoingToRelease());
+            environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MERGE_FROM_COMMIT_ID, onReleaseSubmitedEvent.getMergeFromCommitId());
+            environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MODULE_NAME, onReleaseSubmitedEvent.getModuleNameToRelease());
+            environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.RELEASE_BRANCH_NAME, onReleaseSubmitedEvent.getReleaseBranchName());
+            environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.DOCKER_IMAGE_ID, onReleaseSubmitedEvent.getDockerImageId());
+            environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL, "http://127.0.0.1:8080"); // TODO to conf?
+            addBuildRequest.setInputParams(Utils.makeString(Utils.merge(environmentVariablesFromEvent, Utils.getEnvironmentVariables(onReleaseSubmitedEvent.getInputParams()))));
+            ciEngineFacade.addBuild(addBuildRequest);
+        }
     }
 }
