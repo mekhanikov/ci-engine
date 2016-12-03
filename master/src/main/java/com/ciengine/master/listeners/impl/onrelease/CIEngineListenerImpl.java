@@ -1,14 +1,12 @@
 package com.ciengine.master.listeners.impl.onrelease;
 
 
-import com.ciengine.MasterApplication;
 import com.ciengine.common.CIEngineEvent;
 import com.ciengine.common.DefaultCIEngineEvent;
 import com.ciengine.master.listeners.CIEngineListener;
 import com.ciengine.master.listeners.CIEngineListenerException;
 import com.ciengine.master.listeners.RuleBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
