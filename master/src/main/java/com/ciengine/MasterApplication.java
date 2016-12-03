@@ -4,6 +4,8 @@ import com.ciengine.common.CIEngineEvent;
 import com.ciengine.master.ArtefactoryBinaryRepositoryClient;
 import com.ciengine.master.facades.CIAgentFacade;
 import com.ciengine.master.facades.CIAgentFacadeImpl;
+import com.ciengine.master.listeners.OnNewArtefact;
+import com.ciengine.master.listeners.OnReleaseSubmited;
 import com.ciengine.master.listeners.RuleBuilder;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,6 +108,18 @@ public class MasterApplication
 	@Scope("prototype")
 	public RuleBuilder thing(CIEngineEvent ciEngineEvent) {
 		return new RuleBuilder(ciEngineEvent);
+	}
+
+	@Bean
+	@Scope("prototype")
+	public OnNewArtefact onNewArtefact(CIEngineEvent ciEngineEvent) {
+		return new OnNewArtefact(ciEngineEvent);
+	}
+
+	@Bean
+	@Scope("prototype")
+	public OnReleaseSubmited onReleaseSubmited(CIEngineEvent ciEngineEvent) {
+		return new OnReleaseSubmited(ciEngineEvent);
 	}
 
 
