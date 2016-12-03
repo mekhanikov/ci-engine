@@ -23,10 +23,15 @@ public class OnCommit {
     @Autowired
     private CIEngineFacade ciEngineFacade;
 
-    private List<OnCommitRule> rules = new ArrayList<>();
+//    private List<OnCommitRule> rules = new ArrayList<>();
+    //private OnCommitRule rule;
 
     private CIEngineEvent ciEngineEvent;
     private boolean eventOk = false;
+    private String modules=".*";
+    private String branches=".*";
+    private String applyList="";
+
     public OnCommit(CIEngineEvent ciEngineEvent) {
         this.ciEngineEvent = ciEngineEvent;
         eventOk = ciEngineEvent instanceof OnCommitEvent;
@@ -53,19 +58,17 @@ public class OnCommit {
 
 
             // TODO set module specific values
-
-            List<OnCommitRule> onCommitRuleList = getRules();
-            for(OnCommitRule onCommitRule : onCommitRuleList) {
-                if(isApplicable(onCommitRule, onCommitEvent)) {
+            OnCommitRule rule = createOnCommitRule(modules, branches, applyList);
+                if(isApplicable(rule, onCommitEvent)) {
                     EnvironmentVariables environmentVariablesFromEventTmp = new EnvironmentVariables();
                     environmentVariablesFromEventTmp.addProperties(environmentVariablesFromEvent.getProperties());
                     String buildExternalId = UUID.randomUUID().toString();
                     environmentVariablesFromEventTmp.addProperty(EnvironmentVariablesConstants.BUILD_EXTERNAL_ID, buildExternalId);
                     AddBuildRequest addBuildRequest = new AddBuildRequest();
-                    addBuildRequest.setExecutionList(onCommitRule.getApplyList());
+                    addBuildRequest.setExecutionList(rule.getApplyList());
                     addBuildRequest.setNodeId(null);
-                    addBuildRequest.setDockerImageId(onCommitRule.getDockerImageId());
-                    addBuildRequest.setInputParams(makeString(merge(environmentVariablesFromEventTmp, onCommitRule.getEnvironmentVariables())));
+                    addBuildRequest.setDockerImageId(rule.getDockerImageId());
+                    addBuildRequest.setInputParams(makeString(merge(environmentVariablesFromEventTmp, rule.getEnvironmentVariables())));
                     addBuildRequest.setModuleName(module.getName());
                     addBuildRequest.setReasonOfTrigger("commit");
                     addBuildRequest.setBranchName(onCommitEvent.getBranchName());
@@ -82,7 +85,7 @@ public class OnCommit {
 //					throw new CIEngineListenerException(e);
 //				}
                 }
-            }
+
         }
     }
 
@@ -143,13 +146,6 @@ public class OnCommit {
         return branchIsApplicable;
     }
 
-    public List<OnCommitRule> getRules()
-    {
-        // TODO load from OnCommitListener.csv on each event.
-        // TODO or only on start? because resources inside jar will never be overriten in runtime?
-        return rules;
-    }
-
     private OnCommitRule createOnCommitRule(String forModules, String forBranches, String applyList)
     {
         OnCommitRule onCommitRule = new OnCommitRule();
@@ -161,13 +157,18 @@ public class OnCommit {
         return onCommitRule;
     }
 
-    public void setRules(List<OnCommitRule> rules)
-    {
-        this.rules = rules;
+    public OnCommit forModule(String modules) {
+        this.modules = modules;
+     return this;
     }
 
-    public OnCommit addRule(String forModules, String forBranches, String applyList) {
-        rules.add(createOnCommitRule("modA", "develop, feature/.*", applyList));
+    public OnCommit forBranches(String branches) {
+        this.branches = branches;
+        return this;
+    }
+
+    public OnCommit applyList(String applyList) {
+        this.applyList = applyList;
         return this;
     }
 }
