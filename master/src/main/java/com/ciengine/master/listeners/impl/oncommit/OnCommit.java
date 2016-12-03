@@ -1,14 +1,9 @@
-package com.ciengine.master.listeners;
+package com.ciengine.master.listeners.impl.oncommit;
 
 import com.ciengine.common.*;
 import com.ciengine.common.dto.AddBuildRequest;
-import com.ciengine.common.dto.IsModuleReleasedRequest;
-import com.ciengine.common.dto.IsModuleReleasedResponse;
 import com.ciengine.common.events.OnCommitEvent;
-import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.master.facades.CIEngineFacade;
-import com.ciengine.master.listeners.impl.oncommit.OnCommitRule;
-import com.ciengine.master.listeners.impl.onrelease.OnReleaseRule;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
