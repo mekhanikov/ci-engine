@@ -30,7 +30,7 @@ public class OnCommit {
     private boolean eventOk = false;
     private String modules=".*";
     private String branches=".*";
-    private String applyList="";
+    private String applyList;
     private String mergeFromBranchName;
 
     public OnCommit(CIEngineEvent ciEngineEvent) {
@@ -62,8 +62,12 @@ public class OnCommit {
 
             // TODO set module specific values
             // TODO if applyList is not specified find in buildLists by module branch.
+            if (applyList == null) {
+                applyList = findApplyListFor(module.getName(), onCommitEvent.getBranchName());
+            }
             OnCommitRule rule = createOnCommitRule(modules, branches, applyList);
                 if(isApplicable(rule, onCommitEvent)) {
+
                     EnvironmentVariables environmentVariablesFromEventTmp = new EnvironmentVariables();
                     environmentVariablesFromEventTmp.addProperties(environmentVariablesFromEvent.getProperties());
                     String buildExternalId = UUID.randomUUID().toString();
@@ -91,6 +95,11 @@ public class OnCommit {
                 }
 
         }
+    }
+
+    private String findApplyListFor(String name, String branchName) {
+        // TODO search in BuildApplyListMap
+        return "onCommitList";
     }
 
 

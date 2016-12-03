@@ -27,8 +27,8 @@ public class CIEngineListenerImpl implements CIEngineListener
 		createRuleBuilder(ciEngineEvent).onNewArtefact().processReleaseRule();
 		createRuleBuilder(ciEngineEvent).onReleaseSubmited().triggerRelease();
 		//createRuleBuilder(ciEngineEvent).onCommit().forModules("modA").forBranches("develop, feature/.*").applyList("onCommitList").triggerBuilds();
-		createRuleBuilder(ciEngineEvent).onCommit().forModules("modA").forBranches("develop").applyList("onCommitList").triggerBuilds();
-		createRuleBuilder(ciEngineEvent).onCommit().forModules("modA").forBranches("feature/.*").applyList("onCommitList").enableAutomergeFrom("develop").triggerBuilds();
+		createRuleBuilder(ciEngineEvent).onCommit().forModules("modA").forBranches("develop").triggerBuilds();
+		createRuleBuilder(ciEngineEvent).onCommit().forModules("modA").forBranches("feature/.*").enableAutomergeFrom("develop").triggerBuilds();
 		createRuleBuilder(ciEngineEvent).onCommit().forModules("modA").forBranches("develop").triggerBuildsFor("modA", "feature/.*");
 	}
 
