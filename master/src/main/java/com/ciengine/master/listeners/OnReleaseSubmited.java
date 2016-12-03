@@ -4,7 +4,6 @@ import com.ciengine.common.CIEngineEvent;
 import com.ciengine.common.EnvironmentVariables;
 import com.ciengine.common.EnvironmentVariablesConstants;
 import com.ciengine.common.dto.AddBuildRequest;
-import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.common.events.OnReleaseSubmitedEvent;
 import com.ciengine.master.facades.CIEngineFacade;
 import org.springframework.beans.factory.annotation.Autowired;
