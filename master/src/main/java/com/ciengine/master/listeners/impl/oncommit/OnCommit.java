@@ -9,8 +9,6 @@ import com.ciengine.common.events.OnCommitEvent;
 import com.ciengine.master.facades.CIEngineFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Matcher;
