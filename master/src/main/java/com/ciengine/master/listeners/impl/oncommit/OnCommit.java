@@ -31,6 +31,7 @@ public class OnCommit {
     private String modules=".*";
     private String branches=".*";
     private String applyList="";
+    private String mergeFromBranchName;
 
     public OnCommit(CIEngineEvent ciEngineEvent) {
         this.ciEngineEvent = ciEngineEvent;
@@ -52,7 +53,9 @@ public class OnCommit {
             environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.GIT_URL, onCommitEvent.getGitUrl());
             environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.BRANCH_NAME, onCommitEvent.getBranchName());
             environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.COMMIT_ID, onCommitEvent.getComitId());
-
+            if (mergeFromBranchName != null) {
+                environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MERGE_FROM_BRANCH_NAME, mergeFromBranchName);
+            }
             environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MODULE_NAME, module.getName());
             environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL, "http://127.0.0.1:8080"); // TODO to conf?
 
@@ -175,5 +178,10 @@ public class OnCommit {
 
     public void triggerBuildsFor(String modules, String branches) {
         // TODO find all related module/branch and resolve applyList for them and trigger.
+    }
+
+    public OnCommit enableAutomergeFrom(String mergeFromBranchName) {
+        this.mergeFromBranchName = mergeFromBranchName;
+        return this;
     }
 }

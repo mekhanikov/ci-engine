@@ -59,6 +59,11 @@ public class EnvironmentVariablesConstants
 	/**
 	 *
 	 */
+	public static final String MERGE_FROM_BRANCH_NAME = "MERGE_FROM_BRANCH_NAME";
+
+	/**
+	 *
+	 */
 	public static final String RELEASE_BRANCH_NAME = "RELEASE_BRANCH_NAME";
 
 	/**
