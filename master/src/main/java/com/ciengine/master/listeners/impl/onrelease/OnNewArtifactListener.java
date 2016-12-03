@@ -40,7 +40,6 @@ public class OnNewArtifactListener implements CIEngineListener
 //		}
 		String reasonOfTrigger = "";
 
-		if (ciEngineEvent instanceof OnNewArtifactEvent) {
 			OnNewArtifactEvent ciEngineEvent1 = (OnNewArtifactEvent) ciEngineEvent;
 			reasonOfTrigger = "Released module: " + ciEngineEvent1.getModuleName();
 			// TODO run all?
@@ -106,7 +105,7 @@ public class OnNewArtifactListener implements CIEngineListener
 
 
 			}
-		}
+
 
 	}
 
