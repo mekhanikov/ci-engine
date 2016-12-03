@@ -157,7 +157,7 @@ public class OnCommit {
         return onCommitRule;
     }
 
-    public OnCommit forModule(String modules) {
+    public OnCommit forModules(String modules) {
         this.modules = modules;
      return this;
     }
