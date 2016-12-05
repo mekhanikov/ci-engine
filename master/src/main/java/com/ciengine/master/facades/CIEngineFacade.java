@@ -19,7 +19,7 @@ public interface CIEngineFacade
 {
 	GetBuildsResponse getBuildsResponse();
 
-	GetBuildsResponse addBuild(AddBuildRequest addBuildRequest);
+	AddBuildResponse addBuild(AddBuildRequest addBuildRequest);
 
 	void onEvent(DefaultCIEngineEvent defaultCIEngineEvent);
 

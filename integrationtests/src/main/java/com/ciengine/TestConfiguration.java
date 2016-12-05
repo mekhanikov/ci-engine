@@ -2,7 +2,9 @@ package com.ciengine;
 
 import com.ciengine.agent.steps.impl.MockMavenStep;
 import com.ciengine.common.BinaryRepositoryClient;
+import com.ciengine.common.CIEngineClient;
 import com.ciengine.common.CIEngineStep;
+import com.ciengine.common.MockCIEngineClientImpl;
 import com.ciengine.master.MockBinaryRepositoryClient;
 import com.ciengine.master.MockCIAgentFacadeImpl;
 import com.ciengine.master.facades.CIAgentFacade;
@@ -60,6 +62,12 @@ public class TestConfiguration extends AsyncConfigurerSupport
 	@Primary
 	public BinaryRepositoryClient binaryRepositoryClient() {
 		return new MockBinaryRepositoryClient();
+	}
+
+	@Bean
+	@Primary
+	public CIEngineClient ciEngineClient() {
+		return new MockCIEngineClientImpl();
 	}
 
 	@Bean("mavenStep")

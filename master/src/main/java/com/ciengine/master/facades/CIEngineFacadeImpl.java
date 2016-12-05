@@ -63,9 +63,9 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 		return getBuildsResponse;
 	}
 
-	@Override public GetBuildsResponse addBuild(AddBuildRequest addBuildRequest)
+	@Override public AddBuildResponse addBuild(AddBuildRequest addBuildRequest)
 	{
-		GetBuildsResponse getBuildsResponse = new GetBuildsResponse();
+		AddBuildResponse addBuildResponse = new AddBuildResponse();
 		BuildModel buildModel = new BuildModel();
 		buildModel.setDockerImageId(addBuildRequest.getDockerImageId());
 		buildModel.setBranchName(addBuildRequest.getBranchName());
@@ -78,7 +78,7 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 		buildModel.setStartTimestamp(new Date());
 		buildModel.setExternalId(addBuildRequest.getExternalId());
 		buildDao.save(buildModel);
-		return getBuildsResponse;
+		return addBuildResponse;
 	}
 
 	@Override public void onEvent(DefaultCIEngineEvent defaultCIEngineEvent)

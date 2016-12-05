@@ -1,7 +1,7 @@
 package com.ciengine.master.controllers.addbuild;
 
 import com.ciengine.common.dto.AddBuildRequest;
-import com.ciengine.master.controllers.getbuilds.GetBuildsResponse;
+import com.ciengine.common.dto.AddBuildResponse;
 import com.ciengine.master.facades.CIEngineFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +23,7 @@ public class AddBuildController
 	// TODO 1. Should be secure?
 	@RequestMapping(value = "/addbuild",produces = {"application/json"}, method = RequestMethod.POST)
 	@ResponseBody
-	GetBuildsResponse addbuild(@RequestBody AddBuildRequest addBuildRequest) {
+	AddBuildResponse addbuild(@RequestBody AddBuildRequest addBuildRequest) {
 //		GetBuildsResponse getBuildsResponse = new GetBuildsResponse();
 		return ciEngineFacade.addBuild(addBuildRequest);
 	}

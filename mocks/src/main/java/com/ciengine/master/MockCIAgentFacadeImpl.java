@@ -36,7 +36,7 @@ public class MockCIAgentFacadeImpl implements CIAgentFacade
 		if (ciEngineList != null) {
 			try {
 				result = ciEngineList.isDone() ? ciEngineList.get() : BuildStatus.IN_PROGRESS;
-			} catch (InterruptedException | ExecutionException e) {
+			} catch (InterruptedException | ExecutionException | NullPointerException e) {
 				e.printStackTrace();
 			}
 		}
@@ -54,12 +54,12 @@ public class MockCIAgentFacadeImpl implements CIAgentFacade
 		Future<String> page = null;
 		try {
 			page = asyncListExecutorImpl.executeList(ciEngineList, environmentVariables);
+			map.put(buildModel.getId(), page);
 		} catch (InterruptedException | CIEngineStepException e) {
 			e.printStackTrace();
 		}
-		map.put(buildModel.getId(), page);
-
 	}
+
 	protected EnvironmentVariables getEnvironmentVariables(String inputParams) {
 		EnvironmentVariables environmentVariables = new EnvironmentVariables();
 		if (!StringUtils.isEmpty(inputParams)) {

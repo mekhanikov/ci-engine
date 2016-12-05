@@ -26,7 +26,7 @@ public class AsyncListExecutorImpl implements AsyncListExecutor {
             ciEngineList.doList(environmentVariables);
             logger.debug("!!!!! END: " + environmentVariables);
             return new AsyncResult<>(BuildStatus.SUCCESS);
-        } catch (CIEngineStepException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return new AsyncResult<>(BuildStatus.FAILED);
         }
