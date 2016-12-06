@@ -2,7 +2,6 @@ package com.ciengine.master;
 
 import com.ciengine.common.BuildStatus;
 import com.ciengine.common.CIEngineList;
-import com.ciengine.common.CIEngineStepException;
 import com.ciengine.common.EnvironmentVariables;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

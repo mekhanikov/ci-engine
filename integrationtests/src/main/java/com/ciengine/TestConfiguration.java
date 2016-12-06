@@ -2,9 +2,7 @@ package com.ciengine;
 
 import com.ciengine.agent.steps.impl.MockMavenStep;
 import com.ciengine.common.BinaryRepositoryClient;
-import com.ciengine.common.CIEngineClient;
 import com.ciengine.common.CIEngineStep;
-import com.ciengine.common.MockCIEngineClientImpl;
 import com.ciengine.master.MockBinaryRepositoryClient;
 import com.ciengine.master.MockCIAgentFacadeImpl;
 import com.ciengine.master.facades.CIAgentFacade;

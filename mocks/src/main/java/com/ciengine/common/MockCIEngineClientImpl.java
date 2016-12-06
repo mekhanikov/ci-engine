@@ -4,7 +4,6 @@ package com.ciengine.common;
 import com.ciengine.common.dto.*;
 import com.ciengine.master.facades.CIEngineFacade;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 
 /**
