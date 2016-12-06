@@ -29,10 +29,11 @@ public class MockCIEngineClientImpl implements CIEngineClient
 	}
 
 	@Override
-	public void setBuildStatus(String serverUrl, String externalBuildId, String status) {
+	public void setBuildStatus(String serverUrl, String externalBuildId, String status, String s) {
 		SetBuildStatusRequest setBuildStatusRequest = new SetBuildStatusRequest();
 		setBuildStatusRequest.setExternalBuildId(externalBuildId);
 		setBuildStatusRequest.setStatus(status);
+		setBuildStatusRequest.setStatusDescription(s);
 		ciEngineFacade.setBuildStatus(setBuildStatusRequest);
 	}
 

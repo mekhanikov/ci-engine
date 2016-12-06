@@ -16,6 +16,7 @@ public class SetBuildStatusRequest
 
 	private String externalBuildId;
 	private String status;
+	private String statusDescription;
 
 	public String getExternalBuildId() {
 		return externalBuildId;
@@ -31,5 +32,13 @@ public class SetBuildStatusRequest
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public void setStatusDescription(String statusDescription) {
+		this.statusDescription = statusDescription;
+	}
+
+	public String getStatusDescription() {
+		return statusDescription;
 	}
 }

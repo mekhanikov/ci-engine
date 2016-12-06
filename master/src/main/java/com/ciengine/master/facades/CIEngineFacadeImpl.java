@@ -207,6 +207,8 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 			build.setExternalId(buildModel.getExternalId());
 			build.setId(buildModel.getId());
 			build.setInputParamsHash(buildModel.getInputParamsHash());
+			build.setReasonOfTrigger(buildModel.getReasonOfTrigger());
+			build.setStatusDescription(buildModel.getStatusDescription());
 			//	build.setEndTimestamp(buildModel.getEndTimestamp());
 			// TODO map other
 			builds.add(build);
@@ -220,6 +222,7 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 // TODO
 		BuildModel buildModel = buildDao.findByExternalId(setBuildStatusRequest.getExternalBuildId());
 		buildModel.setStatus(setBuildStatusRequest.getStatus());
+		buildModel.setStatusDescription(setBuildStatusRequest.getStatusDescription());
 	}
 
     @Override

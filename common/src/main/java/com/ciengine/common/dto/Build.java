@@ -31,6 +31,7 @@ public class Build {
     private String summary;
     private String log;
     private String externalId;
+    private String statusDescription;
 
     public int getId() {
         return id;
@@ -150,5 +151,13 @@ public class Build {
 
     public void setExternalId(String externalId) {
         this.externalId = externalId;
+    }
+
+    public String getStatusDescription() {
+        return statusDescription;
+    }
+
+    public void setStatusDescription(String statusDescription) {
+        this.statusDescription = statusDescription;
     }
 }

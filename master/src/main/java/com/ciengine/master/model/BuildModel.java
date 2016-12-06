@@ -36,6 +36,7 @@ public class BuildModel
 	private String summary;
 	private String log;
 	private String externalId;
+	private String statusDescription;
 //			artifacts
 
 
@@ -188,6 +189,14 @@ public class BuildModel
 		return externalId;
 	}
 
+	public String getStatusDescription() {
+		return statusDescription;
+	}
+
+	public void setStatusDescription(String statusDescription) {
+		this.statusDescription = statusDescription;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -214,7 +223,8 @@ public class BuildModel
 			return false;
 		if (summary != null ? !summary.equals(that.summary) : that.summary != null) return false;
 		if (log != null ? !log.equals(that.log) : that.log != null) return false;
-		return externalId != null ? externalId.equals(that.externalId) : that.externalId == null;
+		if (externalId != null ? !externalId.equals(that.externalId) : that.externalId != null) return false;
+		return statusDescription != null ? statusDescription.equals(that.statusDescription) : that.statusDescription == null;
 
 	}
 
@@ -235,6 +245,7 @@ public class BuildModel
 		result = 31 * result + (summary != null ? summary.hashCode() : 0);
 		result = 31 * result + (log != null ? log.hashCode() : 0);
 		result = 31 * result + (externalId != null ? externalId.hashCode() : 0);
+		result = 31 * result + (statusDescription != null ? statusDescription.hashCode() : 0);
 		return result;
 	}
 
@@ -256,6 +267,7 @@ public class BuildModel
 				", summary='" + summary + '\'' +
 				", log='" + log + '\'' +
 				", externalId='" + externalId + '\'' +
+				", statusDescription='" + statusDescription + '\'' +
 				'}';
 	}
 }

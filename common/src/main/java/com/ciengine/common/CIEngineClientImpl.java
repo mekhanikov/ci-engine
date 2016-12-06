@@ -50,12 +50,13 @@ public class CIEngineClientImpl implements CIEngineClient
 	}
 
 	@Override
-	public void setBuildStatus(String serverUrl, String externalBuildId, String status) {
+	public void setBuildStatus(String serverUrl, String externalBuildId, String status, String s) {
 		final String uri =  serverUrl + "/setbuildstatus";
 
 		SetBuildStatusRequest setBuildStatusRequest = new SetBuildStatusRequest();
 		setBuildStatusRequest.setExternalBuildId(externalBuildId);
 		setBuildStatusRequest.setStatus(status);
+		setBuildStatusRequest.setStatusDescription(s);
 //		RestTemplate restTemplate = new RestTemplate();
 //		//set interceptors/requestFactory
 //		ClientHttpRequestInterceptor ri = new LoggingRequestInterceptor();
