@@ -25,8 +25,8 @@ import java.util.List;
 //@ActiveProfiles("test")
 //@Configuration
 @RunWith(SpringRunner.class)
-//@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.DEFINED_PORT, classes = {TestConfiguration.class}, properties = "server.port=8080")
-@SpringBootTest(classes = {TestConfiguration.class})
+@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.DEFINED_PORT, classes = {TestConfiguration.class}, properties = "server.port=8080")
+//@SpringBootTest(classes = {TestConfiguration.class})
 //@EnableAutoConfiguration(exclude = HibernateJpaAutoConfiguration.class)
 //@PropertySource(value = { "classpath:application.properties" })
 public class OnCommitEventIntegrationTests {

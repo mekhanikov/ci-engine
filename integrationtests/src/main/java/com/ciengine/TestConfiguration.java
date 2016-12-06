@@ -64,11 +64,11 @@ public class TestConfiguration extends AsyncConfigurerSupport
 		return new MockBinaryRepositoryClient();
 	}
 
-	@Bean
-	@Primary
-	public CIEngineClient ciEngineClient() {
-		return new MockCIEngineClientImpl();
-	}
+//	@Bean
+//	@Primary
+//	public CIEngineClient ciEngineClient() {
+//		return new MockCIEngineClientImpl();
+//	}
 
 	@Bean("mavenStep")
 	@Primary
