@@ -46,7 +46,7 @@ import java.util.concurrent.Executor;
 //@PropertySource(value = { "classpath:application.properties" })
 ////@EnableSwagger2
 @EnableAutoConfiguration(exclude = HibernateJpaAutoConfiguration.class)
-public class TestConfiguration extends AsyncConfigurerSupport
+public class MasterrunnerConfiguration extends AsyncConfigurerSupport
 {
 
 	@Autowired
@@ -89,7 +89,7 @@ public class TestConfiguration extends AsyncConfigurerSupport
 	}
 //
 	public static void main(String[] args) {
-		ApplicationContext ctx = SpringApplication.run(TestConfiguration.class, args);
+		ApplicationContext ctx = SpringApplication.run(MasterrunnerConfiguration.class, args);
 //		Map<String, CIEngineListener> stringCIEngineListenerMap = ctx.getBeansOfType(CIEngineListener.class);
 //		System.out.println(stringCIEngineListenerMap);
 		//CommonConfiguration application = ctx.getBean(CommonConfiguration.class);
