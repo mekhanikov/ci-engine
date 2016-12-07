@@ -4,9 +4,7 @@ import com.ciengine.common.CIEngineEvent;
 import com.ciengine.common.DefaultCIEngineEvent;
 import com.ciengine.master.listeners.CIEngineListener;
 import com.ciengine.master.listeners.CIEngineListenerException;
-import com.ciengine.master.listeners.impl.oncommit.OnCommitRule;
 
-import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 

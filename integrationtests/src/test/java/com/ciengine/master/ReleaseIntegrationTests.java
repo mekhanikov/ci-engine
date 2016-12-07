@@ -6,7 +6,6 @@ import com.ciengine.common.Module;
 import com.ciengine.common.Repo;
 import com.ciengine.common.dto.IsModuleReleasedRequest;
 import com.ciengine.common.dto.IsModuleReleasedResponse;
-import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.listeners.impl.onrelease.OnReleaseRule;
