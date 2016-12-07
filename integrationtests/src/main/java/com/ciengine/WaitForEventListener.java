@@ -1,4 +1,4 @@
-package com.ciengine.master;
+package com.ciengine;
 
 import com.ciengine.common.CIEngineEvent;
 import com.ciengine.common.DefaultCIEngineEvent;
@@ -17,30 +17,45 @@ import java.util.concurrent.TimeUnit;
 public class WaitForEventListener implements CIEngineListener
 {
 
-	private List<OnCommitRule> rules;
-	private Class<DefaultCIEngineEvent> onNewArtifactEventClass;
-	private CIEngineEvent ciEngineEvent;
+//	private List<OnCommitRule> rules;
+//	private Class<DefaultCIEngineEvent> onNewArtifactEventClass;
+//	private CIEngineEvent ciEngineEvent;
 	CountDownLatch startSignal = new CountDownLatch(1);
 
-	public WaitForEventListener(Class onNewArtifactEventClass)
-	{
-		this.onNewArtifactEventClass = onNewArtifactEventClass;
+	private IsMach isMach;
+	private boolean mach = false;
+
+//	public WaitForEventListener(Class onNewArtifactEventClass)
+//	{
+//		this.onNewArtifactEventClass = onNewArtifactEventClass;
+//	}
+
+	public WaitForEventListener(IsMach isMach) {
+		this.isMach = isMach;
 	}
 
-	public CIEngineEvent waitEvent(long timeout) throws InterruptedException
+	public IsMach waitEvent(long timeout) throws InterruptedException
 	{
 		startSignal.await(timeout, TimeUnit.SECONDS);
-		return ciEngineEvent;
+		return isMach;
 	}
 
 	@Override public void onEvent(CIEngineEvent ciEngineEvent) throws CIEngineListenerException
 	{
-		this.ciEngineEvent = ciEngineEvent;
-		startSignal.countDown();
+		if (isMach.IsMach(ciEngineEvent)) {
+			mach = true;
+			startSignal.countDown();
+		}
+//		this.ciEngineEvent = ciEngineEvent;
+
 	}
 
 	@Override public boolean isEventApplicable(DefaultCIEngineEvent defaultCIEngineEvent)
 	{
-		return onNewArtifactEventClass.getName().equals(defaultCIEngineEvent.getClass().getName());
+		return true;
+	}
+
+	public boolean isMach() {
+		return mach;
 	}
 }
