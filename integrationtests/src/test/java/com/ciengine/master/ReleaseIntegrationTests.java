@@ -1,10 +1,12 @@
 package com.ciengine.master;
 
 import com.ciengine.TestConfiguration;
+import com.ciengine.WaitForEventListener;
 import com.ciengine.common.Module;
 import com.ciengine.common.Repo;
 import com.ciengine.common.dto.IsModuleReleasedRequest;
 import com.ciengine.common.dto.IsModuleReleasedResponse;
+import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.listeners.impl.onrelease.OnReleaseRule;
@@ -30,7 +32,7 @@ import static org.junit.Assert.assertTrue;
 //@SpringBootTest(TestConfiguration.class)
 //@SpringBootTest(classes = {TestConfiguration.class})
 //@EnableAutoConfiguration(exclude = HibernateJpaAutoConfiguration.class)
-public class ReleaseIntegrationTests {
+public class ReleaseIntegrationTests extends AbstractIntegrationTests {
 
 	@Autowired
 	CIEngineFacade ciEngineFacade;
@@ -78,6 +80,12 @@ public class ReleaseIntegrationTests {
 //		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
 //		ciEngineFacade.addListener(waitForEventListener);
 
+		WaitForEventListener waitForEventListener = waitForCondition(ciEngineEvent -> {
+//				IsModuleReleasedResponse isModuleReleasedResponse = ciEngineFacade.isModuleReleased(isModuleReleasedRequest);
+//				return isModuleReleasedResponse.isReleased();
+			return isModuleReleased("ModA:1.0") && isModuleReleased("ModB:1.0") && isModuleReleased("ModC:1.0");
+		});
+
 		submitRelease("ModA:1.0", "ModA:1.0,ModB:1.0,ModC:1.0");
 		//Thread.sleep(6000);
 		submitRelease("ModB:1.0", "ModA:1.0,ModB:1.0,ModC:1.0");
@@ -87,7 +95,20 @@ public class ReleaseIntegrationTests {
 		//mockBinaryRepositoryClient.addModule("ModC:2.0");
 //		submitRelease("ModB:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 //		submitRelease("ModA:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
-		Thread.sleep(30000);
+
+
+
+		//		IsModuleReleasedRequest isModuleReleasedRequest = new IsModuleReleasedRequest();
+//		isModuleReleasedRequest.setModule("");
+//		IsMach isMach = ciEngineEvent -> {
+////				IsModuleReleasedResponse isModuleReleasedResponse = ciEngineFacade.isModuleReleased(isModuleReleasedRequest);
+////				return isModuleReleasedResponse.isReleased();
+//            return ciEngineEvent instanceof OnNewArtifactEvent;
+//        };
+
+
+		waitForEventListener.waitEvent(45);
+		assertTrue(waitForEventListener.isMach());
 		List<BuildModel> buildModels = buildDao.getAll();
 		System.out.println("********");
 		for (BuildModel buildModel : buildModels) {
@@ -95,9 +116,6 @@ public class ReleaseIntegrationTests {
 			System.out.println("--------");
 		}
 		System.out.println("********");
-		assertTrue(isModuleReleased("ModA:1.0"));
-		assertTrue(isModuleReleased("ModB:1.0"));
-		assertTrue(isModuleReleased("ModC:1.0"));
 	}
 
     private boolean isModuleReleased(String s) {
