@@ -11,6 +11,7 @@ import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.listeners.impl.onrelease.OnReleaseRule;
 import com.ciengine.master.model.BuildModel;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,9 @@ import static org.junit.Assert.assertTrue;
 /**
  * Mocked master-agent communication.
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.DEFINED_PORT, classes = {TestConfiguration.class}, properties = "server.port=8080")
+@Ignore("I'm just abstract without tests")
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.DEFINED_PORT, classes = {TestConfiguration.class}, properties = "server.port=8080")
 public class AbstractIntegrationTests {
 
 	@Autowired

@@ -118,13 +118,6 @@ public class ReleaseIntegrationTests extends AbstractIntegrationTests {
 		System.out.println("********");
 	}
 
-    private boolean isModuleReleased(String s) {
-        IsModuleReleasedRequest isModuleReleasedRequest = new IsModuleReleasedRequest();
-        isModuleReleasedRequest.setModule(s);
-        IsModuleReleasedResponse isModuleReleasedResponse = ciEngineFacade.isModuleReleased(isModuleReleasedRequest);
-        return isModuleReleasedResponse.isReleased();
-    }
-
     @Test
 	public void test3() throws Exception {
 //		prepareMocks();
@@ -132,6 +125,11 @@ public class ReleaseIntegrationTests extends AbstractIntegrationTests {
 //		prepareOnCommitListener();
 //		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
 //		ciEngineFacade.addListener(waitForEventListener);
+		WaitForEventListener waitForEventListener = waitForCondition(ciEngineEvent -> {
+//				IsModuleReleasedResponse isModuleReleasedResponse = ciEngineFacade.isModuleReleased(isModuleReleasedRequest);
+//				return isModuleReleasedResponse.isReleased();
+			return isModuleReleased("ModA:1.0") && isModuleReleased("ModB:1.0") && isModuleReleased("ModC:1.0");
+		});
 
 		submitRelease("ModA:3.0", "ModA:3.0,ModB:3.0,ModC:3.0");
 		Thread.sleep(6000);
@@ -142,17 +140,9 @@ public class ReleaseIntegrationTests extends AbstractIntegrationTests {
 		//mockBinaryRepositoryClient.addModule("ModC:2.0");
 //		submitRelease("ModB:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 //		submitRelease("ModA:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
-		Thread.sleep(30000);
-		List<BuildModel> buildModels = buildDao.getAll();
-		System.out.println("********");
-		for (BuildModel buildModel : buildModels) {
-			System.out.println(buildModel);
-			System.out.println("--------");
-		}
-		System.out.println("********");
-		assertTrue(isModuleReleased("ModA:3.0"));
-		assertTrue(isModuleReleased("ModB:3.0"));
-		assertTrue(isModuleReleased("ModC:3.0"));
+
+		waitForEventListener.waitEvent(45);
+		assertTrue(waitForEventListener.isMach());
 	}
 
 	@Test
@@ -236,5 +226,12 @@ public class ReleaseIntegrationTests extends AbstractIntegrationTests {
 		release.setReleaseBranchName("release/2.0");
 		release.setDockerImageId("someDockerImageId");
 		ciEngineFacade.submitRelease(release);
+	}
+
+	private boolean isModuleReleased(String s) {
+		IsModuleReleasedRequest isModuleReleasedRequest = new IsModuleReleasedRequest();
+		isModuleReleasedRequest.setModule(s);
+		IsModuleReleasedResponse isModuleReleasedResponse = ciEngineFacade.isModuleReleased(isModuleReleasedRequest);
+		return isModuleReleasedResponse.isReleased();
 	}
 }
