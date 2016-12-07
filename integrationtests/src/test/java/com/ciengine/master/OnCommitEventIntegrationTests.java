@@ -10,6 +10,7 @@ import com.ciengine.common.dto.IsModuleReleasedRequest;
 import com.ciengine.common.dto.IsModuleReleasedResponse;
 import com.ciengine.common.events.OnCommitEvent;
 import com.ciengine.common.events.OnNewArtifactEvent;
+import com.ciengine.common.events.OnReleaseSubmitedEvent;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.listeners.impl.oncommit.OnCommitRule;
 import org.junit.Assert;
@@ -64,51 +65,24 @@ public class OnCommitEventIntegrationTests {
 		prepareMocks();
 		prepareModules();
 
-		//ciEngineFacade.addListener();
 		OnCommitEvent onCommitEvent = new OnCommitEvent();
-//		AddBuildRequest addBuildRequest = new AddBuildRequest();
-//		addBuildRequest.setNodeId("1");
 		onCommitEvent.setBranchName("develop");
 		onCommitEvent.setGitUrl("ssh://git@repo.ru/mod-a");
 		onCommitEvent.setComitId("1234");
 
-//		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
-		//WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
-//		ciEngineFacade.addListener(waitForEventListener);
-//		ciEngineFacade.onEvent(onCommitEvent);
-//		CIEngineEvent ciEngineEvent = waitForEventListener.waitEvent(15);
-//		Assert.assertTrue(ciEngineEvent instanceof OnNewArtifactEvent);
-		//System.out.println("Hello World!");
-//		long timeout = 5000;
-//		DefaultCIEngineEvent defaultCIEngineEvent = waitForEvent(DefaultCIEngineEvent.class, timeout);
-//		System.out.println("Hello World!");
-//		assertTrue(true);
-		// TODO Added pause because it is posible situation when even OnNewArtifactEvent is sitll sending to other listeners and in next test will recive event created in current.
-		// TODO better to wait for some event but which one? no active builds? All events had been sent to all listeners?
-		//Thread.sleep(1000);
 		IsModuleReleasedRequest isModuleReleasedRequest = new IsModuleReleasedRequest();
 		isModuleReleasedRequest.setModule("");
-		IsMach isMach = new IsMach() {
-
-			@Override
-			public boolean IsMach(CIEngineEvent ciEngineEvent) {
+		IsMach isMach = ciEngineEvent -> {
 //				IsModuleReleasedResponse isModuleReleasedResponse = ciEngineFacade.isModuleReleased(isModuleReleasedRequest);
 //				return isModuleReleasedResponse.isReleased();
-
-				return ciEngineEvent instanceof OnNewArtifactEvent;
-			}
-		};
+            return ciEngineEvent instanceof OnNewArtifactEvent;
+        };
 		WaitForEventListener waitForEventListener0 = waitForCondition(isMach);
 		ciEngineFacade.onEvent(onCommitEvent);
-		waitForEventListener0.waitEvent(1000);
+		waitForEventListener0.waitEvent(5);
 		assertTrue(waitForEventListener0.isMach());
 	}
 
-	private WaitForEventListener waitForCondition(IsMach isMach) {
-		WaitForEventListener waitForEventListener = new WaitForEventListener(isMach);
-		ciEngineFacade.addListener(waitForEventListener);
-		return waitForEventListener;
-	}
 
 	@Test
 	public void triggerBuildForModAFeature() throws Exception {
@@ -196,5 +170,11 @@ public class OnCommitEventIntegrationTests {
 //		CIAgentFacade ciAgentFacade = Mockito.mock(CIAgentFacade.class);
 //		buildStatusChecker.setCiAgentFacade(ciAgentFacade);
 //		buildRunner.setCiAgentFacade(ciAgentFacade);
+	}
+
+	private WaitForEventListener waitForCondition(IsMach isMach) {
+		WaitForEventListener waitForEventListener = new WaitForEventListener(isMach);
+		ciEngineFacade.addListener(waitForEventListener);
+		return waitForEventListener;
 	}
 }
