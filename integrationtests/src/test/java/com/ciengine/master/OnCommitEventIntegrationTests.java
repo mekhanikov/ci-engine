@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 
@@ -72,12 +73,16 @@ public class OnCommitEventIntegrationTests {
 
 //		IsModuleReleasedRequest isModuleReleasedRequest = new IsModuleReleasedRequest();
 //		isModuleReleasedRequest.setModule("");
-		IsMach isMach = ciEngineEvent -> {
+//		IsMach isMach = ciEngineEvent -> {
+////				IsModuleReleasedResponse isModuleReleasedResponse = ciEngineFacade.isModuleReleased(isModuleReleasedRequest);
+////				return isModuleReleasedResponse.isReleased();
+//            return ciEngineEvent instanceof OnNewArtifactEvent;
+//        };
+		WaitForEventListener waitForEventListener = waitForCondition(ciEngineEvent -> {
 //				IsModuleReleasedResponse isModuleReleasedResponse = ciEngineFacade.isModuleReleased(isModuleReleasedRequest);
 //				return isModuleReleasedResponse.isReleased();
-            return ciEngineEvent instanceof OnNewArtifactEvent;
-        };
-		WaitForEventListener waitForEventListener = waitForCondition(isMach);
+			return ciEngineEvent instanceof OnNewArtifactEvent;
+		});
 		ciEngineFacade.onEvent(onCommitEvent);
 		waitForEventListener.waitEvent(5);
 		assertTrue(waitForEventListener.isMach());
@@ -95,12 +100,16 @@ public class OnCommitEventIntegrationTests {
 //		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
 //		ciEngineFacade.addListener(waitForEventListener);
 
-        IsMach isMach = ciEngineEvent -> {
+//        IsMach isMach = ciEngineEvent -> {
+////				IsModuleReleasedResponse isModuleReleasedResponse = ciEngineFacade.isModuleReleased(isModuleReleasedRequest);
+////				return isModuleReleasedResponse.isReleased();
+//            return ciEngineEvent instanceof OnNewArtifactEvent;
+//        };
+        WaitForEventListener waitForEventListener = waitForCondition(ciEngineEvent -> {
 //				IsModuleReleasedResponse isModuleReleasedResponse = ciEngineFacade.isModuleReleased(isModuleReleasedRequest);
 //				return isModuleReleasedResponse.isReleased();
-            return ciEngineEvent instanceof OnNewArtifactEvent;
-        };
-        WaitForEventListener waitForEventListener = waitForCondition(isMach);
+			return ciEngineEvent instanceof OnNewArtifactEvent;
+		});
 		ciEngineFacade.onEvent(onCommitEvent);
         waitForEventListener.waitEvent(5);
         assertTrue(waitForEventListener.isMach());
@@ -113,11 +122,19 @@ public class OnCommitEventIntegrationTests {
 		onCommitEvent.setBranchName("release");
 		onCommitEvent.setGitUrl("ssh://git@repo.ru/mod-a");
 		onCommitEvent.setComitId("1234");
-//		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
-//		ciEngineFacade.addListener(waitForEventListener);
+		WaitForEventListener waitForEventListener = waitForCondition(ciEngineEvent -> {
+//				IsModuleReleasedResponse isModuleReleasedResponse = ciEngineFacade.isModuleReleased(isModuleReleasedRequest);
+//				return isModuleReleasedResponse.isReleased();
+			if (ciEngineEvent instanceof OnNewArtifactEvent) {
+				OnNewArtifactEvent onNewArtifactEvent = (OnNewArtifactEvent)ciEngineEvent;
+				return "release".equals(onNewArtifactEvent.getBranchName());
+			}
+			return false;
+			//return ciEngineEvent instanceof OnNewArtifactEvent;
+		});
 		ciEngineFacade.onEvent(onCommitEvent);
-//		CIEngineEvent ciEngineEvent = waitForEventListener.waitEvent(15);
-//		Assert.assertTrue(ciEngineEvent == null);
+		waitForEventListener.waitEvent(5);
+		assertFalse(waitForEventListener.isMach());
 	}
 
 	@Test
@@ -127,11 +144,14 @@ public class OnCommitEventIntegrationTests {
 		onCommitEvent.setBranchName("develop");
 		onCommitEvent.setGitUrl("ssh://git@repo.ru/mod-b");
 		onCommitEvent.setComitId("1234");
-//		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
-//		ciEngineFacade.addListener(waitForEventListener);
+		WaitForEventListener waitForEventListener = waitForCondition(ciEngineEvent -> {
+//				IsModuleReleasedResponse isModuleReleasedResponse = ciEngineFacade.isModuleReleased(isModuleReleasedRequest);
+//				return isModuleReleasedResponse.isReleased();
+			return ciEngineEvent instanceof OnNewArtifactEvent;
+		});
 		ciEngineFacade.onEvent(onCommitEvent);
-//		CIEngineEvent ciEngineEvent = waitForEventListener.waitEvent(15);
-//		Assert.assertTrue(ciEngineEvent == null);
+		waitForEventListener.waitEvent(5);
+		assertFalse(waitForEventListener.isMach());
 	}
 
 
