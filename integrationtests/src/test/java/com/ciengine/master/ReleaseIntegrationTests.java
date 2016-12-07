@@ -147,22 +147,20 @@ public class ReleaseIntegrationTests extends AbstractIntegrationTests {
 	@Test
 	public void test2() throws Exception {
 		prepareModules();
+
+		WaitForEventListener waitForEventListener = waitForCondition(ciEngineEvent -> {
+//				IsModuleReleasedResponse isModuleReleasedResponse = ciEngineFacade.isModuleReleased(isModuleReleasedRequest);
+//				return isModuleReleasedResponse.isReleased();
+			return isModuleReleased("ModA:1.0") && isModuleReleased("ModB:1.0") && isModuleReleased("ModC:1.0");
+		});
+
 		submitRelease("ModC:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 		Thread.sleep(6000);
 		submitRelease("ModB:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
 		Thread.sleep(6000);
 		submitRelease("ModA:2.0", "ModA:2.0,ModB:2.0,ModC:2.0");
-		Thread.sleep(30000);
-		List<BuildModel> buildModels = buildDao.getAll();
-		System.out.println("********");
-		for (BuildModel buildModel : buildModels) {
-			System.out.println(buildModel);
-			System.out.println("--------");
-		}
-		System.out.println("********");
-		assertTrue(isModuleReleased("ModA:2.0"));
-		assertTrue(isModuleReleased("ModB:2.0"));
-		assertTrue(isModuleReleased("ModC:2.0"));
+		waitForEventListener.waitEvent(45);
+		assertTrue(waitForEventListener.isMach());
 	}
 
 
