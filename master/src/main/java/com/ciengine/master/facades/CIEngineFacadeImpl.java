@@ -244,7 +244,7 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 			JAXBContext jaxbContext = null;
 			jaxbContext = JAXBContext.newInstance(Modules.class);
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-			Modules customer = (Modules) jaxbUnmarshaller.unmarshal(new File("D:\\prj\\ci-engine\\master\\src\\main\\resources\\modules.xml"));
+			Modules customer = (Modules) jaxbUnmarshaller.unmarshal(new File("modules.xml"));
 			getModulesResponse.setModules(customer.getModules());
 		} catch (JAXBException e) {
 			e.printStackTrace();
