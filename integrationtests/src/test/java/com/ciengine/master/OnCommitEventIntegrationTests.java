@@ -70,17 +70,17 @@ public class OnCommitEventIntegrationTests {
 		onCommitEvent.setGitUrl("ssh://git@repo.ru/mod-a");
 		onCommitEvent.setComitId("1234");
 
-		IsModuleReleasedRequest isModuleReleasedRequest = new IsModuleReleasedRequest();
-		isModuleReleasedRequest.setModule("");
+//		IsModuleReleasedRequest isModuleReleasedRequest = new IsModuleReleasedRequest();
+//		isModuleReleasedRequest.setModule("");
 		IsMach isMach = ciEngineEvent -> {
 //				IsModuleReleasedResponse isModuleReleasedResponse = ciEngineFacade.isModuleReleased(isModuleReleasedRequest);
 //				return isModuleReleasedResponse.isReleased();
             return ciEngineEvent instanceof OnNewArtifactEvent;
         };
-		WaitForEventListener waitForEventListener0 = waitForCondition(isMach);
+		WaitForEventListener waitForEventListener = waitForCondition(isMach);
 		ciEngineFacade.onEvent(onCommitEvent);
-		waitForEventListener0.waitEvent(5);
-		assertTrue(waitForEventListener0.isMach());
+		waitForEventListener.waitEvent(5);
+		assertTrue(waitForEventListener.isMach());
 	}
 
 
@@ -94,12 +94,16 @@ public class OnCommitEventIntegrationTests {
 		onCommitEvent.setComitId("1234");
 //		WaitForEventListener waitForEventListener = new WaitForEventListener(OnNewArtifactEvent.class);
 //		ciEngineFacade.addListener(waitForEventListener);
+
+        IsMach isMach = ciEngineEvent -> {
+//				IsModuleReleasedResponse isModuleReleasedResponse = ciEngineFacade.isModuleReleased(isModuleReleasedRequest);
+//				return isModuleReleasedResponse.isReleased();
+            return ciEngineEvent instanceof OnNewArtifactEvent;
+        };
+        WaitForEventListener waitForEventListener = waitForCondition(isMach);
 		ciEngineFacade.onEvent(onCommitEvent);
-//		CIEngineEvent ciEngineEvent = waitForEventListener.waitEvent(15);
-//		Assert.assertTrue(ciEngineEvent instanceof OnNewArtifactEvent);
-		// TODO Added pause because it is posible situation when even OnNewArtifactEvent is sitll sending to other listeners and in next test will recive event created in current.
-		// TODO better to wait for some event but which one? no active builds? All events had been sent to all listeners?
-		Thread.sleep(1000);
+        waitForEventListener.waitEvent(5);
+        assertTrue(waitForEventListener.isMach());
 	}
 
 	@Test
