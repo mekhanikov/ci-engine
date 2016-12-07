@@ -6,6 +6,7 @@ import com.ciengine.common.DefaultCIEngineEvent;
 import com.ciengine.common.Module;
 import com.ciengine.common.dto.*;
 import com.ciengine.master.controllers.getbuilds.GetBuildsResponse;
+import com.ciengine.master.controllers.getmodules.GetModulesResponse;
 import com.ciengine.master.listeners.CIEngineListener;
 import com.ciengine.master.listeners.impl.onrelease.OnReleaseRule;
 
@@ -42,4 +43,6 @@ public interface CIEngineFacade
     void setBuildStatus(SetBuildStatusRequest setBuildStatusRequest);
 
 	IsModuleReleasedResponse isModuleReleased(IsModuleReleasedRequest isModuleReleasedRequest);
+
+GetModulesResponse getModulesResponse();
 }

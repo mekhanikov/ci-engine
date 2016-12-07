@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modules>
+    <n>fff</n>
+    <modules>
+    <module>
+        <name>entitlements</name>
+        <gitUrl>ssh://git@stash.hybris.com:7999/commerce/entitlements.git</gitUrl>
+    </module>
+    <module>
+        <name>subscriptions</name>
+        <gitUrl>ssh://git@stash.hybris.com:7999/commerce/subscriptions.git</gitUrl>
+    </module>
+    </modules>
+</modules>

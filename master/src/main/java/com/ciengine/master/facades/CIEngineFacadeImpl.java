@@ -4,6 +4,7 @@ import com.ciengine.common.*;
 import com.ciengine.common.dto.*;
 import com.ciengine.common.events.OnReleaseSubmitedEvent;
 import com.ciengine.master.controllers.getbuilds.GetBuildsResponse;
+import com.ciengine.master.controllers.getmodules.GetModulesResponse;
 import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.dao.ReleaseDao;
 import com.ciengine.master.listeners.CIEngineListener;
@@ -19,6 +20,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import java.io.File;
 import java.util.*;
 
 /**
@@ -232,7 +237,22 @@ public class CIEngineFacadeImpl implements CIEngineFacade
         return isModuleReleasedResponse;
     }
 
-    protected EnvironmentVariables getEnvironmentVariables(String inputParams) {
+	@Override
+	public GetModulesResponse getModulesResponse() {
+		GetModulesResponse getModulesResponse = new GetModulesResponse();
+		try {
+			JAXBContext jaxbContext = null;
+			jaxbContext = JAXBContext.newInstance(Modules.class);
+			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+			Modules customer = (Modules) jaxbUnmarshaller.unmarshal(new File("D:\\prj\\ci-engine\\master\\src\\main\\resources\\modules.xml"));
+			getModulesResponse.setModules(customer.getModules());
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+		return getModulesResponse;
+	}
+
+	protected EnvironmentVariables getEnvironmentVariables(String inputParams) {
 		EnvironmentVariables environmentVariables = new EnvironmentVariables();
 		if (!StringUtils.isEmpty(inputParams)) {
 			String[] lines = inputParams.split("\n");
