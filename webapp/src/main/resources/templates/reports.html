@@ -6,5 +6,13 @@
 </head>
 <body>
 <p th:text="'Hello!, ' + ${name} + '!'" />
+
+<div th:if="${greeting != null}">
+    <h1>Result</h1>
+    <ul>
+        <li th:each="item : ${greeting}" th:text="${item.name}">Item description here...</li>
+    </ul>
+</div>
+
 </body>
 </html>
