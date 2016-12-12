@@ -53,9 +53,9 @@ public class ReportController {
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public String postReportsPage(@ModelAttribute("modulesForm") ModulesForm modulesForm) {
 //        model.addAttribute("name", "Evg");
-        List<Module> list = new ArrayList<>();
-        list.add(createModule("A"));
-        list.add(createModule("b"));
+//        List<Module> list = new ArrayList<>();
+//        list.add(createModule("A"));
+//        list.add(createModule("b"));
 //        model.addAttribute("greeting", list);
         //model.addAttribute("modules", list);
         return "reports";
@@ -80,6 +80,12 @@ public class ReportController {
     @ModelAttribute(value = "moduleE")
     public ModulesForm newEntity()
     {
-        return new ModulesForm();
+        ModulesForm modulesForm = new ModulesForm();
+        List<Module> list = new ArrayList<>();
+        list.add(createModule("A"));
+        list.add(createModule("b"));
+        list.add(createModule("v"));
+        modulesForm.setModules(list);
+        return modulesForm;
     }
 }
