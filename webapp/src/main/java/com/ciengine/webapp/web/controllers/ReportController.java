@@ -67,18 +67,18 @@ public class ReportController {
         return module;
     }
 
+//
+//    @ModelAttribute("allSeedStarters")
+//    public List<Module> populateSeedStarters() {
+//        List<Module> list = new ArrayList<>();
+//        list.add(createModule("A"));
+//        list.add(createModule("b"));
+//        list.add(createModule("v"));
+//        return list;
+//    }
 
-    @ModelAttribute("allSeedStarters")
-    public List<Module> populateSeedStarters() {
-        List<Module> list = new ArrayList<>();
-        list.add(createModule("A"));
-        list.add(createModule("b"));
-        list.add(createModule("v"));
-        return list;
-    }
-
-    @ModelAttribute(value = "moduleE")
-    public ModulesForm newEntity()
+    @ModelAttribute(value = "newModulesForm")
+    public ModulesForm newModulesForm()
     {
         ModulesForm modulesForm = new ModulesForm();
         List<Module> list = new ArrayList<>();
