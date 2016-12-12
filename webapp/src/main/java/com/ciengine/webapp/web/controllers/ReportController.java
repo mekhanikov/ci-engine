@@ -37,7 +37,7 @@ public class ReportController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String reportsPage(Model model) {
 //        model.addAttribute("name", "Evg");
-        List<Module> list = new ArrayList<>();
+        List<ModuleItem> list = new ArrayList<>();
         list.add(createModule("A"));
         list.add(createModule("b"));
 //        model.addAttribute("greeting", list);
@@ -61,8 +61,8 @@ public class ReportController {
         return "reports";
     }
 
-    private Module createModule(String a) {
-        Module module = new Module();
+    private ModuleItem createModule(String a) {
+        ModuleItem module = new ModuleItem();
         module.setName(a);
         return module;
     }
@@ -81,7 +81,7 @@ public class ReportController {
     public ModulesForm newModulesForm()
     {
         ModulesForm modulesForm = new ModulesForm();
-        List<Module> list = new ArrayList<>();
+        List<ModuleItem> list = new ArrayList<>();
         list.add(createModule("A"));
         list.add(createModule("b"));
         list.add(createModule("v"));

@@ -8,13 +8,13 @@ import java.util.List;
  * Created by emekhanikov on 12.12.2016.
  */
 public class ModulesForm {
-    private List<Module> modules;
+    private List<ModuleItem> modules;
 
-    public List<Module> getModules() {
+    public List<ModuleItem> getModules() {
         return modules;
     }
 
-    public void setModules(List<Module> modules) {
+    public void setModules(List<ModuleItem> modules) {
         this.modules = modules;
     }
 }
