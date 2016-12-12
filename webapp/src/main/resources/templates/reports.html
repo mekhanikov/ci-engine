@@ -14,18 +14,21 @@
     <!--</ul>-->
 <!--</div>-->
 
-<form action="/" method="POST">
-<!--<table>-->
-    <!--<tr data-th-each="module : ${modules}">-->
-        <!--<td>-->
-        <!--<input type="checkbox" name="option1_${module.name}" checked="checked" />-->
-        <!--</td>-->
-        <!--<td data-th-text="${module.name}">...</td>-->
-    <!--</tr>-->
-<!--</table>-->
-    <input name="modules[0].name" />
-    <input name="modules[1].name" />
-    <input name="modules[2].name" />
+<form action="/" th:object="${moduleE}" method="POST">
+<table>
+    <tr th:each="module,rowStat : ${allSeedStarters}">
+        <td>
+            <input type="text" th:field="*{modules[__${rowStat.index}__].name}" />
+        <!--<input type="text"  th:field="*{name}" th:value="${module}"  checked="checked" />-->
+            <!--<label th:for="${#ids.prev('name')}"-->
+                   <!--th:text="#{${'seedstarter.feature.' + module}}">Heating</label>-->
+        </td>
+        <td data-th-text="${module.name}">...</td>
+    </tr>
+</table>
+    <!--<input name="modules[0].name" />-->
+    <!--<input name="modules[1].name" />-->
+    <!--<input name="modules[2].name" />-->
     <input type="submit" value="Subscribe me!" />
 </form>
 </body>

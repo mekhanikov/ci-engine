@@ -67,29 +67,19 @@ public class ReportController {
         return module;
     }
 
-    /**
-     * Get report.
-     *
-     * @param model      model
-     * @param parameters report parameters
-     * @return html with required data or html with error status and message
-     */
-//    @RequestMapping(value = "/report", method = RequestMethod.POST)
-//    public String getReport(Model model, @RequestBody final ReportParams parameters) {
-//        HttpEntity<ReportParams> request = new HttpEntity<>(parameters);
-//        ResponseEntity entity = restTemplate.postForEntity(restUrl + "/reports/report",
-//                request, ReportResponse.class);
-//        if (entity.getStatusCode() == HttpStatus.OK) {
-//            ReportResponse report = (ReportResponse) entity.getBody();
-//            List<ProductViewsResponse> productViewsList = report.getProductViewsList();
-//            model.addAttribute("products", productViewsList);
-//            return "results :: resultsList";
-//        } else {
-//            ControllerResponse response = (ControllerResponse) entity.getBody();
-//            model.addAttribute("status", entity.getStatusCode());
-//            model.addAttribute("reason", response.getMessage());
-//            return "errorMessage";
-//        }
-//    }
 
+    @ModelAttribute("allSeedStarters")
+    public List<Module> populateSeedStarters() {
+        List<Module> list = new ArrayList<>();
+        list.add(createModule("A"));
+        list.add(createModule("b"));
+        list.add(createModule("v"));
+        return list;
+    }
+
+    @ModelAttribute(value = "moduleE")
+    public ModulesForm newEntity()
+    {
+        return new ModulesForm();
+    }
 }
