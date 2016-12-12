@@ -41,7 +41,7 @@ public class ReportController {
         list.add(createModule("A"));
         list.add(createModule("b"));
 //        model.addAttribute("greeting", list);
-        model.addAttribute("modules", list);
+        //model.addAttribute("modules", list);
         return "reports";
     }
 
