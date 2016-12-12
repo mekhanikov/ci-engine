@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
@@ -35,11 +36,28 @@ public class ReportController {
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String reportsPage(Model model) {
-        model.addAttribute("name", "Evg");
+//        model.addAttribute("name", "Evg");
         List<Module> list = new ArrayList<>();
         list.add(createModule("A"));
         list.add(createModule("b"));
-        model.addAttribute("greeting", list);
+//        model.addAttribute("greeting", list);
+        model.addAttribute("modules", list);
+        return "reports";
+    }
+
+    /**
+     * Get reports page.
+     *
+     * @return reports page
+     */
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public String postReportsPage(@ModelAttribute("modulesForm") ModulesForm modulesForm) {
+//        model.addAttribute("name", "Evg");
+        List<Module> list = new ArrayList<>();
+        list.add(createModule("A"));
+        list.add(createModule("b"));
+//        model.addAttribute("greeting", list);
+        //model.addAttribute("modules", list);
         return "reports";
     }
 

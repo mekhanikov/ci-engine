@@ -5,14 +5,28 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<p th:text="'Hello!, ' + ${name} + '!'" />
+<!--<p th:text="'Hello!, ' + ${name} + '!'" />-->
 
-<div th:if="${greeting != null}">
-    <h1>Result</h1>
-    <ul>
-        <li th:each="item : ${greeting}" th:text="${item.name}">Item description here...</li>
-    </ul>
-</div>
+<!--<div th:if="${greeting != null}">-->
+    <!--<h1>Result</h1>-->
+    <!--<ul>-->
+        <!--<li th:each="item : ${greeting}" th:text="${item.name}">Item description here...</li>-->
+    <!--</ul>-->
+<!--</div>-->
 
+<form action="/" method="POST">
+<!--<table>-->
+    <!--<tr data-th-each="module : ${modules}">-->
+        <!--<td>-->
+        <!--<input type="checkbox" name="option1_${module.name}" checked="checked" />-->
+        <!--</td>-->
+        <!--<td data-th-text="${module.name}">...</td>-->
+    <!--</tr>-->
+<!--</table>-->
+    <input name="modules[0].name" />
+    <input name="modules[1].name" />
+    <input name="modules[2].name" />
+    <input type="submit" value="Subscribe me!" />
+</form>
 </body>
 </html>
