@@ -1,6 +1,7 @@
 package com.ciengine.webapp.web.controllers;
 
 import com.ciengine.common.Module;
+import com.fasterxml.jackson.databind.deser.DataFormatReaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -93,6 +94,7 @@ public class ReportController {
 //        model.addAttribute("greeting", list);
         //model.addAttribute("modules", list);
         for (ModuleItem moduleItem : modulesForm.getModules()) {
+            moduleItem.setCodeChanged(Math.random() > 0.5d ? "yes":"no");
             if ("yes".equals(moduleItem.getCodeChanged())) {
                 moduleItem.setEnabled(true);
             }
