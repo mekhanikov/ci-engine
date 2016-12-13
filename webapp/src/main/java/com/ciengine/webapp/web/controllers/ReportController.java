@@ -92,6 +92,11 @@ public class ReportController {
 //        list.add(createModule("b"));
 //        model.addAttribute("greeting", list);
         //model.addAttribute("modules", list);
+        for (ModuleItem moduleItem : modulesForm.getModules()) {
+            if ("yes".equals(moduleItem.getCodeChanged())) {
+                moduleItem.setEnabled(true);
+            }
+        }
         model.addAttribute("modulesForm", modulesForm);
         return "acceptmodules";
     }
