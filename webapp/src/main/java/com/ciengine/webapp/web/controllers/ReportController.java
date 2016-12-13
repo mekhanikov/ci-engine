@@ -133,6 +133,12 @@ public class ReportController {
         return "selectversions";
     }
 
+@RequestMapping(value = "/selectversionsfinal", method = RequestMethod.POST)
+    public String selectversionsfinal(@ModelAttribute("modulesForm") ModulesForm modulesForm, Model model) {
+    model.addAttribute("modulesForm", modulesForm);
+        return "selectversionsfinal";
+    }
+
     private ModuleItem createModule(String a) {
         ModuleItem module = new ModuleItem();
         module.setName(a);
