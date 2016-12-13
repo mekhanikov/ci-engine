@@ -61,9 +61,24 @@ public class ReportController {
         return "selectbranches";
     }
 
+    @RequestMapping(value = "/acceptmodules", method = RequestMethod.POST)
+    public String acceptmodules(@ModelAttribute("modulesForm") ModulesForm modulesForm) {
+//        model.addAttribute("name", "Evg");
+//        List<Module> list = new ArrayList<>();
+//        list.add(createModule("A"));
+//        list.add(createModule("b"));
+//        model.addAttribute("greeting", list);
+        //model.addAttribute("modules", list);
+        return "acceptmodules";
+    }
+
     private ModuleItem createModule(String a) {
         ModuleItem module = new ModuleItem();
         module.setName(a);
+        List<String> brabchesFrom = new ArrayList<>();
+        brabchesFrom.add("develop");
+        brabchesFrom.add("future/6.4");
+        module.setBranchesFrom(brabchesFrom);
         return module;
     }
 

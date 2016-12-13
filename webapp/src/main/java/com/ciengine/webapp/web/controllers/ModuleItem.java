@@ -12,6 +12,8 @@ public class ModuleItem
 {
 	private boolean enabled;
 	private String name;
+	private String brancheFrom;
+	private List<String> branchesFrom;
 
 
 	public String getName()
@@ -30,5 +32,21 @@ public class ModuleItem
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public String getBrancheFrom() {
+		return brancheFrom;
+	}
+
+	public void setBrancheFrom(String brancheFrom) {
+		this.brancheFrom = brancheFrom;
+	}
+
+	public List<String> getBranchesFrom() {
+		return branchesFrom;
+	}
+
+	public void setBranchesFrom(List<String> branchesFrom) {
+		this.branchesFrom = branchesFrom;
 	}
 }
