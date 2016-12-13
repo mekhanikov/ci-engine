@@ -168,15 +168,15 @@ public class ReportController {
 //        return list;
 //    }
 
-    @ModelAttribute(value = "newModulesForm")
-    public ModulesForm newModulesForm()
-    {
-        ModulesForm modulesForm = new ModulesForm();
-        List<ModuleItem> list = new ArrayList<>();
-        list.add(createModule("A"));
-        list.add(createModule("b"));
-        list.add(createModule("v"));
-        modulesForm.setModules(list);
-        return modulesForm;
-    }
+//    @ModelAttribute(value = "newModulesForm")
+//    public ModulesForm newModulesForm()
+//    {
+//        ModulesForm modulesForm = new ModulesForm();
+//        List<ModuleItem> list = new ArrayList<>();
+//        list.add(createModule("A"));
+//        list.add(createModule("b"));
+//        list.add(createModule("v"));
+//        modulesForm.setModules(list);
+//        return modulesForm;
+//    }
 }
