@@ -13,6 +13,7 @@ public class ModuleItem
 	private boolean enabled;
 	private String name;
 	private String brancheFrom;
+	private String codeChanged="yes";
 	private List<String> branchesFrom;
 
 
@@ -48,5 +49,13 @@ public class ModuleItem
 
 	public void setBranchesFrom(List<String> branchesFrom) {
 		this.branchesFrom = branchesFrom;
+	}
+
+	public String getCodeChanged() {
+		return codeChanged;
+	}
+
+	public void setCodeChanged(String codeChanged) {
+		this.codeChanged = codeChanged;
 	}
 }
