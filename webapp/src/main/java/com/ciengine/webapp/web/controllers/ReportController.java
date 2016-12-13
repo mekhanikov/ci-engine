@@ -135,6 +135,9 @@ public class ReportController {
 
 @RequestMapping(value = "/selectversionsfinal", method = RequestMethod.POST)
     public String selectversionsfinal(@ModelAttribute("modulesForm") ModulesForm modulesForm, Model model) {
+    for (ModuleItem moduleItem : modulesForm.getModules()) {
+        moduleItem.setVersion(moduleItem.getNumericversion() + "-" + moduleItem.getMilestonetype() + "123");
+    }
     model.addAttribute("modulesForm", modulesForm);
         return "selectversionsfinal";
     }
