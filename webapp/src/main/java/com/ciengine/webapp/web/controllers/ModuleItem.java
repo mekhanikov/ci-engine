@@ -13,6 +13,7 @@ public class ModuleItem
 	private boolean enabled;
 	private String name;
 	private String brancheFrom;
+	private String numericversion = "2.0";
 	private String codeChanged="yes";
 	private List<String> branchesFrom;
 	private String brancheTo;
@@ -76,4 +77,12 @@ public class ModuleItem
 	public void setBranchesTo(List<String> branchesTo) {
 		this.branchesTo = branchesTo;
 	}
+
+    public String getNumericversion() {
+        return numericversion;
+    }
+
+    public void setNumericversion(String numericversion) {
+        this.numericversion = numericversion;
+    }
 }

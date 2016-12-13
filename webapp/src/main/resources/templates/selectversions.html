@@ -14,7 +14,7 @@
     <!--</ul>-->
 <!--</div>-->
 
-<form action="/selectversions" th:object="${modulesForm}" method="POST">
+<form action="/selectbranches" th:object="${modulesForm}" method="POST">
 <table>
     <tr th:each="module,rowStat : *{modules}">
         <td>
@@ -25,12 +25,10 @@
         <td data-th-text="${module.name}">...</td>
 
         <td data-th-text="${module.brancheFrom}">...</td>
-        <input type="hidden" th:field="*{modules[__${rowStat.index}__].brancheFrom}" />
         <td data-th-text="${module.brancheTo}">...</td>
-        <input type="hidden" th:field="*{modules[__${rowStat.index}__].brancheTo}" />
         <td data-th-text="${module.codeChanged}">...</td>
         <td>
-            <input type="checkbox" th:field="*{modules[__${rowStat.index}__].enabled}" />
+            <input type="text" th:field="*{modules[__${rowStat.index}__].numericversion}" />
         </td>
     </tr>
 </table>

@@ -103,6 +103,32 @@ public class ReportController {
         return "acceptmodules";
     }
 
+ @RequestMapping(value = "/selectversions", method = RequestMethod.POST)
+    public String selectversions(@ModelAttribute("modulesForm") ModulesForm modulesForm, Model model) {
+//        model.addAttribute("name", "Evg");
+//        List<Module> list = new ArrayList<>();
+//        list.add(createModule("A"));
+//        list.add(createModule("b"));
+//        model.addAttribute("greeting", list);
+        //model.addAttribute("modules", list);
+//        for (ModuleItem moduleItem : modulesForm.getModules()) {
+//            moduleItem.setCodeChanged(Math.random() > 0.5d ? "yes":"no");
+//            if ("yes".equals(moduleItem.getCodeChanged())) {
+//                moduleItem.setEnabled(true);
+//            }
+//        }
+     List<ModuleItem> list = new ArrayList<>();
+     for (ModuleItem moduleItem : modulesForm.getModules()) {
+         if (moduleItem.isEnabled()) {
+             list.add(moduleItem);
+
+         }
+     }
+     modulesForm.setModules(list);
+        model.addAttribute("modulesForm", modulesForm);
+        return "selectversions";
+    }
+
     private ModuleItem createModule(String a) {
         ModuleItem module = new ModuleItem();
         module.setName(a);
