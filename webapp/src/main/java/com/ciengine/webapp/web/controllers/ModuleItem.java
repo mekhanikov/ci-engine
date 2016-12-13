@@ -15,6 +15,7 @@ public class ModuleItem
 	private String brancheFrom;
 	private String numericversion = "2.0";
 	private String codeChanged="yes";
+	private String milestonetype="M";
 	private List<String> branchesFrom;
 	private String brancheTo;
 	private List<String> branchesTo;
@@ -84,5 +85,13 @@ public class ModuleItem
 
     public void setNumericversion(String numericversion) {
         this.numericversion = numericversion;
+    }
+
+    public String getMilestonetype() {
+        return milestonetype;
+    }
+
+    public void setMilestonetype(String milestonetype) {
+        this.milestonetype = milestonetype;
     }
 }

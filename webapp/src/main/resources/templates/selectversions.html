@@ -30,6 +30,10 @@
         <td>
             <input type="text" th:field="*{modules[__${rowStat.index}__].numericversion}" />
         </td>
+        <td th:each="ty : ${allTypes}">
+            <input type="radio" th:field="*{modules[__${rowStat.index}__].milestonetype}" th:value="${ty}" />
+            <!--<label th:for="${#ids.prev('type')}" th:text="#{${'seedstarter.type.' + ty}}">Wireframe</label>-->
+        </td>
     </tr>
 </table>
     <input type="submit" value="Subscribe me!" />

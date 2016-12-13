@@ -126,6 +126,10 @@ public class ReportController {
      }
      modulesForm.setModules(list);
         model.addAttribute("modulesForm", modulesForm);
+     List<String> allTypes = new ArrayList<>();
+     allTypes.add("RC");
+     allTypes.add("M");
+        model.addAttribute("allTypes", allTypes);
         return "selectversions";
     }
 
