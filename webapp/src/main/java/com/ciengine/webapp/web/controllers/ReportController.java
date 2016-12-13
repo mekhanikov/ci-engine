@@ -144,7 +144,7 @@ public class ReportController {
 
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
     public String submit(@ModelAttribute("modulesForm") ModulesForm modulesForm, Model model) {
-
+// todo submit via rest call
         return "submit";
     }
 
