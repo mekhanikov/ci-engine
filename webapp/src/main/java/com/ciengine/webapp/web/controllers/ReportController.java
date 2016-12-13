@@ -67,12 +67,16 @@ public class ReportController {
         List<String> brabchesFrom = new ArrayList<>();
         brabchesFrom.add("develop");
         brabchesFrom.add("future/6.4");
+        List<String> brabchesTo = new ArrayList<>();
+        brabchesTo.add("release/6.3");
+        brabchesTo.add("release/6.4");
 
         List<ModuleItem> list = new ArrayList<>();
         for (ModuleItem moduleItem : modulesForm.getModules()) {
             if (moduleItem.isEnabled()) {
                 list.add(moduleItem);
                 moduleItem.setBranchesFrom(brabchesFrom);
+                moduleItem.setBranchesTo(brabchesTo);
             }
         }
         modulesForm.setModules(list);

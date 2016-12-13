@@ -15,6 +15,8 @@ public class ModuleItem
 	private String brancheFrom;
 	private String codeChanged="yes";
 	private List<String> branchesFrom;
+	private String brancheTo;
+	private List<String> branchesTo;
 
 
 	public String getName()
@@ -57,5 +59,21 @@ public class ModuleItem
 
 	public void setCodeChanged(String codeChanged) {
 		this.codeChanged = codeChanged;
+	}
+
+	public String getBrancheTo() {
+		return brancheTo;
+	}
+
+	public void setBrancheTo(String brancheTo) {
+		this.brancheTo = brancheTo;
+	}
+
+	public List<String> getBranchesTo() {
+		return branchesTo;
+	}
+
+	public void setBranchesTo(List<String> branchesTo) {
+		this.branchesTo = branchesTo;
 	}
 }

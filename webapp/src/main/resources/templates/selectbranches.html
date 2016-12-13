@@ -29,8 +29,13 @@
                         th:value="${type}"
                         th:text="${type}">Wireframe</option>
             </select>
-
-
+        </td>
+        <td>
+            <select th:field="*{modules[__${rowStat.index}__].brancheTo}">
+                <option th:each="type : ${module.branchesTo}"
+                        th:value="${type}"
+                        th:text="${type}">Wireframe</option>
+            </select>
         </td>
     </tr>
 </table>
