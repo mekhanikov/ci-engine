@@ -37,11 +37,17 @@ public class ReportController {
     @RequestMapping(value = "/selectmodules", method = RequestMethod.GET)
     public String reportsPage(Model model) {
 //        model.addAttribute("name", "Evg");
+//        List<ModuleItem> list = new ArrayList<>();
+//        list.add(createModule("A"));
+//        list.add(createModule("b"));
+//        model.addAttribute("greeting", list);
+        ModulesForm modulesForm = new ModulesForm();
         List<ModuleItem> list = new ArrayList<>();
         list.add(createModule("A"));
         list.add(createModule("b"));
-//        model.addAttribute("greeting", list);
-        //model.addAttribute("modules", list);
+        list.add(createModule("v"));
+        modulesForm.setModules(list);
+        model.addAttribute("modulesForm", modulesForm);
         return "selectmodules";
     }
 
@@ -51,24 +57,38 @@ public class ReportController {
      * @return reports page
      */
     @RequestMapping(value = "/selectbranches", method = RequestMethod.POST)
-    public String postReportsPage(@ModelAttribute("modulesForm") ModulesForm modulesForm) {
+    public String postReportsPage(@ModelAttribute("modulesForm") ModulesForm modulesForm, Model model) {
 //        model.addAttribute("name", "Evg");
 //        List<Module> list = new ArrayList<>();
 //        list.add(createModule("A"));
 //        list.add(createModule("b"));
 //        model.addAttribute("greeting", list);
         //model.addAttribute("modules", list);
+        List<String> brabchesFrom = new ArrayList<>();
+        brabchesFrom.add("develop");
+        brabchesFrom.add("future/6.4");
+
+        List<ModuleItem> list = new ArrayList<>();
+        for (ModuleItem moduleItem : modulesForm.getModules()) {
+            if (moduleItem.isEnabled()) {
+                list.add(moduleItem);
+                moduleItem.setBranchesFrom(brabchesFrom);
+            }
+        }
+        modulesForm.setModules(list);
+        model.addAttribute("modulesForm", modulesForm);
         return "selectbranches";
     }
 
     @RequestMapping(value = "/acceptmodules", method = RequestMethod.POST)
-    public String acceptmodules(@ModelAttribute("modulesForm") ModulesForm modulesForm) {
+    public String acceptmodules(@ModelAttribute("modulesForm") ModulesForm modulesForm, Model model) {
 //        model.addAttribute("name", "Evg");
 //        List<Module> list = new ArrayList<>();
 //        list.add(createModule("A"));
 //        list.add(createModule("b"));
 //        model.addAttribute("greeting", list);
         //model.addAttribute("modules", list);
+        model.addAttribute("modulesForm", modulesForm);
         return "acceptmodules";
     }
 

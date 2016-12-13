@@ -14,7 +14,7 @@
     <!--</ul>-->
 <!--</div>-->
 
-<form action="/selectbranches" th:object="${newModulesForm}" method="POST">
+<form action="/selectbranches" th:object="${modulesForm}" method="POST">
 <table>
     <tr th:each="module,rowStat : *{modules}">
         <td>

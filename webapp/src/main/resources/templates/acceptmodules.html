@@ -14,24 +14,18 @@
     <!--</ul>-->
 <!--</div>-->
 
-<form action="/selectbranches" th:object="${newModulesForm}" method="POST">
+<form action="/selectbranches" th:object="${modulesForm}" method="POST">
 <table>
     <tr th:each="module,rowStat : *{modules}">
         <td>
             <!--<input type="text" th:field="*{modules[__${rowStat.index}__].name}"  />-->
-            <input type="checkbox" th:field="*{modules[__${rowStat.index}__].enabled}" />
+            <!--<input type="checkbox" th:field="*{modules[__${rowStat.index}__].enabled}" />-->
             <input type="hidden" th:field="*{modules[__${rowStat.index}__].name}" />
         </td>
         <td data-th-text="${module.name}">...</td>
-        <td>
-            <select th:field="*{modules[__${rowStat.index}__].brancheFrom}">
-                <option th:each="type : ${module.branchesFrom}"
-                        th:value="${type}"
-                        th:text="${type}">Wireframe</option>
-            </select>
 
+        <td data-th-text="${module.brancheFrom}">...</td>
 
-        </td>
     </tr>
 </table>
     <input type="submit" value="Subscribe me!" />

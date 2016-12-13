@@ -14,12 +14,12 @@
     <!--</ul>-->
 <!--</div>-->
 
-<form action="/acceptmodules" th:object="${newModulesForm}" method="POST">
+<form action="/acceptmodules" th:object="${modulesForm}" method="POST">
 <table>
     <tr th:each="module,rowStat : *{modules}">
         <td>
             <!--<input type="text" th:field="*{modules[__${rowStat.index}__].name}"  />-->
-            <input type="checkbox" th:field="*{modules[__${rowStat.index}__].enabled}" />
+            <!--<input type="checkbox" th:field="*{modules[__${rowStat.index}__].enabled}" />-->
             <input type="hidden" th:field="*{modules[__${rowStat.index}__].name}" />
         </td>
         <td data-th-text="${module.name}">...</td>
