@@ -34,7 +34,7 @@ public class ReportController {
      *
      * @return reports page
      */
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/selectmodules", method = RequestMethod.GET)
     public String reportsPage(Model model) {
 //        model.addAttribute("name", "Evg");
         List<ModuleItem> list = new ArrayList<>();
@@ -42,7 +42,7 @@ public class ReportController {
         list.add(createModule("b"));
 //        model.addAttribute("greeting", list);
         //model.addAttribute("modules", list);
-        return "reports";
+        return "selectmodules";
     }
 
     /**
@@ -50,7 +50,7 @@ public class ReportController {
      *
      * @return reports page
      */
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "/selectbranches", method = RequestMethod.POST)
     public String postReportsPage(@ModelAttribute("modulesForm") ModulesForm modulesForm) {
 //        model.addAttribute("name", "Evg");
 //        List<Module> list = new ArrayList<>();
@@ -58,7 +58,7 @@ public class ReportController {
 //        list.add(createModule("b"));
 //        model.addAttribute("greeting", list);
         //model.addAttribute("modules", list);
-        return "reports";
+        return "selectbranches";
     }
 
     private ModuleItem createModule(String a) {
