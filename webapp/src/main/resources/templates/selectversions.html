@@ -29,6 +29,7 @@
         <td data-th-text="${module.codeChanged}">...</td>
         <input type="hidden" th:field="*{modules[__${rowStat.index}__].brancheFrom}" />
         <input type="hidden" th:field="*{modules[__${rowStat.index}__].brancheTo}" />
+        <input type="hidden" th:field="*{modules[__${rowStat.index}__].codeChanged}" />
         <td>
             <input type="text" th:field="*{modules[__${rowStat.index}__].numericversion}" />
         </td>

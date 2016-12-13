@@ -14,7 +14,7 @@
     <!--</ul>-->
 <!--</div>-->
 
-<form action="/selectbranches" th:object="${modulesForm}" method="POST">
+<form action="/submit" th:object="${modulesForm}" method="POST">
 <table>
     <tr th:each="module,rowStat : *{modules}">
         <td>
@@ -27,14 +27,13 @@
         <td data-th-text="${module.brancheFrom}">...</td>
         <td data-th-text="${module.brancheTo}">...</td>
         <td data-th-text="${module.codeChanged}">...</td>
-        <td data-th-text="${module.numericversion}">...</td>
-        <input type="hidden" th:field="*{modules[__${rowStat.index}__].numericversion}" />
+        <!--<td data-th-text="${module.numericversion}">...</td>-->
+        <!--<input type="hidden" th:field="*{modules[__${rowStat.index}__].numericversion}" />-->
 
-        <td>
-        <td data-th-text="${module.milestonetype}">...</td>
-            <input type="hidden" th:field="*{modules[__${rowStat.index}__].milestonetype}" />
-            <!--<label th:for="${#ids.prev('type')}" th:text="#{${'seedstarter.type.' + ty}}">Wireframe</label>-->
-        </td>
+        <!--<td data-th-text="${module.milestonetype}">...</td>-->
+            <!--<input type="hidden" th:field="*{modules[__${rowStat.index}__].milestonetype}" />-->
+            <!--&lt;!&ndash;<label th:for="${#ids.prev('type')}" th:text="#{${'seedstarter.type.' + ty}}">Wireframe</label>&ndash;&gt;-->
+        <!--</td>-->
         <td>
             <input type="text" th:field="*{modules[__${rowStat.index}__].version}" />
         </td>

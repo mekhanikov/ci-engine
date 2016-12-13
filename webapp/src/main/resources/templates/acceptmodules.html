@@ -29,6 +29,7 @@
         <td data-th-text="${module.brancheTo}">...</td>
         <input type="hidden" th:field="*{modules[__${rowStat.index}__].brancheTo}" />
         <td data-th-text="${module.codeChanged}">...</td>
+        <input type="hidden" th:field="*{modules[__${rowStat.index}__].codeChanged}" />
         <td>
             <input type="checkbox" th:field="*{modules[__${rowStat.index}__].enabled}" />
         </td>
