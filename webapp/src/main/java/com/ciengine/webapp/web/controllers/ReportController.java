@@ -1,5 +1,6 @@
 package com.ciengine.webapp.web.controllers;
 
+import com.ciengine.common.CIEngineClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,9 @@ public class ReportController {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private CIEngineClient ciEngineClient;
 
     private final String restUrl;
 
