@@ -87,7 +87,7 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 	}
 
 	@Override public void onEvent(DefaultCIEngineEvent defaultCIEngineEvent)
-	{
+	{// TODO only add not trigger listeners, trigger them in separate thread.
 		logger.debug("defaultCIEngineEvent: " + defaultCIEngineEvent);
 		Map<String, CIEngineListener> stringCIEngineListenerMap = applicationContext.getBeansOfType(CIEngineListener.class);
 		if (stringCIEngineListenerMap != null) {
@@ -190,7 +190,8 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 //			releaseModel.setDockerImageId(release.getDockerImageId());
 			releaseDao.save(releaseModel);
 			OnReleaseSubmitedEvent onReleaseSubmitedEvent = new OnReleaseSubmitedEvent();
-			// TODO
+			// TODO 1. send events after data commited to DB
+            // TODO 2. Dont wait until listeners finish.
 			onReleaseSubmitedEvent.setModuleNameToRelease(release.getName());
 			onReleaseSubmitedEvent.setGoingToRelease(goingToRelease);
 //			onReleaseSubmitedEvent.setApplyList(release.getApplyList());
