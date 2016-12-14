@@ -45,4 +45,6 @@ public interface CIEngineFacade
 	IsModuleReleasedResponse isModuleReleased(IsModuleReleasedRequest isModuleReleasedRequest);
 
 GetModulesResponse getModulesResponse();
+
+	SubmitReleasesResponse submitReleases(SubmitReleasesRequest submitReleasesRequest);
 }

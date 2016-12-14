@@ -51,4 +51,9 @@ public class MockCIEngineClientImpl implements CIEngineClient
 		AddBuildResponse addBuildResponse = ciEngineFacade.findBuild(addBuildRequest);
 		return addBuildResponse;
 	}
+
+	@Override
+	public SubmitReleasesResponse submitReleases(String serverUrl, SubmitReleasesRequest submitReleasesRequest) {
+		return null;
+	}
 }

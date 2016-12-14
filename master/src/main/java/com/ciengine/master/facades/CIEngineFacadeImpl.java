@@ -172,6 +172,37 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 	}
 
 	@Override
+	public SubmitReleasesResponse submitReleases(SubmitReleasesRequest submitReleasesRequest) {
+		SubmitReleasesResponse submitReleasesResponse = new SubmitReleasesResponse();
+		List<String> modulesToRelease = new ArrayList<>();
+		for (Release release : submitReleasesRequest.getReleaseList()) {
+			modulesToRelease.add(release.getName());
+		}
+		String goingToRelease = String.join(",", modulesToRelease);
+		for (Release release : submitReleasesRequest.getReleaseList()) {
+			ReleaseModel releaseModel = new ReleaseModel();
+			releaseModel.setModuleNameToRelease(release.getName());
+			releaseModel.setGoingToRelease(goingToRelease);
+//			releaseModel.setApplyList(release.getApplyList());
+			releaseModel.setReleaseBranchName(release.getBrancheTo());
+			releaseModel.setMergeFromCommitId(release.getBrancheFrom());
+//			releaseModel.setInputParams(makeString(release.getEnvironmentVariables()));
+//			releaseModel.setDockerImageId(release.getDockerImageId());
+			releaseDao.save(releaseModel);
+			OnReleaseSubmitedEvent onReleaseSubmitedEvent = new OnReleaseSubmitedEvent();
+			// TODO
+			onReleaseSubmitedEvent.setModuleNameToRelease(release.getName());
+			onReleaseSubmitedEvent.setGoingToRelease(goingToRelease);
+//			onReleaseSubmitedEvent.setApplyList(release.getApplyList());
+			onReleaseSubmitedEvent.setReleaseBranchName(release.getBrancheTo());
+			onReleaseSubmitedEvent.setMergeFromCommitId(release.getBrancheFrom());
+//			onReleaseSubmitedEvent.setInputParams(makeString(release.getEnvironmentVariables()));
+//			onReleaseSubmitedEvent.setDockerImageId(release.getDockerImageId());
+			onEvent(onReleaseSubmitedEvent);
+		}
+		return submitReleasesResponse;
+	}
+	@Override
 	public List<OnReleaseRule> findAllReleases() {
 		List<OnReleaseRule> result = new ArrayList<>();
 		List<ReleaseModel> releaseModels = releaseDao.getAll();

@@ -91,6 +91,15 @@ public class CIEngineClientImpl implements CIEngineClient
 		return addBuildResponse;
 	}
 
+	@Override
+	public SubmitReleasesResponse submitReleases(String serverUrl, SubmitReleasesRequest submitReleasesRequest) {
+		final String uri =  serverUrl + "/submitreleases";
+		//AddBuildRequest addBuildRequest1 = new AddBuildRequest();
+		//isModuleReleasedRequest.setModule(moduleNameToRelease);
+		SubmitReleasesResponse submitReleasesResponse = doPost(uri, submitReleasesRequest, SubmitReleasesResponse.class);
+		return submitReleasesResponse;
+	}
+
 	private <T> T doPost(String url, Object setBuildStatusRequest, Class<T> responseType) {
 		RestTemplate restTemplate = new RestTemplate();
 		//set interceptors/requestFactory

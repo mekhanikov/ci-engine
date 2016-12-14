@@ -1,6 +1,8 @@
 package com.ciengine.webapp.web.controllers;
 
 import com.ciengine.common.CIEngineClient;
+import com.ciengine.common.dto.Release;
+import com.ciengine.common.dto.SubmitReleasesRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -147,6 +149,18 @@ public class ReportController {
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
     public String submit(@ModelAttribute("modulesForm") ModulesForm modulesForm, Model model) {
 // todo submit via rest call
+        List<Release> releaseList = new ArrayList<>();
+        SubmitReleasesRequest submitReleasesRequest = new SubmitReleasesRequest();
+        for (ModuleItem moduleItem : modulesForm.getModules()) {
+            Release release = new Release();
+            release.setName(moduleItem.getName());
+            release.setBrancheFrom(moduleItem.getBrancheFrom());
+            release.setBrancheTo(moduleItem.getBrancheTo());
+            release.setVersion(moduleItem.getVersion());
+            releaseList.add(release);
+        }
+        submitReleasesRequest.setReleaseList(releaseList);
+        ciEngineClient.submitReleases(restUrl, submitReleasesRequest);
         return "submit";
     }
 
