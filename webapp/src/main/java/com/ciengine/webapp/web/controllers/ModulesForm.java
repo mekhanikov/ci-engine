@@ -1,7 +1,5 @@
 package com.ciengine.webapp.web.controllers;
 
-import com.ciengine.common.Module;
-
 import java.util.List;
 
 /**
