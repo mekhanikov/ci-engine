@@ -48,6 +48,9 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 	@Autowired
 	private BinaryRepositoryClient binaryRepositoryClient;
 
+	@Autowired
+	private EnvironmentFacade environmentFacade;
+
 	private List<CIEngineListener> ciEngineListeners = new ArrayList<>();
 
 	private List<Module> modules = new ArrayList<>();
@@ -180,14 +183,15 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 		}
 		String goingToRelease = String.join(",", modulesToRelease);
 		for (Release release : submitReleasesRequest.getReleaseList()) {
+			EnvironmentData environmentData = environmentFacade.findApplyList(release.getName(), release.getBrancheTo());
 			ReleaseModel releaseModel = new ReleaseModel();
 			releaseModel.setModuleNameToRelease(release.getName());
 			releaseModel.setGoingToRelease(goingToRelease);
-//			releaseModel.setApplyList(release.getApplyList());
+			releaseModel.setApplyList(environmentData.getApplyList());
 			releaseModel.setReleaseBranchName(release.getBrancheTo());
 			releaseModel.setMergeFromCommitId(release.getBrancheFrom());
 //			releaseModel.setInputParams(makeString(release.getEnvironmentVariables()));
-//			releaseModel.setDockerImageId(release.getDockerImageId());
+			releaseModel.setDockerImageId(environmentData.getDockerImageId());
 			releaseDao.save(releaseModel);
 			OnReleaseSubmitedEvent onReleaseSubmitedEvent = new OnReleaseSubmitedEvent();
 			// TODO 1. send events after data commited to DB
