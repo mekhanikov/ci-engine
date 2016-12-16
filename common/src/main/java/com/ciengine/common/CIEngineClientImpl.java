@@ -100,6 +100,15 @@ public class CIEngineClientImpl implements CIEngineClient
 		return submitReleasesResponse;
 	}
 
+	@Override
+	public FindModulesResponse findModules(String serverUrl, FindModulesRequest findModulesRequest) {
+		final String uri =  serverUrl + "/findmodules";
+		//AddBuildRequest addBuildRequest1 = new AddBuildRequest();
+		//isModuleReleasedRequest.setModule(moduleNameToRelease);
+		FindModulesResponse findModulesResponse = doPost(uri, findModulesRequest, FindModulesResponse.class);
+		return findModulesResponse;
+	}
+
 	private <T> T doPost(String url, Object setBuildStatusRequest, Class<T> responseType) {
 		RestTemplate restTemplate = new RestTemplate();
 		//set interceptors/requestFactory

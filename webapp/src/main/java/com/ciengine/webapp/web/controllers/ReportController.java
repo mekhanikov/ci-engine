@@ -1,6 +1,9 @@
 package com.ciengine.webapp.web.controllers;
 
 import com.ciengine.common.CIEngineClient;
+import com.ciengine.common.Module;
+import com.ciengine.common.dto.FindModulesRequest;
+import com.ciengine.common.dto.FindModulesResponse;
 import com.ciengine.common.dto.Release;
 import com.ciengine.common.dto.SubmitReleasesRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +25,6 @@ import java.util.List;
 public class ReportController {
 
     @Autowired
-    private RestTemplate restTemplate;
-
-    @Autowired
     private CIEngineClient ciEngineClient;
 
     private final String restUrl;
@@ -41,16 +41,19 @@ public class ReportController {
      */
     @RequestMapping(value = "/selectmodules", method = RequestMethod.GET)
     public String reportsPage(Model model) {
+        FindModulesRequest findModulesRequest = new FindModulesRequest();
+        FindModulesResponse findModulesResponse = ciEngineClient.findModules(restUrl, findModulesRequest);
+        List<ModuleItem> list = new ArrayList<>();
+        for (Module module : findModulesResponse.getModules()) {
+            list.add(createModule(module.getName()));
+        }
 //        model.addAttribute("name", "Evg");
-//        List<ModuleItem> list = new ArrayList<>();
+//
 //        list.add(createModule("A"));
 //        list.add(createModule("b"));
 //        model.addAttribute("greeting", list);
         ModulesForm modulesForm = new ModulesForm();
-        List<ModuleItem> list = new ArrayList<>();
-        list.add(createModule("A"));
-        list.add(createModule("b"));
-        list.add(createModule("v"));
+
         modulesForm.setModules(list);
         model.addAttribute("modulesForm", modulesForm);
         return "selectmodules";

@@ -56,4 +56,9 @@ public class MockCIEngineClientImpl implements CIEngineClient
 	public SubmitReleasesResponse submitReleases(String serverUrl, SubmitReleasesRequest submitReleasesRequest) {
 		return null;
 	}
+
+	@Override
+	public FindModulesResponse findModules(String serverUrl, FindModulesRequest findModulesRequest) {
+		return null;
+	}
 }

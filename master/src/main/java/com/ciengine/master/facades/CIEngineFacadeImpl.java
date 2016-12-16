@@ -184,29 +184,50 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 		String goingToRelease = String.join(",", modulesToRelease);
 		for (Release release : submitReleasesRequest.getReleaseList()) {
 			EnvironmentData environmentData = environmentFacade.findApplyList(release.getName(), release.getBrancheTo());
-			ReleaseModel releaseModel = new ReleaseModel();
-			releaseModel.setModuleNameToRelease(release.getName());
-			releaseModel.setGoingToRelease(goingToRelease);
-			releaseModel.setApplyList(environmentData.getApplyList());
-			releaseModel.setReleaseBranchName(release.getBrancheTo());
-			releaseModel.setMergeFromCommitId(release.getBrancheFrom());
+			if (environmentData != null) {
+				ReleaseModel releaseModel = new ReleaseModel();
+				releaseModel.setModuleNameToRelease(release.getName());
+				releaseModel.setGoingToRelease(goingToRelease);
+				releaseModel.setApplyList(environmentData.getApplyList());
+				releaseModel.setReleaseBranchName(release.getBrancheTo());
+				releaseModel.setMergeFromCommitId(release.getBrancheFrom());
 //			releaseModel.setInputParams(makeString(release.getEnvironmentVariables()));
-			releaseModel.setDockerImageId(environmentData.getDockerImageId());
-			releaseDao.save(releaseModel);
-			OnReleaseSubmitedEvent onReleaseSubmitedEvent = new OnReleaseSubmitedEvent();
-			// TODO 1. send events after data commited to DB
-            // TODO 2. Dont wait until listeners finish.
-			onReleaseSubmitedEvent.setModuleNameToRelease(release.getName());
-			onReleaseSubmitedEvent.setGoingToRelease(goingToRelease);
+				releaseModel.setDockerImageId(environmentData.getDockerImageId());
+				releaseDao.save(releaseModel);
+				OnReleaseSubmitedEvent onReleaseSubmitedEvent = new OnReleaseSubmitedEvent();
+				// TODO 1. send events after data commited to DB
+				// TODO 2. Dont wait until listeners finish.
+				onReleaseSubmitedEvent.setModuleNameToRelease(release.getName());
+				onReleaseSubmitedEvent.setGoingToRelease(goingToRelease);
 //			onReleaseSubmitedEvent.setApplyList(release.getApplyList());
-			onReleaseSubmitedEvent.setReleaseBranchName(release.getBrancheTo());
-			onReleaseSubmitedEvent.setMergeFromCommitId(release.getBrancheFrom());
+				onReleaseSubmitedEvent.setReleaseBranchName(release.getBrancheTo());
+				onReleaseSubmitedEvent.setMergeFromCommitId(release.getBrancheFrom());
 //			onReleaseSubmitedEvent.setInputParams(makeString(release.getEnvironmentVariables()));
 //			onReleaseSubmitedEvent.setDockerImageId(release.getDockerImageId());
-			onEvent(onReleaseSubmitedEvent);
+				onEvent(onReleaseSubmitedEvent);
+			}
+
 		}
 		return submitReleasesResponse;
 	}
+
+	@Override
+	public FindModulesResponse findModules(FindModulesRequest findModulesRequest) {
+		FindModulesResponse findModulesResponse = new FindModulesResponse();
+		List<Module> modules = new ArrayList<>();
+		modules.add(createModule("mod-a"));
+		modules.add(createModule("mod-b"));
+		modules.add(createModule("mod-c"));
+		findModulesResponse.setModules(modules);
+		return findModulesResponse;
+	}
+
+	private Module createModule(String name) {
+		Module module = new Module();
+		module.setName(name);
+		return module;
+	}
+
 	@Override
 	public List<OnReleaseRule> findAllReleases() {
 		List<OnReleaseRule> result = new ArrayList<>();

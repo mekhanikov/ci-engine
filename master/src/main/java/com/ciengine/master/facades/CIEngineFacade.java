@@ -47,4 +47,6 @@ public interface CIEngineFacade
 GetModulesResponse getModulesResponse();
 
 	SubmitReleasesResponse submitReleases(SubmitReleasesRequest submitReleasesRequest);
+
+	FindModulesResponse findModules(FindModulesRequest findModulesRequest);
 }
