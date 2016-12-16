@@ -67,6 +67,7 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 			build.setModuleName(buildModel.getModuleName());
 			build.setBranchName(buildModel.getBranchName());
 			build.setInputParams(buildModel.getInputParams());
+			build.setStatusDescription(buildModel.getStatusDescription());
 			builds.add(build);
 		}
 		findBuildsResponse.setBuildList(builds);

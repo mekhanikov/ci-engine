@@ -80,11 +80,11 @@ public class MockReleaseList implements CIEngineList
 					onNewArtifactEvent.setGitUrl(gitUrl);
 					onNewArtifactEvent.setBranchName(branchName);
 					onNewArtifactEvent.setModuleName(moduleNameToRelease);
-					ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SUCCESS, "ALREADY RELEASED");
+					ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SUCCESS, "RELEASED");
 					ciEngineClient.sendEvent(url, onNewArtifactEvent);
 				} else {
 					System.out.print("DEPS ARE REQUIRED");
-					ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SKIPED, "ALREADY RELEASED");
+					ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SKIPED, "DEPS ARE REQUIRED");
 				}
 
 				// TODO read deps from pom.xml
@@ -101,7 +101,11 @@ public class MockReleaseList implements CIEngineList
 			}
 		} else {
 			System.out.println("NOT ALLARESKIPPED");
-            ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SKIPED, "NOT ALLARESKIPPED");
+			if (ciEngineClient.isModuleReleased(url, moduleNameToRelease)) {
+				ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SKIPED, "ALREADY RELEASED");
+			} else {
+				ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SKIPED, "NOT ALLARESKIPPED");
+			}
         }
 	}
 
