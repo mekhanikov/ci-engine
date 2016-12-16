@@ -1,7 +1,5 @@
 package com.ciengine.master.controllers.submitreleases;
 
-import com.ciengine.common.dto.AddBuildRequest;
-import com.ciengine.common.dto.AddBuildResponse;
 import com.ciengine.common.dto.SubmitReleasesRequest;
 import com.ciengine.common.dto.SubmitReleasesResponse;
 import com.ciengine.master.facades.CIEngineFacade;

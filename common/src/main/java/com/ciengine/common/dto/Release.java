@@ -1,7 +1,5 @@
 package com.ciengine.common.dto;
 
-import java.util.List;
-
 /**
  * Created by emekhanikov on 14.12.2016.
  */
