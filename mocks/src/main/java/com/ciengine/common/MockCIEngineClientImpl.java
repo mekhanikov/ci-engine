@@ -61,4 +61,9 @@ public class MockCIEngineClientImpl implements CIEngineClient
 	public FindModulesResponse findModules(String serverUrl, FindModulesRequest findModulesRequest) {
 		return null;
 	}
+
+	@Override
+	public FindBuildsResponse findBuilds(String serverUrl, FindBuildsRequest findBuildsRequest) {
+		return null;
+	}
 }

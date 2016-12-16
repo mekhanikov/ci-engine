@@ -186,9 +186,9 @@ public class ReleaseIntegrationTests extends AbstractIntegrationTests {
 
 	private void prepareModules() {
 		List<Module> moduleList = new ArrayList<>();
-		moduleList.add(createModule("modA", "ssh://git@repo.ru/mod-a"));
-		moduleList.add(createModule("modB", "ssh://git@repo.ru/mod-b"));
-		moduleList.add(createModule("modC", "ssh://git@repo.ru/mod-c"));
+		moduleList.add(createModule("ModA", "ssh://git@repo.ru/mod-a"));
+		moduleList.add(createModule("ModB", "ssh://git@repo.ru/mod-b"));
+		moduleList.add(createModule("ModC", "ssh://git@repo.ru/mod-c"));
 		ciEngineFacade.setModules(moduleList);
 
 	}

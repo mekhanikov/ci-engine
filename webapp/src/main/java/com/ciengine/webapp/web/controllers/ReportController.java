@@ -2,10 +2,7 @@ package com.ciengine.webapp.web.controllers;
 
 import com.ciengine.common.CIEngineClient;
 import com.ciengine.common.Module;
-import com.ciengine.common.dto.FindModulesRequest;
-import com.ciengine.common.dto.FindModulesResponse;
-import com.ciengine.common.dto.Release;
-import com.ciengine.common.dto.SubmitReleasesRequest;
+import com.ciengine.common.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -164,6 +161,28 @@ public class ReportController {
         submitReleasesRequest.setReleaseList(releaseList);
         ciEngineClient.submitReleases(restUrl, submitReleasesRequest);
         return "submit";
+    }
+
+
+    @RequestMapping(value = "/builds", method = RequestMethod.GET)
+    public String builds(Model model) {
+        FindBuildsRequest findBuildsRequest = new FindBuildsRequest();
+        ciEngineClient.findBuilds(restUrl, findBuildsRequest);
+        FindBuildsResponse findBuildsResponse = ciEngineClient.findBuilds(restUrl, findBuildsRequest);
+        List<Build> builds = new ArrayList<>();
+        for (Build build : findBuildsResponse.getBuildList()) {
+            builds.add(build);
+        }
+//        model.addAttribute("name", "Evg");
+//
+//        list.add(createModule("A"));
+//        list.add(createModule("b"));
+//        model.addAttribute("greeting", list);
+//        ModulesForm modulesForm = new ModulesForm();
+//
+//        modulesForm.setModules(list);
+        model.addAttribute("builds", builds);
+        return "builds";
     }
 
     private ModuleItem createModule(String a) {

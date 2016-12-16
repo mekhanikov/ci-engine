@@ -49,7 +49,7 @@ public class BuildStatusChecker
 				String s = ciAgentFacade.getStatus(node, buildModel.getId());
 				if (!buildModel.getStatus().equals(s)) {
 					buildModel.setStatus(s);
-					buildDao.update(buildModel);
+					//buildDao.update(buildModel);
 //					OnNewArtifactEvent onNewArtifactEvent = new OnNewArtifactEvent();
 //					ciEngineFacade.onEvent(onNewArtifactEvent);
 				}

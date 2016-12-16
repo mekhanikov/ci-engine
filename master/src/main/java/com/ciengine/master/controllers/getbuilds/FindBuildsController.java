@@ -1,5 +1,6 @@
 package com.ciengine.master.controllers.getbuilds;
 
+import com.ciengine.common.dto.FindBuildsResponse;
 import com.ciengine.master.facades.CIEngineFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * Created by emekhanikov on 06.09.2016.
  */
 @Controller
-public class GetBuildsController
+public class FindBuildsController
 {
 	@Autowired
 	CIEngineFacade ciEngineFacade;
@@ -20,11 +21,11 @@ public class GetBuildsController
 	// TODO See list of builds with filtration by fields.
 	// TODO 2. Used for link from Stash to concrete build: to see logs, artefacts, status and so on.
 
-	@RequestMapping(value = "/getBuildsResponse",produces = {"application/json"}, method = RequestMethod.GET)
+	@RequestMapping(value = "/findbuilds",produces = {"application/json"}, method = RequestMethod.POST)
 	@ResponseBody
-	GetBuildsResponse getBuildsResponse() {
+	FindBuildsResponse findbuilds() {
 //		GetBuildsResponse getBuildsResponse = new GetBuildsResponse();
-		return ciEngineFacade.getBuildsResponse();
+		return ciEngineFacade.findBuilds();
 	}
 
 }

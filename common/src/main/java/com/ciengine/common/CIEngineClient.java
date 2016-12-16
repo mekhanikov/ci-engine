@@ -20,4 +20,5 @@ public interface CIEngineClient
     SubmitReleasesResponse submitReleases(String serverUrl, SubmitReleasesRequest submitReleasesRequest);
 
     FindModulesResponse findModules(String serverUrl, FindModulesRequest findModulesRequest);
+    FindBuildsResponse findBuilds(String serverUrl, FindBuildsRequest findBuildsRequest);
 }

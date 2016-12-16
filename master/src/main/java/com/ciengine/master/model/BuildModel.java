@@ -1,5 +1,7 @@
 package com.ciengine.master.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -24,7 +26,8 @@ public class BuildModel
 	//	@Temporal(TemporalType.TIMESTAMP)
 	private Date endTimestamp;
 
-	private String inputParams; // TODO should be TEXT or so.
+	@Type(type="text")
+	private String inputParams;
 	private String inputParamsHash;
 	private String moduleName;
 	private String branchName;// TODO (merge connected to 2 branches, pass both?)

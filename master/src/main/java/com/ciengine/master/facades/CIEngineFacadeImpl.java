@@ -3,7 +3,6 @@ package com.ciengine.master.facades;
 import com.ciengine.common.*;
 import com.ciengine.common.dto.*;
 import com.ciengine.common.events.OnReleaseSubmitedEvent;
-import com.ciengine.master.controllers.getbuilds.GetBuildsResponse;
 import com.ciengine.master.controllers.getmodules.GetModulesResponse;
 import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.dao.ReleaseDao;
@@ -55,8 +54,8 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 
 	private List<Module> modules = new ArrayList<>();
 
-	public GetBuildsResponse getBuildsResponse() {
-		GetBuildsResponse getBuildsResponse = new GetBuildsResponse();
+	public FindBuildsResponse findBuilds() {
+		FindBuildsResponse findBuildsResponse = new FindBuildsResponse();
 		//		buildDao.getAll();
 //		BuildModel buildModel = new BuildModel();
 //		buildModel.setStartTimestamp(new Date());
@@ -64,11 +63,14 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 		List<BuildModel> buildModelList = buildDao.getAll();
 		for (BuildModel buildModel : buildModelList) {
 			Build build = new Build();
+			build.setStatus(buildModel.getStatus());
+			build.setModuleName(buildModel.getModuleName());
 			build.setBranchName(buildModel.getBranchName());
+			build.setInputParams(buildModel.getInputParams());
 			builds.add(build);
 		}
-		getBuildsResponse.setBuildList(builds);
-		return getBuildsResponse;
+		findBuildsResponse.setBuildList(builds);
+		return findBuildsResponse;
 	}
 
 	@Override public AddBuildResponse addBuild(AddBuildRequest addBuildRequest)
@@ -179,14 +181,14 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 		SubmitReleasesResponse submitReleasesResponse = new SubmitReleasesResponse();
 		List<String> modulesToRelease = new ArrayList<>();
 		for (Release release : submitReleasesRequest.getReleaseList()) {
-			modulesToRelease.add(release.getName());
+			modulesToRelease.add(release.getName() + ":" + release.getVersion());
 		}
 		String goingToRelease = String.join(",", modulesToRelease);
 		for (Release release : submitReleasesRequest.getReleaseList()) {
 			EnvironmentData environmentData = environmentFacade.findApplyList(release.getName(), release.getBrancheTo());
 			if (environmentData != null) {
 				ReleaseModel releaseModel = new ReleaseModel();
-				releaseModel.setModuleNameToRelease(release.getName());
+				releaseModel.setModuleNameToRelease(release.getName() + ":" + release.getVersion());
 				releaseModel.setGoingToRelease(goingToRelease);
 				releaseModel.setApplyList(environmentData.getApplyList());
 				releaseModel.setReleaseBranchName(release.getBrancheTo());
@@ -197,13 +199,13 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 				OnReleaseSubmitedEvent onReleaseSubmitedEvent = new OnReleaseSubmitedEvent();
 				// TODO 1. send events after data commited to DB
 				// TODO 2. Dont wait until listeners finish.
-				onReleaseSubmitedEvent.setModuleNameToRelease(release.getName());
+				onReleaseSubmitedEvent.setModuleNameToRelease(releaseModel.getModuleNameToRelease());
 				onReleaseSubmitedEvent.setGoingToRelease(goingToRelease);
-//			onReleaseSubmitedEvent.setApplyList(release.getApplyList());
+			onReleaseSubmitedEvent.setApplyList(environmentData.getApplyList());
 				onReleaseSubmitedEvent.setReleaseBranchName(release.getBrancheTo());
 				onReleaseSubmitedEvent.setMergeFromCommitId(release.getBrancheFrom());
 //			onReleaseSubmitedEvent.setInputParams(makeString(release.getEnvironmentVariables()));
-//			onReleaseSubmitedEvent.setDockerImageId(release.getDockerImageId());
+			onReleaseSubmitedEvent.setDockerImageId(environmentData.getDockerImageId());
 				onEvent(onReleaseSubmitedEvent);
 			}
 
@@ -215,9 +217,10 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 	public FindModulesResponse findModules(FindModulesRequest findModulesRequest) {
 		FindModulesResponse findModulesResponse = new FindModulesResponse();
 		List<Module> modules = new ArrayList<>();
-		modules.add(createModule("mod-a"));
-		modules.add(createModule("mod-b"));
-		modules.add(createModule("mod-c"));
+		// TODO load from config
+		modules.add(createModule("ModA"));
+		modules.add(createModule("ModB"));
+		modules.add(createModule("ModC"));
 		findModulesResponse.setModules(modules);
 		return findModulesResponse;
 	}

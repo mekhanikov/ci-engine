@@ -5,7 +5,6 @@ import com.ciengine.common.CIEngineException;
 import com.ciengine.common.DefaultCIEngineEvent;
 import com.ciengine.common.Module;
 import com.ciengine.common.dto.*;
-import com.ciengine.master.controllers.getbuilds.GetBuildsResponse;
 import com.ciengine.master.controllers.getmodules.GetModulesResponse;
 import com.ciengine.master.listeners.CIEngineListener;
 import com.ciengine.master.listeners.impl.onrelease.OnReleaseRule;
@@ -18,7 +17,7 @@ import java.util.List;
  */
 public interface CIEngineFacade
 {
-	GetBuildsResponse getBuildsResponse();
+	FindBuildsResponse findBuilds();
 
 	AddBuildResponse addBuild(AddBuildRequest addBuildRequest);
 
