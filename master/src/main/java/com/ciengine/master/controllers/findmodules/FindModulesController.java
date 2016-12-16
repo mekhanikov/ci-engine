@@ -2,8 +2,6 @@ package com.ciengine.master.controllers.findmodules;
 
 import com.ciengine.common.dto.FindModulesRequest;
 import com.ciengine.common.dto.FindModulesResponse;
-import com.ciengine.common.dto.SubmitReleasesRequest;
-import com.ciengine.common.dto.SubmitReleasesResponse;
 import com.ciengine.master.facades.CIEngineFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
