@@ -18,7 +18,17 @@ public class EnvironmentFacadeImpl implements EnvironmentFacade {
 
     public EnvironmentFacadeImpl() {
         // TODO each module may have own, need add all of them
-        createEnvironmentData("*", "feature/*", "topic/*", "List1");
+        createEnvironmentData("modA", "develop", "onCommitList", "dockerid");
+        createEnvironmentData("modA", "feature/.*", "onCommitList", "dockerid");
+//        createEnvironmentData("modA", "feature/.*", "onCommitList", "dockerid");
+
+
+//        createRuleBuilder(ciEngineEvent).onCommit().forModules("modA").forBranches("develop").triggerBuild();
+
+//        createRuleBuilder(ciEngineEvent).onCommit().forModules("modA").
+//                forBranches("feature/.*").enableAutomergeFrom("develop").enableCrossBuild().triggerBuild();
+//        createRuleBuilder(ciEngineEvent).onCommit().forModules("modA").forBranches("develop").triggerBuildsFor("modA", "feature/.*");
+
 
     }
 

@@ -1,5 +1,7 @@
 package com.ciengine.master.facades;
 
+import com.ciengine.common.EnvironmentVariables;
+
 /**
  * Created by emekhanikov on 15.12.2016.
  */
@@ -8,9 +10,9 @@ public class EnvironmentData {
     private String forBranches;
     private String applyList;
     private String dockerImageId;
-    private String environmentVariables;
+    private EnvironmentVariables environmentVariables;
 
-    public EnvironmentData(String forModules, String forBranches, String applyList, String dockerImageId, String environmentVariables) {
+    public EnvironmentData(String forModules, String forBranches, String applyList, String dockerImageId, EnvironmentVariables environmentVariables) {
         this.forModules = forModules;
         this.forBranches = forBranches;
         this.applyList = applyList;
@@ -50,11 +52,11 @@ public class EnvironmentData {
         this.dockerImageId = dockerImageId;
     }
 
-    public String getEnvironmentVariables() {
+    public EnvironmentVariables getEnvironmentVariables() {
         return environmentVariables;
     }
 
-    public void setEnvironmentVariables(String environmentVariables) {
+    public void setEnvironmentVariables(EnvironmentVariables environmentVariables) {
         this.environmentVariables = environmentVariables;
     }
 }

@@ -8,7 +8,6 @@ import com.ciengine.common.Repo;
 import com.ciengine.common.events.OnCommitEvent;
 import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.master.facades.CIEngineFacade;
-import com.ciengine.master.listeners.impl.oncommit.OnCommitRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -150,17 +149,17 @@ public class OnCommitEventIntegrationTests {
 	}
 
 
-
-	private OnCommitRule createOnCommitRule(String forModules, String forBranches)
-	{
-		OnCommitRule onCommitRule = new OnCommitRule();
-//		onCommitRule.setDockerImageId();
-		onCommitRule.setApplyList("onCommitList");
-//		onCommitRule.setEnvironmentVariables();
-		onCommitRule.setForBranches(forBranches);
-		onCommitRule.setForModules(forModules);
-		return onCommitRule;
-	}
+//
+//	private OnCommitRule createOnCommitRule(String forModules, String forBranches)
+//	{
+//		OnCommitRule onCommitRule = new OnCommitRule();
+////		onCommitRule.setDockerImageId();
+//		onCommitRule.setApplyList("onCommitList");
+////		onCommitRule.setEnvironmentVariables();
+//		onCommitRule.setForBranches(forBranches);
+//		onCommitRule.setForModules(forModules);
+//		return onCommitRule;
+//	}
 
 	private void prepareModules() {
 		List<Module> moduleList = new ArrayList<>();
