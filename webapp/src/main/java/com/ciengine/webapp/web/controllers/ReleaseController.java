@@ -18,7 +18,7 @@ import java.util.List;
  * This class is used to handle requests from users and return templates.
  */
 @Controller
-public class ReportController {
+public class ReleaseController {
 
     @Autowired
     private CIEngineClient ciEngineClient;
@@ -26,7 +26,7 @@ public class ReportController {
     private final String restUrl;
 
     @Autowired
-    public ReportController(@Value("${rest.service.url}") String restUrl) {
+    public ReleaseController(@Value("${rest.service.url}") String restUrl) {
         this.restUrl = restUrl;
     }
 
@@ -36,7 +36,7 @@ public class ReportController {
      * @return reports page
      */
     @RequestMapping(value = "/selectmodules", method = RequestMethod.GET)
-    public String reportsPage(Model model) {
+    public String selectmodules(Model model) {
         FindModulesRequest findModulesRequest = new FindModulesRequest();
         FindModulesResponse findModulesResponse = ciEngineClient.findModules(restUrl, findModulesRequest);
         List<ModuleItem> list = new ArrayList<>();
@@ -61,7 +61,7 @@ public class ReportController {
      * @return reports page
      */
     @RequestMapping(value = "/selectbranches", method = RequestMethod.POST)
-    public String postReportsPage(@ModelAttribute("modulesForm") ModulesForm modulesForm, Model model) {
+    public String selectbranches(@ModelAttribute("modulesForm") ModulesForm modulesForm, Model model) {
 //        model.addAttribute("name", "Evg");
 //        List<Module> list = new ArrayList<>();
 //        list.add(createModule("A"));
