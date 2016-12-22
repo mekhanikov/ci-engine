@@ -229,6 +229,14 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 	private Module createModule(String name) {
 		Module module = new Module();
 		module.setName(name);
+		List<String> brabchesFrom = new ArrayList<>();
+		brabchesFrom.add("develop");
+		brabchesFrom.add("future/6.4");
+		List<String> brabchesTo = new ArrayList<>();
+		brabchesTo.add("release/6.3");
+		brabchesTo.add("release/6.4");
+		module.setBranchesFrom(brabchesFrom);
+		module.setBranchesTo(brabchesTo);
 		return module;
 	}
 

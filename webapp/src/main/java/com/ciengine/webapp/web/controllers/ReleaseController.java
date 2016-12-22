@@ -68,20 +68,25 @@ public class ReleaseController {
 //        list.add(createModule("b"));
 //        model.addAttribute("greeting", list);
         //model.addAttribute("modules", list);
-        List<String> brabchesFrom = new ArrayList<>();
-        brabchesFrom.add("develop");
-        brabchesFrom.add("future/6.4");
-        List<String> brabchesTo = new ArrayList<>();
-        brabchesTo.add("release/6.3");
-        brabchesTo.add("release/6.4");
+//        List<String> brabchesFrom = new ArrayList<>();
+//        brabchesFrom.add("develop");
+//        brabchesFrom.add("future/6.4");
+//        List<String> brabchesTo = new ArrayList<>();
+//        brabchesTo.add("release/6.3");
+//        brabchesTo.add("release/6.4");
 
-        List<ModuleItem> list = new ArrayList<>();
+        List<String> moduleNames = new ArrayList<>();
         for (ModuleItem moduleItem : modulesForm.getModules()) {
             if (moduleItem.isEnabled()) {
-                list.add(moduleItem);
-                moduleItem.setBranchesFrom(brabchesFrom);
-                moduleItem.setBranchesTo(brabchesTo);
+                moduleNames.add(moduleItem.getName());
             }
+        }
+        FindModulesRequest findModulesRequest = new FindModulesRequest();
+        findModulesRequest.setModuleNames(moduleNames);
+        FindModulesResponse findModulesResponse = ciEngineClient.findModules(restUrl, findModulesRequest);
+        List<ModuleItem> list = new ArrayList<>();
+        for (Module module : findModulesResponse.getModules()) {
+            list.add(createModule(module));
         }
         modulesForm.setModules(list);
         model.addAttribute("modulesForm", modulesForm);
@@ -188,6 +193,8 @@ public class ReleaseController {
     private ModuleItem createModule(Module module) {
         ModuleItem moduleItem = new ModuleItem();
         moduleItem.setName(module.getName());
+        moduleItem.setBranchesFrom(module.getBranchesFrom());
+        moduleItem.setBranchesTo(module.getBranchesTo());
 //        List<String> brabchesFrom = new ArrayList<>();
 //        brabchesFrom.add("develop");
 //        brabchesFrom.add("future/6.4");
