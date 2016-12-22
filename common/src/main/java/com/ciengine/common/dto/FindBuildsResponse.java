@@ -1,7 +1,5 @@
 package com.ciengine.common.dto;
 
-import com.ciengine.common.Module;
-
 import javax.xml.bind.annotation.*;
 import java.util.List;
 
