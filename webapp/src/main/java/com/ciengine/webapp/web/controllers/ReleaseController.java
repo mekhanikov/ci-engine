@@ -41,7 +41,7 @@ public class ReleaseController {
         FindModulesResponse findModulesResponse = ciEngineClient.findModules(restUrl, findModulesRequest);
         List<ModuleItem> list = new ArrayList<>();
         for (Module module : findModulesResponse.getModules()) {
-            list.add(createModule(module.getName()));
+            list.add(createModule(module));
         }
 //        model.addAttribute("name", "Evg");
 //
@@ -185,14 +185,14 @@ public class ReleaseController {
         return "builds";
     }
 
-    private ModuleItem createModule(String a) {
-        ModuleItem module = new ModuleItem();
-        module.setName(a);
-        List<String> brabchesFrom = new ArrayList<>();
-        brabchesFrom.add("develop");
-        brabchesFrom.add("future/6.4");
-        module.setBranchesFrom(brabchesFrom);
-        return module;
+    private ModuleItem createModule(Module module) {
+        ModuleItem moduleItem = new ModuleItem();
+        moduleItem.setName(module.getName());
+//        List<String> brabchesFrom = new ArrayList<>();
+//        brabchesFrom.add("develop");
+//        brabchesFrom.add("future/6.4");
+//        moduleItem.setBranchesFrom(brabchesFrom);
+        return moduleItem;
     }
 
 //
