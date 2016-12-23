@@ -220,7 +220,7 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 	@Override
 	public FindModulesResponse findModules(FindModulesRequest findModulesRequest) {
 		FindModulesResponse findModulesResponse = new FindModulesResponse();
-		List<Module> modules = moduleFacade.findModules();
+		List<Module> modules = moduleFacade.findModules(findModulesRequest);
 		findModulesResponse.setModules(modules);
 		return findModulesResponse;
 	}

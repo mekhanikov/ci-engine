@@ -1,6 +1,7 @@
 package com.ciengine.master.facades;
 
 import com.ciengine.common.Module;
+import com.ciengine.common.dto.FindModulesRequest;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -35,13 +36,20 @@ public class ModuleFacadeImpl implements ModuleFacade {
     }
 
     @Override
-    public List<Module> findModules() {
-        List<Module> modules = new ArrayList<>();
-        // TODO load from config
-        modules.add(createModule("ModA"));
-        modules.add(createModule("ModB"));
-        modules.add(createModule("ModC"));
-        return modules;
+    public List<Module> findModules(FindModulesRequest findModulesRequest) {
+        List<Module> result;
+        if (findModulesRequest.getModuleNames() == null || findModulesRequest.getModuleNames().isEmpty()) {
+            result = modules;
+        } else {
+            result = new ArrayList<>();
+            for (Module module : modules) {
+                if (findModulesRequest.getModuleNames().contains(module.getName())) {
+                    result.add(module);
+                }
+
+            }
+        }
+        return result;
     }
 
     @Override
