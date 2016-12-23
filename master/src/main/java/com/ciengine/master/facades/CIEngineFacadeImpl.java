@@ -50,6 +50,9 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 	@Autowired
 	private EnvironmentFacade environmentFacade;
 
+	@Autowired
+	private ModuleFacade moduleFacade;
+
 	private List<CIEngineListener> ciEngineListeners = new ArrayList<>();
 
 	private List<Module> modules = new ArrayList<>();
@@ -217,28 +220,12 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 	@Override
 	public FindModulesResponse findModules(FindModulesRequest findModulesRequest) {
 		FindModulesResponse findModulesResponse = new FindModulesResponse();
-		List<Module> modules = new ArrayList<>();
-		// TODO load from config
-		modules.add(createModule("ModA"));
-		modules.add(createModule("ModB"));
-		modules.add(createModule("ModC"));
+		List<Module> modules = moduleFacade.findModules();
 		findModulesResponse.setModules(modules);
 		return findModulesResponse;
 	}
 
-	private Module createModule(String name) {
-		Module module = new Module();
-		module.setName(name);
-		List<String> brabchesFrom = new ArrayList<>();
-		brabchesFrom.add("develop");
-		brabchesFrom.add("future/6.4");
-		List<String> brabchesTo = new ArrayList<>();
-		brabchesTo.add("release/6.3");
-		brabchesTo.add("release/6.4");
-		module.setBranchesFrom(brabchesFrom);
-		module.setBranchesTo(brabchesTo);
-		return module;
-	}
+
 
 	@Override
 	public List<OnReleaseRule> findAllReleases() {
