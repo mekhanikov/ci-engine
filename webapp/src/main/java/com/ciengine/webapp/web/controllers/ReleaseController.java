@@ -62,6 +62,7 @@ public class ReleaseController {
      */
     @RequestMapping(value = "/selectbranches", method = RequestMethod.POST)
     public String selectbranches(@ModelAttribute("modulesForm") ModulesForm modulesForm, Model model) {
+        // TODO add ability to select commit id
 //        model.addAttribute("name", "Evg");
 //        List<Module> list = new ArrayList<>();
 //        list.add(createModule("A"));
