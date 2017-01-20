@@ -94,7 +94,7 @@ public class SourcesRepositoryApplication
 	@Bean
 	public Docket newsApi() {
 		return new Docket(DocumentationType.SWAGGER_2)
-				.groupName("greetings")
+				//.groupName("greetings")
 				.apiInfo(apiInfo())
 				.select()
 //				.paths(regex("/greeting.*"))
