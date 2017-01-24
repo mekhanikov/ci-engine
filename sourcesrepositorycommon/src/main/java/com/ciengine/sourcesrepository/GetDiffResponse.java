@@ -15,16 +15,13 @@ public class GetDiffResponse
 {
 
 	@XmlAttribute(name = "sss")
-private String s = "sdd";
+private String commitsText = "sdd";
 
-	public String getS()
-	{
-		return s;
+	public String getCommitsText() {
+		return commitsText;
 	}
 
-	public void setS(String s)
-	{
-		this.s = s;
+	public void setCommitsText(String commitsText) {
+		this.commitsText = commitsText;
 	}
-
 }

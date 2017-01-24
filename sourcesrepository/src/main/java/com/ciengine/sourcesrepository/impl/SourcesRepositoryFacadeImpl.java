@@ -19,7 +19,8 @@ public class SourcesRepositoryFacadeImpl implements SourcesRepositoryFacade {
     @Override
     public GetDiffResponse getDiff(GetDiffRequest getDiffRequest) {
         GetDiffResponse getDiffResponse = new GetDiffResponse();
-        String url = "ssh://git@stash.hybris.com:7999/commerce/entitlements.git";
+        //String url = "ssh://git@stash.hybris.com:7999/commerce/entitlements.git";
+        String url = getDiffRequest.getRepositoryUrl();
         URI uri = null;
         try {
             uri = new URI(url);
@@ -38,10 +39,15 @@ public class SourcesRepositoryFacadeImpl implements SourcesRepositoryFacade {
                 e.printStackTrace();
             }
         }
+//        String sourceBranchName = "origin/develop";
+//        String destinationBranchName = "origin/release/6.4.0";
+        String sourceBranchName = getDiffRequest.getSourceBranchName();
+        String destinationBranchName = getDiffRequest.getDestinationBranchName();
         try {
             Utils.executeCommand(modulePath, "git", "fetch", "--prune");
-            String s = Utils.executeCommand(modulePath, "git", "log", "--oneline", "origin/release/6.4.0..origin/develop");
-            System.out.print(s);
+            String s = Utils.executeCommand(modulePath, "git", "log", "--oneline", destinationBranchName + ".." + sourceBranchName);
+            getDiffResponse.setCommitsText(s);
+            //System.out.print(s);
             // PR develop to release
             //git log --oneline origin/release/6.4.0..origin/develop
         } catch (IOException | InterruptedException e) {
