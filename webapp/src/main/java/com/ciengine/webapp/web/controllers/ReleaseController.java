@@ -3,6 +3,9 @@ package com.ciengine.webapp.web.controllers;
 import com.ciengine.common.CIEngineClient;
 import com.ciengine.common.Module;
 import com.ciengine.common.dto.*;
+import com.ciengine.sourcesrepository.GetDiffRequest;
+import com.ciengine.sourcesrepository.GetDiffResponse;
+import com.ciengine.sourcesrepository.SourceRepositoryClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -12,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class is used to handle requests from users and return templates.
@@ -23,12 +28,15 @@ public class ReleaseController {
     @Autowired
     private CIEngineClient ciEngineClient;
 
-    private final String restUrl;
-
     @Autowired
-    public ReleaseController(@Value("${rest.service.url}") String restUrl) {
-        this.restUrl = restUrl;
-    }
+    private SourceRepositoryClient sourceRepositoryClient;
+
+    @Value("${ciengine.rest.url}")
+    private String ciEngineRestUrl;
+
+    @Value("${sourcesrepository.rest.url}")
+    private String sourcesrepositoryRestUrl;
+
 
     /**
      * Get reports page.
@@ -38,7 +46,7 @@ public class ReleaseController {
     @RequestMapping(value = "/selectmodules", method = RequestMethod.GET)
     public String selectmodules(Model model) {
         FindModulesRequest findModulesRequest = new FindModulesRequest();
-        FindModulesResponse findModulesResponse = ciEngineClient.findModules(restUrl, findModulesRequest);
+        FindModulesResponse findModulesResponse = ciEngineClient.findModules(ciEngineRestUrl, findModulesRequest);
         List<ModuleItem> list = new ArrayList<>();
         for (Module module : findModulesResponse.getModules()) {
             list.add(createModule(module));
@@ -84,7 +92,7 @@ public class ReleaseController {
         }
         FindModulesRequest findModulesRequest = new FindModulesRequest();
         findModulesRequest.setModuleNames(moduleNames);
-        FindModulesResponse findModulesResponse = ciEngineClient.findModules(restUrl, findModulesRequest);
+        FindModulesResponse findModulesResponse = ciEngineClient.findModules(ciEngineRestUrl, findModulesRequest);
         List<ModuleItem> list = new ArrayList<>();
         for (Module module : findModulesResponse.getModules()) {
             list.add(createModule(module));
@@ -102,7 +110,27 @@ public class ReleaseController {
 //        list.add(createModule("b"));
 //        model.addAttribute("greeting", list);
         //model.addAttribute("modules", list);
+        List<String> moduleNames = new ArrayList<>();
         for (ModuleItem moduleItem : modulesForm.getModules()) {
+            if (moduleItem.isEnabled()) {
+                moduleNames.add(moduleItem.getName());
+            }
+        }
+        FindModulesRequest findModulesRequest = new FindModulesRequest();
+        findModulesRequest.setModuleNames(moduleNames);
+        FindModulesResponse findModulesResponse = ciEngineClient.findModules(ciEngineRestUrl, findModulesRequest);
+
+        Map<String, String> map = new HashMap<>();
+        for (Module module : findModulesResponse.getModules()) {
+            map.put(module.getName(), module.getRepoList().get(0).getGitUrl());
+        }
+
+        for (ModuleItem moduleItem : modulesForm.getModules()) {
+            GetDiffRequest getDiffRequest = new GetDiffRequest();
+            getDiffRequest.setRepositoryUrl("ssh://git@stash.hybris.com:7999/commerce/entitlements.git");
+            getDiffRequest.setSourceBranchName("origin/develop");
+            getDiffRequest.setDestinationBranchName("origin/release/6.4.0");
+            GetDiffResponse getDiffResponse = sourceRepositoryClient.getDiff(sourcesrepositoryRestUrl, getDiffRequest);
             moduleItem.setCodeChanged(Math.random() > 0.5d ? "yes":"no");
             if ("yes".equals(moduleItem.getCodeChanged())) {
                 moduleItem.setEnabled(true);
@@ -165,7 +193,7 @@ public class ReleaseController {
             releaseList.add(release);
         }
         submitReleasesRequest.setReleaseList(releaseList);
-        ciEngineClient.submitReleases(restUrl, submitReleasesRequest);
+        ciEngineClient.submitReleases(ciEngineRestUrl, submitReleasesRequest);
         return "submit";
     }
 
@@ -173,8 +201,8 @@ public class ReleaseController {
     @RequestMapping(value = "/builds", method = RequestMethod.GET)
     public String builds(Model model) {
         FindBuildsRequest findBuildsRequest = new FindBuildsRequest();
-        ciEngineClient.findBuilds(restUrl, findBuildsRequest);
-        FindBuildsResponse findBuildsResponse = ciEngineClient.findBuilds(restUrl, findBuildsRequest);
+        ciEngineClient.findBuilds(ciEngineRestUrl, findBuildsRequest);
+        FindBuildsResponse findBuildsResponse = ciEngineClient.findBuilds(ciEngineRestUrl, findBuildsRequest);
         List<Build> builds = new ArrayList<>();
         for (Build build : findBuildsResponse.getBuildList()) {
             builds.add(build);

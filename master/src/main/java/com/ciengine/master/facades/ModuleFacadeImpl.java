@@ -1,6 +1,7 @@
 package com.ciengine.master.facades;
 
 import com.ciengine.common.Module;
+import com.ciengine.common.Repo;
 import com.ciengine.common.dto.FindModulesRequest;
 import org.springframework.stereotype.Component;
 
@@ -18,9 +19,9 @@ public class ModuleFacadeImpl implements ModuleFacade {
 
     public ModuleFacadeImpl() {
         // TODO each module may have own, need add all of them
-        modules.add(createModule("ModA"));
-        modules.add(createModule("ModB"));
-        modules.add(createModule("ModC"));
+        modules.add(createModule("ModA", "ssh://git@stash.hybris.com:7999/commerce/entitlements.git"));
+        modules.add(createModule("ModB", "ssh://git@stash.hybris.com:7999/commerce/entitlements.git"));
+        modules.add(createModule("ModC", "ssh://git@stash.hybris.com:7999/commerce/entitlements.git"));
 //        createEnvironmentData("modA", "feature/.*", "onCommitList", "dockerid");
 
 
@@ -55,7 +56,7 @@ public class ModuleFacadeImpl implements ModuleFacade {
         return null;
     }
 
-    private Module createModule(String name) {
+    private Module createModule(String name, String gitUrl) {
         Module module = new Module();
         module.setName(name);
         List<String> brabchesFrom = new ArrayList<>();
@@ -66,6 +67,11 @@ public class ModuleFacadeImpl implements ModuleFacade {
         brabchesTo.add("release/6.4");
         module.setBranchesFrom(brabchesFrom);
         module.setBranchesTo(brabchesTo);
+        List<Repo> repoList = new ArrayList<>();
+        Repo repo = new Repo();
+        repo.setGitUrl(gitUrl);
+        repoList.add(repo);
+        module.setRepoList(repoList);
         return module;
     }
 
