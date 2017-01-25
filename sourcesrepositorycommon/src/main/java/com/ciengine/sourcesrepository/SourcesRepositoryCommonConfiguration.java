@@ -7,7 +7,7 @@ import org.springframework.core.env.Environment;
 
 @ComponentScan({ "com.ciengine.sourcesrepository" })
 //@EnableAutoConfiguration(exclude = HibernateJpaAutoConfiguration.class)
-public class CommonConfiguration
+public class SourcesRepositoryCommonConfiguration
 {
 	@Autowired
 	private Environment environment;

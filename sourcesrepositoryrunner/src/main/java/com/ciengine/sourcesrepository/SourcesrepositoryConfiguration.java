@@ -18,7 +18,7 @@ import java.util.concurrent.Executor;
  * Created by emekhanikov on 26.09.2016.
  */
 @EnableAsync
-@Import({CommonConfiguration.class, SourcesRepositoryApplication.class})//
+@Import({SourcesRepositoryCommonConfiguration.class, SourcesRepositoryApplication.class})//
 @EnableAutoConfiguration(exclude = HibernateJpaAutoConfiguration.class)
 public class SourcesrepositoryConfiguration extends AsyncConfigurerSupport
 {

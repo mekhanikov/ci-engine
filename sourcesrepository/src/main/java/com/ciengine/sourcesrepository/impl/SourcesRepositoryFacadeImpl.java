@@ -29,7 +29,7 @@ public class SourcesRepositoryFacadeImpl implements SourcesRepositoryFacade {
         }
         String dirName = uri.getPath().replace(".git", "").replace("/", "_");
         String sourcesDirPath = currentDir() + "/tmp/sources/";
-        String modulePath = sourcesDirPath + "/" + dirName;
+        String modulePath = sourcesDirPath + dirName;
         if (!new File(modulePath).exists()) {
             String branchName = "master";
             try {
