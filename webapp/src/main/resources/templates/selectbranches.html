@@ -16,12 +16,15 @@
 
 <form action="/acceptmodules" th:object="${modulesForm}" method="POST">
 <table>
+    <tr>
+        <td>modname</td>
+        <td>from</td>
+        <td>to</td>
+    </tr>
     <tr th:each="module,rowStat : *{modules}">
-        <td>
             <!--<input type="text" th:field="*{modules[__${rowStat.index}__].name}"  />-->
             <!--<input type="checkbox" th:field="*{modules[__${rowStat.index}__].enabled}" />-->
             <input type="hidden" th:field="*{modules[__${rowStat.index}__].name}" />
-        </td>
         <td data-th-text="${module.name}">...</td>
         <td>
             <select th:field="*{modules[__${rowStat.index}__].brancheFrom}">

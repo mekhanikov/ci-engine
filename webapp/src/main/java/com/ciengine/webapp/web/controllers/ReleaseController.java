@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.thymeleaf.expression.Strings;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -132,9 +133,11 @@ public class ReleaseController {
             getDiffRequest.setSourceBranchName(moduleItem.getBrancheFrom());
             getDiffRequest.setDestinationBranchName(moduleItem.getBrancheTo());
             GetDiffResponse getDiffResponse = sourceRepositoryClient.getDiff(sourcesrepositoryRestUrl, getDiffRequest);
-            moduleItem.setCodeChanged(Math.random() > 0.5d ? "yes":"no");
+
+            moduleItem.setCodeChanged(getDiffResponse.getCommitsText() != null && !getDiffResponse.getCommitsText().isEmpty() ? "yes":"no");
             if ("yes".equals(moduleItem.getCodeChanged())) {
                 moduleItem.setEnabled(true);
+                moduleItem.setCommitsText(getDiffResponse.getCommitsText());
             }
         }
         model.addAttribute("modulesForm", modulesForm);

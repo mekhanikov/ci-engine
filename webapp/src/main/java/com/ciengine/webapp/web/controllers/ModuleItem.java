@@ -18,6 +18,7 @@ public class ModuleItem
 	private List<String> branchesFrom;
 	private String brancheTo;
 	private List<String> branchesTo;
+	private String commitsText;
 
 
 	public String getName()
@@ -100,5 +101,13 @@ public class ModuleItem
 
 	public void setVersion(String version) {
 		this.version = version;
+	}
+
+	public void setCommitsText(String commitsText) {
+		this.commitsText = commitsText;
+	}
+
+	public String getCommitsText() {
+		return commitsText;
 	}
 }
