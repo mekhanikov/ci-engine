@@ -63,8 +63,8 @@ public class ModuleFacadeImpl implements ModuleFacade {
         brabchesFrom.add("develop");
         brabchesFrom.add("future/6.4");
         List<String> brabchesTo = new ArrayList<>();
-        brabchesTo.add("release/6.3");
-        brabchesTo.add("release/6.4");
+        brabchesTo.add("release/6.3.0");
+        brabchesTo.add("release/6.4.0");
         module.setBranchesFrom(brabchesFrom);
         module.setBranchesTo(brabchesTo);
         List<Repo> repoList = new ArrayList<>();

@@ -41,8 +41,8 @@ public class SourcesRepositoryFacadeImpl implements SourcesRepositoryFacade {
         }
 //        String sourceBranchName = "origin/develop";
 //        String destinationBranchName = "origin/release/6.4.0";
-        String sourceBranchName = getDiffRequest.getSourceBranchName();
-        String destinationBranchName = getDiffRequest.getDestinationBranchName();
+        String sourceBranchName = "origin/" + getDiffRequest.getSourceBranchName();
+        String destinationBranchName = "origin/" + getDiffRequest.getDestinationBranchName();
         try {
             Utils.executeCommand(modulePath, "git", "fetch", "--prune");
             String s = Utils.executeCommand(modulePath, "git", "log", "--oneline", destinationBranchName + ".." + sourceBranchName);

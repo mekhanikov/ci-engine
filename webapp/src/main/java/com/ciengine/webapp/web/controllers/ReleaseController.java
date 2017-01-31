@@ -127,9 +127,10 @@ public class ReleaseController {
 
         for (ModuleItem moduleItem : modulesForm.getModules()) {
             GetDiffRequest getDiffRequest = new GetDiffRequest();
-            getDiffRequest.setRepositoryUrl("ssh://git@stash.hybris.com:7999/commerce/entitlements.git");
-            getDiffRequest.setSourceBranchName("origin/develop");
-            getDiffRequest.setDestinationBranchName("origin/release/6.4.0");
+            String gitUrl = map.get(moduleItem.getName());
+            getDiffRequest.setRepositoryUrl(gitUrl);
+            getDiffRequest.setSourceBranchName(moduleItem.getBrancheFrom());
+            getDiffRequest.setDestinationBranchName(moduleItem.getBrancheTo());
             GetDiffResponse getDiffResponse = sourceRepositoryClient.getDiff(sourcesrepositoryRestUrl, getDiffRequest);
             moduleItem.setCodeChanged(Math.random() > 0.5d ? "yes":"no");
             if ("yes".equals(moduleItem.getCodeChanged())) {
