@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -112,16 +114,19 @@ public class MockReleaseList implements CIEngineList
 	private boolean allDepsInPlace(String url, String module0) {
 		String moduleName = module0.split(":")[0];
 		String moduleVersion = module0.split(":")[1];
-		if ("ModC".equals(moduleName)) {
-			return true;
+		Set<String> requiredModules = new HashSet<>();
+		if ("ModA".equals(moduleName)) {
+			requiredModules.add("ModB:" + moduleVersion);
+			requiredModules.add("ModC:" + moduleVersion);
 		}
-		if ("ModB".equals(moduleName) &&
-				ciEngineClient.isModuleReleased(url, "ModC:" + moduleVersion)) {
-			return true;
+		if ("ModB".equals(moduleName)) {
+			requiredModules.add("ModC:" + moduleVersion);
 		}
-		if ("ModA".equals(moduleName) && ciEngineClient.isModuleReleased(url, "ModB:" + moduleVersion) && ciEngineClient.isModuleReleased(url, "ModC:" + moduleVersion)) {
-			return true;
+		for (String requiredModule : requiredModules) {
+			if (!ciEngineClient.isModuleReleased(url, requiredModule)) {
+				return false;
+			}
 		}
-		return false;
+		return true;
 	}
 }
