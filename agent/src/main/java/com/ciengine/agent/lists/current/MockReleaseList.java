@@ -64,7 +64,8 @@ public class MockReleaseList implements CIEngineList
 		//String lastBuildStatus = buildLists != null && buildLists.size() > 0 ? buildLists.get(0).getStatus() : null;
 		if (allAreSkipped) {
 			if (!ciEngineClient.isModuleReleased(url, moduleNameToRelease)) {// TODO how it was released if all builds are skipped?
-				if (allDepsInPlace(url, moduleNameToRelease, goingToRelease)) {
+				Set<String> waitingModules = allDepsInPlace(url, moduleNameToRelease, goingToRelease);
+				if (waitingModules.isEmpty()) {
 					System.out.print("d");
 					try {
 						Thread.sleep(5000);
@@ -84,7 +85,7 @@ public class MockReleaseList implements CIEngineList
 					ciEngineClient.sendEvent(url, onNewArtifactEvent);
 				} else {
 					System.out.print("DEPS ARE REQUIRED");
-					ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SKIPED, "DEPS ARE REQUIRED");
+					ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SKIPED, "DEPS ARE REQUIRED: " + String.join(", ", waitingModules));
 				}
 
 				// TODO read deps from pom.xml
@@ -109,7 +110,7 @@ public class MockReleaseList implements CIEngineList
         }
 	}
 
-	private boolean allDepsInPlace(String url, String module0, String goingToRelease) {
+	private Set<String> allDepsInPlace(String url, String module0, String goingToRelease) {
 		Set<String> goingToReleaseModules = new HashSet<>(Arrays.asList(goingToRelease.split(",")));
 		String moduleName = module0.split(":")[0];
 		String moduleVersion = module0.split(":")[1];
@@ -122,11 +123,12 @@ public class MockReleaseList implements CIEngineList
 			requiredModules.add("ModC:" + moduleVersion);
 		}
 
+		Set<String> waitingModules = new HashSet<>();
 		for (String requiredModule : requiredModules) {
 			if (goingToReleaseModules.contains(requiredModule) && !ciEngineClient.isModuleReleased(url, requiredModule)) {
-				return false;
+				waitingModules.add(requiredModule);
 			}
 		}
-		return true;
+		return waitingModules;
 	}
 }
