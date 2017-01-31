@@ -62,7 +62,7 @@ public class OnNewArtefact {
                     environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MODULE_NAME, onReleaseRule.getModuleNameToRelease());
                     environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.RELEASE_BRANCH_NAME, onReleaseRule.getReleaseBranchName());
                     environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.DOCKER_IMAGE_ID, onReleaseRule.getDockerImageId());
-                    environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL, "http://127.0.0.1:8080"); // TODO to conf?
+                    environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL, "http://127.0.0.1:8081"); // TODO to conf?
                     addBuildRequest.setInputParams(Utils.makeString(Utils.merge(environmentVariablesFromEvent, onReleaseRule.getEnvironmentVariables())));
                     ciEngineFacade.addBuild(addBuildRequest);
                 }

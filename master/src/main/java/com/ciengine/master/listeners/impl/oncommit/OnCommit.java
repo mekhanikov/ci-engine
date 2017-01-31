@@ -62,7 +62,7 @@ public class OnCommit {
                 environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.ENABLE_CROSS_BUILD, "true");
             }
             environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MODULE_NAME, module.getName());
-            environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL, "http://127.0.0.1:8080"); // TODO to conf?
+            environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL, "http://127.0.0.1:8081"); // TODO to conf?
 
 
             // TODO set module specific values

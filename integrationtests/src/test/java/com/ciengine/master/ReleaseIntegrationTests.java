@@ -27,7 +27,7 @@ import static org.junit.Assert.assertTrue;
  */
 //@ActiveProfiles("test")
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.DEFINED_PORT, classes = {TestConfiguration.class}, properties = "server.port=8080")
+@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.DEFINED_PORT, classes = {TestConfiguration.class}, properties = "server.port=8081")
 //@SpringBootTest(TestConfiguration.class)
 //@SpringBootTest(classes = {TestConfiguration.class})
 //@EnableAutoConfiguration(exclude = HibernateJpaAutoConfiguration.class)
