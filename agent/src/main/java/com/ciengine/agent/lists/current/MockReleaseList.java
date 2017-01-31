@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -66,7 +64,7 @@ public class MockReleaseList implements CIEngineList
 		//String lastBuildStatus = buildLists != null && buildLists.size() > 0 ? buildLists.get(0).getStatus() : null;
 		if (allAreSkipped) {
 			if (!ciEngineClient.isModuleReleased(url, moduleNameToRelease)) {// TODO how it was released if all builds are skipped?
-				if (allDepsInPlace(url, moduleNameToRelease)) {
+				if (allDepsInPlace(url, moduleNameToRelease, goingToRelease)) {
 					System.out.print("d");
 					try {
 						Thread.sleep(5000);
@@ -111,7 +109,8 @@ public class MockReleaseList implements CIEngineList
         }
 	}
 
-	private boolean allDepsInPlace(String url, String module0) {
+	private boolean allDepsInPlace(String url, String module0, String goingToRelease) {
+		Set<String> goingToReleaseModules = new HashSet<>(Arrays.asList(goingToRelease.split(",")));
 		String moduleName = module0.split(":")[0];
 		String moduleVersion = module0.split(":")[1];
 		Set<String> requiredModules = new HashSet<>();
@@ -122,8 +121,9 @@ public class MockReleaseList implements CIEngineList
 		if ("ModB".equals(moduleName)) {
 			requiredModules.add("ModC:" + moduleVersion);
 		}
+
 		for (String requiredModule : requiredModules) {
-			if (!ciEngineClient.isModuleReleased(url, requiredModule)) {
+			if (goingToReleaseModules.contains(requiredModule) && !ciEngineClient.isModuleReleased(url, requiredModule)) {
 				return false;
 			}
 		}
