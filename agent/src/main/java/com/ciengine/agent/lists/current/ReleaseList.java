@@ -16,6 +16,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -56,16 +57,13 @@ public class ReleaseList extends AbstractReleaseList
 		// TODO checkot sources for module how to get GIT_URL? Should be passed to the build!?
 		// TODO Get artefacts dep from pom.xml map them to modules (how?)
 		Set<String> goingToReleaseModules = new HashSet<>(Arrays.asList(goingToRelease.split(",")));
-		String moduleName = moduleNameToRelease.split(":")[0];
-		String moduleVersion = moduleNameToRelease.split(":")[1];
-		Set<String> requiredModules = new HashSet<>();
-		if ("ModA".equals(moduleName)) {
-			requiredModules.add("ModB:" + moduleVersion);
-			requiredModules.add("ModC:" + moduleVersion);
-		}
-		if ("ModB".equals(moduleName)) {
-			requiredModules.add("ModC:" + moduleVersion);
-		}
+//		String moduleName = moduleNameToRelease.split(":")[0];
+		//String moduleVersion = moduleNameToRelease.substring(moduleNameToRelease.lastIndexOf(':')+1, moduleNameToRelease.length());
+		goingToReleaseModules = goingToReleaseModules.stream().map(it -> it.substring(0, it.lastIndexOf(':'))).collect(Collectors.toSet());
+		//String moduleNameToReleaseWithoutVersion = onReleaseSubmitedEvent.getModuleNameToRelease().substring(0, onReleaseSubmitedEvent.getModuleNameToRelease().lastIndexOf(':'));
+
+
+		Set<String> requiredModules = new HashSet<>(dependencies);
 
 		Set<String> waitingModules = new HashSet<>();
 		for (String requiredModule : requiredModules) {

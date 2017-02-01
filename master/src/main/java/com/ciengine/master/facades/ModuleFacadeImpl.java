@@ -22,7 +22,8 @@ public class ModuleFacadeImpl implements ModuleFacade {
         modules.add(createModule("ModA", "ssh://git@stash.hybris.com:7999/commerce/entitlements.git"));
         modules.add(createModule("ModB", "ssh://git@stash.hybris.com:7999/commerce/entitlements.git"));
         modules.add(createModule("ModC", "ssh://git@stash.hybris.com:7999/commerce/entitlements.git"));
-        modules.add(createModule("subscriptions-module", "ssh://git@stash.hybris.com:7999/commerce/subscriptions.git"));
+        modules.add(createModule("de.hybris.platform:subscriptions-module", "ssh://git@stash.hybris.com:7999/commerce/subscriptions.git"));
+        modules.add(createModule("de.hybris.platform:atdd-module", "ssh://git@stash.hybris.com:7999/platform/atdd.git"));
 //        createEnvironmentData("modA", "feature/.*", "onCommitList", "dockerid");
 
 
