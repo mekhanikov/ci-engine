@@ -2,6 +2,7 @@ package com.ciengine;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -14,6 +15,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -34,8 +36,29 @@ public class Main {
             mainRootElement.appendChild(getCompany(doc, "2", "eBay", "Shopping", "2000"));
             mainRootElement.appendChild(getCompany(doc, "3", "Google", "Search", "3000"));
 
-            doc = readXML("D:\\prj\\ci-engine\\tmp2\\sources\\_commerce_subscriptions\\pom.xml");
+            doc = readXML("/Users/evgenymekhanikov/prj/ci-engine/tmp/sources/_commerce_entitlements/pom.xml");
+            List<String> dependencies = new ArrayList<>();
+            NodeList deps = doc.getElementsByTagName("dependency");
+            for (int i = 0; i < deps.getLength(); i++) {
+                Node dep = deps.item(i);
+                if (dep.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) dep;
+                    String artifactId = eElement
+                            .getElementsByTagName("artifactId")
+                            .item(0)
+                            .getTextContent();
+
+                    String groupId = eElement
+                            .getElementsByTagName("groupId")
+                            .item(0)
+                            .getTextContent();
+                    dependencies.add(groupId + ":" + artifactId);
+
+                }
+            }
+
             //doc.getElementsByTagName("cis-module.version").item(0).getTextContent()
+            // doc.getElementsByTagName("dependency").item(5).getTextContent()
             // output DOM XML to console
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
