@@ -51,7 +51,8 @@ public class OnNewArtefact {
                     addBuildRequest.setReasonOfTrigger(reasonOfTrigger);
                     String buildExternalId = UUID.randomUUID().toString();
                     addBuildRequest.setExternalId(buildExternalId);
-                    String gitUrl = ciEngineFacade.findGitUrlByModuleName(onReleaseRule.getModuleNameToRelease().split(":")[0]);
+                    String moduleNameToReleaseWithoutVersion = onReleaseRule.getModuleNameToRelease().substring(0, onReleaseRule.getModuleNameToRelease().lastIndexOf(':'));
+                    String gitUrl = ciEngineFacade.findGitUrlByModuleName(moduleNameToReleaseWithoutVersion);
                     environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.GIT_URL, gitUrl);
                     environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.BUILD_EXTERNAL_ID, buildExternalId);
                     environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.GOING_TO_RELEASE, onReleaseRule.getGoingToRelease());

@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Utils {
     //public static String baseDir = "tmp/";
 
-    public static void clone(String url, String branchName) {
+    public static String clone(String url, String branchName) {
         //String url = "ssh://git@stash.hybris.com:7999/commerce/entitlements.git";
         URI uri = null;
         try {
@@ -42,6 +42,7 @@ public class Utils {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
+        return modulePath;
     }
 
     public static String executeCommand(String relativeDir, String... command) throws IOException, InterruptedException {

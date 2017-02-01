@@ -51,8 +51,8 @@ public class ReleaseList extends AbstractReleaseList
 		String url = environmentVariables.getProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL);
 		String dockerImageId = environmentVariables.getProperty(EnvironmentVariablesConstants.DOCKER_IMAGE_ID);
 
-		Utils.clone(gitUrl, branchName);
-		List<String> dependencies = retrieveDependencies();
+		String path = Utils.clone(gitUrl, branchName);
+		List<String> dependencies = retrieveDependencies(path + "/pom.xml");
 
 		// TODO checkot sources for module how to get GIT_URL? Should be passed to the build!?
 		// TODO Get artefacts dep from pom.xml map them to modules (how?)
@@ -74,8 +74,8 @@ public class ReleaseList extends AbstractReleaseList
 		return waitingModules;
 	}
 
-	protected List<String> retrieveDependencies() {
-		Document doc = readXML("/Users/evgenymekhanikov/prj/ci-engine/tmp/sources/_commerce_entitlements/pom.xml");
+	protected List<String> retrieveDependencies(String s) {
+		Document doc = readXML(s);
 		List<String> dependencies = new ArrayList<>();
 		NodeList deps = doc.getElementsByTagName("dependency");
 		for (int i = 0; i < deps.getLength(); i++) {
