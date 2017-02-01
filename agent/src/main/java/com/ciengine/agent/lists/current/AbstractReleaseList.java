@@ -18,7 +18,7 @@ import java.util.Set;
  * Created by emekhanikov on 05.09.2016.
  */
 @Component
-public abstract class ReleaseList implements CIEngineList
+public abstract class AbstractReleaseList implements CIEngineList
 {// TODO rename to ReleaseList
 	@Autowired
 	private CIEngineClient ciEngineClient;

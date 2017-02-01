@@ -13,7 +13,7 @@ import java.util.Set;
  * Created by emekhanikov on 05.09.2016.
  */
 @Component
-public class MockReleaseList extends ReleaseList
+public class MockReleaseList extends AbstractReleaseList
 {
 	protected String getExecutionListName() {
 		return "mockReleaseList";
