@@ -41,6 +41,8 @@ public class OnReleaseSubmited {
             String buildExternalId = UUID.randomUUID().toString();
             addBuildRequest.setExternalId(buildExternalId);
             EnvironmentVariables environmentVariablesFromEvent = new EnvironmentVariables();
+            String gitUrl = ciEngineFacade.findGitUrlByModuleName(onReleaseSubmitedEvent.getModuleNameToRelease().split(":")[0]);
+            environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.GIT_URL, gitUrl);
             environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.BUILD_EXTERNAL_ID, buildExternalId);
             environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.GOING_TO_RELEASE, onReleaseSubmitedEvent.getGoingToRelease());
             environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MERGE_FROM_COMMIT_ID, onReleaseSubmitedEvent.getMergeFromCommitId());

@@ -48,4 +48,6 @@ GetModulesResponse getModulesResponse();
 	SubmitReleasesResponse submitReleases(SubmitReleasesRequest submitReleasesRequest);
 
 	FindModulesResponse findModules(FindModulesRequest findModulesRequest);
+
+	String findGitUrlByModuleName(String moduleNameWithoutVersion);
 }

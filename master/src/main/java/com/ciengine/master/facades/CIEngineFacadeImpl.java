@@ -225,7 +225,15 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 		return findModulesResponse;
 	}
 
-
+	@Override
+	public String findGitUrlByModuleName(String moduleNameWithoutVersion) {
+		FindModulesRequest findModulesRequest = new FindModulesRequest();
+		List<String> moduleNames = new ArrayList<>();
+		moduleNames.add(moduleNameWithoutVersion);
+		findModulesRequest.setModuleNames(moduleNames);
+		FindModulesResponse findModulesResponse = findModules(findModulesRequest);
+		return findModulesResponse.getModules().get(0).getRepoList().get(0).getGitUrl();
+	}
 
 	@Override
 	public List<OnReleaseRule> findAllReleases() {
