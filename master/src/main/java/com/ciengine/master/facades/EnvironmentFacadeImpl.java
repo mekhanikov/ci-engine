@@ -23,6 +23,7 @@ public class EnvironmentFacadeImpl implements EnvironmentFacade {
         createEnvironmentData("ModA", "release/.*", "mockReleaseList", "dockerid");
         createEnvironmentData("ModB", "release/.*", "mockReleaseList", "dockerid");
         createEnvironmentData("ModC", "release/.*", "mockReleaseList", "dockerid");
+        createEnvironmentData("subscriptions-module", "release/.*", "releaseList", "dockerid");
 //        createEnvironmentData("modA", "feature/.*", "onCommitList", "dockerid");
 
 

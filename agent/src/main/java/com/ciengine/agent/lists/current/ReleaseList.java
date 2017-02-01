@@ -1,6 +1,7 @@
 package com.ciengine.agent.lists.current;
 
 
+import com.ciengine.agent.Utils;
 import com.ciengine.common.EnvironmentVariables;
 import com.ciengine.common.EnvironmentVariablesConstants;
 import org.springframework.stereotype.Component;
@@ -37,6 +38,7 @@ public class ReleaseList extends AbstractReleaseList
 		String branchName = environmentVariables.getProperty(EnvironmentVariablesConstants.RELEASE_BRANCH_NAME);
 		String commitId = environmentVariables.getProperty(EnvironmentVariablesConstants.COMMIT_ID);
 		String buildId = environmentVariables.getProperty(EnvironmentVariablesConstants.BUILD_EXTERNAL_ID);
+		Utils.clone(gitUrl, branchName);
 		String goingToRelease = environmentVariables.getProperty(EnvironmentVariablesConstants.GOING_TO_RELEASE);
 		String moduleNameToRelease = environmentVariables.getProperty(EnvironmentVariablesConstants.MODULE_NAME);
 		String url = environmentVariables.getProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL);
