@@ -2,6 +2,7 @@ package com.ciengine.agent.lists.current;
 
 
 import com.ciengine.common.EnvironmentVariables;
+import com.ciengine.common.EnvironmentVariablesConstants;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -31,10 +32,13 @@ public class MockReleaseList extends AbstractReleaseList
 		}
 	}
 
-	protected Set<String> allDepsInPlace(String url, String module0, String goingToRelease) {
+	protected Set<String> allDepsInPlace(EnvironmentVariables environmentVariables) {
+		String goingToRelease = environmentVariables.getProperty(EnvironmentVariablesConstants.GOING_TO_RELEASE);
+		String moduleNameToRelease = environmentVariables.getProperty(EnvironmentVariablesConstants.MODULE_NAME);
+		String url = environmentVariables.getProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL);
 		Set<String> goingToReleaseModules = new HashSet<>(Arrays.asList(goingToRelease.split(",")));
-		String moduleName = module0.split(":")[0];
-		String moduleVersion = module0.split(":")[1];
+		String moduleName = moduleNameToRelease.split(":")[0];
+		String moduleVersion = moduleNameToRelease.split(":")[1];
 		Set<String> requiredModules = new HashSet<>();
 		if ("ModA".equals(moduleName)) {
 			requiredModules.add("ModB:" + moduleVersion);

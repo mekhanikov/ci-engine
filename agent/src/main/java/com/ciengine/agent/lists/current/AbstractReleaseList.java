@@ -65,7 +65,7 @@ public abstract class AbstractReleaseList implements CIEngineList
 		//String lastBuildStatus = buildLists != null && buildLists.size() > 0 ? buildLists.get(0).getStatus() : null;
 		if (allAreSkipped) {
 			if (!ciEngineClient.isModuleReleased(url, moduleNameToRelease)) {// TODO how it was released if all builds are skipped?
-				Set<String> waitingModules = allDepsInPlace(url, moduleNameToRelease, goingToRelease);
+				Set<String> waitingModules = allDepsInPlace(environmentVariables);
 				if (waitingModules.isEmpty()) {
 					build(environmentVariables);
 
@@ -108,7 +108,7 @@ public abstract class AbstractReleaseList implements CIEngineList
 
 	protected abstract String getExecutionListName();
 
-	protected abstract Set<String> allDepsInPlace(String url, String module0, String goingToRelease);
+	protected abstract Set<String> allDepsInPlace(EnvironmentVariables environmentVariables);
 
 
 	public CIEngineClient getCiEngineClient() {
