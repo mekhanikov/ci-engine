@@ -1,9 +1,20 @@
 package com.ciengine.agent;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by evgenymekhanikov on 20.01.17.
@@ -106,5 +117,124 @@ public class Utils {
         public StringBuilder getOutput() {
             return output;
         }
+    }
+
+
+    public static void updateDependencies(String s, Map<String, String> dependencyVersionMap) {
+        Document doc = readXML(s);
+        List<String> dependencies = new ArrayList<>();
+        NodeList deps = doc.getElementsByTagName("dependency");
+        for (int i = 0; i < deps.getLength(); i++) {
+            Node dep = deps.item(i);
+            if (dep.getNodeType() == Node.ELEMENT_NODE) {
+                Element eElement = (Element) dep;
+                String artifactId = eElement
+                        .getElementsByTagName("artifactId")
+                        .item(0)
+                        .getTextContent();
+
+                String groupId = eElement
+                        .getElementsByTagName("groupId")
+                        .item(0)
+                        .getTextContent();
+
+                String dependency = groupId + ":" + artifactId;
+                String newVersion = dependencyVersionMap.get(dependency);
+                if (newVersion != null) {
+                    String version = eElement
+                            .getElementsByTagName("version")
+                            .item(0)
+                            .getTextContent();
+
+                    if (version.startsWith("$")) {
+                        String propertyName = version.replace("${", "").replace("}", "");
+                        doc.getElementsByTagName(propertyName).item(0).setTextContent(newVersion);
+                    }
+                }
+
+
+
+//				dependencies.add();
+
+            }
+        }
+
+
+        try {
+            Transformer transformer = null;
+            transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            DOMSource source = new DOMSource(doc);
+//			StreamResult console = new StreamResult(System.out);
+            //			transformer.transform(source, console);
+            StreamResult result = new StreamResult(new File(s));
+            transformer.transform(source, result);
+
+
+
+            // write the content into xml file
+
+
+//			transformer.transform(source, result);
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public static List<String> retrieveDependencies(String s) {
+        Document doc = readXML(s);
+        List<String> dependencies = new ArrayList<>();
+        NodeList deps = doc.getElementsByTagName("dependency");
+        for (int i = 0; i < deps.getLength(); i++) {
+            Node dep = deps.item(i);
+            if (dep.getNodeType() == Node.ELEMENT_NODE) {
+                Element eElement = (Element) dep;
+                String artifactId = eElement
+                        .getElementsByTagName("artifactId")
+                        .item(0)
+                        .getTextContent();
+
+                String groupId = eElement
+                        .getElementsByTagName("groupId")
+                        .item(0)
+                        .getTextContent();
+                dependencies.add(groupId + ":" + artifactId);
+
+            }
+        }
+        return dependencies;
+    }
+
+    public static Document readXML(String xml) {
+        String role1 = null;
+        String role2 = null;
+        String role3 = null;
+        String role4 = null;
+        ArrayList<String> rolev;
+        rolev = new ArrayList<>();
+        Document dom;
+        // Make an  instance of the DocumentBuilderFactory
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        try {
+            // use the factory to take an instance of the document builder
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            // parse using the builder to get the DOM mapping of the
+            // XML file
+            dom = db.parse(xml);
+            return dom;
+
+
+        } catch (ParserConfigurationException pce) {
+            System.out.println(pce.getMessage());
+        } catch (SAXException se) {
+            System.out.println(se.getMessage());
+        } catch (IOException ioe) {
+            System.err.println(ioe.getMessage());
+        }
+        return null;
     }
 }
