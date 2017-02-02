@@ -64,18 +64,17 @@ public class ReleaseList extends AbstractReleaseList
 		//String moduleNameToReleaseWithoutVersion = onReleaseSubmitedEvent.getModuleNameToRelease().substring(0, onReleaseSubmitedEvent.getModuleNameToRelease().lastIndexOf(':'));
 
 //		Map<String, String> modVersions = new HashMap<>();
-		Set<String> requiredModulesWithVersions = new HashSet<>(dependencies);
+		Set<String> requiredModulesThatGoingToReleaseWithVersions = new HashSet<>();
 		for (String goingToReleaseModule : goingToReleaseModules) {
 			String moduleWithoutVersion = goingToReleaseModule.substring(0, goingToReleaseModule.lastIndexOf(':'));
 			if (requiredModules.contains(moduleWithoutVersion)) {
-				requiredModulesWithVersions.add(goingToReleaseModule);
+				requiredModulesThatGoingToReleaseWithVersions.add(goingToReleaseModule);
 			}
-
 		}
 
 		Set<String> waitingModules = new HashSet<>();
-		for (String requiredModule : requiredModulesWithVersions) {
-			if (goingToReleaseModules.contains(requiredModule) && !getCiEngineClient().isModuleReleased(url, requiredModule)) {
+		for (String requiredModule : requiredModulesThatGoingToReleaseWithVersions) {
+			if (!getCiEngineClient().isModuleReleased(url, requiredModule)) {
 				waitingModules.add(requiredModule);
 			}
 		}
