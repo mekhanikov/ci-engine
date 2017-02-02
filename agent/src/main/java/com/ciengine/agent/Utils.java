@@ -22,20 +22,27 @@ import java.util.*;
 public class Utils {
     //public static String baseDir = "tmp/";
 
-    public static String clone(String url, String branchName) {
+    public static String getWorkspace() {
+        return currentDir() + "/workspace";
+    }
+
+    public static void clone(String url, String branchName, String toDirPath) {
         //String url = "ssh://git@stash.hybris.com:7999/commerce/entitlements.git";
-        URI uri = null;
-        try {
-            uri = new URI(url);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        String dirName = uri.getPath().replace(".git", "").replace("/", "_");
-        String sourcesDirPath = currentDir() + "/tmp2/sources/";
-        String modulePath = sourcesDirPath + dirName;
-        if (!new File(modulePath).exists()) {
+//        URI uri = null;
+//        try {
+//            uri = new URI(url);
+//        } catch (URISyntaxException e) {
+//            e.printStackTrace();
+//        }
+//        String dirName = uri.getPath().replace(".git", "").replace("/", "_");
+        File toDirFile = new File(toDirPath);
+        String sourcesDirPath = toDirFile.getParent();
+        String toDirName = toDirFile.getName();
+//        String sourcesDirPath = getWorkspace();
+//        String modulePath = sourcesDirPath + toDirName;
+        if (!new File(toDirPath).exists()) {
             try {
-                Utils.executeCommand(sourcesDirPath, "git", "clone", url, dirName);
+                Utils.executeCommand(sourcesDirPath, "git", "clone", url, toDirName);
 
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
@@ -45,7 +52,7 @@ public class Utils {
 //        String destinationBranchName = "origin/release/6.4.0";
 
         try {
-            Utils.executeCommand(modulePath, "git", "fetch", "--prune");
+            Utils.executeCommand(toDirPath, "git", "fetch", "--prune");
 
             //System.out.print(s);
             // PR develop to release
@@ -53,7 +60,7 @@ public class Utils {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-        return modulePath;
+//        return modulePath;
     }
 
     public static String executeCommand(String relativeDir, String... command) throws IOException, InterruptedException {

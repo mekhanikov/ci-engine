@@ -55,8 +55,11 @@ public class ReleaseList extends AbstractReleaseList
 		String url = environmentVariables.getProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL);
 		String dockerImageId = environmentVariables.getProperty(EnvironmentVariablesConstants.DOCKER_IMAGE_ID);
 
-		String path = Utils.clone(gitUrl, branchName);
-		List<String> dependencies = Utils.retrieveDependencies(path + "/pom.xml");
+//		String workspace = Utils.getWorkspace() + "/" + buildId;
+		String workspace = Utils.getWorkspace() + "/" + moduleNameToRelease.replace(":", "_");
+
+		Utils.clone(gitUrl, branchName, workspace + "/source");
+		List<String> dependencies = Utils.retrieveDependencies(workspace + "/source/pom.xml");
 		Set<String> requiredModules = new HashSet<>(dependencies);
 
 		// TODO checkot sources for module how to get GIT_URL? Should be passed to the build!?
