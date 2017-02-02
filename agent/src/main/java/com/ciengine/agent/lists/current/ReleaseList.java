@@ -49,20 +49,20 @@ public class ReleaseList extends AbstractReleaseList
 		Map<String, String> map = new HashMap<>();
 		for (String goingToReleaseModule : Arrays.asList(goingToRelease.split(","))) {
 			String moduleWithoutVersion = goingToReleaseModule.substring(0, goingToReleaseModule.lastIndexOf(':'));
-			String moduleVersion = extractVersion(moduleNameToRelease);
+			String moduleVersion = extractVersion(goingToReleaseModule);
 			map.put(moduleWithoutVersion, moduleVersion);
 		}
 		String moduleVersion = extractVersion(moduleNameToRelease);
 		Utils.updateDependenciesAndVersion(workspace + "/pom.xml", map, moduleVersion);
 
 		try {
-			String s = Utils.executeCommand(workspace, "mvn.bat", "clean", "install");
-			System.out.print(s);
+			Utils.executeCommand(workspace, "mvn.bat", "clean", "install");
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
+
 
 		try {
 			Thread.sleep(5000);

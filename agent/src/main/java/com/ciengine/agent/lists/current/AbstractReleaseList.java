@@ -68,7 +68,6 @@ public abstract class AbstractReleaseList implements CIEngineList
 				Set<String> waitingModules = allDepsInPlace(environmentVariables);
 				if (waitingModules.isEmpty()) {
 					build(environmentVariables);
-
 					ciEngineStep.doStep(environmentVariables);
 					OnNewArtifactEvent onNewArtifactEvent = new OnNewArtifactEvent();
 					onNewArtifactEvent.setComitId(commitId);
