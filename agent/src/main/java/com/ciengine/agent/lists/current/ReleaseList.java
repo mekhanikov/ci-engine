@@ -53,20 +53,28 @@ public class ReleaseList extends AbstractReleaseList
 
 		String path = Utils.clone(gitUrl, branchName);
 		List<String> dependencies = retrieveDependencies(path + "/pom.xml");
+		Set<String> requiredModules = new HashSet<>(dependencies);
 
 		// TODO checkot sources for module how to get GIT_URL? Should be passed to the build!?
 		// TODO Get artefacts dep from pom.xml map them to modules (how?)
 		Set<String> goingToReleaseModules = new HashSet<>(Arrays.asList(goingToRelease.split(",")));
 //		String moduleName = moduleNameToRelease.split(":")[0];
 		//String moduleVersion = moduleNameToRelease.substring(moduleNameToRelease.lastIndexOf(':')+1, moduleNameToRelease.length());
-		goingToReleaseModules = goingToReleaseModules.stream().map(it -> it.substring(0, it.lastIndexOf(':'))).collect(Collectors.toSet());
+		//goingToReleaseModules = goingToReleaseModules.stream().map(it -> it.substring(0, it.lastIndexOf(':'))).collect(Collectors.toSet());
 		//String moduleNameToReleaseWithoutVersion = onReleaseSubmitedEvent.getModuleNameToRelease().substring(0, onReleaseSubmitedEvent.getModuleNameToRelease().lastIndexOf(':'));
 
+//		Map<String, String> modVersions = new HashMap<>();
+		Set<String> requiredModulesWithVersions = new HashSet<>(dependencies);
+		for (String goingToReleaseModule : goingToReleaseModules) {
+			String moduleWithoutVersion = goingToReleaseModule.substring(0, goingToReleaseModule.lastIndexOf(':'));
+			if (requiredModules.contains(moduleWithoutVersion)) {
+				requiredModulesWithVersions.add(goingToReleaseModule);
+			}
 
-		Set<String> requiredModules = new HashSet<>(dependencies);
+		}
 
 		Set<String> waitingModules = new HashSet<>();
-		for (String requiredModule : requiredModules) {
+		for (String requiredModule : requiredModulesWithVersions) {
 			if (goingToReleaseModules.contains(requiredModule) && !getCiEngineClient().isModuleReleased(url, requiredModule)) {
 				waitingModules.add(requiredModule);
 			}
