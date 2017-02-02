@@ -14,6 +14,9 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -81,6 +84,62 @@ public class ReleaseList extends AbstractReleaseList
 		return waitingModules;
 	}
 
+	public static void updateDependencies(String s, Map<String, String> dependencyVersionMap) {
+		Document doc = readXML(s);
+		List<String> dependencies = new ArrayList<>();
+		NodeList deps = doc.getElementsByTagName("dependency");
+		for (int i = 0; i < deps.getLength(); i++) {
+			Node dep = deps.item(i);
+			if (dep.getNodeType() == Node.ELEMENT_NODE) {
+				Element eElement = (Element) dep;
+				String artifactId = eElement
+						.getElementsByTagName("artifactId")
+						.item(0)
+						.getTextContent();
+
+				String groupId = eElement
+						.getElementsByTagName("groupId")
+						.item(0)
+						.getTextContent();
+
+				String dependency = groupId + ":" + artifactId;
+				String newVersion = dependencyVersionMap.get(dependency);
+				if (newVersion != null) {
+					String version = eElement
+							.getElementsByTagName("version")
+							.item(0)
+							.getTextContent();
+
+					if (version.startsWith("$")) {
+						String propertyName = version.replace("${", "").replace("}", "");
+						doc.getElementsByTagName(propertyName).item(0).setTextContent(newVersion);
+					}
+				}
+
+
+
+//				dependencies.add();
+
+			}
+		}
+
+
+		try {
+			Transformer transformer = null;
+			transformer = TransformerFactory.newInstance().newTransformer();
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			DOMSource source = new DOMSource(doc);
+			StreamResult console = new StreamResult(System.out);
+			transformer.transform(source, console);
+		} catch (TransformerConfigurationException e) {
+			e.printStackTrace();
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		}
+
+
+	}
+
 	protected List<String> retrieveDependencies(String s) {
 		Document doc = readXML(s);
 		List<String> dependencies = new ArrayList<>();
@@ -132,5 +191,11 @@ public class ReleaseList extends AbstractReleaseList
 			System.err.println(ioe.getMessage());
 		}
 		return null;
+	}
+
+	public static void main(String[] ss) {
+		Map<String, String> map = new HashMap<>();
+		map.put("de.hybris.platform:atdd-module", "new ver");
+		ReleaseList.updateDependencies("D:\\prj\\ci-engine\\tmp2\\sources\\_commerce_subscriptions\\pom.xml", map);
 	}
 }
