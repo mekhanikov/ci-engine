@@ -45,14 +45,25 @@ public class ReleaseList extends AbstractReleaseList
 		System.out.print("d");
 
 		String workspace = Utils.getWorkspace() + "/" + moduleNameToRelease.replace(":", "_");
-		Set<String> goingToReleaseModules = new HashSet<>(Arrays.asList(goingToRelease.split(",")));
+//		Set<String> goingToReleaseModules = new HashSet<>();
 		Map<String, String> map = new HashMap<>();
-		for (String goingToReleaseModule : goingToReleaseModules) {
+		for (String goingToReleaseModule : Arrays.asList(goingToRelease.split(","))) {
 			String moduleWithoutVersion = goingToReleaseModule.substring(0, goingToReleaseModule.lastIndexOf(':'));
-			String moduleVersion = moduleNameToRelease.substring(moduleNameToRelease.lastIndexOf(':')+1, moduleNameToRelease.length());
+			String moduleVersion = extractVersion(moduleNameToRelease);
 			map.put(moduleWithoutVersion, moduleVersion);
 		}
-		Utils.updateDependencies(workspace + "/pom.xml", map);
+		String moduleVersion = extractVersion(moduleNameToRelease);
+		Utils.updateDependenciesAndVersion(workspace + "/pom.xml", map, moduleVersion);
+
+		try {
+			String s = Utils.executeCommand(workspace, "mvn.bat", "clean", "install");
+			System.out.print(s);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
@@ -108,5 +119,9 @@ public class ReleaseList extends AbstractReleaseList
 			}
 		}
 		return waitingModules;
+	}
+
+	protected String extractVersion(String moduleNameWithVersion) {
+		return  moduleNameWithVersion.substring(moduleNameWithVersion.lastIndexOf(':') + 1, moduleNameWithVersion.length());
 	}
 }

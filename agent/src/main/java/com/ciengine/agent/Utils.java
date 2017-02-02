@@ -11,6 +11,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.xpath.*;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -96,6 +97,62 @@ public class Utils {
         return currentDir;
     }
 
+    public static void updateDependenciesAndVersion(String s, Map<String, String> dependencyVersionMap, String moduleVersion) {
+        Document doc = readXML(s);
+        updateDeps(dependencyVersionMap, doc);
+
+        XPath xpath = XPathFactory.newInstance().newXPath();
+        XPathExpression expr1 = null;
+        try {
+            expr1 = xpath.compile("/project/version");
+            NodeList nodes = (NodeList)expr1.evaluate(doc, XPathConstants.NODESET);
+            nodes.item(0).setTextContent(moduleVersion);
+            System.out.println("Files in //notification");
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+        }
+
+
+        doc.getElementsByTagName("version");
+        // TODO update version
+        //doc.getElementsByTagName("version").item(1).getTextContent()
+        writeXml(s, doc);
+    }
+
+    protected static void updateDeps(Map<String, String> dependencyVersionMap, Document doc) {
+        List<String> dependencies = new ArrayList<>();
+        NodeList deps = doc.getElementsByTagName("dependency");
+        for (int i = 0; i < deps.getLength(); i++) {
+            Node dep = deps.item(i);
+            if (dep.getNodeType() == Node.ELEMENT_NODE) {
+                Element eElement = (Element) dep;
+                String artifactId = eElement
+                        .getElementsByTagName("artifactId")
+                        .item(0)
+                        .getTextContent();
+
+                String groupId = eElement
+                        .getElementsByTagName("groupId")
+                        .item(0)
+                        .getTextContent();
+
+                String dependency = groupId + ":" + artifactId;
+                String newVersion = dependencyVersionMap.get(dependency);
+                if (newVersion != null) {
+                    String version = eElement
+                            .getElementsByTagName("version")
+                            .item(0)
+                            .getTextContent();
+
+                    if (version.startsWith("$")) {
+                        String propertyName = version.replace("${", "").replace("}", "");
+                        doc.getElementsByTagName(propertyName).item(0).setTextContent(newVersion);
+                    }
+                }
+            }
+        }
+    }
+
     private static class IOThreadHandler extends Thread {
         private InputStream inputStream;
         private StringBuilder output = new StringBuilder();
@@ -129,44 +186,11 @@ public class Utils {
 
     public static void updateDependencies(String s, Map<String, String> dependencyVersionMap) {
         Document doc = readXML(s);
-        List<String> dependencies = new ArrayList<>();
-        NodeList deps = doc.getElementsByTagName("dependency");
-        for (int i = 0; i < deps.getLength(); i++) {
-            Node dep = deps.item(i);
-            if (dep.getNodeType() == Node.ELEMENT_NODE) {
-                Element eElement = (Element) dep;
-                String artifactId = eElement
-                        .getElementsByTagName("artifactId")
-                        .item(0)
-                        .getTextContent();
+        updateDeps(dependencyVersionMap, doc);
+        writeXml(s, doc);
+    }
 
-                String groupId = eElement
-                        .getElementsByTagName("groupId")
-                        .item(0)
-                        .getTextContent();
-
-                String dependency = groupId + ":" + artifactId;
-                String newVersion = dependencyVersionMap.get(dependency);
-                if (newVersion != null) {
-                    String version = eElement
-                            .getElementsByTagName("version")
-                            .item(0)
-                            .getTextContent();
-
-                    if (version.startsWith("$")) {
-                        String propertyName = version.replace("${", "").replace("}", "");
-                        doc.getElementsByTagName(propertyName).item(0).setTextContent(newVersion);
-                    }
-                }
-
-
-
-//				dependencies.add();
-
-            }
-        }
-
-
+    protected static void writeXml(String s, Document doc) {
         try {
             Transformer transformer = null;
             transformer = TransformerFactory.newInstance().newTransformer();
@@ -188,8 +212,6 @@ public class Utils {
         } catch (TransformerException e) {
             e.printStackTrace();
         }
-
-
     }
 
     public static List<String> retrieveDependencies(String s) {
