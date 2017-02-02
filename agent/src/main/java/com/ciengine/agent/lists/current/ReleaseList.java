@@ -17,6 +17,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -129,8 +130,17 @@ public class ReleaseList extends AbstractReleaseList
 			transformer = TransformerFactory.newInstance().newTransformer();
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			DOMSource source = new DOMSource(doc);
-			StreamResult console = new StreamResult(System.out);
-			transformer.transform(source, console);
+//			StreamResult console = new StreamResult(System.out);
+			//			transformer.transform(source, console);
+			StreamResult result = new StreamResult(new File(s));
+			transformer.transform(source, result);
+
+
+
+			// write the content into xml file
+
+
+//			transformer.transform(source, result);
 		} catch (TransformerConfigurationException e) {
 			e.printStackTrace();
 		} catch (TransformerException e) {
