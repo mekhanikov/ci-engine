@@ -19,9 +19,12 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
-
+import static java.nio.file.StandardCopyOption.*;
 
 /**
  * Created by emekhanikov on 05.09.2016.
@@ -34,10 +37,22 @@ public class ReleaseList extends AbstractReleaseList
 	}
 
 	protected void build(EnvironmentVariables environmentVariables) {
+		String moduleNameToRelease = environmentVariables.getProperty(EnvironmentVariablesConstants.MODULE_NAME);
+		String goingToRelease = environmentVariables.getProperty(EnvironmentVariablesConstants.GOING_TO_RELEASE);
 		//throw new CIEngineStepException("");
 		// TODO parse Maven logs for "Uploaded artefacts?"
 		// TODO are we interesting in Artefacts released? or in Module released? For Module Released we can not scan logs then.
 		System.out.print("d");
+
+		String workspace = Utils.getWorkspace() + "/" + moduleNameToRelease.replace(":", "_");
+		Set<String> goingToReleaseModules = new HashSet<>(Arrays.asList(goingToRelease.split(",")));
+		Map<String, String> map = new HashMap<>();
+		for (String goingToReleaseModule : goingToReleaseModules) {
+			String moduleWithoutVersion = goingToReleaseModule.substring(0, goingToReleaseModule.lastIndexOf(':'));
+			String moduleVersion = moduleNameToRelease.substring(moduleNameToRelease.lastIndexOf(':')+1, moduleNameToRelease.length());
+			map.put(moduleWithoutVersion, moduleVersion);
+		}
+		Utils.updateDependencies(workspace + "/pom.xml", map);
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
@@ -59,7 +74,14 @@ public class ReleaseList extends AbstractReleaseList
 		String workspace = Utils.getWorkspace() + "/" + moduleNameToRelease.replace(":", "_");
 
 		Utils.clone(gitUrl, branchName, workspace + "/source");
-		List<String> dependencies = Utils.retrieveDependencies(workspace + "/source/pom.xml");
+		try {
+			Files.copy(FileSystems.getDefault().getPath(workspace + "/source/pom.xml"),
+                    FileSystems.getDefault().getPath(workspace + "/pom.xml"),
+                    REPLACE_EXISTING);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		List<String> dependencies = Utils.retrieveDependencies(workspace + "/pom.xml");
 		Set<String> requiredModules = new HashSet<>(dependencies);
 
 		// TODO checkot sources for module how to get GIT_URL? Should be passed to the build!?
