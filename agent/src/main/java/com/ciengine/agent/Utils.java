@@ -1,4 +1,5 @@
 package com.ciengine.agent;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -13,8 +14,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.*;
 import java.io.*;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.*;
 
 /**

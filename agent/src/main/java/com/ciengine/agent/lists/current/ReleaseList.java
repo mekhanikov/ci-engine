@@ -5,26 +5,13 @@ import com.ciengine.agent.Utils;
 import com.ciengine.common.EnvironmentVariables;
 import com.ciengine.common.EnvironmentVariablesConstants;
 import org.springframework.stereotype.Component;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.*;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
-import java.util.stream.Collectors;
-import static java.nio.file.StandardCopyOption.*;
+
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 /**
  * Created by emekhanikov on 05.09.2016.

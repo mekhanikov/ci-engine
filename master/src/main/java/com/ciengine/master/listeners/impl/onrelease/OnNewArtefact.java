@@ -3,13 +3,14 @@ package com.ciengine.master.listeners.impl.onrelease;
 import com.ciengine.common.CIEngineEvent;
 import com.ciengine.common.EnvironmentVariables;
 import com.ciengine.common.EnvironmentVariablesConstants;
-import com.ciengine.common.dto.*;
+import com.ciengine.common.dto.AddBuildRequest;
+import com.ciengine.common.dto.IsModuleReleasedRequest;
+import com.ciengine.common.dto.IsModuleReleasedResponse;
 import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.listeners.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
