@@ -4,7 +4,6 @@ import com.ciengine.common.BuildStatus;
 import com.ciengine.common.Node;
 import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.facades.CIAgentFacade;
-import com.ciengine.master.facades.CIEngineFacadeImpl;
 import com.ciengine.master.facades.NodeFacade;
 import com.ciengine.master.model.BuildModel;
 import org.apache.commons.logging.Log;
@@ -22,7 +21,7 @@ import java.text.SimpleDateFormat;
 @Component
 public class BuildRunner// implements BuildRunner
 {
-	private static final Log logger = LogFactory.getLog(CIEngineFacadeImpl.class);
+	private static final Log logger = LogFactory.getLog(BuildRunner.class);
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
 
@@ -44,9 +43,8 @@ public class BuildRunner// implements BuildRunner
 			buildModel.setStatus(BuildStatus.IN_PROGRESS);
 			buildDao.update(buildModel);
 			ciAgentFacade.run(buildModel, node);
+			logger.info(String.valueOf(buildModel));
 		}
-
-		logger.info(String.valueOf(buildModel));
 	}
 
 	public void setCiAgentFacade(CIAgentFacade ciAgentFacade)

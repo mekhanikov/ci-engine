@@ -52,9 +52,10 @@ public class BuildStatusChecker
 					//buildDao.update(buildModel);
 //					OnNewArtifactEvent onNewArtifactEvent = new OnNewArtifactEvent();
 //					ciEngineFacade.onEvent(onNewArtifactEvent);
+					logger.info(String.valueOf(buildModel));
 				}
 				// Finished with status s.
-				logger.info(String.valueOf(buildModel));
+
 			}
 		}
 	}
