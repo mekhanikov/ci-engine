@@ -17,9 +17,14 @@ Run as java:
 
 
 **Configurations**
-- **ModuleFacadeImpl** has Modules configurations  (name, git url).
+- **CIAgentFacadeImpl** upload by ssh and run builds.
+- **CIEngineFacadeImpl** main facade with all workflow.
 - **EnvironmentFacadeImpl** contains how to build modules is here  (which execution list to apply to which Module and branch, 
 what docker image to use)
+- **ModuleFacadeImpl** has Modules configurations  (name, git url).
+- **NodeFacadeImpl** has list of nodes accesible to build.
+
+
 - **CIEngineListenerImpl** is entry point to all events, has reactions on them (what to do in case some particular event). 
 In general it is just listener, we can add any number of listeners.
 
