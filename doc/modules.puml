@@ -1,6 +1,6 @@
 @startuml
 
-agent --> common
+class agent --> common
 integrationtests --> common
 integrationtests --> master
 integrationtests --> agent
@@ -17,11 +17,5 @@ webapp --> common
 webapp --> sourcesrepositorycommon
 
 
-
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
-}
 
 @enduml
