@@ -1,0 +1,26 @@
+@startuml
+
+agent --> common
+integrationtests --> master
+'integrationtests --> agent
+integrationtests --> mocks
+master --> common
+masterrunner --> mocks
+masterrunner --> master
+'mocks --> common
+mocks --> master
+mocks --> agent
+sourcesrepository --> sourcesrepositorycommon
+sourcesrepositoryrunner --> sourcesrepository
+webapp --> common
+webapp --> sourcesrepositorycommon
+
+
+
+enum TimeUnit {
+DAYS
+HOURS
+MINUTES
+}
+
+@enduml
