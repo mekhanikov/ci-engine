@@ -22,3 +22,9 @@ Run as java:
 what docker image to use)
 - **CIEngineListenerImpl** is entry point to all events, has reactions on them (what to do in case some particular event). 
 In general it is just listener, we can add any number of listeners.
+
+Build lists lives in **agent** module:
+- **MockReleaseList** - for tests
+- **ReleaseList** - real build (clone sources, run maven and so on).
+- **OnCommitList** 
+
