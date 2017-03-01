@@ -17,8 +17,8 @@ Run as java:
 
 
 **Configurations**
-- Modules configured here ModuleFacadeImpl (name, git url).
-- How to build modules is here EnvironmentFacadeImpl (which execution list to apply to which Module and branch, 
+- **ModuleFacadeImpl** has Modules configurations  (name, git url).
+- **EnvironmentFacadeImpl** contains how to build modules is here  (which execution list to apply to which Module and branch, 
 what docker image to use)
-- CIEngineListenerImpl is entry point to all events, has reactions on them (what to do in case some particular event). 
+- **CIEngineListenerImpl** is entry point to all events, has reactions on them (what to do in case some particular event). 
 In general it is just listener, we can add any number of listeners.
