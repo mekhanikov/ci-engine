@@ -1,13 +1,14 @@
 @startuml
 
 agent --> common
+integrationtests --> common
 integrationtests --> master
-'integrationtests --> agent
+integrationtests --> agent
 integrationtests --> mocks
 master --> common
 masterrunner --> mocks
 masterrunner --> master
-'mocks --> common
+mocks --> common
 mocks --> master
 mocks --> agent
 sourcesrepository --> sourcesrepositorycommon
