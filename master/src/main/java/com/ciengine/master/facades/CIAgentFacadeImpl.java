@@ -112,6 +112,7 @@ public class CIAgentFacadeImpl implements CIAgentFacade
 			//sftpChannel.cd("/home/ev/.ssh");
 			prepareBuildFolderDockerImageSpecific(sftpChannel);
 
+			// TODO take from binary repo by maven?
 			File f5 = new File("D:/prj/ci-engine/agent/target/agent-1.0-SNAPSHOT.jar");
 			sftpChannel.put(new FileInputStream(f5), f5.getName(), ChannelSftp.OVERWRITE);
 
@@ -196,7 +197,7 @@ public class CIAgentFacadeImpl implements CIAgentFacade
 	}
 
 	private String getDockerImagesRoot()
-	{
+	{// TODO use relative path?
 		return "D:/prj/ci-engine/master/docker/";
 	}
 
