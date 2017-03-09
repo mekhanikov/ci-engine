@@ -82,8 +82,6 @@ public class ReleaseList extends AbstractReleaseList
 		List<String> dependencies = Utils.retrieveDependencies(workspace + "/pom.xml");
 		Set<String> requiredModules = new HashSet<>(dependencies);
 
-		// TODO checkot sources for module how to get GIT_URL? Should be passed to the build!?
-		// TODO Get artefacts dep from pom.xml map them to modules (how?)
 		Set<String> goingToReleaseModules = new HashSet<>(Arrays.asList(goingToRelease.split(",")));
 //		String moduleName = moduleNameToRelease.split(":")[0];
 		//String moduleVersion = moduleNameToRelease.substring(moduleNameToRelease.lastIndexOf(':')+1, moduleNameToRelease.length());

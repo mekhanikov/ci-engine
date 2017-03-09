@@ -19,7 +19,7 @@ import java.util.Set;
  */
 @Component
 public abstract class AbstractReleaseList implements CIEngineList
-{// TODO rename to ReleaseList
+{
 	@Autowired
 	private CIEngineClient ciEngineClient;
 
@@ -81,7 +81,6 @@ public abstract class AbstractReleaseList implements CIEngineList
 					ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SKIPED, "DEPS ARE REQUIRED: " + String.join(", ", waitingModules));
 				}
 
-				// TODO read deps from pom.xml
 				// Map each dep artefact to module (each module can be related to multiple artefacts).
 				// Check if the module in list of going to release.
 				// If in list, check if isModuleReleased

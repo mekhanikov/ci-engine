@@ -25,7 +25,7 @@ public class Build {
     private String branchName;// TODO (merge connected to 2 branches, pass both?)
     private String executionList;
     private String dockerImageId;
-    private String Status;// TODO  (queued, canceled/postponed/not met pre-req, in progress, success, failed)
+    private String Status;//  see BuildStatus
     private String nodeId;//Executed on node id (null if Status: queued) - doesn't makes sense
     private String reasonOfTrigger;
     private String summary;

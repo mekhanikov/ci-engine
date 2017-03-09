@@ -17,8 +17,7 @@ public class GetModulesController
 	@Autowired
 	CIEngineFacade ciEngineFacade;
 	// TODO 1. Should be secure?
-	// TODO See list of builds with filtration by fields.
-	// TODO 2. Used for link from Stash to concrete build: to see logs, artefacts, status and so on.
+
 
 	@RequestMapping(value = "/getModulesResponse",produces = {"application/json"}, method = RequestMethod.GET)
 	@ResponseBody

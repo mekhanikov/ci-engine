@@ -110,11 +110,6 @@ public class Utils {
         } catch (XPathExpressionException e) {
             e.printStackTrace();
         }
-
-
-        doc.getElementsByTagName("version");
-        // TODO update version
-        //doc.getElementsByTagName("version").item(1).getTextContent()
         writeXml(s, doc);
     }
 

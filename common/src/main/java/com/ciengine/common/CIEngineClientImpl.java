@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Component
 public class CIEngineClientImpl implements CIEngineClient
-{// TODO 1. Used by Agents/Slaves to send events to Master.
+{
 	@Override public void attachArtefacts(String serverUrl, String buildId, String files)
 	{
 

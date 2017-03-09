@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 //@Component
 public class MockCIEngineClientImpl implements CIEngineClient
-{// TODO 1. Used by Agents/Slaves to send events to Master.
+{
 
 	@Autowired
 	CIEngineFacade ciEngineFacade;
