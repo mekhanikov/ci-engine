@@ -48,7 +48,7 @@ public class WaitForEventListener implements CIEngineListener
 
 	}
 
-	@Override public boolean isEventApplicable(DefaultCIEngineEvent defaultCIEngineEvent)
+	@Override public boolean isEventApplicable(CIEngineEvent defaultCIEngineEvent)
 	{
 		return true;
 	}

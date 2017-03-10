@@ -24,21 +24,21 @@ public class CIEngineListenerImpl implements CIEngineListener
 
 	@Override
 	public void onEvent(CIEngineEvent ciEngineEvent) throws CIEngineListenerException {
-		createRuleBuilder(ciEngineEvent).onNewArtefact().processReleaseRule();
-		createRuleBuilder(ciEngineEvent).onReleaseSubmited().triggerRelease();
+		createRuleBuilder().onNewArtefact().processReleaseRule().createCIEngineListener().onEvent(ciEngineEvent);
+		createRuleBuilder().onReleaseSubmited().triggerRelease().createCIEngineListener().onEvent(ciEngineEvent);
 		//createRuleBuilder(ciEngineEvent).onCommit().forModules("modA").forBranches("develop, feature/.*").applyList("onCommitList").triggerBuild();
-		createRuleBuilder(ciEngineEvent).onCommit().forModules("modA").forBranches("develop").triggerBuild();
-		createRuleBuilder(ciEngineEvent).onCommit().forModules("modA").
+		createRuleBuilder().onCommit().forModules("modA").forBranches("develop").triggerBuild();
+		createRuleBuilder().onCommit().forModules("modA").
 				forBranches("feature/.*").enableAutomergeFrom("develop").enableCrossBuild().triggerBuild();
-		createRuleBuilder(ciEngineEvent).onCommit().forModules("modA").forBranches("develop").triggerBuildsFor("modA", "feature/.*");
+		createRuleBuilder().onCommit().forModules("modA").forBranches("develop").triggerBuildsFor("modA", "feature/.*");
 	}
 
-	private RuleBuilder createRuleBuilder(CIEngineEvent ciEngineEvent) {
-		return applicationContext.getBean(RuleBuilder.class, ciEngineEvent);
+	private RuleBuilder createRuleBuilder() {
+		return applicationContext.getBean(RuleBuilder.class);
 	}
 
 	@Override
-	public boolean isEventApplicable(DefaultCIEngineEvent defaultCIEngineEvent) {
+	public boolean isEventApplicable(CIEngineEvent defaultCIEngineEvent) {
 		return true;
 	}
 }

@@ -107,26 +107,26 @@ public class MasterApplication
 
 	@Bean
 	@Scope("prototype")
-	public RuleBuilder thing(CIEngineEvent ciEngineEvent) {
-		return new RuleBuilder(ciEngineEvent);
+	public RuleBuilder thing() {
+		return new RuleBuilder();
 	}
 
 	@Bean
 	@Scope("prototype")
-	public OnNewArtefact onNewArtefact(CIEngineEvent ciEngineEvent) {
-		return new OnNewArtefact(ciEngineEvent);
+	public OnNewArtefact onNewArtefact() {
+		return new OnNewArtefact();
 	}
 
 	@Bean
 	@Scope("prototype")
-	public OnReleaseSubmited onReleaseSubmited(CIEngineEvent ciEngineEvent) {
-		return new OnReleaseSubmited(ciEngineEvent);
+	public OnReleaseSubmited onReleaseSubmited() {
+		return new OnReleaseSubmited();
 	}
 
 	@Bean
 	@Scope("prototype")
-	public OnCommit onCommit(CIEngineEvent ciEngineEvent) {
-		return new OnCommit(ciEngineEvent);
+	public OnCommit onCommit() {
+		return new OnCommit();
 	}
 
 

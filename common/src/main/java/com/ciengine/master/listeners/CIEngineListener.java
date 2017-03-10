@@ -14,5 +14,5 @@ public interface CIEngineListener
 {
 	void onEvent(CIEngineEvent ciEngineEvent) throws CIEngineListenerException;
 
-	boolean isEventApplicable(DefaultCIEngineEvent defaultCIEngineEvent);
+	boolean isEventApplicable(CIEngineEvent defaultCIEngineEvent);
 }

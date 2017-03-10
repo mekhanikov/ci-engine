@@ -17,23 +17,19 @@ public class RuleBuilder {
     @Autowired
     private ApplicationContext applicationContext;
 
-    private CIEngineEvent ciEngineEvent;
-    public RuleBuilder(CIEngineEvent ciEngineEvent) {
-        this.ciEngineEvent = ciEngineEvent;
-    }
 
     public OnNewArtefact onNewArtefact() {
-        OnNewArtefact onNewArtefact = applicationContext.getBean(OnNewArtefact.class, ciEngineEvent);
+        OnNewArtefact onNewArtefact = applicationContext.getBean(OnNewArtefact.class);
         return onNewArtefact;
     }
 
     public OnReleaseSubmited onReleaseSubmited() {
-        OnReleaseSubmited onReleaseSubmited = applicationContext.getBean(OnReleaseSubmited.class, ciEngineEvent);
+        OnReleaseSubmited onReleaseSubmited = applicationContext.getBean(OnReleaseSubmited.class);
         return onReleaseSubmited;
     }
 
     public OnCommit onCommit() {
-        OnCommit onCommit = applicationContext.getBean(OnCommit.class, ciEngineEvent);
+        OnCommit onCommit = applicationContext.getBean(OnCommit.class);
         return onCommit;
     }
 }

@@ -35,13 +35,13 @@ public class OnCommit {
     private String mergeFromBranchName;
     private boolean crossBuildEnabled;
 
-    public OnCommit(CIEngineEvent ciEngineEvent) {
-        this.ciEngineEvent = ciEngineEvent;
-        eventOk = ciEngineEvent instanceof OnCommitEvent;
-        //rules.add(createOnCommitRule("modA", "develop, feature/.*"));
-//		onCommitRules.add(createOnCommitRule("modB", "develop"));
-//		onCommitRules.add(createOnCommitRule("modC", "develop"));
-    }
+//    public OnCommit(CIEngineEvent ciEngineEvent) {
+//        this.ciEngineEvent = ciEngineEvent;
+//        eventOk = ciEngineEvent instanceof OnCommitEvent;
+//        //rules.add(createOnCommitRule("modA", "develop, feature/.*"));
+////		onCommitRules.add(createOnCommitRule("modB", "develop"));
+////		onCommitRules.add(createOnCommitRule("modC", "develop"));
+//    }
 
     public void triggerBuild() {
         if (eventOk) {
