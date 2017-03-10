@@ -1,5 +1,7 @@
-package com.ciengine.master.facades;
+package com.ciengine.master;
 
+import com.ciengine.master.facades.EnvironmentData;
+import com.ciengine.master.facades.EnvironmentFacade;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
