@@ -46,12 +46,6 @@ public class CIEngineListenerImpl implements CIEngineListener
 		});
 	}
 
-	private RuleBuilder createRuleBuilder() {
-		RuleBuilder ruleBuilder = applicationContext.getBean(RuleBuilder.class);
-		ruleBuilderList.add(ruleBuilder);
-		return ruleBuilder;
-	}
-
 	protected void createRules() {
 		//createRuleBuilder(ciEngineEvent).onCommit().forModules("modA").forBranches("develop, feature/.*").applyList("onCommitList").triggerBuild();
 		//createRuleBuilder().onCommit().forModules("modA").forBranches("develop").triggerBuildsFor("modA", "feature/.*");
@@ -61,6 +55,12 @@ public class CIEngineListenerImpl implements CIEngineListener
 		createRuleBuilder().onNewArtefact().processReleaseRule();
 		createRuleBuilder().onReleaseSubmited().triggerRelease();
 		createRuleBuilder().onCommit().forModules("modA").forBranches("develop").triggerBuild();
+	}
+
+	protected RuleBuilder createRuleBuilder() {
+		RuleBuilder ruleBuilder = applicationContext.getBean(RuleBuilder.class);
+		ruleBuilderList.add(ruleBuilder);
+		return ruleBuilder;
 	}
 
 	@Override
