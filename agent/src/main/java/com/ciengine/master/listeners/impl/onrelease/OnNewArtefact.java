@@ -1,7 +1,6 @@
 package com.ciengine.master.listeners.impl.onrelease;
 
 import com.ciengine.common.CIEngineEvent;
-import com.ciengine.common.DefaultCIEngineEvent;
 import com.ciengine.common.EnvironmentVariables;
 import com.ciengine.common.EnvironmentVariablesConstants;
 import com.ciengine.common.dto.AddBuildRequest;
@@ -27,13 +26,6 @@ public class OnNewArtefact implements CIEngineListenerBuilder {
     private CIEngineFacade ciEngineFacade;
 
     private CIEngineListener ciEngineListener;
-
-//    private CIEngineEvent ciEngineEvent;
-//    private boolean eventOk = false;
-//    public OnNewArtefact(CIEngineEvent ciEngineEvent) {
-//        this.ciEngineEvent = ciEngineEvent;
-//        eventOk = ciEngineEvent instanceof OnNewArtifactEvent;
-//    }
 
     public OnNewArtefact processReleaseRule() {
         ciEngineListener = new CIEngineListener() {

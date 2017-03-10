@@ -29,24 +29,11 @@ public class OnCommit implements CIEngineListenerBuilder {
 
     private CIEngineListener ciEngineListener;
 
-//    private List<OnCommitRule> rules = new ArrayList<>();
-    //private OnCommitRule rule;
-
-//    private CIEngineEvent ciEngineEvent;
-//    private boolean eventOk = false;
     private String modules=".*";
     private String branches=".*";
 //    private String applyList;
     private String mergeFromBranchName;
     private boolean crossBuildEnabled;
-
-//    public OnCommit(CIEngineEvent ciEngineEvent) {
-//        this.ciEngineEvent = ciEngineEvent;
-//        eventOk = ciEngineEvent instanceof OnCommitEvent;
-//        //rules.add(createOnCommitRule("modA", "develop, feature/.*"));
-////		onCommitRules.add(createOnCommitRule("modB", "develop"));
-////		onCommitRules.add(createOnCommitRule("modC", "develop"));
-//    }
 
     public OnCommit triggerBuild() {
         ciEngineListener = new CIEngineListener() {

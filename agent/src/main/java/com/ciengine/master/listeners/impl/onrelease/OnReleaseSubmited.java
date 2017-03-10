@@ -23,14 +23,6 @@ public class OnReleaseSubmited  implements CIEngineListenerBuilder {
 
     private CIEngineListener ciEngineListener;
 
-//    private CIEngineEvent ciEngineEvent;
-//    private boolean eventOk = false;
-//
-//    public OnReleaseSubmited(CIEngineEvent ciEngineEvent) {
-//        this.ciEngineEvent = ciEngineEvent;
-//        eventOk = ciEngineEvent instanceof OnReleaseSubmitedEvent;
-//    }
-
     public OnReleaseSubmited triggerRelease() {
         ciEngineListener = new CIEngineListener() {
             @Override

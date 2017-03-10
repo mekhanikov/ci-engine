@@ -1,6 +1,5 @@
 package com.ciengine;
 
-import com.ciengine.common.CIEngineEvent;
 import com.ciengine.master.ArtefactoryBinaryRepositoryClient;
 import com.ciengine.master.facades.CIAgentFacade;
 import com.ciengine.master.facades.CIAgentFacadeImpl;

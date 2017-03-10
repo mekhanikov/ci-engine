@@ -1,10 +1,7 @@
 package com.ciengine.master.listeners;
 
 
-
-
 import com.ciengine.common.CIEngineEvent;
-import com.ciengine.common.DefaultCIEngineEvent;
 
 
 /**

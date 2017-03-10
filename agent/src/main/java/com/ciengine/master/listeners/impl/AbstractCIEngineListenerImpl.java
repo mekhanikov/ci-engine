@@ -2,14 +2,11 @@ package com.ciengine.master.listeners.impl;
 
 
 import com.ciengine.common.CIEngineEvent;
-import com.ciengine.common.DefaultCIEngineEvent;
 import com.ciengine.master.listeners.CIEngineListener;
-import com.ciengine.master.listeners.CIEngineListenerBuilder;
 import com.ciengine.master.listeners.CIEngineListenerException;
 import com.ciengine.master.listeners.RuleBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
