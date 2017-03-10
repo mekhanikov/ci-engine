@@ -20,7 +20,7 @@ import java.util.List;
  * Created by emekhanikov on 05.09.2016.
  */
 
-public abstract class AbstractCIEngineListenerImpl implements CIEngineListener
+abstract class AbstractCIEngineListenerImpl implements CIEngineListener
 {
 	private List<RuleBuilder> ruleBuilderList = new ArrayList<>();
 	private List<CIEngineListener> ciEngineListenerList = new ArrayList<>();
@@ -46,16 +46,6 @@ public abstract class AbstractCIEngineListenerImpl implements CIEngineListener
 	}
 
 	protected abstract void createRules();
-//	{
-//		//createRuleBuilder(ciEngineEvent).onCommit().forModules("modA").forBranches("develop, feature/.*").applyList("onCommitList").triggerBuild();
-//		//createRuleBuilder().onCommit().forModules("modA").forBranches("develop").triggerBuildsFor("modA", "feature/.*");
-//		//		createRuleBuilder().onCommit().forModules("modA").
-////				forBranches("feature/.*").enableAutomergeFrom("develop").enableCrossBuild().triggerBuild();
-//
-//		createRuleBuilder().onNewArtefact().processReleaseRule();
-//		createRuleBuilder().onReleaseSubmited().triggerRelease();
-//		createRuleBuilder().onCommit().forModules("modA").forBranches("develop").triggerBuild();
-//	}
 
 	protected RuleBuilder createRuleBuilder() {
 		RuleBuilder ruleBuilder = applicationContext.getBean(RuleBuilder.class);
