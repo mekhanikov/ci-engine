@@ -20,13 +20,6 @@ public class EnvironmentFacadeImpl implements EnvironmentFacade {
 
     public EnvironmentFacadeImpl() {
         // TODO each module may have own, need add all of them
-        createEnvironmentData("modA", "develop", "onCommitList", "dockerid");
-        createEnvironmentData("modA", "feature/.*", "onCommitList", "dockerid");
-        createEnvironmentData("ModA", "release/.*", "mockReleaseList", "dockerid");
-        createEnvironmentData("ModB", "release/.*", "mockReleaseList", "dockerid");
-        createEnvironmentData("ModC", "release/.*", "mockReleaseList", "dockerid");
-        createEnvironmentData("de.hybris.platform:subscriptions-module", "release/.*", "releaseList", "dockerid");
-        createEnvironmentData("de.hybris.platform:atdd-module", "release/.*", "releaseList", "dockerid");
 //        createEnvironmentData("modA", "feature/.*", "onCommitList", "dockerid");
 
 
@@ -39,7 +32,7 @@ public class EnvironmentFacadeImpl implements EnvironmentFacade {
 
     }
 
-    private void createEnvironmentData(String forModules, String forBranches, String applyList, String dockerImageId) {
+    public void createEnvironmentData(String forModules, String forBranches, String applyList, String dockerImageId) {
         EnvironmentData environmentData = new EnvironmentData(forModules, forBranches, applyList, dockerImageId, null);
         environmentDataList.add(environmentData);
     }

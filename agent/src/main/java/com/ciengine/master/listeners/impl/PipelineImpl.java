@@ -1,5 +1,6 @@
 package com.ciengine.master.listeners.impl;
 
+import com.ciengine.master.facades.EnvironmentFacade;
 import com.ciengine.master.listeners.CIEngineListener;
 import com.ciengine.master.listeners.RuleBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,20 @@ public class PipelineImpl implements Pipeline {
     @Autowired
     private ApplicationContext applicationContext;
 
+    @Autowired
+    private EnvironmentFacade environmentFacade;
+
     private List<RuleBuilder> ruleBuilderList = new ArrayList<>();
 
     @Override
     public List<RuleBuilder> prepare() {
+        environmentFacade.createEnvironmentData("modA", "develop", "onCommitList", "dockerid");
+        environmentFacade.createEnvironmentData("modA", "feature/.*", "onCommitList", "dockerid");
+        environmentFacade.createEnvironmentData("ModA", "release/.*", "mockReleaseList", "dockerid");
+        environmentFacade.createEnvironmentData("ModB", "release/.*", "mockReleaseList", "dockerid");
+        environmentFacade.createEnvironmentData("ModC", "release/.*", "mockReleaseList", "dockerid");
+        environmentFacade.createEnvironmentData("de.hybris.platform:subscriptions-module", "release/.*", "releaseList", "dockerid");
+        environmentFacade.createEnvironmentData("de.hybris.platform:atdd-module", "release/.*", "releaseList", "dockerid");
         //createRuleBuilder(ciEngineEvent).onCommit().forModules("modA").forBranches("develop, feature/.*").applyList("onCommitList").triggerBuild();
         //createRuleBuilder().onCommit().forModules("modA").forBranches("develop").triggerBuildsFor("modA", "feature/.*");
         //		createRuleBuilder().onCommit().forModules("modA").
