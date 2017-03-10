@@ -26,6 +26,8 @@ public class OnNewArtefact implements CIEngineListenerBuilder {
     @Autowired
     private CIEngineFacade ciEngineFacade;
 
+    private CIEngineListener ciEngineListener;
+
 //    private CIEngineEvent ciEngineEvent;
 //    private boolean eventOk = false;
 //    public OnNewArtefact(CIEngineEvent ciEngineEvent) {
@@ -34,20 +36,7 @@ public class OnNewArtefact implements CIEngineListenerBuilder {
 //    }
 
     public OnNewArtefact processReleaseRule() {
-
-        return this;
-    }
-
-
-
-    public List<OnReleaseRule> getRules()
-    {
-        return ciEngineFacade.findAllReleases();
-    }
-
-    @Override
-    public CIEngineListener createCIEngineListener() {
-        return new CIEngineListener() {
+        ciEngineListener = new CIEngineListener() {
             @Override
             public void onEvent(CIEngineEvent ciEngineEvent) throws CIEngineListenerException {
                 if (isEventApplicable(ciEngineEvent)) {
@@ -100,5 +89,18 @@ public class OnNewArtefact implements CIEngineListenerBuilder {
                 return defaultCIEngineEvent instanceof OnNewArtifactEvent;
             }
         };
+        return this;
+    }
+
+
+
+    public List<OnReleaseRule> getRules()
+    {
+        return ciEngineFacade.findAllReleases();
+    }
+
+    @Override
+    public CIEngineListener createCIEngineListener() {
+        return ciEngineListener;
     }
 }

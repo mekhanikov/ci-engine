@@ -21,6 +21,8 @@ public class OnReleaseSubmited  implements CIEngineListenerBuilder {
     @Autowired
     private CIEngineFacade ciEngineFacade;
 
+    private CIEngineListener ciEngineListener;
+
 //    private CIEngineEvent ciEngineEvent;
 //    private boolean eventOk = false;
 //
@@ -30,13 +32,7 @@ public class OnReleaseSubmited  implements CIEngineListenerBuilder {
 //    }
 
     public OnReleaseSubmited triggerRelease() {
-        return this;
-    }
-
-
-    @Override
-    public CIEngineListener createCIEngineListener() {
-        return new CIEngineListener() {
+        ciEngineListener = new CIEngineListener() {
             @Override
             public void onEvent(CIEngineEvent ciEngineEvent) throws CIEngineListenerException {
                 if (isEventApplicable(ciEngineEvent)) {
@@ -73,5 +69,12 @@ public class OnReleaseSubmited  implements CIEngineListenerBuilder {
                 return ciEngineEvent instanceof OnReleaseSubmitedEvent;
             }
         };
+        return this;
+    }
+
+
+    @Override
+    public CIEngineListener createCIEngineListener() {
+        return ciEngineListener;
     }
 }

@@ -27,6 +27,8 @@ public class OnCommit implements CIEngineListenerBuilder {
     @Autowired
     private EnvironmentFacade environmentFacade;
 
+    private CIEngineListener ciEngineListener;
+
 //    private List<OnCommitRule> rules = new ArrayList<>();
     //private OnCommitRule rule;
 
@@ -47,7 +49,73 @@ public class OnCommit implements CIEngineListenerBuilder {
 //    }
 
     public OnCommit triggerBuild() {
-        // TODO set action? Create listener here?
+        ciEngineListener = new CIEngineListener() {
+            @Override
+            public void onEvent(CIEngineEvent ciEngineEvent) throws CIEngineListenerException {
+                if (isEventApplicable(ciEngineEvent)) {
+                    OnCommitEvent onCommitEvent = (OnCommitEvent) ciEngineEvent;
+                    Module module = ciEngineFacade.findModuleByGitUrl(((OnCommitEvent) ciEngineEvent).getGitUrl());
+                    if (module == null) {
+                        // TODO add warning?
+                        return;
+                    }
+                    EnvironmentVariables environmentVariablesFromEvent = new EnvironmentVariables();
+                    environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.GIT_URL, onCommitEvent.getGitUrl());
+                    environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.BRANCH_NAME, onCommitEvent.getBranchName());
+                    environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.COMMIT_ID, onCommitEvent.getComitId());
+                    if (mergeFromBranchName != null) {
+                        environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MERGE_FROM_BRANCH_NAME, mergeFromBranchName);
+                    }
+                    if (crossBuildEnabled) {
+                        environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.ENABLE_CROSS_BUILD, "true");
+                    }
+                    environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MODULE_NAME, module.getName());
+                    environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL, "http://127.0.0.1:8081"); // TODO to conf?
+
+
+                    // TODO set module specific values
+                    // TODO if applyList is not specified find in buildLists by module branch.
+//            if (applyList == null) {
+                    EnvironmentData environmentData = environmentFacade.findApplyList(module.getName(), onCommitEvent.getBranchName());
+//                applyList = environmentData != null ? environmentData.getApplyList() : null;
+//            }
+//            EnvironmentData environmentData = environmentFacade.findApplyList(module.getName(), onCommitEvent.getBranchName());
+                    if(environmentData != null) {
+
+                        EnvironmentVariables environmentVariablesFromEventTmp = new EnvironmentVariables();
+                        environmentVariablesFromEventTmp.addProperties(environmentVariablesFromEvent.getProperties());
+                        String buildExternalId = UUID.randomUUID().toString();
+                        environmentVariablesFromEventTmp.addProperty(EnvironmentVariablesConstants.BUILD_EXTERNAL_ID, buildExternalId);
+                        AddBuildRequest addBuildRequest = new AddBuildRequest();
+                        addBuildRequest.setExecutionList(environmentData.getApplyList());
+                        addBuildRequest.setNodeId(null);
+                        addBuildRequest.setDockerImageId(environmentData.getDockerImageId());
+                        addBuildRequest.setInputParams(makeString(merge(environmentVariablesFromEventTmp, environmentData.getEnvironmentVariables())));
+                        addBuildRequest.setModuleName(module.getName());
+                        addBuildRequest.setReasonOfTrigger("commit");
+                        addBuildRequest.setBranchName(onCommitEvent.getBranchName());
+                        addBuildRequest.setExternalId(buildExternalId);
+                        ciEngineFacade.addBuild(addBuildRequest);
+//				ciEngineFacade.onEvent(onQueueBuildEvent);
+
+//				try
+//				{
+//
+//				}
+//				catch (CIEngineException e)
+//				{
+//					throw new CIEngineListenerException(e);
+//				}
+                    }
+
+                }
+            }
+
+            @Override
+            public boolean isEventApplicable(CIEngineEvent ciEngineEvent) {
+                return ciEngineEvent instanceof OnCommitEvent;
+            }
+        };
         return this;
     }
 
@@ -121,72 +189,6 @@ public class OnCommit implements CIEngineListenerBuilder {
 
     @Override
     public CIEngineListener createCIEngineListener() {
-        return new CIEngineListener() {
-            @Override
-            public void onEvent(CIEngineEvent ciEngineEvent) throws CIEngineListenerException {
-                if (isEventApplicable(ciEngineEvent)) {
-                    OnCommitEvent onCommitEvent = (OnCommitEvent) ciEngineEvent;
-                    Module module = ciEngineFacade.findModuleByGitUrl(((OnCommitEvent) ciEngineEvent).getGitUrl());
-                    if (module == null) {
-                        // TODO add warning?
-                        return;
-                    }
-                    EnvironmentVariables environmentVariablesFromEvent = new EnvironmentVariables();
-                    environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.GIT_URL, onCommitEvent.getGitUrl());
-                    environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.BRANCH_NAME, onCommitEvent.getBranchName());
-                    environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.COMMIT_ID, onCommitEvent.getComitId());
-                    if (mergeFromBranchName != null) {
-                        environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MERGE_FROM_BRANCH_NAME, mergeFromBranchName);
-                    }
-                    if (crossBuildEnabled) {
-                        environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.ENABLE_CROSS_BUILD, "true");
-                    }
-                    environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MODULE_NAME, module.getName());
-                    environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL, "http://127.0.0.1:8081"); // TODO to conf?
-
-
-                    // TODO set module specific values
-                    // TODO if applyList is not specified find in buildLists by module branch.
-//            if (applyList == null) {
-                    EnvironmentData environmentData = environmentFacade.findApplyList(module.getName(), onCommitEvent.getBranchName());
-//                applyList = environmentData != null ? environmentData.getApplyList() : null;
-//            }
-//            EnvironmentData environmentData = environmentFacade.findApplyList(module.getName(), onCommitEvent.getBranchName());
-                    if(environmentData != null) {
-
-                        EnvironmentVariables environmentVariablesFromEventTmp = new EnvironmentVariables();
-                        environmentVariablesFromEventTmp.addProperties(environmentVariablesFromEvent.getProperties());
-                        String buildExternalId = UUID.randomUUID().toString();
-                        environmentVariablesFromEventTmp.addProperty(EnvironmentVariablesConstants.BUILD_EXTERNAL_ID, buildExternalId);
-                        AddBuildRequest addBuildRequest = new AddBuildRequest();
-                        addBuildRequest.setExecutionList(environmentData.getApplyList());
-                        addBuildRequest.setNodeId(null);
-                        addBuildRequest.setDockerImageId(environmentData.getDockerImageId());
-                        addBuildRequest.setInputParams(makeString(merge(environmentVariablesFromEventTmp, environmentData.getEnvironmentVariables())));
-                        addBuildRequest.setModuleName(module.getName());
-                        addBuildRequest.setReasonOfTrigger("commit");
-                        addBuildRequest.setBranchName(onCommitEvent.getBranchName());
-                        addBuildRequest.setExternalId(buildExternalId);
-                        ciEngineFacade.addBuild(addBuildRequest);
-//				ciEngineFacade.onEvent(onQueueBuildEvent);
-
-//				try
-//				{
-//
-//				}
-//				catch (CIEngineException e)
-//				{
-//					throw new CIEngineListenerException(e);
-//				}
-                    }
-
-                }
-            }
-
-            @Override
-            public boolean isEventApplicable(CIEngineEvent ciEngineEvent) {
-                return ciEngineEvent instanceof OnCommitEvent;
-            }
-        };
+        return ciEngineListener;
     }
 }
