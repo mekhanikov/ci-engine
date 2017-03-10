@@ -17,19 +17,28 @@ public class RuleBuilder {
     @Autowired
     private ApplicationContext applicationContext;
 
+    private CIEngineListenerBuilder ciEngineListenerBuilder;
+
 
     public OnNewArtefact onNewArtefact() {
         OnNewArtefact onNewArtefact = applicationContext.getBean(OnNewArtefact.class);
+        ciEngineListenerBuilder = onNewArtefact;
         return onNewArtefact;
     }
 
     public OnReleaseSubmited onReleaseSubmited() {
         OnReleaseSubmited onReleaseSubmited = applicationContext.getBean(OnReleaseSubmited.class);
+        ciEngineListenerBuilder = onReleaseSubmited;
         return onReleaseSubmited;
     }
 
     public OnCommit onCommit() {
         OnCommit onCommit = applicationContext.getBean(OnCommit.class);
+        ciEngineListenerBuilder = onCommit;
         return onCommit;
+    }
+
+    public CIEngineListenerBuilder getCIEngineListenerBuilder() {
+        return ciEngineListenerBuilder;
     }
 }

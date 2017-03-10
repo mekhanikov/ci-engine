@@ -4,11 +4,16 @@ package com.ciengine.master.listeners.impl;
 import com.ciengine.common.CIEngineEvent;
 import com.ciengine.common.DefaultCIEngineEvent;
 import com.ciengine.master.listeners.CIEngineListener;
+import com.ciengine.master.listeners.CIEngineListenerBuilder;
 import com.ciengine.master.listeners.CIEngineListenerException;
 import com.ciengine.master.listeners.RuleBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -18,23 +23,44 @@ import org.springframework.stereotype.Component;
 
 public class CIEngineListenerImpl implements CIEngineListener
 {
+	private List<RuleBuilder> ruleBuilderList = new ArrayList<>();
+	private List<CIEngineListener> ciEngineListenerList = new ArrayList<>();
 
 	@Autowired
 	private ApplicationContext applicationContext;
 
+	@PostConstruct
+	public void init() {
+		createRules();
+		ruleBuilderList.forEach(t->{ciEngineListenerList.add(t.getCIEngineListenerBuilder().createCIEngineListener());});
+	}
+
 	@Override
 	public void onEvent(CIEngineEvent ciEngineEvent) throws CIEngineListenerException {
-		createRuleBuilder().onNewArtefact().processReleaseRule().createCIEngineListener().onEvent(ciEngineEvent);
-		createRuleBuilder().onReleaseSubmited().triggerRelease().createCIEngineListener().onEvent(ciEngineEvent);
-		//createRuleBuilder(ciEngineEvent).onCommit().forModules("modA").forBranches("develop, feature/.*").applyList("onCommitList").triggerBuild();
-		createRuleBuilder().onCommit().forModules("modA").forBranches("develop").triggerBuild().createCIEngineListener().onEvent(ciEngineEvent);
-		createRuleBuilder().onCommit().forModules("modA").
-				forBranches("feature/.*").enableAutomergeFrom("develop").enableCrossBuild().triggerBuild();
-		createRuleBuilder().onCommit().forModules("modA").forBranches("develop").triggerBuildsFor("modA", "feature/.*");
+		ciEngineListenerList.forEach(t->{
+			try {
+				t.onEvent(ciEngineEvent);
+			} catch (CIEngineListenerException e) {
+				e.printStackTrace();
+			}
+		});
 	}
 
 	private RuleBuilder createRuleBuilder() {
-		return applicationContext.getBean(RuleBuilder.class);
+		RuleBuilder ruleBuilder = applicationContext.getBean(RuleBuilder.class);
+		ruleBuilderList.add(ruleBuilder);
+		return ruleBuilder;
+	}
+
+	protected void createRules() {
+		//createRuleBuilder(ciEngineEvent).onCommit().forModules("modA").forBranches("develop, feature/.*").applyList("onCommitList").triggerBuild();
+		//createRuleBuilder().onCommit().forModules("modA").forBranches("develop").triggerBuildsFor("modA", "feature/.*");
+		//		createRuleBuilder().onCommit().forModules("modA").
+//				forBranches("feature/.*").enableAutomergeFrom("develop").enableCrossBuild().triggerBuild();
+
+		createRuleBuilder().onNewArtefact().processReleaseRule();
+		createRuleBuilder().onReleaseSubmited().triggerRelease();
+		createRuleBuilder().onCommit().forModules("modA").forBranches("develop").triggerBuild();
 	}
 
 	@Override
