@@ -17,7 +17,7 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
  * Created by emekhanikov on 05.09.2016.
  */
 @Component
-public class ReleaseList extends AbstractReleaseList
+class ReleaseList extends AbstractReleaseList
 {
 	protected String getExecutionListName() {
 		return "releaseList";
