@@ -7,7 +7,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class PipelineImpl extends AbstractPipelineImpl {
+
     protected void prepareAll() {
+        // We need store it separate on in rules, because triggerBuildsFor() method then requires lots of configurations.
         getEnvironmentFacade().createEnvironmentData("modA", "develop", "onCommitList", "dockerid");
         getEnvironmentFacade().createEnvironmentData("modA", "feature/.*", "onCommitList", "dockerid");
         getEnvironmentFacade().createEnvironmentData("ModA", "release/.*", "mockReleaseList", "dockerid");

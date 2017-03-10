@@ -9,5 +9,5 @@ import java.util.List;
  */
 
 public interface Pipeline {
-    List<RuleBuilder> prepare();
+//    void prepare();
 }

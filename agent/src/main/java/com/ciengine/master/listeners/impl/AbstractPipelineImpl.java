@@ -1,13 +1,16 @@
 package com.ciengine.master.listeners.impl;
 
+import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.facades.EnvironmentFacade;
 import com.ciengine.master.listeners.CIEngineListener;
+import com.ciengine.master.listeners.CIEngineListenerException;
 import com.ciengine.master.listeners.RuleBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import sun.misc.Contended;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +21,13 @@ public abstract class AbstractPipelineImpl implements Pipeline {
 
     @Autowired
     private ApplicationContext applicationContext;
+
+    @Autowired
+    private CIEngineFacade ciEngineFacade;
+
+
+//    private List<CIEngineListener> ciEngineListenerList = new ArrayList<>();
+
 
     public EnvironmentFacade getEnvironmentFacade() {
         return environmentFacade;
@@ -32,10 +42,11 @@ public abstract class AbstractPipelineImpl implements Pipeline {
 
     private List<RuleBuilder> ruleBuilderList = new ArrayList<>();
 
-    @Override
-    public List<RuleBuilder> prepare() {
+    @PostConstruct
+    public void init() {
         prepareAll();
-        return ruleBuilderList;
+        ruleBuilderList.forEach(t->{
+            ciEngineFacade.addListener(t.getCIEngineListenerBuilder().createCIEngineListener());});
     }
 
     protected abstract void prepareAll();
