@@ -1,4 +1,4 @@
-package com.ciengine.master.controllers.getmodules;
+package com.ciengine.master;
 
 import com.ciengine.common.Module;
 

@@ -6,7 +6,7 @@ import com.ciengine.common.EnvironmentVariablesConstants;
 import com.ciengine.common.dto.AddBuildRequest;
 import com.ciengine.common.events.OnReleaseSubmitedEvent;
 import com.ciengine.master.facades.CIEngineFacade;
-import com.ciengine.master.listeners.Utils;
+import com.ciengine.master.listeners.impl.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;

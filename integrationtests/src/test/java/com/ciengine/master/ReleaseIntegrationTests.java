@@ -8,7 +8,7 @@ import com.ciengine.common.dto.IsModuleReleasedRequest;
 import com.ciengine.common.dto.IsModuleReleasedResponse;
 import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.facades.CIEngineFacade;
-import com.ciengine.master.listeners.impl.onrelease.OnReleaseRule;
+import com.ciengine.master.listeners.OnReleaseRule;
 import com.ciengine.master.model.BuildModel;
 import org.junit.Test;
 import org.junit.runner.RunWith;
