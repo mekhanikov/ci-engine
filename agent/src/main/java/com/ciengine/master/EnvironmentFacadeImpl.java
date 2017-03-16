@@ -37,21 +37,8 @@ public class EnvironmentFacadeImpl implements EnvironmentFacade {
         environmentDataList.add(environmentData);
     }
 
-
-    @Override
-    public List<EnvironmentData> findApplyLists(String moduleName, String branchName) {
-        List<EnvironmentData> result = new ArrayList<>();
-        for (EnvironmentData environmentData : environmentDataList) {
-            if(isApplicable(environmentData, moduleName, branchName)) {
-                result.add(environmentData);
-            }
-        }
-        return result;
-    }
-
     @Override
     public EnvironmentData findApplyList(String moduleName, String branchName) {
-        List<EnvironmentData> result = new ArrayList<>();
         for (EnvironmentData environmentData : environmentDataList) {
             if(isApplicable(environmentData, moduleName, branchName)) {
                 return environmentData;
