@@ -11,13 +11,13 @@ public class PipelineImpl extends AbstractPipelineImpl {
     @Override
     protected void prepareAll() {
         // We need store it separate on in rules, because triggerBuildsFor() method then requires lots of configurations.
-        getEnvironmentFacade().createEnvironmentData("modA", "develop", "onCommitList", "dockerid");
-        getEnvironmentFacade().createEnvironmentData("modA", "feature/.*", "onCommitList", "dockerid");
-        getEnvironmentFacade().createEnvironmentData("ModA", "release/.*", "mockReleaseList", "dockerid");
-        getEnvironmentFacade().createEnvironmentData("ModB", "release/.*", "mockReleaseList", "dockerid");
-        getEnvironmentFacade().createEnvironmentData("ModC", "release/.*", "mockReleaseList", "dockerid");
-        getEnvironmentFacade().createEnvironmentData("de.hybris.platform:subscriptions-module", "release/.*", "releaseList", "dockerid");
-        getEnvironmentFacade().createEnvironmentData("de.hybris.platform:atdd-module", "release/.*", "releaseList", "dockerid");
+        createEnvironmentData("modA", "develop", "onCommitList", "dockerid");
+        createEnvironmentData("modA", "feature/.*", "onCommitList", "dockerid");
+        createEnvironmentData("ModA", "release/.*", "mockReleaseList", "dockerid");
+        createEnvironmentData("ModB", "release/.*", "mockReleaseList", "dockerid");
+        createEnvironmentData("ModC", "release/.*", "mockReleaseList", "dockerid");
+        createEnvironmentData("de.hybris.platform:subscriptions-module", "release/.*", "releaseList", "dockerid");
+        createEnvironmentData("de.hybris.platform:atdd-module", "release/.*", "releaseList", "dockerid");
         //createRuleBuilder(ciEngineEvent).onCommit().forModules("modA").forBranches("develop, feature/.*").applyList("onCommitList").triggerBuild();
         //createRuleBuilder().onCommit().forModules("modA").forBranches("develop").triggerBuildsFor("modA", "feature/.*");
         //		createRuleBuilder().onCommit().forModules("modA").
@@ -26,5 +26,9 @@ public class PipelineImpl extends AbstractPipelineImpl {
         createRuleBuilder().onNewArtefact().processReleaseRule();
         createRuleBuilder().onReleaseSubmited().triggerRelease();
         createRuleBuilder().onCommit().forModules("modA").forBranches("develop").triggerBuild();
+    }
+
+    protected void createEnvironmentData(String moduleName, String branchName, String commitId, String dockerid) {
+        getEnvironmentFacade().createEnvironmentData(moduleName, branchName, commitId, dockerid);
     }
 }

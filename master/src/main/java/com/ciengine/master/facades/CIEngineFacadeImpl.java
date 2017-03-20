@@ -107,7 +107,7 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 	}
 
 	private void processEventForListeners(DefaultCIEngineEvent defaultCIEngineEvent, Collection<CIEngineListener> ciEngineListenerCollection)
-	{
+	{// TODO had java.util.ConcurrentModificationException for ciEngineListenerCollection!
 		for (CIEngineListener ciEngineListener : ciEngineListenerCollection) {
 			if (ciEngineListener.isEventApplicable(defaultCIEngineEvent)) {
 				try
