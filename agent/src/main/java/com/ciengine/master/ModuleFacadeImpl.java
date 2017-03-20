@@ -18,25 +18,6 @@ public class ModuleFacadeImpl implements ModuleFacade {
 
     private List<Module> modules = new ArrayList<>();
 
-    public ModuleFacadeImpl() {
-        // TODO each module may have own, need add all of them
-//        modules.add(createModule("ModA", "ssh://git@stash.hybris.com:7999/commerce/entitlements.git"));
-//        modules.add(createModule("ModB", "ssh://git@stash.hybris.com:7999/commerce/entitlements.git"));
-//        modules.add(createModule("ModC", "ssh://git@stash.hybris.com:7999/commerce/entitlements.git"));
-//        modules.add(createModule("de.hybris.platform:subscriptions-module", "ssh://git@stash.hybris.com:7999/commerce/subscriptions.git"));
-//        modules.add(createModule("de.hybris.platform:atdd-module", "ssh://git@stash.hybris.com:7999/platform/atdd.git"));
-//        createEnvironmentData("modA", "feature/.*", "onCommitList", "dockerid");
-
-
-//        createRuleBuilder(ciEngineEvent).onCommit().forModules("modA").forBranches("develop").triggerBuild();
-
-//        createRuleBuilder(ciEngineEvent).onCommit().forModules("modA").
-//                forBranches("feature/.*").enableAutomergeFrom("develop").enableCrossBuild().triggerBuild();
-//        createRuleBuilder(ciEngineEvent).onCommit().forModules("modA").forBranches("develop").triggerBuildsFor("modA", "feature/.*");
-
-
-    }
-
     @Override
     public List<Module> findModules(FindModulesRequest findModulesRequest) {
         List<Module> result;
