@@ -1,8 +1,9 @@
-package com.ciengine.master.facades;
+package com.ciengine.master;
 
 import com.ciengine.common.Module;
 import com.ciengine.common.Repo;
 import com.ciengine.common.dto.FindModulesRequest;
+import com.ciengine.master.facades.ModuleFacade;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
