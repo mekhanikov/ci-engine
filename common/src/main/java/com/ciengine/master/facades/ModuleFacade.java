@@ -10,4 +10,5 @@ public interface ModuleFacade
 {
 	List<Module> findModules(FindModulesRequest findModulesRequest);
 	Module findModuleByName(String moduleName);
+	void addModule(Module module);
 }

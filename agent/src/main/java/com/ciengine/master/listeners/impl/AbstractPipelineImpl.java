@@ -2,6 +2,7 @@ package com.ciengine.master.listeners.impl;
 
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.facades.EnvironmentFacade;
+import com.ciengine.master.facades.ModuleFacade;
 import com.ciengine.master.listeners.CIEngineListener;
 import com.ciengine.master.listeners.CIEngineListenerException;
 import com.ciengine.master.listeners.RuleBuilder;
@@ -26,16 +27,15 @@ public abstract class AbstractPipelineImpl implements Pipeline {
     private CIEngineFacade ciEngineFacade;
 
 
+
+    @Autowired
+    private ModuleFacade moduleFacade;
+
+
 //    private List<CIEngineListener> ciEngineListenerList = new ArrayList<>();
 
 
-    public EnvironmentFacade getEnvironmentFacade() {
-        return environmentFacade;
-    }
 
-    public void setEnvironmentFacade(EnvironmentFacade environmentFacade) {
-        this.environmentFacade = environmentFacade;
-    }
 
     @Autowired
     private EnvironmentFacade environmentFacade;
@@ -55,5 +55,17 @@ public abstract class AbstractPipelineImpl implements Pipeline {
         RuleBuilder ruleBuilder = applicationContext.getBean(RuleBuilder.class);
         ruleBuilderList.add(ruleBuilder);
         return ruleBuilder;
+    }
+
+    public EnvironmentFacade getEnvironmentFacade() {
+        return environmentFacade;
+    }
+
+    public void setEnvironmentFacade(EnvironmentFacade environmentFacade) {
+        this.environmentFacade = environmentFacade;
+    }
+
+    public ModuleFacade getModuleFacade() {
+        return moduleFacade;
     }
 }
