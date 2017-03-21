@@ -23,8 +23,6 @@ public class PipelineImpl extends AbstractPipelineImpl {
 
         // We need store it separate on in rules, because triggerBuildsFor() method then requires lots of configurations.
         // TODO those two are required only for integrationtests, move to integrationtests?
-        createEnvironmentData("modA", "develop", "onCommitList", "dockerid");
-        createEnvironmentData("modA", "feature/.*", "onCommitList", "dockerid");
         createEnvironmentData("ModA", "release/.*", "mockReleaseList", "dockerid");
         createEnvironmentData("ModB", "release/.*", "mockReleaseList", "dockerid");
         createEnvironmentData("ModC", "release/.*", "mockReleaseList", "dockerid");

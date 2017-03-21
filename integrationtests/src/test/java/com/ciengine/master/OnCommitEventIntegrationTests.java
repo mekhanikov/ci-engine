@@ -8,6 +8,7 @@ import com.ciengine.common.Repo;
 import com.ciengine.common.events.OnCommitEvent;
 import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.master.facades.CIEngineFacade;
+import com.ciengine.master.facades.EnvironmentFacade;
 import com.ciengine.master.facades.ModuleFacade;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,6 +43,9 @@ public class OnCommitEventIntegrationTests {
 
 	@Autowired
 	private ModuleFacade moduleFacade;
+
+	@Autowired
+	private EnvironmentFacade environmentFacade;
 
 	/*
 	Test data:
@@ -170,6 +174,13 @@ public class OnCommitEventIntegrationTests {
 		moduleFacade.addModule(createModule("modA", "ssh://git@repo.ru/mod-a"));
 		moduleFacade.addModule(createModule("modB", "ssh://git@repo.ru/mod-b"));
 
+		createEnvironmentData("modA", "develop", "onCommitList", "dockerid");
+        createEnvironmentData("modA", "feature/.*", "onCommitList", "dockerid");
+
+	}
+
+	protected void createEnvironmentData(String moduleName, String branchName, String commitId, String dockerid) {
+		getEnvironmentFacade().createEnvironmentData(moduleName, branchName, commitId, dockerid);
 	}
 
 	private Module createModule(String modName, String gitUrl)
@@ -196,5 +207,13 @@ public class OnCommitEventIntegrationTests {
 		WaitForEventListener waitForEventListener = new WaitForEventListener(isMach);
 		ciEngineFacade.addListener(waitForEventListener);
 		return waitForEventListener;
+	}
+
+	public EnvironmentFacade getEnvironmentFacade() {
+		return environmentFacade;
+	}
+
+	public void setEnvironmentFacade(EnvironmentFacade environmentFacade) {
+		this.environmentFacade = environmentFacade;
 	}
 }
