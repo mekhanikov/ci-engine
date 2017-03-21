@@ -55,7 +55,7 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 
 	private List<CIEngineListener> ciEngineListeners = new ArrayList<>();
 
-	private List<Module> modules = new ArrayList<>();
+//	private List<Module> modules = new ArrayList<>();
 
 	public FindBuildsResponse findBuilds() {
 		FindBuildsResponse findBuildsResponse = new FindBuildsResponse();
@@ -131,6 +131,9 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 
 	@Override public Module findModuleByGitUrl(String gitUrl)
 	{
+		FindModulesRequest findModulesRequest = new FindModulesRequest();
+		// TODO
+		List<Module> modules = moduleFacade.findModules(findModulesRequest);
 		for (Module module: modules) {
 			for (Repo repo : module.getRepoList()) {
 				if (gitUrl.equals(repo.getGitUrl())) {
@@ -146,15 +149,6 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 		ciEngineListeners.add(ciEngineListener);
 	}
 
-	public List<Module> getModules()
-	{
-		return modules;
-	}
-
-	public void setModules(List<Module> modules)
-	{
-		this.modules = modules;
-	}
 
 	@Override
 	public void submitRelease(OnReleaseRule release) {

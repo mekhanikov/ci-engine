@@ -8,6 +8,7 @@ import com.ciengine.common.Repo;
 import com.ciengine.common.events.OnCommitEvent;
 import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.master.facades.CIEngineFacade;
+import com.ciengine.master.facades.ModuleFacade;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ public class OnCommitEventIntegrationTests {
 
 	//@Autowired
 	//OnCommitListener onCommitListener;
+
+	@Autowired
+	private ModuleFacade moduleFacade;
 
 	/*
 	Test data:
@@ -162,11 +166,9 @@ public class OnCommitEventIntegrationTests {
 //	}
 
 	private void prepareModules() {
-		List<Module> moduleList = new ArrayList<>();
-		moduleList.add(createModule("modA", "ssh://git@repo.ru/mod-a"));
-		moduleList.add(createModule("modB", "ssh://git@repo.ru/mod-b"));
 //		moduleList.add(createModule("modC", "ssh://git@repo.ru/mod-c"));
-		ciEngineFacade.setModules(moduleList);
+		moduleFacade.addModule(createModule("modA", "ssh://git@repo.ru/mod-a"));
+		moduleFacade.addModule(createModule("modB", "ssh://git@repo.ru/mod-b"));
 
 	}
 

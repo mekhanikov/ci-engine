@@ -8,6 +8,7 @@ import com.ciengine.common.dto.IsModuleReleasedRequest;
 import com.ciengine.common.dto.IsModuleReleasedResponse;
 import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.facades.CIEngineFacade;
+import com.ciengine.master.facades.ModuleFacade;
 import com.ciengine.master.listeners.OnReleaseRule;
 import com.ciengine.master.model.BuildModel;
 import org.junit.Test;
@@ -35,6 +36,9 @@ public class ReleaseIntegrationTests extends AbstractIntegrationTests {
 
 	@Autowired
 	CIEngineFacade ciEngineFacade;
+
+	@Autowired
+	private ModuleFacade moduleFacade;
 
 //	@Autowired
 //	OnCommitListener onCommitListener;
@@ -185,11 +189,9 @@ public class ReleaseIntegrationTests extends AbstractIntegrationTests {
 //	}
 
 	private void prepareModules() {
-		List<Module> moduleList = new ArrayList<>();
-		moduleList.add(createModule("ModA", "ssh://git@repo.ru/mod-a"));
-		moduleList.add(createModule("ModB", "ssh://git@repo.ru/mod-b"));
-		moduleList.add(createModule("ModC", "ssh://git@repo.ru/mod-c"));
-		ciEngineFacade.setModules(moduleList);
+		moduleFacade.addModule(createModule("ModA", "ssh://git@repo.ru/mod-a"));
+		moduleFacade.addModule(createModule("ModB", "ssh://git@repo.ru/mod-b"));
+		moduleFacade.addModule(createModule("ModC", "ssh://git@repo.ru/mod-c"));
 
 	}
 

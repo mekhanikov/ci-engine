@@ -26,8 +26,6 @@ public abstract class AbstractPipelineImpl implements Pipeline {
     @Autowired
     private CIEngineFacade ciEngineFacade;
 
-
-
     @Autowired
     private ModuleFacade moduleFacade;
 

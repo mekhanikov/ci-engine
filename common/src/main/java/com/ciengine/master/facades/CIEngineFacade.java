@@ -29,7 +29,6 @@ public interface CIEngineFacade
 
 	void addListener(CIEngineListener ciEngineListener);
 
-	void setModules(List<Module> moduleList);
 
 	// TODO extract to ReleseFacade
 	void submitRelease(OnReleaseRule release);
