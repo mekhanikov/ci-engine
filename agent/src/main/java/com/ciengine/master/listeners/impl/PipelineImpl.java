@@ -22,7 +22,6 @@ public class PipelineImpl extends AbstractPipelineImpl {
         createModule("de.hybris.platform:atdd-module", "ssh://git@stash.hybris.com:7999/platform/atdd.git");
 
         // We need store it separate on in rules, because triggerBuildsFor() method then requires lots of configurations.
-        // TODO those two are required only for integrationtests, move to integrationtests?
         createEnvironmentData("ModA", "release/.*", "mockReleaseList", "dockerid");
         createEnvironmentData("ModB", "release/.*", "mockReleaseList", "dockerid");
         createEnvironmentData("ModC", "release/.*", "mockReleaseList", "dockerid");
@@ -35,7 +34,6 @@ public class PipelineImpl extends AbstractPipelineImpl {
 
         createRuleBuilder().onNewArtefact().processReleaseRule();
         createRuleBuilder().onReleaseSubmited().triggerRelease();
-        createRuleBuilder().onCommit().forModules("modA").forBranches("develop").triggerBuild();
     }
 
     protected void createEnvironmentData(String moduleName, String branchName, String commitId, String dockerid) {
