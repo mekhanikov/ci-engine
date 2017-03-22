@@ -65,9 +65,6 @@ public class OnCommitEventIntegrationTests {
 		 */
 	@Test
 	public void triggerBuildForModADevelop() throws Exception {
-		prepareMocks();
-		prepareModules();
-
 		OnCommitEvent onCommitEvent = new OnCommitEvent();
 		onCommitEvent.setBranchName("develop");
 		onCommitEvent.setGitUrl("ssh://git@repo.ru/mod-a");
@@ -93,8 +90,6 @@ public class OnCommitEventIntegrationTests {
 
 	@Test
 	public void triggerBuildForModAFeature() throws Exception {
-		prepareMocks();
-		prepareModules();
 		OnCommitEvent onCommitEvent = new OnCommitEvent();
 		onCommitEvent.setBranchName("feature/AA-1234");
 		onCommitEvent.setGitUrl("ssh://git@repo.ru/mod-a");
@@ -119,7 +114,6 @@ public class OnCommitEventIntegrationTests {
 
 	@Test
 	public void dontTriggerBuildForModARelease() throws Exception {
-		prepareModules();
 		OnCommitEvent onCommitEvent = new OnCommitEvent();
 		onCommitEvent.setBranchName("release");
 		onCommitEvent.setGitUrl("ssh://git@repo.ru/mod-a");
@@ -141,7 +135,6 @@ public class OnCommitEventIntegrationTests {
 
 	@Test
 	public void dontTriggerBuildForModBDevelop() throws Exception {
-		prepareModules();
 		OnCommitEvent onCommitEvent = new OnCommitEvent();
 		onCommitEvent.setBranchName("develop");
 		onCommitEvent.setGitUrl("ssh://git@repo.ru/mod-b");
@@ -169,15 +162,6 @@ public class OnCommitEventIntegrationTests {
 //		return onCommitRule;
 //	}
 
-	private void prepareModules() {
-//		moduleList.add(createModule("modC", "ssh://git@repo.ru/mod-c"));
-		moduleFacade.addModule(createModule("modA", "ssh://git@repo.ru/mod-a"));
-		moduleFacade.addModule(createModule("modB", "ssh://git@repo.ru/mod-b"));
-
-		createEnvironmentData("modA", "develop", "onCommitList", "dockerid");
-        createEnvironmentData("modA", "feature/.*", "onCommitList", "dockerid");
-
-	}
 
 	protected void createEnvironmentData(String moduleName, String branchName, String commitId, String dockerid) {
 		getEnvironmentFacade().createEnvironmentData(moduleName, branchName, commitId, dockerid);
@@ -196,12 +180,6 @@ public class OnCommitEventIntegrationTests {
 		return module;
 	}
 
-	private void prepareMocks()
-	{
-//		CIAgentFacade ciAgentFacade = Mockito.mock(CIAgentFacade.class);
-//		buildStatusChecker.setCiAgentFacade(ciAgentFacade);
-//		buildRunner.setCiAgentFacade(ciAgentFacade);
-	}
 
 	private WaitForEventListener waitForCondition(IsMach isMach) {
 		WaitForEventListener waitForEventListener = new WaitForEventListener(isMach);

@@ -16,6 +16,12 @@ public class TestPipelineImpl extends AbstractPipelineImpl {
 
     @Override
     protected void prepareAll() {
+        createModule("modA", "ssh://git@repo.ru/mod-a");
+        createModule("modB", "ssh://git@repo.ru/mod-b");
+
+        createEnvironmentData("modA", "develop", "onCommitList", "dockerid");
+        createEnvironmentData("modA", "feature/.*", "onCommitList", "dockerid");
+
         createRuleBuilder().onCommit().forModules("modA").forBranches("develop").triggerBuild();
     }
 
