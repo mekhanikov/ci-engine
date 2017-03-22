@@ -8,8 +8,6 @@ import com.ciengine.common.Repo;
 import com.ciengine.common.events.OnCommitEvent;
 import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.master.facades.CIEngineFacade;
-import com.ciengine.master.facades.EnvironmentFacade;
-import com.ciengine.master.facades.ModuleFacade;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +38,6 @@ public class OnCommitEventIntegrationTests {
 
 	//@Autowired
 	//OnCommitListener onCommitListener;
-
-	@Autowired
-	private ModuleFacade moduleFacade;
-
-	@Autowired
-	private EnvironmentFacade environmentFacade;
 
 	/*
 	Test data:
@@ -163,10 +155,6 @@ public class OnCommitEventIntegrationTests {
 //	}
 
 
-	protected void createEnvironmentData(String moduleName, String branchName, String commitId, String dockerid) {
-		getEnvironmentFacade().createEnvironmentData(moduleName, branchName, commitId, dockerid);
-	}
-
 	private Module createModule(String modName, String gitUrl)
 	{
 		Module module = new Module();
@@ -187,11 +175,4 @@ public class OnCommitEventIntegrationTests {
 		return waitForEventListener;
 	}
 
-	public EnvironmentFacade getEnvironmentFacade() {
-		return environmentFacade;
-	}
-
-	public void setEnvironmentFacade(EnvironmentFacade environmentFacade) {
-		this.environmentFacade = environmentFacade;
-	}
 }
