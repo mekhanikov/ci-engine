@@ -87,6 +87,16 @@ public class TaskIntegrationTests extends AbstractIntegrationTests {
 		assertTrue(javadocTask.isInProgress());
 		assertFalse(deployTask.isInProgress());
 
+		tests.get(0).setSuccess(true);
+		tests.get(0).setFinished(true);
+		tests.get(0).setInProgress(false);
+		tests.get(1).setSuccess(true);
+		tests.get(1).setFinished(true);
+		tests.get(1).setInProgress(false);
+		javadocTask.setSuccess(true);
+		javadocTask.setFinished(true);
+		javadocTask.setInProgress(false);
+
 		taskEvaluator.evaluate(deployTask);
 		assertTrue(deployTask.isInProgress());
 
