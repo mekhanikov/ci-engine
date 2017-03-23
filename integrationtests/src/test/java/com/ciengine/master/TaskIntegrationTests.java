@@ -21,6 +21,7 @@ import javax.validation.constraints.AssertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 
@@ -67,6 +68,27 @@ public class TaskIntegrationTests extends AbstractIntegrationTests {
 		// Test
 		assertTrue(createBinaries.isInProgress());
 		assertTrue(createSources.isInProgress());
+		assertFalse(tests.get(0).isInProgress());
+		assertFalse(tests.get(1).isInProgress());
+		assertFalse(javadocTask.isInProgress());
+		assertFalse(deployTask.isInProgress());
+
+		//
+		createBinaries.setSuccess(true);
+		createBinaries.setFinished(true);
+		createBinaries.setInProgress(false);
+		createSources.setSuccess(true);
+		createSources.setFinished(true);
+		createSources.setInProgress(false);
+		taskEvaluator.evaluate(deployTask);
+
+		assertTrue(tests.get(0).isInProgress());
+		assertTrue(tests.get(1).isInProgress());
+		assertTrue(javadocTask.isInProgress());
+		assertFalse(deployTask.isInProgress());
+
+		taskEvaluator.evaluate(deployTask);
+		assertTrue(deployTask.isInProgress());
 
 		System.out.print(1);
 	}
