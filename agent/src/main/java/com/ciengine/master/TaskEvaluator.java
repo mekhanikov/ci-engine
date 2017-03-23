@@ -33,7 +33,7 @@ public class TaskEvaluator {
     }
 
     private boolean isAllDependenciesFinishedAndSuccess(List<Task> tasks) {
-        if (tasks != null && tasks.size() > 0) {
+        if (tasks != null) {
             for (Task task : tasks) {
                 if (!isDependenciesFinishedAndSuccess(task)) {
                     return false;
