@@ -1,5 +1,7 @@
 package com.ciengine.master.task;
 
+import com.ciengine.common.BuildStatus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,9 +11,7 @@ import java.util.List;
 public class Task {
     private String name;
     private List<Task> dependOnTasks = new ArrayList<>();
-    private boolean finished;
-    private boolean inProgress;
-    private boolean success;
+    private String status = BuildStatus.QUEUED;
 
     public Task(String name) {
         this.name = name;
@@ -36,28 +36,19 @@ public class Task {
         this.dependOnTasks = dependOnTasks;
     }
 
-    public boolean isFinished() {
-        return finished;
+    public String getName() {
+        return name;
     }
 
-    public void setFinished(boolean finished) {
-        this.finished = finished;
+    public void setName(String name) {
+        this.name = name;
     }
 
-
-    public boolean isInProgress() {
-        return inProgress;
+    public String getStatus() {
+        return status;
     }
 
-    public void setInProgress(boolean inProgress) {
-        this.inProgress = inProgress;
-    }
-
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

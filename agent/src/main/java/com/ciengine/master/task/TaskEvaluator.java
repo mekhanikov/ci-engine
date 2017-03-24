@@ -1,5 +1,6 @@
 package com.ciengine.master.task;
 
+import com.ciengine.common.BuildStatus;
 import com.ciengine.master.task.Task;
 
 import java.util.List;
@@ -26,12 +27,12 @@ public class TaskEvaluator {
     }
 
     protected boolean needToEvaluate(Task task) {
-        return !(task.isFinished() || task.isInProgress());
+        return BuildStatus.QUEUED.equals(task.getStatus());
     }
 
     private void runTask(Task task) {
         // TODO run task in separate thread.
-        task.setInProgress(true);
+        task.setStatus(BuildStatus.IN_PROGRESS);
         // TODO
     }
 
@@ -47,6 +48,6 @@ public class TaskEvaluator {
     }
 
     private boolean isDependenciesFinishedAndSuccess(Task task) {
-        return task.isFinished() && task.isSuccess();
+        return BuildStatus.SUCCESS.equals(task.getStatus());
     }
 }

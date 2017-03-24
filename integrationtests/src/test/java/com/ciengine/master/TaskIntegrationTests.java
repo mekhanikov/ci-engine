@@ -1,6 +1,7 @@
 package com.ciengine.master;
 
 import com.ciengine.TestConfiguration;
+import com.ciengine.common.BuildStatus;
 import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.facades.ModuleFacade;
@@ -15,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -60,39 +62,30 @@ public class TaskIntegrationTests extends AbstractIntegrationTests {
 		TaskEvaluator taskEvaluator =	new TaskEvaluator();
 		taskEvaluator.evaluate(deployTask);
 		// Test
-		assertTrue(createBinaries.isInProgress());
-		assertTrue(createSources.isInProgress());
-		assertFalse(tests.get(0).isInProgress());
-		assertFalse(tests.get(1).isInProgress());
-		assertFalse(javadocTask.isInProgress());
-		assertFalse(deployTask.isInProgress());
+		assertEquals(BuildStatus.IN_PROGRESS, createBinaries.getStatus());
+		assertEquals(BuildStatus.IN_PROGRESS, createSources.getStatus());
+		assertEquals(BuildStatus.QUEUED, tests.get(0).getStatus());
+		assertEquals(BuildStatus.QUEUED, tests.get(1).getStatus());
+		assertEquals(BuildStatus.QUEUED, javadocTask.getStatus());
+		assertEquals(BuildStatus.QUEUED, deployTask.getStatus());
 
 		//
-		createBinaries.setSuccess(true);
-		createBinaries.setFinished(true);
-		createBinaries.setInProgress(false);
-		createSources.setSuccess(true);
-		createSources.setFinished(true);
-		createSources.setInProgress(false);
+		createBinaries.setStatus(BuildStatus.SUCCESS);
+		createSources.setStatus(BuildStatus.SUCCESS);
 		taskEvaluator.evaluate(deployTask);
 
-		assertTrue(tests.get(0).isInProgress());
-		assertTrue(tests.get(1).isInProgress());
-		assertTrue(javadocTask.isInProgress());
-		assertFalse(deployTask.isInProgress());
+		assertEquals(BuildStatus.IN_PROGRESS, tests.get(0).getStatus());
+		assertEquals(BuildStatus.IN_PROGRESS, tests.get(1).getStatus());
+		assertEquals(BuildStatus.IN_PROGRESS, javadocTask.getStatus());
+		assertEquals(BuildStatus.QUEUED, deployTask.getStatus());
 
-		tests.get(0).setSuccess(true);
-		tests.get(0).setFinished(true);
-		tests.get(0).setInProgress(false);
-		tests.get(1).setSuccess(true);
-		tests.get(1).setFinished(true);
-		tests.get(1).setInProgress(false);
-		javadocTask.setSuccess(true);
-		javadocTask.setFinished(true);
-		javadocTask.setInProgress(false);
+		tests.get(0).setStatus(BuildStatus.SUCCESS);
+		tests.get(1).setStatus(BuildStatus.SUCCESS);
+		javadocTask.setStatus(BuildStatus.SUCCESS);
+
 
 		taskEvaluator.evaluate(deployTask);
-		assertTrue(deployTask.isInProgress());
+		assertEquals(BuildStatus.IN_PROGRESS, deployTask.getStatus());
 
 		System.out.print(1);
 	}
