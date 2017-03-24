@@ -1,4 +1,6 @@
-package com.ciengine.master;
+package com.ciengine.master.task;
+
+import com.ciengine.master.task.Task;
 
 import java.util.List;
 
@@ -28,6 +30,7 @@ public class TaskEvaluator {
     }
 
     private void runTask(Task task) {
+        // TODO run task in separate thread.
         task.setInProgress(true);
         // TODO
     }

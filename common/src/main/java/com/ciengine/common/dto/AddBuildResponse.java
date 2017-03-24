@@ -14,26 +14,16 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AddBuildResponse
 {
-	private List<Build> buildList;
+	private String buildId;
 
-	@XmlAttribute(name = "sss")
-private String s = "sdd";
-
-	public String getS()
-	{
-		return s;
+	public String getBuildId() {
+		return buildId;
 	}
 
-	public void setS(String s)
-	{
-		this.s = s;
+	public void setBuildId(String buildId) {
+		this.buildId = buildId;
 	}
 
-	public List<Build> getBuildList() {
-		return buildList;
-	}
 
-	public void setBuildList(List<Build> buildList) {
-		this.buildList = buildList;
-	}
+
 }

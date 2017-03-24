@@ -248,8 +248,8 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 	}
 
 	@Override
-	public AddBuildResponse findBuild(AddBuildRequest addBuildRequest) {
-		AddBuildResponse addBuildResponse = new AddBuildResponse();
+	public FindBuildsResponse findBuild(FindBuildsRequest addBuildRequest) {
+		FindBuildsResponse findBuildsResponse = new FindBuildsResponse();
 		List<BuildModel> buildModelList = buildDao.find(
 				addBuildRequest.getModuleName(),
 				addBuildRequest.getBranchName(),
@@ -276,8 +276,8 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 			// TODO map other
 			builds.add(build);
 		}
-		addBuildResponse.setBuildList(builds);
-		return addBuildResponse;
+		findBuildsResponse.setBuildList(builds);
+		return findBuildsResponse;
 	}
 
 	@Override

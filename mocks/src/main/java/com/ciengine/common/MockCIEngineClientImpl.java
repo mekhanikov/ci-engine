@@ -45,11 +45,11 @@ public class MockCIEngineClientImpl implements CIEngineClient
 	}
 
 	@Override
-	public AddBuildResponse findBuild(String serverUrl, AddBuildRequest addBuildRequest) {
+	public FindBuildsResponse findBuild(String serverUrl, FindBuildsRequest findBuildsRequest) {
 		//AddBuildRequest addBuildRequest1 = new AddBuildRequest();
 		//isModuleReleasedRequest.setModule(moduleNameToRelease);
-		AddBuildResponse addBuildResponse = ciEngineFacade.findBuild(addBuildRequest);
-		return addBuildResponse;
+		FindBuildsResponse findBuildsResponse = ciEngineFacade.findBuild(findBuildsRequest);
+		return findBuildsResponse;
 	}
 
 	@Override

@@ -36,7 +36,7 @@ public interface CIEngineFacade
 	// TODO extract to ReleseFacade
     List<OnReleaseRule> findAllReleases();
 
-	AddBuildResponse findBuild(AddBuildRequest addBuildRequest);
+	FindBuildsResponse findBuild(FindBuildsRequest addBuildRequest);
 
     void setBuildStatus(SetBuildStatusRequest setBuildStatusRequest);
 

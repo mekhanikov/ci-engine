@@ -2,9 +2,7 @@ package com.ciengine.agent.lists.current;
 
 
 import com.ciengine.common.*;
-import com.ciengine.common.dto.AddBuildRequest;
-import com.ciengine.common.dto.AddBuildResponse;
-import com.ciengine.common.dto.Build;
+import com.ciengine.common.dto.*;
 import com.ciengine.common.events.OnNewArtifactEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -40,15 +38,15 @@ abstract class AbstractReleaseList implements CIEngineList
 
 		//String moduleName = moduleNameToRelease.split(":")[0];
 
-		AddBuildRequest addBuildRequest = new AddBuildRequest();
-		addBuildRequest.setExecutionList(getExecutionListName());
-		addBuildRequest.setDockerImageId(dockerImageId);
-		addBuildRequest.setModuleName(moduleNameToRelease);
-		addBuildRequest.setBranchName(branchName);
-		AddBuildResponse addBuildResponse = ciEngineClient.findBuild(url, addBuildRequest);
+		FindBuildsRequest findBuildsRequest = new FindBuildsRequest();
+		findBuildsRequest.setExecutionList(getExecutionListName());
+		findBuildsRequest.setDockerImageId(dockerImageId);
+		findBuildsRequest.setModuleName(moduleNameToRelease);
+		findBuildsRequest.setBranchName(branchName);
+		FindBuildsResponse findBuildsResponse = ciEngineClient.findBuild(url, findBuildsRequest);
         // TODO calch hash and gilter by hash as well.
         // TODO except current one build - it alwasy IN PROGRESS
-		List<Build> buildLists = addBuildResponse.getBuildList();
+		List<Build> buildLists = findBuildsResponse.getBuildList();
 
         // If has at least one build IN PROGRESS/QUEUED/FAILED (check hash as well, it should be the same?) - skip current one - no need build the same.
 

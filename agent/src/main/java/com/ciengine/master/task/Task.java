@@ -1,4 +1,4 @@
-package com.ciengine.master;
+package com.ciengine.master.task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +21,11 @@ public class Task {
         for(int i = 0; i < task.length; i++){
             dependOnTasks.add(task[i]);
         }
+    }
+
+    public void run() {
+        // If finidhed - return?
+        //
     }
 
     public List<Task> getDependOnTasks() {

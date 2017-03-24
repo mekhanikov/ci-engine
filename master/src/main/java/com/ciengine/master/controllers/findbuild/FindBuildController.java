@@ -2,6 +2,8 @@ package com.ciengine.master.controllers.findbuild;
 
 import com.ciengine.common.dto.AddBuildRequest;
 import com.ciengine.common.dto.AddBuildResponse;
+import com.ciengine.common.dto.FindBuildsRequest;
+import com.ciengine.common.dto.FindBuildsResponse;
 import com.ciengine.master.facades.CIEngineFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,9 +25,9 @@ public class FindBuildController
 	// TODO 1. Should be secure?
 	@RequestMapping(value = "/findbuild",produces = {"application/json"}, method = RequestMethod.POST)
 	@ResponseBody
-	AddBuildResponse addbuild(@RequestBody AddBuildRequest addBuildRequest) {
+	FindBuildsResponse findBuild(@RequestBody FindBuildsRequest findBuildsRequest) {
 //		GetBuildsResponse getBuildsResponse = new GetBuildsResponse();
-		return ciEngineFacade.findBuild(addBuildRequest);
+		return ciEngineFacade.findBuild(findBuildsRequest);
 	}
 
 }
