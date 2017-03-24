@@ -39,7 +39,9 @@ public class TaskPipelineImpl extends AbstractPipelineImpl {
                 deployTask.dependsOn(myArray);
             }
         };
-        // TODO on commit to pom.xml or on manual trigger (sction?) run flow.
+        // TODO on commit to pom.xml or on manual trigger (sction?) run flow. O have build?
+        // TODO on build status changed (/periodicaly), update according Task nd reevaluate other.
+        // /periodicaly
         //
 //        createRuleBuilder().onCommit().forModules("modA").forBranches("develop").triggerBuild();
     }
