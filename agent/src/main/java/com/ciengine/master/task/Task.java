@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by emekhanikov on 23.03.2017.
  */
-public class Task {
+public abstract class Task {
     private String name;
     private List<Task> dependOnTasks = new ArrayList<>();
     private String status = BuildStatus.QUEUED;
@@ -23,10 +23,7 @@ public class Task {
         }
     }
 
-    public void run() {
-        // If finidhed - return?
-        //
-    }
+    public abstract void run();
 
     public List<Task> getDependOnTasks() {
         return dependOnTasks;

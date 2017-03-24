@@ -5,6 +5,7 @@ import com.ciengine.common.BuildStatus;
 import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.facades.ModuleFacade;
+import com.ciengine.master.task.BuildTask;
 import com.ciengine.master.task.Task;
 import com.ciengine.master.task.TaskEvaluator;
 import org.junit.Test;
@@ -39,20 +40,20 @@ public class TaskIntegrationTests extends AbstractIntegrationTests {
 
 	@Test
 	public void test() throws Exception {
-		Task createBinaries = new Task("createBinaries");
-		Task createSources = new Task("createSources");
+		Task createBinaries = new BuildTask("createBinaries");
+		Task createSources = new BuildTask("createSources");
 
 		List<Task> tests = new ArrayList<>();
 		for(int i=0; i < 2; i++) {
-			Task task = new Task("test" +i);
+			Task task = new BuildTask("test" +i);
 			task.dependsOn(createBinaries, createSources);
 			tests.add(task);
 		}
 
-		Task javadocTask = new Task("javadocTask");
+		Task javadocTask = new BuildTask("javadocTask");
 		javadocTask.dependsOn(createBinaries, createSources);
 
-		Task deployTask = new Task("deployTask");
+		Task deployTask = new BuildTask("deployTask");
 
 		Task[] myArray = tests.toArray(new Task[0]);
 		deployTask.dependsOn(createBinaries, createSources, javadocTask);
