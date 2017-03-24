@@ -1,7 +1,5 @@
 package com.ciengine.master.task;
 
-import com.ciengine.common.Module;
-import com.ciengine.common.Repo;
 import com.ciengine.master.listeners.impl.AbstractPipelineImpl;
 import org.springframework.stereotype.Component;
 
