@@ -9,5 +9,5 @@ public abstract class Flow {
 this.name = name;
     }
 
-    abstract void createFlow();
+    abstract void createFlow(FlowContext flowContext);
 }
