@@ -30,8 +30,7 @@ public class BuildTask extends Task {
             FindBuildsRequest findBuildsRequest = new FindBuildsRequest();
             FindBuildsResponse findBuildsResponse = ciEngineFacade.findBuild(findBuildsRequest);
             Build build = findBuildsResponse.getBuildList().get(0);
-            build.getStatus();
-
+            setStatus(build.getStatus());
         }
     }
 }
