@@ -92,6 +92,7 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 		buildModel.setStartTimestamp(new Date());
 		buildModel.setExternalId(addBuildRequest.getExternalId());
 		buildDao.save(buildModel);
+		addBuildResponse.setBuildId(buildModel.getId());
 		return addBuildResponse;
 	}
 

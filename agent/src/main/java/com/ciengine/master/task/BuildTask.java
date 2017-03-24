@@ -1,18 +1,14 @@
 package com.ciengine.master.task;
 
-import com.ciengine.common.dto.AddBuildRequest;
-import com.ciengine.common.dto.AddBuildResponse;
+import com.ciengine.common.dto.*;
 import com.ciengine.master.facades.CIEngineFacade;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by emekhanikov on 23.03.2017.
  */
 public class BuildTask extends Task {
-//    pr
+    private Integer buildId;
 
     @Autowired
     private CIEngineFacade ciEngineFacade;
@@ -26,6 +22,16 @@ public class BuildTask extends Task {
         AddBuildRequest addBuildRequest = new AddBuildRequest();
         // TODO
         AddBuildResponse addBuildResponse = ciEngineFacade.addBuild(addBuildRequest);
+        buildId = addBuildResponse.getBuildId();
+    }
 
+    public void update() {
+        if (buildId != null) {
+            FindBuildsRequest findBuildsRequest = new FindBuildsRequest();
+            FindBuildsResponse findBuildsResponse = ciEngineFacade.findBuild(findBuildsRequest);
+            Build build = findBuildsResponse.getBuildList().get(0);
+            build.getStatus();
+
+        }
     }
 }

@@ -14,13 +14,13 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AddBuildResponse
 {
-	private String buildId;
+	private int buildId;
 
-	public String getBuildId() {
+	public int getBuildId() {
 		return buildId;
 	}
 
-	public void setBuildId(String buildId) {
+	public void setBuildId(int buildId) {
 		this.buildId = buildId;
 	}
 
