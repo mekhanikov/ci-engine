@@ -27,7 +27,7 @@ public class OnBuildStatusChanged implements CIEngineListenerBuilder {
 
 
 
-    EventExecutor<OnBuildStatusChanged> executor;
+    EventExecutor<OnBuildStatusChanged, OnBuildStatusChangedEvent> executor;
 
 
     @Override
@@ -35,7 +35,7 @@ public class OnBuildStatusChanged implements CIEngineListenerBuilder {
         return ciEngineListener;
     }
 
-    public OnBuildStatusChanged execute(EventExecutor<OnBuildStatusChanged> executor) {
+    public OnBuildStatusChanged execute(EventExecutor<OnBuildStatusChanged, OnBuildStatusChangedEvent> executor) {
         this.executor = executor;
         final OnBuildStatusChanged onBuildStatusChanged = this;
         ciEngineListener = new CIEngineListener() {

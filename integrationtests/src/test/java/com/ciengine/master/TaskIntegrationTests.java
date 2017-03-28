@@ -1,7 +1,10 @@
 package com.ciengine.master;
 
 import com.ciengine.TestConfiguration;
+import com.ciengine.WaitForEventListener;
 import com.ciengine.common.BuildStatus;
+import com.ciengine.common.events.OnBuildStatusChangedEvent;
+import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.facades.ModuleFacade;
@@ -89,6 +92,17 @@ public class TaskIntegrationTests extends AbstractIntegrationTests {
 		assertEquals(BuildStatus.IN_PROGRESS, deployTask.getStatus());
 
 		System.out.print(1);
+	}
+
+	@Test
+	public void test2() throws InterruptedException {
+		OnBuildStatusChangedEvent onBuildStatusChangedEvent = new OnBuildStatusChangedEvent();
+		WaitForEventListener waitForEventListener = waitForCondition(ciEngineEvent -> {
+			return ciEngineEvent instanceof OnNewArtifactEvent;
+		});
+		ciEngineFacade.onEvent(onBuildStatusChangedEvent);
+		waitForEventListener.waitEvent(5);
+//		assertTrue(waitForEventListener.isMach());
 	}
 
 }
