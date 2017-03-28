@@ -1,6 +1,7 @@
 package com.ciengine.master.listeners;
 
 import com.ciengine.master.facades.CIEngineFacade;
+import com.ciengine.master.listeners.impl.onbuildstatuschanged.OnBuildStatusChanged;
 import com.ciengine.master.listeners.impl.oncommit.OnCommit;
 import com.ciengine.master.listeners.impl.onrelease.OnNewArtefact;
 import com.ciengine.master.listeners.impl.onrelease.OnReleaseSubmited;
@@ -39,5 +40,11 @@ public class RuleBuilder {
 
     public CIEngineListenerBuilder getCIEngineListenerBuilder() {
         return ciEngineListenerBuilder;
+    }
+
+    public OnBuildStatusChanged onBuildStatusChanged() {
+        OnBuildStatusChanged onBuildStatusChanged = applicationContext.getBean(OnBuildStatusChanged.class);
+        ciEngineListenerBuilder = onBuildStatusChanged;
+        return onBuildStatusChanged;
     }
 }

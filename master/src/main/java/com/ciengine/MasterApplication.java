@@ -4,6 +4,7 @@ import com.ciengine.master.ArtefactoryBinaryRepositoryClient;
 import com.ciengine.master.facades.CIAgentFacade;
 import com.ciengine.master.facades.CIAgentFacadeImpl;
 import com.ciengine.master.listeners.RuleBuilder;
+import com.ciengine.master.listeners.impl.onbuildstatuschanged.OnBuildStatusChanged;
 import com.ciengine.master.listeners.impl.oncommit.OnCommit;
 import com.ciengine.master.listeners.impl.onrelease.OnNewArtefact;
 import com.ciengine.master.listeners.impl.onrelease.OnReleaseSubmited;
@@ -126,6 +127,12 @@ public class MasterApplication
 	@Scope("prototype")
 	public OnCommit onCommit() {
 		return new OnCommit();
+	}
+
+	@Bean
+	@Scope("prototype")
+	public OnBuildStatusChanged onBuildStatusChanged() {
+		return new OnBuildStatusChanged();
 	}
 
 

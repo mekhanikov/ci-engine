@@ -1,6 +1,7 @@
 package com.ciengine.master.task;
 
 import com.ciengine.master.listeners.impl.AbstractPipelineImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -11,6 +12,8 @@ import java.util.List;
  */
 @Component
 public class TaskPipelineImpl extends AbstractPipelineImpl {
+    @Autowired
+    private TaskFacade taskFacade;
 
     @Override
     protected void prepareAll() {
@@ -44,5 +47,6 @@ public class TaskPipelineImpl extends AbstractPipelineImpl {
         // /periodicaly
         //
 //        createRuleBuilder().onCommit().forModules("modA").forBranches("develop").triggerBuild();
+        createRuleBuilder().onBuildStatusChanged().execute(t->{});
     }
 }
