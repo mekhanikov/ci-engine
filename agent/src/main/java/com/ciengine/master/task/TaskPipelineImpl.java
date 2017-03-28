@@ -48,8 +48,7 @@ public class TaskPipelineImpl extends AbstractPipelineImpl {
         //
 //        createRuleBuilder().onCommit().forModules("modA").forBranches("develop").triggerBuild();
         createRuleBuilder().onBuildStatusChanged().execute((t,e)->{
-            e.getBuildId();
-            flowFacade.updateAll();
+            flowFacade.updateBuildTaskStatusForBuildId(e.getBuildId(), e.getNewStatus());
         });
     }
 }

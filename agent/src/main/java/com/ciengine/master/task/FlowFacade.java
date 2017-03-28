@@ -5,4 +5,6 @@ package com.ciengine.master.task;
  */
 public interface FlowFacade {
     void updateAll();
+
+    void updateBuildTaskStatusForBuildId(String buildId, String newStatus);
 }
