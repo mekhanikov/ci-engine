@@ -9,7 +9,7 @@ import com.ciengine.common.DefaultCIEngineEvent;
 /**
  * Created by emekhanikov on 05.09.2016.
  */
-public class onBuildStatusChangedEvent extends DefaultCIEngineEvent
+public class OnBuildStatusChangedEvent extends DefaultCIEngineEvent
 {
 	private String buildId;
 	private String newStatus;
@@ -35,7 +35,7 @@ public class onBuildStatusChangedEvent extends DefaultCIEngineEvent
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		onBuildStatusChangedEvent that = (onBuildStatusChangedEvent) o;
+		OnBuildStatusChangedEvent that = (OnBuildStatusChangedEvent) o;
 
 		if (buildId != null ? !buildId.equals(that.buildId) : that.buildId != null) return false;
 		return newStatus != null ? newStatus.equals(that.newStatus) : that.newStatus == null;

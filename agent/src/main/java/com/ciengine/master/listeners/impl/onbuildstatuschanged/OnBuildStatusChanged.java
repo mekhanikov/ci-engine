@@ -5,6 +5,7 @@ import com.ciengine.common.EnvironmentVariables;
 import com.ciengine.common.EnvironmentVariablesConstants;
 import com.ciengine.common.Module;
 import com.ciengine.common.dto.AddBuildRequest;
+import com.ciengine.common.events.OnBuildStatusChangedEvent;
 import com.ciengine.common.events.OnCommitEvent;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.facades.EnvironmentData;
@@ -41,14 +42,14 @@ public class OnBuildStatusChanged implements CIEngineListenerBuilder {
             @Override
             public void onEvent(CIEngineEvent ciEngineEvent) throws CIEngineListenerException {
                 if (isEventApplicable(ciEngineEvent)) {
-                    OnCommitEvent onCommitEvent = (OnCommitEvent) ciEngineEvent;
-                    executor.execute(onBuildStatusChanged);
+                    OnBuildStatusChangedEvent onBuildStatusChangedEvent = (OnBuildStatusChangedEvent) ciEngineEvent;
+                    executor.execute(onBuildStatusChanged, onBuildStatusChangedEvent);
                 }
             }
 
             @Override
             public boolean isEventApplicable(CIEngineEvent ciEngineEvent) {
-                return ciEngineEvent instanceof OnCommitEvent;
+                return ciEngineEvent instanceof OnBuildStatusChangedEvent;
             }
         };
         return this;

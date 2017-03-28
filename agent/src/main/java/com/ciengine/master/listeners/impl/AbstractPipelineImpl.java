@@ -3,13 +3,9 @@ package com.ciengine.master.listeners.impl;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.facades.EnvironmentFacade;
 import com.ciengine.master.facades.ModuleFacade;
-import com.ciengine.master.listeners.CIEngineListener;
-import com.ciengine.master.listeners.CIEngineListenerException;
 import com.ciengine.master.listeners.RuleBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
-import sun.misc.Contended;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
