@@ -13,7 +13,7 @@ import java.util.List;
 @Component
 public class TaskPipelineImpl extends AbstractPipelineImpl {
     @Autowired
-    private TaskFacade taskFacade;
+    private FlowFacade flowFacade;
 
     @Override
     protected void prepareAll() {
@@ -49,7 +49,7 @@ public class TaskPipelineImpl extends AbstractPipelineImpl {
 //        createRuleBuilder().onCommit().forModules("modA").forBranches("develop").triggerBuild();
         createRuleBuilder().onBuildStatusChanged().execute((t,e)->{
             e.getBuildId();
-            taskFacade.updateAll();
+            flowFacade.updateAll();
         });
     }
 }
