@@ -8,6 +8,7 @@ import com.ciengine.master.listeners.impl.onbuildstatuschanged.OnBuildStatusChan
 import com.ciengine.master.listeners.impl.oncommit.OnCommit;
 import com.ciengine.master.listeners.impl.onrelease.OnNewArtefact;
 import com.ciengine.master.listeners.impl.onrelease.OnReleaseSubmited;
+import com.ciengine.master.task.BuildTask;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -133,6 +134,11 @@ public class MasterApplication
 	@Scope("prototype")
 	public OnBuildStatusChanged onBuildStatusChanged() {
 		return new OnBuildStatusChanged();
+	}
+@Bean
+	@Scope("prototype")
+	public BuildTask buildTask(String buildName) {
+		return new BuildTask(buildName);
 	}
 
 

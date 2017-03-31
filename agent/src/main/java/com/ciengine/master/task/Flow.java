@@ -1,5 +1,7 @@
 package com.ciengine.master.task;
 
+import com.ciengine.master.listeners.RuleBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,11 +24,11 @@ public class Flow {
 
 //    public abstract void createFlow(FlowContext flowContext);
 
-    BuildTask createBuildTask(String name) {
-        BuildTask buildTask = new BuildTask(name);
-        addTask(buildTask);
-        return buildTask;
-    }
+//    BuildTask createBuildTask(String name) {
+//        BuildTask buildTask = new BuildTask(name);
+//        addTask(buildTask);
+//        return buildTask;
+//    }
 
 //    public String getName()
 //    {

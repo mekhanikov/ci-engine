@@ -34,6 +34,7 @@ public class TaskEvaluator {
         // TODO run task in separate thread.
         task.setStatus(BuildStatus.IN_PROGRESS);
         // TODO
+        task.run();
     }
 
     private boolean isAllDependenciesFinishedAndSuccess(List<Task> tasks) {

@@ -1,7 +1,9 @@
 package com.ciengine.master.task;
 
+import com.ciengine.master.listeners.RuleBuilder;
 import com.ciengine.master.listeners.impl.AbstractPipelineImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -15,28 +17,33 @@ public class TaskPipelineImpl extends AbstractPipelineImpl {
     @Autowired
     private FlowFacade flowFacade;
 
+    @Autowired
+    private ApplicationContext applicationContext;
+
     @Override
     protected void prepareAll() {
         flowFacade.createPrototype("build CS", (flowContext)->{
             Flow flow = new Flow();
-            Task createBinaries = flow.createBuildTask("createBinaries");
-            Task createSources = flow.createBuildTask("createSources");
+            Task createBinaries = createBuildTask("createBinaries");
+            Task createSources = createBuildTask("createSources");
 
             List<Task> tests = new ArrayList<>();
             for(int i=0; i < 2; i++) {
-                Task task = flow.createBuildTask("test" +i);
+                Task task = createBuildTask("test" +i);
                 task.dependsOn(createBinaries, createSources);
                 tests.add(task);
             }
 
-            Task javadocTask = flow.createBuildTask("javadocTask");
+            Task javadocTask = createBuildTask("javadocTask");
             javadocTask.dependsOn(createBinaries, createSources);
 
-            Task deployTask = flow.createBuildTask("deployTask");
+            Task deployTask = createBuildTask("deployTask");
 
             Task[] myArray = tests.toArray(new Task[0]);
             deployTask.dependsOn(createBinaries, createSources, javadocTask);
             deployTask.dependsOn(myArray);
+
+            flow.addTask(deployTask);
             return flow;
         });
 
@@ -50,4 +57,13 @@ public class TaskPipelineImpl extends AbstractPipelineImpl {
             flowFacade.updateBuildTaskStatusForBuildId(e.getBuildId(), e.getNewStatus());
         });
     }
+
+    private BuildTask createBuildTask(String taskName)
+    {
+        BuildTask buildTask = applicationContext.getBean(BuildTask.class, taskName);
+        buildTask.setName(taskName);
+//        ruleBuilderList.add(ruleBuilder);
+        return buildTask;
+    }
+
 }

@@ -1,14 +1,28 @@
 package com.ciengine.master.task;
 
+import com.ciengine.common.EnvironmentVariables;
+import com.ciengine.common.EnvironmentVariablesConstants;
 import com.ciengine.common.dto.*;
 import com.ciengine.master.facades.CIEngineFacade;
+import com.ciengine.master.facades.EnvironmentData;
+import com.ciengine.master.listeners.impl.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.UUID;
+
 
 /**
  * Created by emekhanikov on 23.03.2017.
  */
 public class BuildTask extends Task {
     private Integer buildId;
+
+//    private EnvironmentData environmentData;
+    private String moduleName;
+    private String branchName;
+    private String applyList;
+    private String dockerImageId;
+    private EnvironmentVariables environmentVariables = new EnvironmentVariables();
 
     @Autowired
     private CIEngineFacade ciEngineFacade;
@@ -19,8 +33,18 @@ public class BuildTask extends Task {
 
     @Override
     public void run() {
+        String buildExternalId = UUID.randomUUID().toString();
+        EnvironmentVariables environmentVariablesFromEvent = new EnvironmentVariables();
+        environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.BUILD_EXTERNAL_ID, buildExternalId);
         AddBuildRequest addBuildRequest = new AddBuildRequest();
-        // TODO
+        addBuildRequest.setExecutionList(applyList);
+        addBuildRequest.setNodeId(null);
+        addBuildRequest.setDockerImageId(dockerImageId);
+        addBuildRequest.setInputParams(Utils.makeString(Utils.merge(environmentVariablesFromEvent, environmentVariables)));
+        addBuildRequest.setModuleName(moduleName);
+        addBuildRequest.setReasonOfTrigger("BuildTask");
+        addBuildRequest.setBranchName(branchName);
+        addBuildRequest.setExternalId(buildExternalId);
         AddBuildResponse addBuildResponse = ciEngineFacade.addBuild(addBuildRequest);
         buildId = addBuildResponse.getBuildId();
     }

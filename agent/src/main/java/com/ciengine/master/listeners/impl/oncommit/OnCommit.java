@@ -12,6 +12,7 @@ import com.ciengine.master.facades.EnvironmentFacade;
 import com.ciengine.master.listeners.CIEngineListener;
 import com.ciengine.master.listeners.CIEngineListenerBuilder;
 import com.ciengine.master.listeners.CIEngineListenerException;
+import com.ciengine.master.listeners.impl.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
@@ -69,15 +70,16 @@ public class OnCommit implements CIEngineListenerBuilder {
 //            EnvironmentData environmentData = environmentFacade.findApplyList(module.getName(), onCommitEvent.getBranchName());
                     if(environmentData != null) {
 
-                        EnvironmentVariables environmentVariablesFromEventTmp = new EnvironmentVariables();
-                        environmentVariablesFromEventTmp.addProperties(environmentVariablesFromEvent.getProperties());
+//                        EnvironmentVariables environmentVariablesFromEventTmp = new EnvironmentVariables();
+//                        environmentVariablesFromEventTmp.addProperties(environmentVariablesFromEvent.getProperties());
                         String buildExternalId = UUID.randomUUID().toString();
-                        environmentVariablesFromEventTmp.addProperty(EnvironmentVariablesConstants.BUILD_EXTERNAL_ID, buildExternalId);
+                        environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.BUILD_EXTERNAL_ID, buildExternalId);
                         AddBuildRequest addBuildRequest = new AddBuildRequest();
                         addBuildRequest.setExecutionList(environmentData.getApplyList());
                         addBuildRequest.setNodeId(null);
                         addBuildRequest.setDockerImageId(environmentData.getDockerImageId());
-                        addBuildRequest.setInputParams(makeString(merge(environmentVariablesFromEventTmp, environmentData.getEnvironmentVariables())));
+                        addBuildRequest.setInputParams(
+                              Utils.makeString(Utils.merge(environmentVariablesFromEvent, environmentData.getEnvironmentVariables())));
                         addBuildRequest.setModuleName(module.getName());
                         addBuildRequest.setReasonOfTrigger("commit");
                         addBuildRequest.setBranchName(onCommitEvent.getBranchName());
@@ -106,33 +108,6 @@ public class OnCommit implements CIEngineListenerBuilder {
         return this;
     }
 
-    private String makeString(EnvironmentVariables merge)
-    {
-        StringBuilder stringBuilder = new StringBuilder();
-        if (merge != null && merge.getProperties() != null) {
-            for (Map.Entry<String, Object> kvEntry : merge.getProperties().entrySet()) {
-                stringBuilder.append(kvEntry.getKey());
-                stringBuilder.append("=");
-                stringBuilder.append(kvEntry.getValue());
-                stringBuilder.append("\n");
-            }
-        }
-        return stringBuilder.toString();
-    }
-
-    private EnvironmentVariables merge(EnvironmentVariables environmentVariablesFromEvent,
-                                       EnvironmentVariables environmentVariables)
-    {
-        EnvironmentVariables environmentVariablesMerged = new EnvironmentVariables();
-        if (environmentVariablesFromEvent != null && environmentVariablesFromEvent.getProperties() != null) {
-            environmentVariablesMerged.addProperties(environmentVariablesFromEvent.getProperties());
-        }
-        if (environmentVariables != null && environmentVariables.getProperties() != null) {
-            environmentVariablesMerged.addProperties(environmentVariables.getProperties());
-        }
-
-        return environmentVariablesMerged;
-    }
 
 //    private OnCommitRule createOnCommitRule(String forModules, String forBranches, String applyList)
 //    {

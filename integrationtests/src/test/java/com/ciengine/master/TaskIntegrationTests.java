@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -31,6 +32,9 @@ import static org.junit.Assert.assertTrue;
 public class TaskIntegrationTests extends AbstractIntegrationTests {
 
 	@Autowired
+	private ApplicationContext applicationContext;
+
+	@Autowired
 	CIEngineFacade ciEngineFacade;
 
 	@Autowired
@@ -44,20 +48,20 @@ public class TaskIntegrationTests extends AbstractIntegrationTests {
 
 	@Test
 	public void test() throws Exception {
-		Task createBinaries = new BuildTask("createBinaries");
-		Task createSources = new BuildTask("createSources");
+		Task createBinaries = createBuildTask("createBinaries");
+		Task createSources = createBuildTask("createSources");
 
 		List<Task> tests = new ArrayList<>();
 		for(int i=0; i < 2; i++) {
-			Task task = new BuildTask("test" +i);
+			Task task = createBuildTask("test" +i);
 			task.dependsOn(createBinaries, createSources);
 			tests.add(task);
 		}
 
-		Task javadocTask = new BuildTask("javadocTask");
+		Task javadocTask = createBuildTask("javadocTask");
 		javadocTask.dependsOn(createBinaries, createSources);
 
-		Task deployTask = new BuildTask("deployTask");
+		Task deployTask = createBuildTask("deployTask");
 
 		Task[] myArray = tests.toArray(new Task[0]);
 		deployTask.dependsOn(createBinaries, createSources, javadocTask);
@@ -107,6 +111,14 @@ public class TaskIntegrationTests extends AbstractIntegrationTests {
 //		ciEngineFacade.onEvent(onBuildStatusChangedEvent);
 //		waitForEventListener.waitEvent(5);
 ////		assertTrue(waitForEventListener.isMach());
+	}
+
+	private BuildTask createBuildTask(String taskName)
+	{
+		BuildTask buildTask = applicationContext.getBean(BuildTask.class, taskName);
+		buildTask.setName(taskName);
+		//        ruleBuilderList.add(ruleBuilder);
+		return buildTask;
 	}
 
 }
