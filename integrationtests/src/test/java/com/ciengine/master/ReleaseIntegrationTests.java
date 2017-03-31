@@ -65,7 +65,7 @@ public class ReleaseIntegrationTests extends AbstractIntegrationTests {
 	Release ModC 2.0
 
 
-	On commit to develop of ModC -> execute exection list
+	On commit to develop of ModC -> createPrototype exection list
 	 */
 
 		/*

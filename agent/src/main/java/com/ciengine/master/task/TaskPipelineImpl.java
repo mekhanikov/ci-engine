@@ -17,31 +17,26 @@ public class TaskPipelineImpl extends AbstractPipelineImpl {
 
     @Override
     protected void prepareAll() {
-        Flow flow = new Flow("build CS") {
-            @Override
-            public void createFlow(FlowContext flowContext) {
-                Task createBinaries = createBuildTask("createBinaries");
-                Task createSources = createBuildTask("createSources");
+        flowFacade.createPrototype("build CS", (flowContext, flow)->{
+            Task createBinaries = flow.createBuildTask("createBinaries");
+            Task createSources = flow.createBuildTask("createSources");
 
-                List<Task> tests = new ArrayList<>();
-                for(int i=0; i < 2; i++) {
-                    Task task = createBuildTask("test" +i);
-                    task.dependsOn(createBinaries, createSources);
-                    tests.add(task);
-                }
-
-                Task javadocTask = createBuildTask("javadocTask");
-                javadocTask.dependsOn(createBinaries, createSources);
-
-                Task deployTask = createBuildTask("deployTask");
-
-                Task[] myArray = tests.toArray(new Task[0]);
-                deployTask.dependsOn(createBinaries, createSources, javadocTask);
-                deployTask.dependsOn(myArray);
+            List<Task> tests = new ArrayList<>();
+            for(int i=0; i < 2; i++) {
+                Task task = flow.createBuildTask("test" +i);
+                task.dependsOn(createBinaries, createSources);
+                tests.add(task);
             }
-        };
 
-        flowFacade.addFlow(flow);
+            Task javadocTask = flow.createBuildTask("javadocTask");
+            javadocTask.dependsOn(createBinaries, createSources);
+
+            Task deployTask = flow.createBuildTask("deployTask");
+
+            Task[] myArray = tests.toArray(new Task[0]);
+            deployTask.dependsOn(createBinaries, createSources, javadocTask);
+            deployTask.dependsOn(myArray);
+        });
 
 
         // TODO on commit to pom.xml or on manual trigger (sction?) run flow. O have build?

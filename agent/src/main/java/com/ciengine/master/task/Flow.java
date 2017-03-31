@@ -7,20 +7,20 @@ import java.util.List;
 /**
  * Created by emekhanikov on 24.03.2017.
  */
-public abstract class Flow {
-    private String name;
+public class Flow {
+//    private String name;
     private List<Task> taskList = new ArrayList<>();
 
-    public Flow(String name) {
-this.name = name;
-    }
+//    public Flow(String name) {
+//this.name = name;
+//    }
 
     void addTask(Task task)
     {
         taskList.add(task);
     }
 
-    public abstract void createFlow(FlowContext flowContext);
+//    public abstract void createFlow(FlowContext flowContext);
 
     BuildTask createBuildTask(String name) {
         BuildTask buildTask = new BuildTask(name);
@@ -28,15 +28,15 @@ this.name = name;
         return buildTask;
     }
 
-    public String getName()
-    {
-        return name;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
-    }
+//    public String getName()
+//    {
+//        return name;
+//    }
+//
+//    public void setName(String name)
+//    {
+//        this.name = name;
+//    }
 
     public List<Task> getTaskList()
     {

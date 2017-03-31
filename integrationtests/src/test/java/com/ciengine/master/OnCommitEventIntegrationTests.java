@@ -45,7 +45,7 @@ public class OnCommitEventIntegrationTests {
 	ModA -> ModB, ModC
 	ModB -> ModC
 	Each has develop branch
-	On commit to develop of ModC -> execute exection list
+	On commit to develop of ModC -> createPrototype exection list
 	 */
 
 		/*

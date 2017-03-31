@@ -4,15 +4,20 @@ import com.ciengine.master.task.*;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 
 /**
  * Created by emekhanikov on 24.03.2017.
  */
 @Component
 public class FlowFacadeImpl implements FlowFacade {
-    private List<Flow> flowPrototypeList = new ArrayList<>();
+//    private List<Flow> flowPrototypeList = new ArrayList<>();
     private List<Flow> flowInstanceList = new ArrayList<>();
+
+    private Map<String, FlowExecutor> stringFlowExecutorMap = new HashMap<>();
 
     private TaskEvaluator taskEvaluator = new TaskEvaluator();
 
@@ -43,26 +48,26 @@ public class FlowFacadeImpl implements FlowFacade {
 
     @Override public void triggerFlow(String flowName, FlowContext flowContext)
     {
-        Flow flow = findFlowByName(flowName);
-        if (flow != null) {
-            flow.createFlow(flowContext);
-            flowInstanceList.add(flow);
-            taskEvaluator.evaluate(flow.getTaskList());
-        }
+        Flow flow = new Flow();
+        FlowExecutor flowExecutor = findFlowExecutorByName(flowName);
+        flowExecutor.execute(flowContext, flow);
+        //            flow.createFlow(flowContext);
+        flowInstanceList.add(flow);
+        taskEvaluator.evaluate(flow.getTaskList());
     }
 
-    private Flow findFlowByName(String flowName)
+    private FlowExecutor findFlowExecutorByName(String flowName)
     {
-        for (Flow flow : flowPrototypeList) {
-            if(flowName.equals(flow.getName())) {
-                return flow;
-            }
-        }
-        return null;
+        return stringFlowExecutorMap.get(flowName);
     }
 
-    @Override public void addFlow(Flow flow)
+//    @Override public void addFlow(Flow flow)
+//    {
+//        flowPrototypeList.add(flow);
+//    }
+
+    @Override public void createPrototype(String flowName, FlowExecutor executor)
     {
-        flowPrototypeList.add(flow);
+        stringFlowExecutorMap.put(flowName, executor);
     }
 }
