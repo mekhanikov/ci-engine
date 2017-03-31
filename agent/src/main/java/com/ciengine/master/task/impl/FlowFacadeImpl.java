@@ -31,19 +31,33 @@ public class FlowFacadeImpl implements FlowFacade {
         for (Flow flow : flowInstanceList) {
             boolean needEvaluate = false;
             for(Task task : flow.getTaskList()) {
-                if (task instanceof BuildTask) {
-                    BuildTask buildTask = (BuildTask)task;
-                    if (buildId.equals(buildTask.getBuildId()) && !newStatus.equals(buildTask.getStatus())) {
-                        buildTask.setStatus(newStatus);
-                        needEvaluate = true;
-                        // TODO break? only one Task per Build?
-                    }
+                boolean res = foo(task, buildId, newStatus);
+                if(res){
+                    needEvaluate = true;
                 }
             }
             if (needEvaluate) {
                 taskEvaluator.evaluate(flow.getTaskList());
             }
         }
+    }
+
+    protected boolean foo(Task task, String buildId, String newStatus) {
+        if (task instanceof BuildTask) {
+            BuildTask buildTask = (BuildTask)task;
+            if (buildId.equals(buildTask.getBuildId()) && !newStatus.equals(buildTask.getStatus())) {
+                buildTask.setStatus(newStatus);
+                return true;
+                // TODO break? only one Task per Build?
+            }
+        }
+        for(Task task1 : task.getDependOnTasks()) {
+            boolean res = foo(task1, buildId, newStatus);
+            if(res){
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override public void triggerFlow(String flowName, FlowContext flowContext)
