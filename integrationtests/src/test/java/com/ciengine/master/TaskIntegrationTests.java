@@ -105,11 +105,11 @@ public class TaskIntegrationTests extends AbstractIntegrationTests {
 		flowFacade.triggerFlow("build CS", flowContext);
 
 //		OnBuildStatusChangedEvent onBuildStatusChangedEvent = new OnBuildStatusChangedEvent();
-//		WaitForEventListener waitForEventListener = waitForCondition(ciEngineEvent -> {
-//			return ciEngineEvent instanceof OnNewArtifactEvent;
-//		});
+		WaitForEventListener waitForEventListener = waitForCondition(ciEngineEvent -> {
+			return false;
+		});
 //		ciEngineFacade.onEvent(onBuildStatusChangedEvent);
-//		waitForEventListener.waitEvent(5);
+//		waitForEventListener.waitEvent(50000);
 ////		assertTrue(waitForEventListener.isMach());
 	}
 

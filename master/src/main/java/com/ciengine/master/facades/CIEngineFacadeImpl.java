@@ -2,6 +2,7 @@ package com.ciengine.master.facades;
 
 import com.ciengine.common.*;
 import com.ciengine.common.dto.*;
+import com.ciengine.common.events.OnBuildStatusChangedEvent;
 import com.ciengine.common.events.OnReleaseSubmitedEvent;
 import com.ciengine.master.GetModulesResponse;
 import com.ciengine.master.dao.BuildDao;
@@ -285,8 +286,21 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 	public void setBuildStatus(SetBuildStatusRequest setBuildStatusRequest) {
 // TODO
 		BuildModel buildModel = buildDao.findByExternalId(setBuildStatusRequest.getExternalBuildId());
-		buildModel.setStatus(setBuildStatusRequest.getStatus());
-		buildModel.setStatusDescription(setBuildStatusRequest.getStatusDescription());
+		if (!buildModel.getStatus().equals(setBuildStatusRequest.getStatus())) {
+			buildModel.setStatus(setBuildStatusRequest.getStatus());
+			buildModel.setStatusDescription(setBuildStatusRequest.getStatusDescription());
+			buildDao.update(buildModel);
+			//buildDao.update(buildModel);
+			//					OnNewArtifactEvent onNewArtifactEvent = new OnNewArtifactEvent();
+			//					ciEngineFacade.onEvent(onNewArtifactEvent);
+			OnBuildStatusChangedEvent onBuildStatusChangedEvent = new OnBuildStatusChangedEvent();
+			onBuildStatusChangedEvent.setBuildId(buildModel.getExternalId());
+			onBuildStatusChangedEvent.setNewStatus(buildModel.getStatus());
+			onEvent(onBuildStatusChangedEvent);
+			logger.info(String.valueOf(buildModel));
+		}
+//		buildModel.setStatus(setBuildStatusRequest.getStatus());
+//		buildModel.setStatusDescription(setBuildStatusRequest.getStatusDescription());
 	}
 
     @Override

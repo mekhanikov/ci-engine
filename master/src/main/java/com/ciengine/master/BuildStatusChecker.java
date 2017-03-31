@@ -1,6 +1,7 @@
 package com.ciengine.master;
 
 import com.ciengine.common.Node;
+import com.ciengine.common.events.OnBuildStatusChangedEvent;
 import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.facades.CIAgentFacade;
 import com.ciengine.master.facades.CIEngineFacade;
@@ -53,6 +54,10 @@ public class BuildStatusChecker
 					//buildDao.update(buildModel);
 //					OnNewArtifactEvent onNewArtifactEvent = new OnNewArtifactEvent();
 //					ciEngineFacade.onEvent(onNewArtifactEvent);
+					OnBuildStatusChangedEvent onBuildStatusChangedEvent = new OnBuildStatusChangedEvent();
+					onBuildStatusChangedEvent.setBuildId(buildModel.getExternalId());
+					onBuildStatusChangedEvent.setNewStatus(buildModel.getStatus());
+					ciEngineFacade.onEvent(onBuildStatusChangedEvent);
 					logger.info(String.valueOf(buildModel));
 				}
 				// Finished with status s.

@@ -15,13 +15,13 @@ import java.util.UUID;
  * Created by emekhanikov on 23.03.2017.
  */
 public class BuildTask extends Task {
-    private Integer buildId;
+    private String buildId;
 
 //    private EnvironmentData environmentData;
-    private String moduleName;
-    private String branchName;
-    private String applyList;
-    private String dockerImageId;
+    private String moduleName = "ModA";
+    private String branchName = "develop";
+    private String applyList = "mockReleaseList";
+    private String dockerImageId = "dockerid";
     private EnvironmentVariables environmentVariables = new EnvironmentVariables();
 
     @Autowired
@@ -29,6 +29,9 @@ public class BuildTask extends Task {
 
     public BuildTask(String name) {
         super(name);
+        environmentVariables.addProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL, "http://127.0.0.1:8081"); // TODO to conf?
+        environmentVariables.addProperty(EnvironmentVariablesConstants.GOING_TO_RELEASE, "ModA,ModB,ModC"); // TODO to conf?
+        environmentVariables.addProperty(EnvironmentVariablesConstants.MODULE_NAME, "ModA:1.0"); // TODO to conf?
     }
 
     @Override
@@ -46,7 +49,7 @@ public class BuildTask extends Task {
         addBuildRequest.setBranchName(branchName);
         addBuildRequest.setExternalId(buildExternalId);
         AddBuildResponse addBuildResponse = ciEngineFacade.addBuild(addBuildRequest);
-        buildId = addBuildResponse.getBuildId();
+        buildId = buildExternalId;
     }
 
     public void update() {
@@ -58,12 +61,12 @@ public class BuildTask extends Task {
         }
     }
 
-    public Integer getBuildId()
+    public String getBuildId()
     {
         return buildId;
     }
 
-    public void setBuildId(Integer buildId)
+    public void setBuildId(String buildId)
     {
         this.buildId = buildId;
     }

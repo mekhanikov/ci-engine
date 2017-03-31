@@ -24,7 +24,7 @@ class MockReleaseList extends AbstractReleaseList
 		//throw new CIEngineStepException("");
 		// TODO parse Maven logs for "Uploaded artefacts?"
 		// TODO are we interesting in Artefacts released? or in Module released? For Module Released we can not scan logs then.
-		System.out.print("d");
+		System.out.println("***** MockReleaseList");
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
