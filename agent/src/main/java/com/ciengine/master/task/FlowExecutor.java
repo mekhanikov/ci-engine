@@ -7,5 +7,5 @@ import com.ciengine.common.CIEngineEvent;
  * Created by emekhanikov on 28.03.2017.
  */
 public interface FlowExecutor {
-    void execute(FlowContext context, Flow flow);
+    Flow execute(FlowContext context);
 }

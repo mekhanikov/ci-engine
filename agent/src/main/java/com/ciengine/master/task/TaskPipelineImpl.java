@@ -17,7 +17,8 @@ public class TaskPipelineImpl extends AbstractPipelineImpl {
 
     @Override
     protected void prepareAll() {
-        flowFacade.createPrototype("build CS", (flowContext, flow)->{
+        flowFacade.createPrototype("build CS", (flowContext)->{
+            Flow flow = new Flow();
             Task createBinaries = flow.createBuildTask("createBinaries");
             Task createSources = flow.createBuildTask("createSources");
 
@@ -36,6 +37,7 @@ public class TaskPipelineImpl extends AbstractPipelineImpl {
             Task[] myArray = tests.toArray(new Task[0]);
             deployTask.dependsOn(createBinaries, createSources, javadocTask);
             deployTask.dependsOn(myArray);
+            return flow;
         });
 
 

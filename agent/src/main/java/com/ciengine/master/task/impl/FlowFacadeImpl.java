@@ -48,9 +48,8 @@ public class FlowFacadeImpl implements FlowFacade {
 
     @Override public void triggerFlow(String flowName, FlowContext flowContext)
     {
-        Flow flow = new Flow();
         FlowExecutor flowExecutor = findFlowExecutorByName(flowName);
-        flowExecutor.execute(flowContext, flow);
+        Flow flow = flowExecutor.execute(flowContext);
         //            flow.createFlow(flowContext);
         flowInstanceList.add(flow);
         taskEvaluator.evaluate(flow.getTaskList());
