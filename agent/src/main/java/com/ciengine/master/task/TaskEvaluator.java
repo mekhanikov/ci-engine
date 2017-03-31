@@ -50,4 +50,11 @@ public class TaskEvaluator {
     private boolean isDependenciesFinishedAndSuccess(Task task) {
         return BuildStatus.SUCCESS.equals(task.getStatus());
     }
+
+    public void evaluate(List<Task> taskList)
+    {// TODO it is not effective?
+        for(Task task : taskList) {
+            evaluate(task);
+        }
+    }
 }

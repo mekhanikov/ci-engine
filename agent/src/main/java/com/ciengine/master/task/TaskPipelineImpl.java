@@ -19,29 +19,31 @@ public class TaskPipelineImpl extends AbstractPipelineImpl {
     protected void prepareAll() {
         Flow flow = new Flow("build CS") {
             @Override
-            void createFlow(FlowContext flowContext) {
-                Task createBinaries = new BuildTask("createBinaries");
-                Task createSources = new BuildTask("createSources");
+            public void createFlow(FlowContext flowContext) {
+                Task createBinaries = createBuildTask("createBinaries");
+                Task createSources = createBuildTask("createSources");
 
                 List<Task> tests = new ArrayList<>();
                 for(int i=0; i < 2; i++) {
-                    Task task = new BuildTask("test" +i);
+                    Task task = createBuildTask("test" +i);
                     task.dependsOn(createBinaries, createSources);
                     tests.add(task);
                 }
 
-                Task javadocTask = new BuildTask("javadocTask");
+                Task javadocTask = createBuildTask("javadocTask");
                 javadocTask.dependsOn(createBinaries, createSources);
 
-                Task deployTask = new BuildTask("deployTask");
+                Task deployTask = createBuildTask("deployTask");
 
                 Task[] myArray = tests.toArray(new Task[0]);
                 deployTask.dependsOn(createBinaries, createSources, javadocTask);
                 deployTask.dependsOn(myArray);
             }
         };
-        FlowContext flowContext = new FlowContext();
-        flow.createFlow(flowContext);
+
+        flowFacade.addFlow(flow);
+
+
         // TODO on commit to pom.xml or on manual trigger (sction?) run flow. O have build?
         // TODO on build status changed (/periodicaly), update according Task nd reevaluate other.
         // /periodicaly

@@ -7,4 +7,9 @@ public interface FlowFacade {
     void updateAll();
 
     void updateBuildTaskStatusForBuildId(String buildId, String newStatus);
+
+	void triggerFlow(String flowName, FlowContext flowContext);
+
+
+	void addFlow(Flow flow);
 }

@@ -33,4 +33,14 @@ public class BuildTask extends Task {
             setStatus(build.getStatus());
         }
     }
+
+    public Integer getBuildId()
+    {
+        return buildId;
+    }
+
+    public void setBuildId(Integer buildId)
+    {
+        this.buildId = buildId;
+    }
 }

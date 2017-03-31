@@ -8,9 +8,7 @@ import com.ciengine.common.events.OnNewArtifactEvent;
 import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.facades.ModuleFacade;
-import com.ciengine.master.task.BuildTask;
-import com.ciengine.master.task.Task;
-import com.ciengine.master.task.TaskEvaluator;
+import com.ciengine.master.task.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +38,9 @@ public class TaskIntegrationTests extends AbstractIntegrationTests {
 
 	@Autowired
 	BuildDao buildDao;
+
+	@Autowired
+	private FlowFacade flowFacade;
 
 	@Test
 	public void test() throws Exception {
@@ -96,13 +97,16 @@ public class TaskIntegrationTests extends AbstractIntegrationTests {
 
 	@Test
 	public void test2() throws InterruptedException {
-		OnBuildStatusChangedEvent onBuildStatusChangedEvent = new OnBuildStatusChangedEvent();
-		WaitForEventListener waitForEventListener = waitForCondition(ciEngineEvent -> {
-			return ciEngineEvent instanceof OnNewArtifactEvent;
-		});
-		ciEngineFacade.onEvent(onBuildStatusChangedEvent);
-		waitForEventListener.waitEvent(5);
-//		assertTrue(waitForEventListener.isMach());
+		FlowContext flowContext = new FlowContext();
+		flowFacade.triggerFlow("build CS", flowContext);
+
+//		OnBuildStatusChangedEvent onBuildStatusChangedEvent = new OnBuildStatusChangedEvent();
+//		WaitForEventListener waitForEventListener = waitForCondition(ciEngineEvent -> {
+//			return ciEngineEvent instanceof OnNewArtifactEvent;
+//		});
+//		ciEngineFacade.onEvent(onBuildStatusChangedEvent);
+//		waitForEventListener.waitEvent(5);
+////		assertTrue(waitForEventListener.isMach());
 	}
 
 }
