@@ -9,4 +9,6 @@ public interface CIEngineList
 	void doList(EnvironmentVariables environmentVariables) throws CIEngineStepException;
 
 	EnvironmentVariables createEnvironmentVariables();
+
+	String getBeanName();
 }

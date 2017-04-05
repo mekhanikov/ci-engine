@@ -30,7 +30,7 @@ public class Flow {
 //        return buildTask;
 //    }
 
-//    public String getName()
+//    public String getBeanName()
 //    {
 //        return name;
 //    }

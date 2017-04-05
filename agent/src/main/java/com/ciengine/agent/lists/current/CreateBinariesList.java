@@ -40,6 +40,11 @@ public class CreateBinariesList  implements CIEngineList
 		return environmentVariables;
 	}
 
+	@Override public String getBeanName()
+	{
+		return "createBinariesList";
+	}
+
 	public void setGitUrl(String gitUrl)
 	{
 		this.gitUrl = gitUrl;

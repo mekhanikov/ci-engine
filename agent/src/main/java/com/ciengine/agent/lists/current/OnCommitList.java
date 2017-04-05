@@ -70,6 +70,11 @@ public class OnCommitList implements CIEngineList
 		return null;
 	}
 
+	@Override public String getBeanName()
+	{
+		return "onCommitList";
+	}
+
 	private void executeStep(CIEngineStep checkoutStep, EnvironmentVariables environmentVariables) throws CIEngineStepException
 	{
 		checkoutStep.doStep(environmentVariables);

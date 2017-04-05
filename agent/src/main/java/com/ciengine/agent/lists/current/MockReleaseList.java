@@ -56,4 +56,9 @@ class MockReleaseList extends AbstractReleaseList
 		}
 		return waitingModules;
 	}
+
+	@Override public String getBeanName()
+	{
+		return "mockReleaseList";
+	}
 }

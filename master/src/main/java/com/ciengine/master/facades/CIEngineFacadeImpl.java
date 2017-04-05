@@ -33,7 +33,7 @@ import java.util.*;
 @Component
 public class CIEngineFacadeImpl implements CIEngineFacade
 {
-//	private static final Logger LOG = Logger.getLogger(CIEngineFacadeImpl.class.getName());
+//	private static final Logger LOG = Logger.getLogger(CIEngineFacadeImpl.class.getBeanName());
 	private static final Log logger = LogFactory.getLog(CIEngineFacadeImpl.class);
 
 	@Autowired

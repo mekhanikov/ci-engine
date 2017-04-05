@@ -47,7 +47,7 @@
 ////		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.BRANCH_NAME, onNewArtifactEvent.getBranchName());
 ////		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.COMMIT_ID, onNewArtifactEvent.getComitId());
 //
-////		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MODULE_NAME, module.getName());
+////		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MODULE_NAME, module.getBeanName());
 //
 //			// TODO set module specific values
 //

@@ -67,7 +67,7 @@ public class OnCommit implements CIEngineListenerBuilder {
                     EnvironmentData environmentData = environmentFacade.findApplyList(module.getName(), onCommitEvent.getBranchName());
 //                applyList = environmentData != null ? environmentData.getApplyList() : null;
 //            }
-//            EnvironmentData environmentData = environmentFacade.findApplyList(module.getName(), onCommitEvent.getBranchName());
+//            EnvironmentData environmentData = environmentFacade.findApplyList(module.getBeanName(), onCommitEvent.getBranchName());
                     if(environmentData != null) {
 
 //                        EnvironmentVariables environmentVariablesFromEventTmp = new EnvironmentVariables();

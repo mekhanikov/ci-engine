@@ -40,7 +40,7 @@
 //		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.BRANCH_NAME, onCommitEvent.getBranchName());
 //		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.COMMIT_ID, onCommitEvent.getComitId());
 //
-//		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MODULE_NAME, module.getName());
+//		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.MODULE_NAME, module.getBeanName());
 //		environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL, "http://127.0.0.1:8080"); // TODO to conf?
 //
 //
@@ -58,7 +58,7 @@
 //				addBuildRequest.setNodeId(null);
 //				addBuildRequest.setDockerImageId(onCommitRule.getDockerImageId());
 //				addBuildRequest.setInputParams(makeString(merge(environmentVariablesFromEventTmp, onCommitRule.getEnvironmentVariables())));
-//				addBuildRequest.setModuleName(module.getName());
+//				addBuildRequest.setModuleName(module.getBeanName());
 //				addBuildRequest.setReasonOfTrigger("commit");
 //				addBuildRequest.setBranchName(onCommitEvent.getBranchName());
 //				addBuildRequest.setExternalId(buildExternalId);
@@ -117,7 +117,7 @@
 //			return false;
 //		}
 //		boolean branchIsApplicable = isMach(onCommitRule.getForBranches(), onCommitEvent.getBranchName());
-//		boolean moduleIsApplicable = isMach(onCommitRule.getForModules(), module.getName());
+//		boolean moduleIsApplicable = isMach(onCommitRule.getForModules(), module.getBeanName());
 //		return branchIsApplicable && moduleIsApplicable;
 //	}
 //

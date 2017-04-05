@@ -109,4 +109,9 @@ class ReleaseList extends AbstractReleaseList
 	protected String extractVersion(String moduleNameWithVersion) {
 		return  moduleNameWithVersion.substring(moduleNameWithVersion.lastIndexOf(':') + 1, moduleNameWithVersion.length());
 	}
+
+	@Override public String getBeanName()
+	{
+		return "releaseList";
+	}
 }
