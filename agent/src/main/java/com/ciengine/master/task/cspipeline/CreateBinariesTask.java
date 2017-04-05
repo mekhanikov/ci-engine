@@ -1,6 +1,7 @@
 package com.ciengine.master.task.cspipeline;
 
 import com.ciengine.agent.lists.current.CreateBinariesList;
+import com.ciengine.common.CIEngineList;
 import com.ciengine.common.EnvironmentVariables;
 import com.ciengine.common.EnvironmentVariablesConstants;
 import com.ciengine.common.dto.*;
@@ -41,6 +42,11 @@ public class CreateBinariesTask extends Task {
         createBinariesList.setCIEngineMasterUrl("http://127.0.0.1:8081");
         createBinariesList.setGitUrl("");
         // TODO set all other data.
+        addBuild(createBinariesList);
+    }
+
+    protected void addBuild(CIEngineList createBinariesList)
+    {
         EnvironmentVariables environmentVariables = createBinariesList.createEnvironmentVariables();
         String buildExternalId = UUID.randomUUID().toString();
         EnvironmentVariables environmentVariablesFromEvent = new EnvironmentVariables();
