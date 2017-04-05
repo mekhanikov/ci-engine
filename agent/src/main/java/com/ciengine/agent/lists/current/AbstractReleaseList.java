@@ -106,6 +106,10 @@ abstract class AbstractReleaseList implements CIEngineList
 
 	protected abstract Set<String> allDepsInPlace(EnvironmentVariables environmentVariables);
 
+	@Override public EnvironmentVariables createEnvironmentVariables()
+	{
+		return new EnvironmentVariables();
+	}
 
 	public CIEngineClient getCiEngineClient() {
 		return ciEngineClient;

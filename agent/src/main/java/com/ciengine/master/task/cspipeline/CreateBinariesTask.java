@@ -1,11 +1,12 @@
-package com.ciengine.master.task;
+package com.ciengine.master.task.cspipeline;
 
+import com.ciengine.agent.lists.current.CreateBinariesList;
 import com.ciengine.common.EnvironmentVariables;
 import com.ciengine.common.EnvironmentVariablesConstants;
 import com.ciengine.common.dto.*;
 import com.ciengine.master.facades.CIEngineFacade;
-import com.ciengine.master.facades.EnvironmentData;
 import com.ciengine.master.listeners.impl.Utils;
+import com.ciengine.master.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;
@@ -14,7 +15,7 @@ import java.util.UUID;
 /**
  * Created by emekhanikov on 23.03.2017.
  */
-public class BuildTask extends Task {
+public class CreateBinariesTask extends Task {
     private String buildId;
 
 //    private EnvironmentData environmentData;
@@ -22,20 +23,25 @@ public class BuildTask extends Task {
     private String branchName = "develop";
     private String applyList = "createBinariesList";
     private String dockerImageId = "dockerid";
-    private EnvironmentVariables environmentVariables = new EnvironmentVariables();
+//    private EnvironmentVariables environmentVariables = new EnvironmentVariables();
 
     @Autowired
     private CIEngineFacade ciEngineFacade;
 
-    public BuildTask(String name) {
+    public CreateBinariesTask(String name) {
         super(name);
-        environmentVariables.addProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL, "http://127.0.0.1:8081"); // TODO to conf?
-        environmentVariables.addProperty(EnvironmentVariablesConstants.GOING_TO_RELEASE, "ModA,ModB,ModC"); // TODO to conf?
-        environmentVariables.addProperty(EnvironmentVariablesConstants.MODULE_NAME, "ModA:1.0"); // TODO to conf?
+//        environmentVariables.addProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL, "http://127.0.0.1:8081"); // TODO to conf?
+//        environmentVariables.addProperty(EnvironmentVariablesConstants.GOING_TO_RELEASE, "ModA,ModB,ModC"); // TODO to conf?
+//        environmentVariables.addProperty(EnvironmentVariablesConstants.MODULE_NAME, "ModA:1.0"); // TODO to conf?
     }
 
     @Override
     public void run() {
+        CreateBinariesList createBinariesList = new CreateBinariesList();
+        createBinariesList.setCIEngineMasterUrl("http://127.0.0.1:8081");
+        createBinariesList.setGitUrl("");
+        // TODO set all other data.
+        EnvironmentVariables environmentVariables = createBinariesList.createEnvironmentVariables();
         String buildExternalId = UUID.randomUUID().toString();
         EnvironmentVariables environmentVariablesFromEvent = new EnvironmentVariables();
         environmentVariablesFromEvent.addProperty(EnvironmentVariablesConstants.BUILD_EXTERNAL_ID, buildExternalId);

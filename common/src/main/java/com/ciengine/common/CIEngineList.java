@@ -7,4 +7,6 @@ package com.ciengine.common;
 public interface CIEngineList
 {
 	void doList(EnvironmentVariables environmentVariables) throws CIEngineStepException;
+
+	EnvironmentVariables createEnvironmentVariables();
 }

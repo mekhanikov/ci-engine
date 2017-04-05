@@ -65,6 +65,11 @@ public class OnCommitList implements CIEngineList
 		ciEngineClient.sendEvent(url, onNewArtifactEvent);
 	}
 
+	@Override public EnvironmentVariables createEnvironmentVariables()
+	{
+		return null;
+	}
+
 	private void executeStep(CIEngineStep checkoutStep, EnvironmentVariables environmentVariables) throws CIEngineStepException
 	{
 		checkoutStep.doStep(environmentVariables);
