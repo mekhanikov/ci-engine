@@ -2,6 +2,7 @@ package com.ciengine.master.task;
 
 import com.ciengine.master.listeners.RuleBuilder;
 import com.ciengine.master.listeners.impl.AbstractPipelineImpl;
+import com.ciengine.master.task.cspipeline.CreateBinariesTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -24,7 +25,7 @@ public class TaskPipelineImpl extends AbstractPipelineImpl {
     protected void prepareAll() {
         flowFacade.createPrototype("build CS", (flowContext)->{
             Flow flow = new Flow();
-            Task createBinaries = createBuildTask("createBinaries");
+            Task createBinaries = createCreateBinariesTask("createBinaries");
             Task createSources = createBuildTask("createSources");
 
             List<Task> tests = new ArrayList<>();
@@ -64,6 +65,14 @@ public class TaskPipelineImpl extends AbstractPipelineImpl {
         buildTask.setName(taskName);
 //        ruleBuilderList.add(ruleBuilder);
         return buildTask;
+    }
+
+    private CreateBinariesTask createCreateBinariesTask(String taskName)
+    {
+        CreateBinariesTask createBinariesTask = (CreateBinariesTask) applicationContext.getBean("createBinariesTask", taskName);
+        createBinariesTask.setName(taskName);
+        //        ruleBuilderList.add(ruleBuilder);
+        return createBinariesTask;
     }
 
 }

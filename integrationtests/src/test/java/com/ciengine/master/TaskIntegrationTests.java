@@ -49,7 +49,7 @@ public class TaskIntegrationTests extends AbstractIntegrationTests {
 
 	@Test
 	public void test() throws Exception {
-		Task createBinaries = createCreateBinariesTask("createBinaries");
+		Task createBinaries = createBuildTask("createBinaries");
 		Task createSources = createBuildTask("createSources");
 
 		List<Task> tests = new ArrayList<>();
@@ -122,12 +122,6 @@ public class TaskIntegrationTests extends AbstractIntegrationTests {
 		return buildTask;
 	}
 
-	private CreateBinariesTask createCreateBinariesTask(String taskName)
-	{
-		CreateBinariesTask createBinariesTask = (CreateBinariesTask) applicationContext.getBean("createBinariesTask", taskName);
-		createBinariesTask.setName(taskName);
-		//        ruleBuilderList.add(ruleBuilder);
-		return createBinariesTask;
-	}
+
 
 }
