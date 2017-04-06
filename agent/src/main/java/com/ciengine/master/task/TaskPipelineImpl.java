@@ -60,7 +60,7 @@ public class TaskPipelineImpl extends AbstractPipelineImpl {
 
     private BuildTask createBuildTask(String taskName)
     {
-        BuildTask buildTask = applicationContext.getBean(BuildTask.class, taskName);
+        BuildTask buildTask = (BuildTask) applicationContext.getBean("buildTask", taskName);
         buildTask.setName(taskName);
 //        ruleBuilderList.add(ruleBuilder);
         return buildTask;

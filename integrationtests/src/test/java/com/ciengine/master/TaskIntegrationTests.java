@@ -9,6 +9,7 @@ import com.ciengine.master.dao.BuildDao;
 import com.ciengine.master.facades.CIEngineFacade;
 import com.ciengine.master.facades.ModuleFacade;
 import com.ciengine.master.task.*;
+import com.ciengine.master.task.cspipeline.CreateBinariesTask;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,7 @@ public class TaskIntegrationTests extends AbstractIntegrationTests {
 
 	@Test
 	public void test() throws Exception {
-		Task createBinaries = createBuildTask("createBinaries");
+		Task createBinaries = createCreateBinariesTask("createBinaries");
 		Task createSources = createBuildTask("createSources");
 
 		List<Task> tests = new ArrayList<>();
@@ -115,10 +116,18 @@ public class TaskIntegrationTests extends AbstractIntegrationTests {
 
 	private BuildTask createBuildTask(String taskName)
 	{
-		BuildTask buildTask = applicationContext.getBean(BuildTask.class, taskName);
+		BuildTask buildTask = (BuildTask) applicationContext.getBean("buildTask", taskName);
 		buildTask.setName(taskName);
 		//        ruleBuilderList.add(ruleBuilder);
 		return buildTask;
+	}
+
+	private CreateBinariesTask createCreateBinariesTask(String taskName)
+	{
+		CreateBinariesTask createBinariesTask = (CreateBinariesTask) applicationContext.getBean("createBinariesTask", taskName);
+		createBinariesTask.setName(taskName);
+		//        ruleBuilderList.add(ruleBuilder);
+		return createBinariesTask;
 	}
 
 }

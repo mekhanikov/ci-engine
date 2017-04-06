@@ -9,6 +9,7 @@ import com.ciengine.master.listeners.impl.oncommit.OnCommit;
 import com.ciengine.master.listeners.impl.onrelease.OnNewArtefact;
 import com.ciengine.master.listeners.impl.onrelease.OnReleaseSubmited;
 import com.ciengine.master.task.BuildTask;
+import com.ciengine.master.task.cspipeline.CreateBinariesTask;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -135,10 +136,17 @@ public class MasterApplication
 	public OnBuildStatusChanged onBuildStatusChanged() {
 		return new OnBuildStatusChanged();
 	}
-@Bean
+
+	@Bean
 	@Scope("prototype")
 	public BuildTask buildTask(String buildName) {
 		return new BuildTask(buildName);
+	}
+
+	@Bean
+	@Scope("prototype")
+	public CreateBinariesTask createBinariesTask(String buildName) {
+		return new CreateBinariesTask(buildName);
 	}
 
 
