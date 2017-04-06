@@ -25,6 +25,8 @@ abstract class AbstractReleaseList implements CIEngineList
 	@Qualifier("mavenStep")
 	private CIEngineStep ciEngineStep;
 
+	private String ciEngineMasterUrl;
+
 	@Override public void doList(EnvironmentVariables environmentVariables) throws CIEngineStepException
 	{
 		String gitUrl = environmentVariables.getProperty(EnvironmentVariablesConstants.GIT_URL);
@@ -98,6 +100,12 @@ abstract class AbstractReleaseList implements CIEngineList
 				ciEngineClient.setBuildStatus(url, buildId, BuildStatus.SKIPED, "NOT ALLARESKIPPED");
 			}
         }
+	}
+
+	@Override
+	public void setCIEngineMasterUrl(String ciEngineMasterUrl)
+	{
+		this.ciEngineMasterUrl = ciEngineMasterUrl;
 	}
 
 	protected abstract void build(EnvironmentVariables environmentVariables);

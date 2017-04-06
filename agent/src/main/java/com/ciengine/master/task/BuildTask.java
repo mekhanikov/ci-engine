@@ -29,9 +29,6 @@ public class BuildTask extends Task {
 
     public BuildTask(String name) {
         super(name);
-        environmentVariables.addProperty(EnvironmentVariablesConstants.CIENGINE_MASTER_URL, "http://127.0.0.1:8081"); // TODO to conf?
-        environmentVariables.addProperty(EnvironmentVariablesConstants.GOING_TO_RELEASE, "ModA,ModB,ModC"); // TODO to conf?
-        environmentVariables.addProperty(EnvironmentVariablesConstants.MODULE_NAME, "ModA:1.0"); // TODO to conf?
     }
 
     @Override
@@ -63,6 +60,7 @@ public class BuildTask extends Task {
 
     protected void addBuild(CIEngineList createBinariesList)
     {
+        createBinariesList.setCIEngineMasterUrl("http://127.0.0.1:8081");
         EnvironmentVariables environmentVariables = createBinariesList.createEnvironmentVariables();
         String buildExternalId = UUID.randomUUID().toString();
         EnvironmentVariables environmentVariablesFromEvent = new EnvironmentVariables();

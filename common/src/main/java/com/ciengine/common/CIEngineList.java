@@ -11,4 +11,6 @@ public interface CIEngineList
 	EnvironmentVariables createEnvironmentVariables();
 
 	String getBeanName();
+
+	void setCIEngineMasterUrl(String s);
 }

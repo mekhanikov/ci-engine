@@ -114,4 +114,6 @@ class ReleaseList extends AbstractReleaseList
 	{
 		return "releaseList";
 	}
+
+
 }

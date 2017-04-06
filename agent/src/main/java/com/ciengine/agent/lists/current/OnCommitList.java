@@ -32,6 +32,8 @@ public class OnCommitList implements CIEngineList
 	@Autowired
 	private CIEngineClient ciEngineClient;
 
+	private String ciEngineMasterUrl;
+
 	@Override public void doList(EnvironmentVariables environmentVariables) throws CIEngineStepException
 	{
 		/*
@@ -73,6 +75,12 @@ public class OnCommitList implements CIEngineList
 	@Override public String getBeanName()
 	{
 		return "onCommitList";
+	}
+
+	@Override
+	public void setCIEngineMasterUrl(String ciEngineMasterUrl)
+	{
+		this.ciEngineMasterUrl = ciEngineMasterUrl;
 	}
 
 	private void executeStep(CIEngineStep checkoutStep, EnvironmentVariables environmentVariables) throws CIEngineStepException
