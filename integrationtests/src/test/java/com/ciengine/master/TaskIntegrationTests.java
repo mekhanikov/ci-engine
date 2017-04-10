@@ -104,13 +104,22 @@ public class TaskIntegrationTests extends AbstractIntegrationTests {
 	public void test2() throws InterruptedException {
 		FlowContext flowContext = new FlowContext();
 		flowFacade.triggerFlow("build CS", flowContext);
-
+		final int[] i = { 0 };
 //		OnBuildStatusChangedEvent onBuildStatusChangedEvent = new OnBuildStatusChangedEvent();
 		WaitForEventListener waitForEventListener = waitForCondition(ciEngineEvent -> {
+			if(ciEngineEvent instanceof OnBuildStatusChangedEvent) {
+				OnBuildStatusChangedEvent onBuildStatusChangedEvent = (OnBuildStatusChangedEvent)ciEngineEvent;
+				if ("SUCCESS".equals(onBuildStatusChangedEvent.getNewStatus())) {
+					i[0]++;
+					if (i[0]==5) {
+						return true;
+					}
+				}
+			}
 			return false;
 		});
 //		ciEngineFacade.onEvent(onBuildStatusChangedEvent);
-//		waitForEventListener.waitEvent(50000);
+		waitForEventListener.waitEvent(50000);
 ////		assertTrue(waitForEventListener.isMach());
 	}
 
