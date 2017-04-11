@@ -1,6 +1,7 @@
 @startuml
 
-class agent --> common
+class agent
+agent --> common
 integrationtests --> common
 integrationtests --> master
 integrationtests --> agent

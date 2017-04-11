@@ -4,6 +4,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 
 /**
  * Created by emekhanikov on 26.10.2016.
+ * Encapsulate something like attempt for task? Actualy can live without tasks.
+ * Encapsulate particular run on particular node with particular params.
  */
 public class Build {
 
@@ -21,10 +23,10 @@ public class Build {
 
     private String inputParams; // TODO should be TEXT or so.
     private String inputParamsHash;
-    private String moduleName;
+    private String moduleName;// TODO build can be multi module build and has multi repos, should this param be comon or like a metadata?
     private String branchName;// TODO (merge connected to 2 branches, pass both?)
     private String executionList;
-    private String dockerImageId;
+    private String dockerImageId; // TODo what if run on LXC container, it will be some image id
     private String Status;//  see BuildStatus
     private String nodeId;//Executed on node id (null if Status: queued) - doesn't makes sense
     private String reasonOfTrigger;
