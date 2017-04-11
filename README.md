@@ -33,3 +33,5 @@ Build lists lives in **agent** module:
 - **ReleaseList** - real build (clone sources, run maven and so on).
 - **OnCommitList** 
 
+
+More details in GoogleDoc https://docs.google.com/document/d/1iK2nRhV81JQwQ-4Isa-C5KkZemZeH4zeDpLKMtLpVxk/edit#
