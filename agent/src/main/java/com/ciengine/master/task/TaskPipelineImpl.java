@@ -23,6 +23,8 @@ public class TaskPipelineImpl extends AbstractPipelineImpl {
 
     @Override
     protected void prepareAll() {
+        // TODO ExecutionList should be able create Flow (prototype or/and instance?) with tasks via client (REST-calls).
+        // TODO ideally should looks in the same way.
         flowFacade.createPrototype("build CS", (flowContext)->{
             Flow flow = new Flow();
             Task createBinaries = createCreateBinariesTask("createBinaries");
