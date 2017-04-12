@@ -21,9 +21,9 @@ public class Build {
     //	@Temporal(TemporalType.TIMESTAMP)
     private Long endTimestamp;
 
-    private String inputParams; // TODO should be TEXT or so.
+    private String medatdata;// will contains in XML/(JSON?) inputParams (and execution list specific stuff like: moduleName, branchName)
+    private String inputParams;
     private String inputParamsHash;
-    private String moduleName;// TODO build can be multi module build and has multi repos, should this param be comon or like a metadata?
     private String branchName;// TODO (merge connected to 2 branches, pass both?)
     private String executionList;
     private String dockerImageId; // TODo what if run on LXC container, it will be some image id
@@ -73,14 +73,6 @@ public class Build {
 
     public void setInputParamsHash(String inputParamsHash) {
         this.inputParamsHash = inputParamsHash;
-    }
-
-    public String getModuleName() {
-        return moduleName;
-    }
-
-    public void setModuleName(String moduleName) {
-        this.moduleName = moduleName;
     }
 
     public String getBranchName() {

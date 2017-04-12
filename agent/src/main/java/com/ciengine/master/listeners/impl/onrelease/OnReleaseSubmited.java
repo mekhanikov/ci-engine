@@ -35,7 +35,7 @@ public class OnReleaseSubmited  implements CIEngineListenerBuilder {
                     addBuildRequest.setExecutionList(onReleaseSubmitedEvent.getApplyList());
                     addBuildRequest.setNodeId(null);
                     addBuildRequest.setDockerImageId(onReleaseSubmitedEvent.getDockerImageId());
-                    addBuildRequest.setModuleName(onReleaseSubmitedEvent.getModuleNameToRelease());
+//                    addBuildRequest.setModuleName(onReleaseSubmitedEvent.getModuleNameToRelease());// TODO already have moduleName in environmentVariablesFromEvent, do we need it? just for fast search?
                     addBuildRequest.setBranchName(onReleaseSubmitedEvent.getReleaseBranchName());
                     addBuildRequest.setReasonOfTrigger(reasonOfTrigger);
                     String buildExternalId = UUID.randomUUID().toString();

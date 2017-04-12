@@ -46,7 +46,7 @@ abstract class AbstractReleaseList implements CIEngineList
 		findBuildsRequest.setModuleName(moduleNameToRelease);
 		findBuildsRequest.setBranchName(branchName);
 		FindBuildsResponse findBuildsResponse = ciEngineClient.findBuild(url, findBuildsRequest);
-        // TODO calch hash and gilter by hash as well.
+        // TODO calch hash and gilter by hash as well. OR all retryis will have same group_id/pipeline_id? then search by group_id/pipeline_id
         // TODO except current one build - it alwasy IN PROGRESS
 		List<Build> buildLists = findBuildsResponse.getBuildList();
 

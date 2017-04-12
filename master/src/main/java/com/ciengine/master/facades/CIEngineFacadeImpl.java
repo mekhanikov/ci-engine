@@ -68,7 +68,7 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 		for (BuildModel buildModel : buildModelList) {
 			Build build = new Build();
 			build.setStatus(buildModel.getStatus());
-			build.setModuleName(buildModel.getModuleName());
+//			build.setModuleName(buildModel.getModuleName());// TODO how we going to search by metadata?
 			build.setBranchName(buildModel.getBranchName());
 			build.setInputParams(buildModel.getInputParams());
 			build.setStatusDescription(buildModel.getStatusDescription());
@@ -86,7 +86,7 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 		buildModel.setBranchName(addBuildRequest.getBranchName());
 		buildModel.setExecutionList(addBuildRequest.getExecutionList());
 		buildModel.setInputParams(addBuildRequest.getInputParams());
-		buildModel.setModuleName(addBuildRequest.getModuleName());
+		buildModel.setMedatdata(addBuildRequest.getMedatdata());
 		buildModel.setNodeId(addBuildRequest.getNodeId());
 		buildModel.setReasonOfTrigger(addBuildRequest.getReasonOfTrigger());
 		buildModel.setStatus(BuildStatus.QUEUED);
@@ -250,14 +250,13 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 	}
 
 	@Override
-	public FindBuildsResponse findBuild(FindBuildsRequest addBuildRequest) {
+	public FindBuildsResponse findBuild(FindBuildsRequest findBuildsRequest) {
 		FindBuildsResponse findBuildsResponse = new FindBuildsResponse();
 		List<BuildModel> buildModelList = buildDao.find(
-				addBuildRequest.getModuleName(),
-				addBuildRequest.getBranchName(),
-				addBuildRequest.getExecutionList(),
-				addBuildRequest.getDockerImageId(),
-				addBuildRequest.getInputParams()
+				findBuildsRequest.getBranchName(),
+				findBuildsRequest.getExecutionList(),
+				findBuildsRequest.getDockerImageId(),
+				findBuildsRequest.getInputParams()
 				);
 
 		List<Build> builds = new ArrayList<>();
@@ -266,7 +265,6 @@ public class CIEngineFacadeImpl implements CIEngineFacade
 			build.setDockerImageId(buildModel.getDockerImageId());
 			build.setBranchName(buildModel.getBranchName());
 			build.setExecutionList(buildModel.getExecutionList());
-			build.setModuleName(buildModel.getModuleName());
 			build.setInputParams(buildModel.getInputParams());
 			build.setStatus(buildModel.getStatus());
 			build.setExternalId(buildModel.getExternalId());

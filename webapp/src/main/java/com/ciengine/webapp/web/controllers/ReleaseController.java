@@ -204,7 +204,6 @@ public class ReleaseController {
     @RequestMapping(value = "/builds", method = RequestMethod.GET)
     public String builds(Model model) {
         FindBuildsRequest findBuildsRequest = new FindBuildsRequest();
-        ciEngineClient.findBuilds(ciEngineRestUrl, findBuildsRequest);
         FindBuildsResponse findBuildsResponse = ciEngineClient.findBuilds(ciEngineRestUrl, findBuildsRequest);
         List<Build> builds = new ArrayList<>();
         for (Build build : findBuildsResponse.getBuildList()) {

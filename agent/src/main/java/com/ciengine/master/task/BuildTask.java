@@ -41,7 +41,7 @@ public class BuildTask extends Task {
         addBuildRequest.setNodeId(null);
         addBuildRequest.setDockerImageId(dockerImageId);
         addBuildRequest.setInputParams(Utils.makeString(Utils.merge(environmentVariablesFromEvent, environmentVariables)));
-        addBuildRequest.setModuleName(moduleName);
+//        addBuildRequest.setModuleName(moduleName);// TODO add to metadata
         addBuildRequest.setReasonOfTrigger("BuildTask");
         addBuildRequest.setBranchName(branchName);
         addBuildRequest.setExternalId(buildExternalId);
@@ -70,7 +70,7 @@ public class BuildTask extends Task {
         addBuildRequest.setNodeId(null);
         addBuildRequest.setDockerImageId(dockerImageId);
         addBuildRequest.setInputParams(Utils.makeString(Utils.merge(environmentVariablesFromEvent, environmentVariables)));
-        addBuildRequest.setModuleName(moduleName);
+//        addBuildRequest.setModuleName(moduleName);// TODO add to metadata
         addBuildRequest.setReasonOfTrigger("BuildTask");
         addBuildRequest.setBranchName(branchName);
         addBuildRequest.setExternalId(buildExternalId);

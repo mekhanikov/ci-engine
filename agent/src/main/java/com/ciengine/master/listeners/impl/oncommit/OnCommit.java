@@ -80,7 +80,7 @@ public class OnCommit implements CIEngineListenerBuilder {
                         addBuildRequest.setDockerImageId(environmentData.getDockerImageId());
                         addBuildRequest.setInputParams(
                               Utils.makeString(Utils.merge(environmentVariablesFromEvent, environmentData.getEnvironmentVariables())));
-                        addBuildRequest.setModuleName(module.getName());
+//                        addBuildRequest.setModuleName(module.getName());// TODO already have moduleName in environmentVariablesFromEvent, do we need it? just for fast search?
                         addBuildRequest.setReasonOfTrigger("commit");
                         addBuildRequest.setBranchName(onCommitEvent.getBranchName());
                         addBuildRequest.setExternalId(buildExternalId);

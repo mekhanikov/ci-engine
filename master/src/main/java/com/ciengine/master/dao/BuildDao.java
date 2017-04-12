@@ -49,15 +49,13 @@ public class BuildDao extends AbstractDao<BuildModel>
 		return result;
 	}
 
-	public List<BuildModel> find(String moduleName, String branchName, String executionList, String dockerImageId, String inputParams) {
+	public List<BuildModel> find(String branchName, String executionList, String dockerImageId, String inputParams) {
 		Query query = openSession().createQuery("from build as o" +
-				" where o.moduleName=:moduleName" +
-				" AND o.branchName=:branchName" +
+				" where o.branchName=:branchName" +
 				" AND o.executionList=:executionList" +
 				" AND o.dockerImageId=:dockerImageId" +
 //				" AND o.inputParams=:inputParams" +
 				" ORDER BY o.startTimestamp DESC")
-				.setParameter( "moduleName", moduleName )
 				.setParameter( "branchName", branchName )
 				.setParameter( "executionList", executionList )
 				.setParameter( "dockerImageId", dockerImageId );

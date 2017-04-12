@@ -112,6 +112,7 @@ public class TaskIntegrationTests extends AbstractIntegrationTests {
 				if ("SUCCESS".equals(onBuildStatusChangedEvent.getNewStatus())) {
 					i[0]++;
 					if (i[0]==5) {
+						// TODO better to have some matrix of states for each step? why if multiple states is allowed for some particular step?
 						return true;
 					}
 				}

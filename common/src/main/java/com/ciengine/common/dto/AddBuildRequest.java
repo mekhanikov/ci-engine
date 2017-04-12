@@ -15,14 +15,13 @@ public class AddBuildRequest
 //	@XmlAttribute(name = "sss")
 
 	private String inputParams;
-	private String moduleName;
 	private String branchName;
 	private String executionList;
 	private String dockerImageId;
 	private String nodeId;//Executed on node id (null if Status: queued) - doesn't makes sense
 	private String reasonOfTrigger;
 	private String externalId;
-
+	private String medatdata;
 
 	public String getInputParams()
 	{
@@ -32,16 +31,6 @@ public class AddBuildRequest
 	public void setInputParams(String inputParams)
 	{
 		this.inputParams = inputParams;
-	}
-
-	public String getModuleName()
-	{
-		return moduleName;
-	}
-
-	public void setModuleName(String moduleName)
-	{
-		this.moduleName = moduleName;
 	}
 
 	public String getBranchName()
@@ -100,5 +89,15 @@ public class AddBuildRequest
 
 	public String getExternalId() {
 		return externalId;
+	}
+
+	public String getMedatdata()
+	{
+		return medatdata;
+	}
+
+	public void setMedatdata(String medatdata)
+	{
+		this.medatdata = medatdata;
 	}
 }

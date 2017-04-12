@@ -29,7 +29,7 @@ public class BuildModel
 	@Type(type="text")
 	private String inputParams;
 	private String inputParamsHash;
-	private String moduleName;
+	private String medatdata;
 	private String branchName;// TODO (merge connected to 2 branches, pass both?)
 	private String executionList;
 	private String dockerImageId;
@@ -93,14 +93,14 @@ public class BuildModel
 		this.inputParamsHash = inputParamsHash;
 	}
 
-	public String getModuleName()
+	public String getMedatdata()
 	{
-		return moduleName;
+		return medatdata;
 	}
 
-	public void setModuleName(String moduleName)
+	public void setMedatdata(String medatdata)
 	{
-		this.moduleName = moduleName;
+		this.medatdata = medatdata;
 	}
 
 	public String getBranchName()
@@ -183,62 +183,76 @@ public class BuildModel
 		this.log = log;
 	}
 
-
-	public void setExternalId(String externalId) {
-		this.externalId = externalId;
-	}
-
-	public String getExternalId() {
+	public String getExternalId()
+	{
 		return externalId;
 	}
 
-	public String getStatusDescription() {
+	public void setExternalId(String externalId)
+	{
+		this.externalId = externalId;
+	}
+
+	public String getStatusDescription()
+	{
 		return statusDescription;
 	}
 
-	public void setStatusDescription(String statusDescription) {
+	public void setStatusDescription(String statusDescription)
+	{
 		this.statusDescription = statusDescription;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+	@Override public boolean equals(Object o)
+	{
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 
 		BuildModel that = (BuildModel) o;
 
-		if (id != that.id) return false;
+		if (id != that.id)
+			return false;
 		if (startTimestamp != null ? !startTimestamp.equals(that.startTimestamp) : that.startTimestamp != null)
 			return false;
-		if (endTimestamp != null ? !endTimestamp.equals(that.endTimestamp) : that.endTimestamp != null) return false;
-		if (inputParams != null ? !inputParams.equals(that.inputParams) : that.inputParams != null) return false;
+		if (endTimestamp != null ? !endTimestamp.equals(that.endTimestamp) : that.endTimestamp != null)
+			return false;
+		if (inputParams != null ? !inputParams.equals(that.inputParams) : that.inputParams != null)
+			return false;
 		if (inputParamsHash != null ? !inputParamsHash.equals(that.inputParamsHash) : that.inputParamsHash != null)
 			return false;
-		if (moduleName != null ? !moduleName.equals(that.moduleName) : that.moduleName != null) return false;
-		if (branchName != null ? !branchName.equals(that.branchName) : that.branchName != null) return false;
+		if (medatdata != null ? !medatdata.equals(that.medatdata) : that.medatdata != null)
+			return false;
+		if (branchName != null ? !branchName.equals(that.branchName) : that.branchName != null)
+			return false;
 		if (executionList != null ? !executionList.equals(that.executionList) : that.executionList != null)
 			return false;
 		if (dockerImageId != null ? !dockerImageId.equals(that.dockerImageId) : that.dockerImageId != null)
 			return false;
-		if (Status != null ? !Status.equals(that.Status) : that.Status != null) return false;
-		if (nodeId != null ? !nodeId.equals(that.nodeId) : that.nodeId != null) return false;
+		if (Status != null ? !Status.equals(that.Status) : that.Status != null)
+			return false;
+		if (nodeId != null ? !nodeId.equals(that.nodeId) : that.nodeId != null)
+			return false;
 		if (reasonOfTrigger != null ? !reasonOfTrigger.equals(that.reasonOfTrigger) : that.reasonOfTrigger != null)
 			return false;
-		if (summary != null ? !summary.equals(that.summary) : that.summary != null) return false;
-		if (log != null ? !log.equals(that.log) : that.log != null) return false;
-		if (externalId != null ? !externalId.equals(that.externalId) : that.externalId != null) return false;
+		if (summary != null ? !summary.equals(that.summary) : that.summary != null)
+			return false;
+		if (log != null ? !log.equals(that.log) : that.log != null)
+			return false;
+		if (externalId != null ? !externalId.equals(that.externalId) : that.externalId != null)
+			return false;
 		return statusDescription != null ? statusDescription.equals(that.statusDescription) : that.statusDescription == null;
-
 	}
 
-	@Override
-	public int hashCode() {
+	@Override public int hashCode()
+	{
 		int result = id;
 		result = 31 * result + (startTimestamp != null ? startTimestamp.hashCode() : 0);
 		result = 31 * result + (endTimestamp != null ? endTimestamp.hashCode() : 0);
 		result = 31 * result + (inputParams != null ? inputParams.hashCode() : 0);
 		result = 31 * result + (inputParamsHash != null ? inputParamsHash.hashCode() : 0);
-		result = 31 * result + (moduleName != null ? moduleName.hashCode() : 0);
+		result = 31 * result + (medatdata != null ? medatdata.hashCode() : 0);
 		result = 31 * result + (branchName != null ? branchName.hashCode() : 0);
 		result = 31 * result + (executionList != null ? executionList.hashCode() : 0);
 		result = 31 * result + (dockerImageId != null ? dockerImageId.hashCode() : 0);
@@ -252,15 +266,15 @@ public class BuildModel
 		return result;
 	}
 
-	@Override
-	public String toString() {
+	@Override public String toString()
+	{
 		return "BuildModel{" +
 				"id=" + id +
 				", startTimestamp=" + startTimestamp +
 				", endTimestamp=" + endTimestamp +
 				", inputParams='" + inputParams + '\'' +
 				", inputParamsHash='" + inputParamsHash + '\'' +
-				", moduleName='" + moduleName + '\'' +
+				", medatdata='" + medatdata + '\'' +
 				", branchName='" + branchName + '\'' +
 				", executionList='" + executionList + '\'' +
 				", dockerImageId='" + dockerImageId + '\'' +

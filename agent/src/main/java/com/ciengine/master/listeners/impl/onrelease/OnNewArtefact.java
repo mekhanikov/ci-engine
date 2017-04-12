@@ -48,7 +48,7 @@ public class OnNewArtefact implements CIEngineListenerBuilder {
                             addBuildRequest.setExecutionList(onReleaseRule.getApplyList());
                             addBuildRequest.setNodeId(null);
                             addBuildRequest.setDockerImageId(onReleaseRule.getDockerImageId());
-                            addBuildRequest.setModuleName(onReleaseRule.getModuleNameToRelease());
+//                            addBuildRequest.setModuleName(onReleaseRule.getModuleNameToRelease());// TODO already have moduleName in environmentVariablesFromEvent, do we need it? just for fast search?
                             //addBuildRequest.setReasonOfTrigger("commit");
                             addBuildRequest.setBranchName(onReleaseRule.getReleaseBranchName());
                             addBuildRequest.setReasonOfTrigger(reasonOfTrigger);
